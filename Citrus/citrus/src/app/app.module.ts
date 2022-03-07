@@ -1,30 +1,37 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CalendarComponent } from './components/calendar/calendar.component';
-import { CalendarItemComponent } from './components/calendar/calendar-item/calendar-item.component';
-
 import { HttpClientModule } from '@angular/common/http';
-import { SelectTimeComponent } from './components/calendar/calendar-item/select-time/select-time.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CalendarItemComponent } from './components/calendar-item/calendar-item.component';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MatCardModule} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
     AppComponent,
     CalendarComponent,
-    CalendarItemComponent,
-    SelectTimeComponent
+    CalendarItemComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatProgressBarModule,
+    MatDatepickerModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatNativeDateModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

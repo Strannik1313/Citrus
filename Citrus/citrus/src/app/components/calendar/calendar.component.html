@@ -1,10 +1,9 @@
-<div class="calendarContainer" *ngFor="let item of calendarValues.array; let i = index">
-    <app-calendar-item 
-    [ngClass]="{}"
-    [currentDate]="item" 
-    [studioData]="studioData" 
-    [clientCount]="clientCount">
-</app-calendar-item>
-</div>
-
-
+<mat-card class="demo-inline-calendar-card">
+  <mat-calendar 
+   [minDate]="date3" 
+   [dateFilter]="disableDate" 
+   [maxDate]="date" 
+   [(selected)]="selected"
+  ></mat-calendar>
+</mat-card>
+<p>Selected date: {{selected}}</p>
