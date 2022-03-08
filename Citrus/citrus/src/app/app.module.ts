@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,7 +10,12 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import {MatButtonModule} from '@angular/material/button';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import { CustomDateAdapter } from './CustomDateAdapter';
+registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
@@ -27,10 +32,12 @@ import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
     MatCardModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MatNativeDateModule
+    MatNativeDateModule,
   ],
   providers: [
     {provide: MAT_DATE_LOCALE, useValue: 'ru-RU'},
+    {provide: LOCALE_ID, useValue: 'ru' },
+    { provide: DateAdapter, useClass: CustomDateAdapter },
   ],
   bootstrap: [AppComponent]
 })
