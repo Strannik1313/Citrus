@@ -1,8 +1,9 @@
 <mat-card class="demo-inline-calendar-card">
   <mat-calendar 
+   [headerComponent]="exampleHeader"
    [minDate]="date3" 
    [dateFilter]="disableDate" 
-   [maxDate]="date" 
+  
    [(selected)]="selected"
   ></mat-calendar>
 </mat-card>

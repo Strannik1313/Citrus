@@ -2,7 +2,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CalendarComponent } from './components/calendar/calendar.component';
+import { CalendarComponent, ExampleHeader } from './components/calendar/calendar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CalendarItemComponent } from './components/calendar-item/calendar-item.component';
@@ -21,7 +21,8 @@ registerLocaleData(localeRu);
   declarations: [
     AppComponent,
     CalendarComponent,
-    CalendarItemComponent
+    CalendarItemComponent,
+    ExampleHeader
   ],
   imports: [
     BrowserModule,
