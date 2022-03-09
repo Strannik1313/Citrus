@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LoginPageLayoutComponent } from './components/login-page-layout/login-page-layout.component';
+import { CrossroadPageLayoutComponent } from '../components/crossroad-page-layout/crossroad-page-layout.component';
 import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
   declarations: [
-    LoginPageLayoutComponent
+    CrossroadPageLayoutComponent,
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([
-      {path: '', component: LoginPageLayoutComponent}
+      {path: 'crossroad', component: CrossroadPageLayoutComponent}
     ])
   ],
   exports: [
     RouterModule
   ]
 })
-export class LoginPageModule { }
+export class CrossroadPageModule { }

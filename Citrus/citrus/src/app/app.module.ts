@@ -15,10 +15,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { CustomDateAdapter } from './CustomDateAdapter';
-import { MainPageModule } from './mainPage/main-page.module';
 import { MainPageLayoutComponent } from './mainPage/components/main-page-layout/main-page-layout.component';
 import { MainPageLayoutHeaderComponent } from './mainPage/components/main-page-layout-header/main-page-layout-header.component';
 import { MainPageLayoutFooterComponent } from './mainPage/components/main-page-layout-footer/main-page-layout-footer.component';
+import { LoginPageModule } from './login-page/login-page.module';
+import { CrossroadPageModule } from './crossroad-page/crossroad-page/crossroad-page.module';
 registerLocaleData(localeRu);
 
 @NgModule({
@@ -37,12 +38,14 @@ registerLocaleData(localeRu);
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatButtonModule,
+    CrossroadPageModule,
+
     MatDatepickerModule,
     MatCardModule,
     MatFormFieldModule,
     MatCheckboxModule,
-    MatNativeDateModule,
-    MainPageModule
+    MatNativeDateModule
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
