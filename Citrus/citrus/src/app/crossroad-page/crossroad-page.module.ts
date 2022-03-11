@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CrossroadPageLayoutComponent } from '../components/crossroad-page-layout/crossroad-page-layout.component';
+import { CrossroadPageLayoutComponent } from './components/crossroad-page-layout/crossroad-page-layout.component';
 import { RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -11,8 +12,9 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    MatButtonModule,
     RouterModule.forChild([
-      {path: 'crossroad', component: CrossroadPageLayoutComponent}
+      {path: '', component: CrossroadPageLayoutComponent}
     ])
   ],
   exports: [

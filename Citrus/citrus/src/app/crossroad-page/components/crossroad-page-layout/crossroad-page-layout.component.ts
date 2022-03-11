@@ -15,14 +15,14 @@ export class CrossroadPageLayoutComponent implements OnInit {
 
   goToNextPage(key: string): void {
     switch (key) {
-      case 'master': 
-        this.router.navigate(['/spec-choise'])
+      case 'master':
+        this.router.navigate(['/spec-choice'])
         break
-      case 'service': 
-      this.router.navigate(['/service-choise'])
-      break
-      
+      case 'service':
+        this.router.navigate(['/service-choice'])
+        break
+
     }
-    
+
   }
 }
