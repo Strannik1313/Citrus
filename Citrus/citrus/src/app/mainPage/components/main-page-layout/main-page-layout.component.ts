@@ -14,6 +14,7 @@ export class MainPageLayoutComponent implements OnInit {
   }
 
   goToNextPage(): void {
+    console.log(this.router.routerState.snapshot.url)
     this.router.navigate(['/crossroad'])
   }
 }
