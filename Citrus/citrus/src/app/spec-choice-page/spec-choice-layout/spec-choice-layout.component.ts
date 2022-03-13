@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { RouteService } from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-spec-choice-layout',
@@ -9,14 +7,9 @@ import { RouteService } from 'src/app/services/route.service';
 })
 export class SpecChoiceLayoutComponent implements OnInit {
 
-  constructor( 
-    private router: Router,
-    public routeWithUrl: RouteService
-    ) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
-  // goToNextPage(): void {
-  //   this.router.navigate(['/service-choice'])
-  // }
+  
 }

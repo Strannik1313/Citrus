@@ -8,11 +8,9 @@ import { Router } from '@angular/router';
 })
 export class DateChoiceLayoutComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
-  goToNextPage(): void {
-    this.router.navigate(['/confirm-page'])
-  }
+  
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { RouteService } from 'src/app/services/route.service';
 
 @Component({
   selector: 'app-main-page-layout',
@@ -8,13 +8,9 @@ import { Router } from '@angular/router';
 })
 export class MainPageLayoutComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  goToNextPage(): void {
-    console.log(this.router.routerState.snapshot.url)
-    this.router.navigate(['/crossroad'])
-  }
 }

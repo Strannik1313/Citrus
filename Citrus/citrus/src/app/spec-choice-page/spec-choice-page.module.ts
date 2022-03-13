@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SpecChoiceLayoutComponent } from './spec-choice-layout/spec-choice-layout.component';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material/button';
+import { AppButtonModule } from '../shared/app-button/app-button.module';
 
 
 
@@ -12,10 +12,11 @@ import { MatButtonModule } from '@angular/material/button';
   ],
   imports: [
     CommonModule,
+    AppButtonModule,
     RouterModule.forChild([
       {path: '', component: SpecChoiceLayoutComponent}
     ]),
-    MatButtonModule
+ 
   ]
 })
 export class SpecChoicePageModule { }

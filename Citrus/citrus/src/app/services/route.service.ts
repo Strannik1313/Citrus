@@ -6,20 +6,15 @@ import { Router } from '@angular/router';
 })
 export class RouteService {
   private currentUrl: string = ''
-  
+
   constructor(private route: Router) { }
 
-  private _getUrl(): string {
-    return '/service-choice'
+  private _setCurrentUrl(curUrl: string): void {
+    this.currentUrl = curUrl
   }
 
-  private _setUrl(url: string): void {
-    this.currentUrl = url
-  }
-
-  goToNextpage(url:string): any {
-    this._setUrl(url)
-    this.route.navigate([this._getUrl()])
-    console.log(this.currentUrl)
+  goToNextPage(url: string): any {
+    this._setCurrentUrl(this.route.routerState.snapshot.url)
+    this.route.navigate([url])
   }
 }

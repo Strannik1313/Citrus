@@ -1,5 +1,3 @@
 <p>date-choice-layout works!</p>
 <app-calendar></app-calendar>
-<div>
-    <button mat-button color="primary" (click)="goToNextPage()">Записаться</button>
-</div>
+<app-custom-button [name]="'Продолжить'" [url]="'/confirm-page'"></app-custom-button>

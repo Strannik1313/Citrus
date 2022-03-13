@@ -8,21 +8,10 @@ import { Router } from '@angular/router';
 })
 export class CrossroadPageLayoutComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
-  goToNextPage(key: string): void {
-    switch (key) {
-      case 'master':
-        this.router.navigate(['/spec-choice'])
-        break
-      case 'service':
-        this.router.navigate(['/service-choice'])
-        break
-
-    }
-
-  }
+  
 }
