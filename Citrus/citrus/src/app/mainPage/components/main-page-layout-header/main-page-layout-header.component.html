@@ -1,7 +1,3 @@
 <div>Header</div>
-<div>
-    <a routerLink="/login" routerLinkActive="active-link">Login</a>
-</div>
-<div>
-    <a routerLink="/" routerLinkActive="active-link">Back</a>
-</div>
+<app-custom-button [name]="'Login'" [url]="'/login'"></app-custom-button>
+<app-custom-button [name]="'Back'" [url]="'/..'"></app-custom-button>

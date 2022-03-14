@@ -1,20 +1,39 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RouteService {
-  private currentUrl: string = ''
+  subscription: Subscription
+  
+  private currentUrl: Array<string> = []
 
-  constructor(private route: Router) { }
+  constructor(
+    private storage: StorageService,
+    private route: Router
 
-  private _setCurrentUrl(curUrl: string): void {
-    this.currentUrl = curUrl
+  ) {
+    this.subscription = this.storage.roadMapUrls$.subscribe(data => this.currentUrl = data)
+  
   }
 
-  goToNextPage(url: string): any {
-    this._setCurrentUrl(this.route.routerState.snapshot.url)
-    this.route.navigate([url])
+
+
+  goToNextPage(url: string): void {
+    if (url == '/..') {
+      this.goToPreviousPage(url)
+    } else {
+      this.storage.setRoadMap(url)
+      this.route.navigate([url])
+    }
+  }
+  goToPreviousPage(url: string): void {
+    // console.log(this.currentUrl[this.currentUrl.length-1])
+    this.storage.setRoadMap(url)
+     this.route.navigate([this.currentUrl[this.currentUrl.length-1]])
+    //  console.log(this.currentUrl[this.currentUrl.length-2])
   }
 }
