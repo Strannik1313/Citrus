@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login-page-layout',
@@ -6,10 +7,47 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./login-page-layout.component.scss']
 })
 export class LoginPageLayoutComponent implements OnInit {
+  loginForm: FormGroup
+  hide = true;
 
-  constructor() { }
+
+  constructor() {
+    this.loginForm = new FormGroup({
+
+      'email': new FormControl('', [Validators.required, Validators.email]),
+      'password': new FormControl('', [Validators.required, Validators.minLength(5)]),
+      'checkbox': new FormControl()
+    });
+  }
+
+  submit() {
+    console.log(this.loginForm.value);
+  }
+
 
   ngOnInit(): void {
   }
-
+  getErrorMessage(inputName: string) {
+    switch (inputName) {
+      case 'email': {
+        if (this.loginForm.controls['email'].hasError('required')) {
+          return 'You must enter a value';
+        }
+        return this.loginForm.controls['email'].hasError('email') ? 'Not a valid email' : '';
+      }
+      case 'password': {
+        if (this.loginForm.controls['password'].hasError('required')) {
+          return 'You must enter a value';
+        }
+        return this.loginForm.controls['password'].hasError('minlength') ? 'Min lenght is 5' : '';
+      }
+      default: return 'SomeError'
+    }
+    
+    
+  }
 }
+
+
+
+

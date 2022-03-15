@@ -8,7 +8,7 @@ import { StorageService } from './storage.service';
 })
 export class RouteService {
   subscription: Subscription
-  
+
   private currentUrl: Array<string> = []
 
   constructor(
@@ -17,7 +17,7 @@ export class RouteService {
 
   ) {
     this.subscription = this.storage.roadMapUrls$.subscribe(data => this.currentUrl = data)
-  
+
   }
 
 
@@ -31,9 +31,7 @@ export class RouteService {
     }
   }
   goToPreviousPage(url: string): void {
-    // console.log(this.currentUrl[this.currentUrl.length-1])
     this.storage.setRoadMap(url)
-     this.route.navigate([this.currentUrl[this.currentUrl.length-1]])
-    //  console.log(this.currentUrl[this.currentUrl.length-2])
+    this.route.navigate([this.currentUrl[this.currentUrl.length - 1]])
   }
 }

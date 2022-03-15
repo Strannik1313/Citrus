@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { NavigationEnd } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -9,21 +10,19 @@ export class StorageService {
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
 
   private _tempArray: Array<string> = ['/']
-
+  
   roadMapUrls$: Observable<any> = this.roadMapSubject.asObservable()
   buttonStatus$: Observable<any> = this.isButtonDisabled.asObservable()
 
   setRoadMap(newValue: string) {
+    
     if (newValue == '/..') {
-      console.log(this._tempArray)
       this._tempArray.pop()
       this.roadMapSubject.next(this._tempArray)
-      console.log(this._tempArray)
     } else {
       if (this._tempArray.find(a => a == newValue) == undefined) {
         this._tempArray.push(newValue)
         this.roadMapSubject.next(this._tempArray)
-        console.log(this._tempArray)
       }
     }
   }
