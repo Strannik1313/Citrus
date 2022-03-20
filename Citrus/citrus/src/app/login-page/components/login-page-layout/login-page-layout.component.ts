@@ -10,11 +10,9 @@ export class LoginPageLayoutComponent implements OnInit {
   loginForm: FormGroup
   hide = true;
 
-
   constructor() {
     this.loginForm = new FormGroup({
-
-      'email': new FormControl('', [Validators.required, Validators.email]),
+      'email': new FormControl('', [Validators.required, Validators.pattern("[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}")]),
       'password': new FormControl('', [Validators.required, Validators.minLength(5)]),
       'checkbox': new FormControl()
     });
@@ -24,16 +22,16 @@ export class LoginPageLayoutComponent implements OnInit {
     console.log(this.loginForm.value);
   }
 
-
   ngOnInit(): void {
   }
+
   getErrorMessage(inputName: string) {
     switch (inputName) {
       case 'email': {
         if (this.loginForm.controls['email'].hasError('required')) {
           return 'You must enter a value';
         }
-        return this.loginForm.controls['email'].hasError('email') ? 'Not a valid email' : '';
+        return this.loginForm.controls['email'].hasError('pattern') ? 'Not a valid email' : '';
       }
       case 'password': {
         if (this.loginForm.controls['password'].hasError('required')) {

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { RouteService } from 'src/app/services/route.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -8,9 +8,9 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './app-button.component.html',
   styleUrls: ['./app-button.component.scss']
 })
-export class AppButtonComponent implements OnInit {
+export class AppButtonComponent implements OnInit, OnDestroy {
 
-  @Input() name: string = ''
+  @Input() label: string = ''
   @Input() url: string = ''
   isDisabled: boolean = false
   subscription: Subscription
@@ -32,5 +32,8 @@ export class AppButtonComponent implements OnInit {
     return false
   }
 
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe()
+  }
 
 }

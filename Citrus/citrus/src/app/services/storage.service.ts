@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { NavigationEnd } from '@angular/router';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
@@ -15,7 +14,6 @@ export class StorageService {
   buttonStatus$: Observable<any> = this.isButtonDisabled.asObservable()
 
   setRoadMap(newValue: string) {
-    
     if (newValue == '/..') {
       this._tempArray.pop()
       this.roadMapSubject.next(this._tempArray)
@@ -34,6 +32,6 @@ export class StorageService {
     }
   }
 
-  constructor() { console.log('storage was created') }
+  constructor() {}
 
 }

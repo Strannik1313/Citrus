@@ -1,0 +1,10 @@
+<div *ngIf="!isInitialize; else content">Loading...</div>
+<ng-template #content>
+    <mat-selection-list #shoes [multiple]="false" color="primary">
+        <mat-list-option *ngFor="let item of masterData" [value]="item.name">
+            {{item.name}}
+        </mat-list-option>
+    </mat-selection-list>
+    
+    <app-custom-button [label]="'Продолжить'" [url]="'/service-choice'"></app-custom-button>
+</ng-template>
