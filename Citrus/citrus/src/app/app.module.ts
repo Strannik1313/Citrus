@@ -11,7 +11,8 @@ import localeRu from '@angular/common/locales/ru';
 import { MainPageLayoutComponent } from './mainPage/components/main-page-layout/main-page-layout.component';
 import { MainPageLayoutHeaderComponent } from './mainPage/components/main-page-layout-header/main-page-layout-header.component';
 import { MainPageLayoutFooterComponent } from './mainPage/components/main-page-layout-footer/main-page-layout-footer.component';
-import { AppButtonModule } from './shared/app-button/app-button.module';
+import { AppButtonModule } from './shared/app-button-wrapper/app-button/app-button.module';
+import { AppButtonWrapperComponent } from './shared/app-button-wrapper/app-button-wrapper.component';
 
 registerLocaleData(localeRu);
 

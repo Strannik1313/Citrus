@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
 import { CustomDateAdapter } from '../CustomDateAdapter';
-import { AppButtonModule } from '../shared/app-button/app-button.module';
+import { AppButtonModule } from '../shared/app-button-wrapper/app-button/app-button.module';
 
 
 

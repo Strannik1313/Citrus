@@ -1,3 +1,11 @@
 <div>Header</div>
-<app-custom-button [label]="'Login'" [url]="'/login'"></app-custom-button>
-<app-custom-button [label]="'Back'" [url]="'/..'"></app-custom-button>
+<app-app-button-wrapper 
+    [buttonId]="'mainPage'" 
+    [label]="'Login'" 
+    [url]="'/login'"
+></app-app-button-wrapper>
+<app-app-button-wrapper 
+    [buttonId]="'backButton'" 
+    [label]="'Back'" 
+    [url]="'/..'"
+></app-app-button-wrapper>

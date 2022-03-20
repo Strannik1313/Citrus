@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CrossroadPageLayoutComponent } from './components/crossroad-page-layout/crossroad-page-layout.component';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { AppButtonModule } from '../shared/app-button/app-button.module';
+import { AppButtonModule } from '../shared/app-button-wrapper/app-button/app-button.module';
 
 
 
