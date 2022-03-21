@@ -18,20 +18,13 @@ export class AppButtonWrapperComponent implements OnInit, OnDestroy {
     private storage: StorageService,
     public routeWithUrl: RouteService
   ) {
-
     this.subscription = this.storage.buttonStatus$.subscribe(data => this.isDisabled = data)
-
-
   }
 
   ngOnInit(): void {
-    
   }
   ngOnDestroy(): void {
     this.subscription.unsubscribe()
-  }
-  goToNextPage(url: string): void {
-
   }
   setBackButtonStatus(url: string): boolean {
     if (this.url == '/..') {
