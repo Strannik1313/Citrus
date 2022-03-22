@@ -27,6 +27,7 @@ export class RouteService {
       this.goToPreviousPage(url)
     } else {
       this.storage.setRoadMap(url)
+      this.storage.setAccessMap(url)
       this.route.navigate([url])
     }
   }

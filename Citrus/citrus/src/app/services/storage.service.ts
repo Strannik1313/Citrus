@@ -9,12 +9,12 @@ export class StorageService {
   private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject([''])
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   private accessMap: BehaviorSubject<AccessMap> = new BehaviorSubject<AccessMap>({
-      mainPage: true,
-      crossroadPage: true,
-      specChoicePage: false,
-      serviceChoicePage: false,
-      dateChoicePage: false,
-      confirmPage: false
+    mainPage: true,
+    crossroadPage: false,
+    specChoicePage: false,
+    serviceChoicePage: false,
+    dateChoicePage: false,
+    confirmPage: false
   })
 
   private _tempArray: Array<string> = ['/']
@@ -42,6 +42,54 @@ export class StorageService {
       this.isButtonDisabled.next(false)
     }
   }
+  setAccessMap(url: string): void {
+    switch (url) {
+      case '/crossroad': {
+        this.accessMap.next({
+          ...this.accessMap.value,
+          crossroadPage: true
+        })
+        break
+      }
+      case '/spec-choice': {
+        this.accessMap.next({
+          ...this.accessMap.value,
+          specChoicePage: true,
+        })
+        console.log('storage: ', this.accessMap.value)
+        break
+      }
+      case '/service-choice': {
+        this.accessMap.next({
+          ...this.accessMap.value,
+          serviceChoicePage: true
+        })
+        break
+      }
+      case '/date-choice': {
+        this.accessMap.next({
+          ...this.accessMap.value,
+          dateChoicePage: true
+        })
+        break
+      }
+      case '/confirm-page': {
+        this.accessMap.next({
+          mainPage: true,
+          crossroadPage: true,
+          specChoicePage: true,
+          serviceChoicePage: true,
+          dateChoicePage: true,
+          confirmPage: true
+        })
+        break
+      }
+      
+    }
+
+  }
+
+
 
   constructor() { }
 
