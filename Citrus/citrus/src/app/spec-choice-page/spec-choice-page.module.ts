@@ -8,7 +8,6 @@ import { MatListModule } from '@angular/material/list';
 
 
 
-
 @NgModule({
   declarations: [
     SpecChoiceLayoutComponent,
@@ -23,5 +22,6 @@ import { MatListModule } from '@angular/material/list';
     ]),
  
   ]
+  
 })
 export class SpecChoicePageModule { }

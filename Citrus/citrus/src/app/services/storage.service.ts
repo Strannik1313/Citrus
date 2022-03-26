@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AccessMap } from '../interfaces/access-map';
+import { ClientData } from '../interfaces/client-data';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,7 @@ import { AccessMap } from '../interfaces/access-map';
 export class StorageService {
   private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject([''])
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  private isBackButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   private accessMap: BehaviorSubject<AccessMap> = new BehaviorSubject<AccessMap>({
     mainPage: true,
     crossroadPage: false,
@@ -16,13 +18,24 @@ export class StorageService {
     dateChoicePage: false,
     confirmPage: false
   })
+  private clientData: BehaviorSubject<ClientData> = new BehaviorSubject<ClientData>({
+    master: '',
+    services: '',
+    date: '',
+    name: '',
+    surname: '',
+    phoneNumber: '',
+    comments: ''
+  })
 
   private _tempArray: Array<string> = ['/']
 
 
   roadMapUrls$: Observable<any> = this.roadMapSubject.asObservable()
   buttonStatus$: Observable<any> = this.isButtonDisabled.asObservable()
+  backButtonDisabled$: Observable<any> = this.isBackButtonDisabled.asObservable()
   accessMap$: Observable<any> = this.accessMap.asObservable()
+  clientData$: Observable<any> = this.clientData.asObservable()
 
   setRoadMap(newValue: string) {
     if (newValue == '/..') {
@@ -36,10 +49,13 @@ export class StorageService {
     }
   }
   setButtonStatus(): void {
+
+  }
+  setBackButtonStatus(): void {
     if (this._tempArray.length == 1) {
-      this.isButtonDisabled.next(true)
+      this.isBackButtonDisabled.next(true)
     } else {
-      this.isButtonDisabled.next(false)
+      this.isBackButtonDisabled.next(false)
     }
   }
   setAccessMap(url: string): void {
@@ -56,7 +72,6 @@ export class StorageService {
           ...this.accessMap.value,
           specChoicePage: true,
         })
-        console.log('storage: ', this.accessMap.value)
         break
       }
       case '/service-choice': {
@@ -84,11 +99,22 @@ export class StorageService {
         })
         break
       }
-      
+
     }
 
   }
+  setClientData(action: any): void {
+    switch (action.name) {
+      case 'master': {
+        this.clientData.next({
+          ...this.clientData.value,
+          master: action.value
+        })
+        break
+      }
+    }
 
+  }
 
 
   constructor() { }

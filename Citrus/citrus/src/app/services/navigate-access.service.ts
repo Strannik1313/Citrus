@@ -21,7 +21,6 @@ export class NavigateAccess implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
-    console.log('canActivate: ', this.accessMap)
     switch (state.url)  {
       case '/crossroad': {
         if (!this.accessMap.crossroadPage) {
@@ -33,7 +32,6 @@ export class NavigateAccess implements CanActivate {
         if (!this.accessMap.specChoicePage) {
           this.route.navigate(['/']);
         }
-        console.log(this.accessMap.specChoicePage)
         return this.accessMap.specChoicePage
       }
       case '/service-choice': {

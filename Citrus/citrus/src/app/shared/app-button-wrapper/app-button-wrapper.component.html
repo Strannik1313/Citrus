@@ -1,6 +1,6 @@
 <app-custom-button 
     [label]="label" 
     [url]="url" 
-    [isDisabled]="setBackButtonStatus(this.url)"
+    [isDisabled]="setBackButtonStatus(url)"
     (goToNextPage)="routeWithUrl.goToNextPage($event)"
 ></app-custom-button>

@@ -21,7 +21,7 @@ export class HttpService {
         }))
   }
 
-  getClientData(): Observable<MasterData[]> {
+  getMasterData(): Observable<MasterData[]> {
     return this.http.get<MasterData[]>('https://jsonplaceholder.typicode.com/todos/1')
     .pipe(
       map(
