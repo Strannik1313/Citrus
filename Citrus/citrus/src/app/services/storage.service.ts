@@ -9,7 +9,7 @@ import { ClientData } from '../interfaces/client-data';
 export class StorageService {
   private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject([''])
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
-  private isBackButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  private isBackButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
   private accessMap: BehaviorSubject<AccessMap> = new BehaviorSubject<AccessMap>({
     mainPage: true,
     crossroadPage: false,

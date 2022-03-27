@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ButtonStatusService } from 'src/app/services/button-status.service';
 import { RouteService } from 'src/app/services/route.service';
 import { StorageService } from 'src/app/services/storage.service';
 
@@ -7,31 +7,21 @@ import { StorageService } from 'src/app/services/storage.service';
   selector: 'app-app-button-wrapper',
   templateUrl: './app-button-wrapper.component.html',
   styleUrls: ['./app-button-wrapper.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppButtonWrapperComponent implements OnInit, OnDestroy {
+export class AppButtonWrapperComponent implements OnInit {
   @Input() label: string = ''
   @Input() url: string = ''
   @Input() buttonId: string = ''
-  isDisabled: boolean = false
-  subscription: Subscription
   constructor(
-    private storage: StorageService,
-    public routeWithUrl: RouteService
-  ) {
-    this.subscription = this.storage.backButtonDisabled$.subscribe(data => this.isDisabled = data)
-  }
+    public storage: StorageService,
+    public routeWithUrl: RouteService,
+    public status: ButtonStatusService
+  ) { }
 
   ngOnInit(): void {
+   
   }
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe()
-  }
-  setBackButtonStatus(url: string): boolean {
-    if (this.url == '/..') {
-      this.storage.setBackButtonStatus()
-      return this.isDisabled
-    }
-    return false
-  }
+  
+ 
 }

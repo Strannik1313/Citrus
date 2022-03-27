@@ -11,7 +11,7 @@ export class AppButtonComponent implements OnInit {
 
   @Input() label: string = ''
   @Input() url: string = ''
-  @Input() isDisabled: boolean = false
+  @Input() isDisabled: boolean | null = false
   @Output() goToNextPage = new EventEmitter ()
 
   constructor() { }

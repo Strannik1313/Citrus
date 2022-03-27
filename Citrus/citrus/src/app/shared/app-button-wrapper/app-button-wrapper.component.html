@@ -1,6 +1,8 @@
 <app-custom-button 
     [label]="label" 
     [url]="url" 
-    [isDisabled]="setBackButtonStatus(url)"
+    [isDisabled]="status.setButtonStatus(this.url) | async"
     (goToNextPage)="routeWithUrl.goToNextPage($event)"
 ></app-custom-button>
+
+<!-- [isDisabled]="storage.backButtonDisabled$ | async" -->

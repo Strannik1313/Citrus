@@ -19,9 +19,6 @@ export class RouteService {
     this.subscription = this.storage.roadMapUrls$.subscribe(data => this.currentUrl = data)
 
   }
-
-
-
   goToNextPage(url: string): void {
     if (url == '/..') {
       this.goToPreviousPage(url)
@@ -29,10 +26,13 @@ export class RouteService {
       this.storage.setRoadMap(url)
       this.storage.setAccessMap(url)
       this.route.navigate([url])
+      this.storage.setBackButtonStatus()
     }
+    
   }
   goToPreviousPage(url: string): void {
     this.storage.setRoadMap(url)
     this.route.navigate([this.currentUrl[this.currentUrl.length - 1]])
+    this.storage.setBackButtonStatus()
   }
 }
