@@ -32,8 +32,8 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   }
   updateChoisenMaster(masterName: string):void {
     this.storage.setClientData({
-      action: 'master',
-      name: masterName
+      name: 'master',
+      value: masterName
     })
   }
 }

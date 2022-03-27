@@ -31,11 +31,11 @@ export class StorageService {
   private _tempArray: Array<string> = ['/']
 
 
-  roadMapUrls$: Observable<any> = this.roadMapSubject.asObservable()
-  buttonStatus$: Observable<any> = this.isButtonDisabled.asObservable()
-  backButtonDisabled$: Observable<any> = this.isBackButtonDisabled.asObservable()
-  accessMap$: Observable<any> = this.accessMap.asObservable()
-  clientData$: Observable<any> = this.clientData.asObservable()
+  roadMapUrls$: Observable<string[]> = this.roadMapSubject.asObservable()
+  buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable()
+  backButtonDisabled$: Observable<boolean> = this.isBackButtonDisabled.asObservable()
+  accessMap$: Observable<AccessMap> = this.accessMap.asObservable()
+  clientData$: Observable<ClientData> = this.clientData.asObservable()
 
   setRoadMap(newValue: string) {
     if (newValue == '/..') {
@@ -49,7 +49,8 @@ export class StorageService {
     }
   }
   setButtonStatus(): void {
-
+    this.isButtonDisabled.next(false)
+      
   }
   setBackButtonStatus(): void {
     if (this._tempArray.length == 1) {
@@ -110,6 +111,7 @@ export class StorageService {
           ...this.clientData.value,
           master: action.value
         })
+        this.setButtonStatus()
         break
       }
     }
