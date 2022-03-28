@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ButtonStatusService } from 'src/app/services/button-status.service';
 import { RouteService } from 'src/app/services/route.service';
 import { StorageService } from 'src/app/services/storage.service';
@@ -9,7 +9,7 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./app-button-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppButtonWrapperComponent implements OnInit {
+export class AppButtonWrapperComponent implements OnInit, OnDestroy {
   @Input() label: string = ''
   @Input() url: string = ''
   @Input() buttonId: string = ''
@@ -20,8 +20,10 @@ export class AppButtonWrapperComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.status.setButtonStatus()
    
   }
-  
+  ngOnDestroy(): void {
+  }
  
 }

@@ -48,9 +48,11 @@ export class StorageService {
       }
     }
   }
-  setButtonStatus(): void {
-    this.isButtonDisabled.next(false)
-      
+  activateButton(): void {
+    this.isButtonDisabled.next(false) 
+  }
+  disableButton(): void {
+    this.isButtonDisabled.next(true) 
   }
   setBackButtonStatus(): void {
     if (this._tempArray.length == 1) {
@@ -111,7 +113,7 @@ export class StorageService {
           ...this.clientData.value,
           master: action.value
         })
-        this.setButtonStatus()
+        this.activateButton()
         break
       }
     }
