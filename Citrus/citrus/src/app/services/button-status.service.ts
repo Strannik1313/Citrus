@@ -1,20 +1,43 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { ClientData } from '../interfaces/client-data';
 import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ButtonStatusService {
-
+  private subscription: Subscription = new Subscription
+  private clientData: ClientData = {
+    master: '',
+    services: '',
+    date: '',
+    name: '',
+    surname: '',
+    phoneNumber: '',
+    comments: ''
+  }
   constructor(
     private storage: StorageService,
     private route: Router
-  ) { }
-    
+  ) {
+    this.storage.clientData$.subscribe(
+      (data) => {
+        this.clientData = {
+          master: data.master,
+          services: '',
+          date: '',
+          name: '',
+          surname: '',
+          phoneNumber: '',
+          comments: ''
+        }
+      }
+    )
+  }
+
   setButtonStatus(): void {
-    console.log(this.route.routerState.snapshot.url)
     switch (this.route.routerState.snapshot.url) {
       case '': {
         this.storage.activateButton()
@@ -25,7 +48,11 @@ export class ButtonStatusService {
         break
       }
       case '/spec-choice': {
-        this.storage.disableButton()
+        if (this.clientData.master == '') {
+          this.storage.disableButton()
+        } else {
+          this.storage.activateButton()
+        }
         break
       }
       case '/service-choice': {

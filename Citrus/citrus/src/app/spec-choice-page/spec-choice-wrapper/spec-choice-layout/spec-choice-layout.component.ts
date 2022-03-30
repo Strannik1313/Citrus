@@ -8,22 +8,23 @@ import { MasterData } from 'src/app/interfaces/master-data';
   styleUrls: ['./spec-choice-layout.component.scss'],
   // changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SpecChoiceLayoutComponent implements OnInit {
+export class SpecChoiceLayoutComponent implements OnInit{
   @Input() masterData: MasterData[] = [{
     name: '',
     services: [''],
     id: ''
   }]
   @Input() isInitialize: boolean = false
-  @Output() selectedItems: EventEmitter<string> = new EventEmitter
+  @Input() selectedOption: string = ''
+  @Output() selectedItems: EventEmitter<MatSelectionListChange> = new EventEmitter
 
   constructor() { }
 
   ngOnInit(): void {
-
   }
+  
   selectedItem(e: MatSelectionListChange): void {
-    this.selectedItems.emit(e.source.selectedOptions.selected[0].value)
+    this.selectedItems.emit(e)
   }
 
 }

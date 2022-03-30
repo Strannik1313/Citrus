@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSelectionListChange } from '@angular/material/list';
 import { Subscription } from 'rxjs';
 import { MasterData } from 'src/app/interfaces/master-data';
 import { HttpService } from 'src/app/services/http.service';
@@ -30,10 +31,11 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   ngOnDestroy():void {
     this.subscription.unsubscribe()
   }
-  updateChoisenMaster(masterName: string):void {
+  updateChoisenMaster(e: MatSelectionListChange):void {
+    debugger
     this.storage.setClientData({
       name: 'master',
-      value: masterName
+      value: e.source.selectedOptions.selected[0].value
     })
   }
 }

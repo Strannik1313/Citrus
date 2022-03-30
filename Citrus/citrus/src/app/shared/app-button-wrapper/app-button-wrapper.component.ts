@@ -12,7 +12,6 @@ import { StorageService } from 'src/app/services/storage.service';
 export class AppButtonWrapperComponent implements OnInit, OnDestroy {
   @Input() label: string = ''
   @Input() url: string = ''
-  @Input() buttonId: string = ''
   constructor(
     public storage: StorageService,
     public routeWithUrl: RouteService,

@@ -1,7 +1,7 @@
 <div *ngIf="!isInitialize; else content">Loading...</div>
 <ng-template #content>
     <mat-selection-list (selectionChange)="selectedItem($event)" #items [multiple]="false" color="primary">
-        <mat-list-option *ngFor="let item of masterData" [value]="item.name">
+        <mat-list-option [selected]="selectedOption == item.id" *ngFor="let item of masterData" [value]="item.name">
             <p>{{item.name}}</p>
             <p *ngFor="let service of item.services">{{service}}</p>
         </mat-list-option>
