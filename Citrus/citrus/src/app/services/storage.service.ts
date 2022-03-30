@@ -20,6 +20,7 @@ export class StorageService {
   })
   private clientData: BehaviorSubject<ClientData> = new BehaviorSubject<ClientData>({
     master: '',
+    masterId: '',
     services: '',
     date: '',
     name: '',
@@ -111,7 +112,8 @@ export class StorageService {
       case 'master': {
         this.clientData.next({
           ...this.clientData.value,
-          master: action.value
+          master: action.value,
+          masterId: action.id
         })
         this.activateButton()
         break

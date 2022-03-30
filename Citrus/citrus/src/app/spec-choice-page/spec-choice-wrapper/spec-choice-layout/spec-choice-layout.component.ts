@@ -6,7 +6,7 @@ import { MasterData } from 'src/app/interfaces/master-data';
   selector: 'app-spec-choice-layout',
   templateUrl: './spec-choice-layout.component.html',
   styleUrls: ['./spec-choice-layout.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SpecChoiceLayoutComponent implements OnInit{
   @Input() masterData: MasterData[] = [{
@@ -24,6 +24,7 @@ export class SpecChoiceLayoutComponent implements OnInit{
   }
   
   selectedItem(e: MatSelectionListChange): void {
+    console.log(e.source.selectedOptions.selected[0].value)
     this.selectedItems.emit(e)
   }
 

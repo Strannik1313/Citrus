@@ -11,6 +11,7 @@ export class ButtonStatusService {
   private subscription: Subscription = new Subscription
   private clientData: ClientData = {
     master: '',
+    masterId: '',
     services: '',
     date: '',
     name: '',
@@ -26,6 +27,7 @@ export class ButtonStatusService {
       (data) => {
         this.clientData = {
           master: data.master,
+          masterId: '',
           services: '',
           date: '',
           name: '',
