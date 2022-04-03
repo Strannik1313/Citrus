@@ -21,7 +21,7 @@ export class StorageService {
   private clientData: BehaviorSubject<ClientData> = new BehaviorSubject<ClientData>({
     master: '',
     masterId: '',
-    services: '',
+    services: [''],
     date: '',
     name: '',
     surname: '',
@@ -120,6 +120,10 @@ export class StorageService {
       }
     }
 
+  }
+  removeDataFromCurrentPage(url: string): void {
+    switch (url) {
+    }
   }
 
 

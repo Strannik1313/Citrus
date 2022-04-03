@@ -24,7 +24,6 @@ export class SpecChoiceLayoutComponent implements OnInit{
   }
   
   selectedItem(e: MatSelectionListChange): void {
-    console.log(e.source.selectedOptions.selected[0].value)
     this.selectedItems.emit(e)
   }
 

@@ -12,7 +12,7 @@ export class ButtonStatusService {
   private clientData: ClientData = {
     master: '',
     masterId: '',
-    services: '',
+    services: [''],
     date: '',
     name: '',
     surname: '',
@@ -28,7 +28,7 @@ export class ButtonStatusService {
         this.clientData = {
           master: data.master,
           masterId: '',
-          services: '',
+          services: [''],
           date: '',
           name: '',
           surname: '',

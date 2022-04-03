@@ -1,4 +1,4 @@
-<p>Master Elena</p>
+<p *ngFor="let item of masterData">{{item.name}}</p>
 <app-app-button-wrapper 
     [label]="'Продолжить'" 
     [url]="'/date-choice'"
