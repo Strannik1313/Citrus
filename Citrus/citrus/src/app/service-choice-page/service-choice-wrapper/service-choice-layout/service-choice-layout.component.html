@@ -3,3 +3,10 @@
     [label]="'Продолжить'" 
     [url]="'/date-choice'"
 ></app-app-button-wrapper>
+
+    <mat-label>Masters</mat-label>
+    <mat-select multiple>
+      <mat-option *ngFor="let item of services" [value]="item">{{item}}</mat-option>
+    </mat-select>
+
+    
