@@ -23,8 +23,10 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
     phoneNumber: '',
     comments: ''
   }
+  shouldClientDataBeSaved: boolean = false
   subscriptionMasterData: Subscription
   subscriptionClientData: Subscription
+  subscriptionShouldClientDataBeSaved: Subscription
   selectedOption: string = ''
   isInitialize: boolean = false
   constructor(
@@ -38,7 +40,10 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
     this.subscriptionClientData = this.storage.clientData$.subscribe((data) => {
       this.clientData = data
     })
-   }
+    this.subscriptionShouldClientDataBeSaved = this.storage.shouldClientDataSaved$.subscribe((data) => {
+      this.shouldClientDataBeSaved = data
+    })
+  }
 
   ngOnInit(): void {
     if (!!this.clientData.masterId) {
@@ -46,11 +51,20 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy():void {
+  ngOnDestroy(): void {
+    debugger
+    if (!this.shouldClientDataBeSaved) {
+      this.storage.setClientData({
+        name: 'master',
+        value: '',
+        id: ''
+      })
+    }
     this.subscriptionMasterData.unsubscribe()
     this.subscriptionClientData.unsubscribe()
+    this.subscriptionShouldClientDataBeSaved.unsubscribe()
   }
-  updateChoisenMaster(e: MatSelectionListChange):void {
+  updateChoisenMaster(e: MatSelectionListChange): void {
     this.storage.setClientData({
       name: 'master',
       value: e.source.selectedOptions.selected[0].value.name,

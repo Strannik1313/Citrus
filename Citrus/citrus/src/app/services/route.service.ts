@@ -27,6 +27,7 @@ export class RouteService {
       this.storage.setAccessMap(url)
       this.route.navigate([url])
       this.storage.setBackButtonStatus()
+      this.storage.setClientDataSaved(true)
     }
     
   }
@@ -34,5 +35,6 @@ export class RouteService {
     this.storage.setRoadMap(url)
     this.route.navigate([this.currentUrl[this.currentUrl.length - 1]])
     this.storage.setBackButtonStatus()
+    this.storage.setClientDataSaved(false)
   }
 }

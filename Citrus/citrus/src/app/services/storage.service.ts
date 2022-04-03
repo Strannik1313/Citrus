@@ -9,6 +9,7 @@ import { ClientData } from '../interfaces/client-data';
 export class StorageService {
   private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject([''])
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  private isClientDataShouldSaved: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
   private isBackButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
   private accessMap: BehaviorSubject<AccessMap> = new BehaviorSubject<AccessMap>({
     mainPage: true,
@@ -31,9 +32,9 @@ export class StorageService {
 
   private _tempArray: Array<string> = ['/']
 
-
   roadMapUrls$: Observable<string[]> = this.roadMapSubject.asObservable()
   buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable()
+  shouldClientDataSaved$: Observable<boolean> = this.isClientDataShouldSaved.asObservable()
   backButtonDisabled$: Observable<boolean> = this.isBackButtonDisabled.asObservable()
   accessMap$: Observable<AccessMap> = this.accessMap.asObservable()
   clientData$: Observable<ClientData> = this.clientData.asObservable()
@@ -119,11 +120,10 @@ export class StorageService {
         break
       }
     }
-
   }
-  removeDataFromCurrentPage(url: string): void {
-    switch (url) {
-    }
+  
+  setClientDataSaved(value: boolean): void {
+    this.isClientDataShouldSaved.next(value)
   }
 
 
