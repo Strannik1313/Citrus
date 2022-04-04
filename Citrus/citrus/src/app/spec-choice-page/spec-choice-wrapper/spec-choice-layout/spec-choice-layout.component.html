@@ -1,10 +1,22 @@
 <div *ngIf="!isInitialize; else content">Loading...</div>
 <ng-template #content>
-    <mat-selection-list (selectionChange)="selectedItem($event)" #items [multiple]="false" color="primary">
-        <mat-list-option [selected]="selectedOption == item.id" *ngFor="let item of masterData" [value]="item">
+    <mat-selection-list 
+     (selectionChange)="selectedItem($event)" 
+     #items 
+     [multiple]="false" 
+     color="primary"
+    >
+        <mat-list-option 
+         [selected]="selectedOption == item.id" 
+         *ngFor="let item of masterData" 
+         [value]="item"
+        >
             <p>{{item.name}}</p>
             <p *ngFor="let service of item.services">{{service}}</p>
         </mat-list-option>
     </mat-selection-list>
-    <app-app-button-wrapper [label]="'Продолжить'" [url]="'/service-choice'"></app-app-button-wrapper>
+    <app-app-button-wrapper 
+     [label]="'Продолжить'" 
+     [url]="'/service-choice'"
+    ></app-app-button-wrapper>
 </ng-template>

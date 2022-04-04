@@ -22,7 +22,7 @@ export class StorageService {
   private clientData: BehaviorSubject<ClientData> = new BehaviorSubject<ClientData>({
     master: '',
     masterId: '',
-    services: [''],
+    services: [],
     date: '',
     name: '',
     surname: '',
@@ -117,6 +117,18 @@ export class StorageService {
           masterId: action.id
         })
         this.activateButton()
+        break
+      }
+      case 'services': {
+        this.clientData.next({
+          ...this.clientData.value,
+          services: action.value[0]? [...this.clientData.value.services, action.value] : action.value
+        })
+        if (action.value.length>0){
+          this.activateButton()
+        }else {
+          this.disableButton()
+        }
         break
       }
     }

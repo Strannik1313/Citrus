@@ -1,6 +1,8 @@
 <app-service-choice-layout
     [masterData]="masterData"
     [services]="services"
+    [preSelection]="preSelectionServices"
+    (selectionChange)="updateChoisenServices($event)"
 >
 </app-service-choice-layout>
 

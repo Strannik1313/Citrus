@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 import { ClientData } from 'src/app/interfaces/client-data';
 import { MasterData } from 'src/app/interfaces/master-data';
@@ -13,15 +14,16 @@ import { StorageService } from 'src/app/services/storage.service';
 export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
   shouldClientDataBeSaved: boolean = false
   services: Array<string> = []
+  preSelectionServices: Array<string> = []
   masterData: MasterData[] = [{
     name: '',
-    services: [''],
+    services: [],
     id: ''
   }]
   clientData: ClientData = {
     master: '',
     masterId: '',
-    services: [''],
+    services: [],
     date: '',
     name: '',
     surname: '',
@@ -37,7 +39,6 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptionClientData = this.storage.clientData$.subscribe(data => this.clientData = data)
     this.subscriptionMasterData = this.http.getMasterData().subscribe((data) => {
-      console.log(data)
       if (this.clientData.masterId) {
         this.masterData = data.filter((m) => {
           return m.id == this.clientData.masterId
@@ -45,33 +46,41 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
       } else {
         this.masterData = data
       }
+      for (let i = 0; i < this.masterData.length; i++) {
+        for (let y = 0; y < this.masterData[i].services.length; y++) {
+          if (this.services.find(a => a == this.masterData[i].services[y]) == undefined) {
+            this.services.push(this.masterData[i].services[y])
+          }
+        }
+      }
+      if (this.clientData.services.length > 0) {
+        this.preSelectionServices = this.clientData.services
+      }
     })
     this.subscriptionShouldClientDataBeSaved = this.storage.shouldClientDataSaved$.subscribe((data) => {
       this.shouldClientDataBeSaved = data
     })
-    
+
   }
 
   ngOnInit(): void {
-    debugger
-    for (let i = 0; i < this.masterData.length; i++) {
-      for (let y = 0; y < this.masterData[i].services.length; y++) {
-        if (this.services.find(a => a == this.masterData[i].services[y]) == undefined) {
-          this.services.push(this.masterData[i].services[y])
-        }
-      }
-    }
+    
   }
   ngOnDestroy(): void {
     if (!this.shouldClientDataBeSaved) {
       this.storage.setClientData({
         name: 'services',
-        value: '',
-        id: ''
+        value: []
       })
       this.subscriptionShouldClientDataBeSaved.unsubscribe()
     }
     this.subscriptionClientData.unsubscribe()
     this.subscriptionMasterData.unsubscribe()
+  }
+  updateChoisenServices(e: MatSelectChange): void {
+    this.storage.setClientData({
+      name: 'services',
+      value: e.value
+    })
   }
 }

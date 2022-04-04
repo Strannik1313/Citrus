@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSelectChange } from '@angular/material/select';
 import { MasterData } from 'src/app/interfaces/master-data';
 
 @Component({
@@ -10,9 +11,15 @@ import { MasterData } from 'src/app/interfaces/master-data';
 export class ServiceChoiceLayoutComponent implements OnInit {
   @Input() masterData: MasterData[] = []
   @Input() services: Array<string> = []
+  @Input() preSelection: Array<string> = []
+  @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter
+  selection: Array<string> = this.preSelection
   constructor() { }
 
   ngOnInit(): void {
   }
   
+  selectIsTouched(e: MatSelectChange): void {
+    this.selectionChange.emit(e)
+  }
 }

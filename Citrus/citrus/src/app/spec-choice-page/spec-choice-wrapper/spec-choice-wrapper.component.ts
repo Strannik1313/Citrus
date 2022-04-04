@@ -52,7 +52,6 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    debugger
     if (!this.shouldClientDataBeSaved) {
       this.storage.setClientData({
         name: 'master',
