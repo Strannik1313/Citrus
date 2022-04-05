@@ -58,7 +58,11 @@ export class ButtonStatusService {
         break
       }
       case '/service-choice': {
-        this.storage.disableButton()
+        if (this.clientData.services == []) {
+          this.storage.disableButton()
+        } else {
+          this.storage.activateButton()
+        }
         break
       }
       case '/date-choice': {

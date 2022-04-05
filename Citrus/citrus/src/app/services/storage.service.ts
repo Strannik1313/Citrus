@@ -122,7 +122,7 @@ export class StorageService {
       case 'services': {
         this.clientData.next({
           ...this.clientData.value,
-          services: action.value[0]? [...this.clientData.value.services, action.value] : action.value
+          services: action.value
         })
         if (action.value.length>0){
           this.activateButton()

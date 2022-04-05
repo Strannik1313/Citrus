@@ -4,7 +4,7 @@
   <mat-select 
    multiple 
    (selectionChange)="selectIsTouched($event)"
-   [value]="preSelection[0]"
+   [value]="preSelection"
   >
     <mat-option *ngFor="let item of services" [value]="item">{{item}}</mat-option>
   </mat-select>
