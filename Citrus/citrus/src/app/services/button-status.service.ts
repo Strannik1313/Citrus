@@ -12,7 +12,7 @@ export class ButtonStatusService {
   private clientData: ClientData = {
     master: '',
     masterId: '',
-    services: [''],
+    services: [],
     date: '',
     name: '',
     surname: '',
@@ -25,16 +25,7 @@ export class ButtonStatusService {
   ) {
     this.storage.clientData$.subscribe(
       (data) => {
-        this.clientData = {
-          master: data.master,
-          masterId: '',
-          services: [''],
-          date: '',
-          name: '',
-          surname: '',
-          phoneNumber: '',
-          comments: ''
-        }
+        this.clientData = data
       }
     )
   }
@@ -58,7 +49,7 @@ export class ButtonStatusService {
         break
       }
       case '/service-choice': {
-        if (this.clientData.services == []) {
+        if (this.clientData.services.length == 0) {
           this.storage.disableButton()
         } else {
           this.storage.activateButton()
