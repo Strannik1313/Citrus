@@ -12,7 +12,6 @@ import { CustomCalendarHeader } from './date-choice-wrapper/date-choice-layout/c
 import { DateChoiceWrapperComponent } from './date-choice-wrapper/date-choice-wrapper.component';
 
 
-
 @NgModule({
   declarations: [
     DateChoiceLayoutComponent,

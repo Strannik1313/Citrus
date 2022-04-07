@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CalendarData } from 'src/app/interfaces/calendar-data';
 import { StudioData } from 'src/app/interfaces/studio-data';
 
@@ -9,6 +9,8 @@ import { StudioData } from 'src/app/interfaces/studio-data';
 })
 export class DateChoiceLayoutComponent implements OnInit {
   @Input() customHeader: any
+  @Input() masterName: string = ''
+  @Input() selected: Date | null = null
   @Input() calendarValues: CalendarData = {
     date: new Date,
     month: 0,
@@ -19,9 +21,12 @@ export class DateChoiceLayoutComponent implements OnInit {
     maxLoad: 0,
     arrayOfFreeTimes: []
   }
+  @Output() dateWasSelected: EventEmitter<Date> = new EventEmitter
   constructor() { }
 
   ngOnInit(): void {
   }
-  
+  dateSelected(e: any): void {
+    this.dateWasSelected.emit(e)
+  }
 }

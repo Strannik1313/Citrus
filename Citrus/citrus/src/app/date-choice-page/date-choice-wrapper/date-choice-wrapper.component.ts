@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { DateRange } from '@angular/material/datepicker';
+import { Subscription } from 'rxjs';
 import { CalendarData } from 'src/app/interfaces/calendar-data';
 import { StudioData } from 'src/app/interfaces/studio-data';
 import { CalendarService } from 'src/app/services/calendar.service';
@@ -10,8 +12,9 @@ import { CustomCalendarHeader } from './date-choice-layout/custom-calendar-heade
   templateUrl: './date-choice-wrapper.component.html',
   styleUrls: ['./date-choice-wrapper.component.scss']
 })
-export class DateChoiceWrapperComponent implements OnInit {
-
+export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
+  selected: Date | null = null
+  subscriptionCalendar: Subscription = new Subscription
   customHeader = CustomCalendarHeader
   calendarValues: CalendarData = {
     date: new Date,
@@ -28,13 +31,19 @@ export class DateChoiceWrapperComponent implements OnInit {
     private http: HttpService
   ) {
     this.calendarValues = this.calendarService.getData()
-    this.http.getCalendarData()
-      .subscribe((response) => {
-        this.studioData = response
-      })
   }
 
   ngOnInit(): void {
   }
-
+  ngOnDestroy(): void {
+    this.subscriptionCalendar.unsubscribe()
+  }
+  dateWasSelected(e: Date): void {
+    this.subscriptionCalendar = this.http.getCalendarData(e.getDate(), e.getMonth())
+      .subscribe((response) => {
+        this.studioData = response
+        this.selected = e
+      console.log(this.studioData)
+      })
+  }
 }

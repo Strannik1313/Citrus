@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 import { MasterData } from '../interfaces/master-data';
@@ -10,8 +10,13 @@ import { StudioData } from '../interfaces/studio-data';
 export class HttpService {
 
   constructor(private http: HttpClient) { }
-  getCalendarData(): Observable<StudioData> {
-    return this.http.get<StudioData>('https://jsonplaceholder.typicode.com/todos/1')
+  getCalendarData(d: number, m: number): Observable<StudioData> {
+    return this.http.get<StudioData>('https://jsonplaceholder.typicode.com/todos/1', {
+      params: {
+        day: d,
+        month: m
+      }
+    })
       .pipe(
         map((response) => {
           return {
@@ -23,22 +28,22 @@ export class HttpService {
 
   getMasterData(): Observable<MasterData[]> {
     return this.http.get<MasterData[]>('https://jsonplaceholder.typicode.com/todos/1')
-    .pipe(
-      map(
-        (response)=>{
-          return [{
-            name: 'Anastasiya',
-            services: ['manikur','pedikur'],
-            id: '1'
-          },
-          {
-            name: 'Lena',
-            services: ['manikur'],
-            id: '2'
+      .pipe(
+        map(
+          (response) => {
+            return [{
+              name: 'Anastasiya',
+              services: ['manikur', 'pedikur'],
+              id: '1'
+            },
+            {
+              name: 'Lena',
+              services: ['manikur'],
+              id: '2'
+            }
+            ]
           }
-        ]
-        }
+        )
       )
-    )
   }
 }
