@@ -10,19 +10,42 @@ import { StudioData } from '../interfaces/studio-data';
 export class HttpService {
 
   constructor(private http: HttpClient) { }
-  getCalendarData(d: number, m: number): Observable<StudioData> {
-    return this.http.get<StudioData>('https://jsonplaceholder.typicode.com/todos/1', {
+  getCalendarData(
+    d: number,
+    m: number,
+    id: number,
+    procedure: Array<string>
+  ): Observable<StudioData[]> {
+    return this.http.get<StudioData[]>('https://jsonplaceholder.typicode.com/todos/1', {
       params: {
         day: d,
-        month: m
+        month: m,
+        masterId: id,
+        procedure: procedure
       }
     })
       .pipe(
         map((response) => {
-          return {
+          return [{
+            masterName: 'Anastasiya',
+            masterId: '1',
             arrayOfFreeTimes: [10, 12, 14, 16, 18],
-            maxLoad: 5
-          }
+            price: 50,
+            procedureDuration: {
+              hour: 1,
+              minute: 30
+            }
+          },
+          {
+            masterName: 'Lena',
+            masterId: '2',
+            arrayOfFreeTimes: [10, 12, 16, 18],
+            price: 40,
+            procedureDuration: {
+              hour: 2,
+              minute: 0
+            }
+          }]
         }))
   }
 

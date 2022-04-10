@@ -12,21 +12,12 @@ import { StudioData } from 'src/app/interfaces/studio-data';
 })
 export class CalendarComponent implements OnInit {
   @Input() customHeader: any
-  @Input() calendarValues: CalendarData = {
-    date: new Date,
-    month: 0,
-    day: 0,
-    array: []
-  }
-  @Input() studioData: StudioData = {
-    maxLoad: 0,
-    arrayOfFreeTimes: []
-  }
+  @Input() date: Date = new Date
   @Input() selected: Date | null  = null
   @Output() selectedChange: EventEmitter<Date> = new EventEmitter
-  date: Date = new Date(2022, 2, 20)
   date2: Date = new Date(2022, 2, 10)
-  date3: Date = new Date(2022, 2, 6)
+  date3: Date = new Date(2022, 3, 8)
+  date4: Date = new Date(2022, 4, 30)
   constructor() { }
   ngOnInit(): void { }
   disableDate = (d: Date): boolean => {

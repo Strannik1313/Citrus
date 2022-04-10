@@ -14,6 +14,10 @@ export class ButtonStatusService {
     masterId: '',
     services: [],
     date: '',
+    time: {
+      hour: '',
+      minute: ''
+    },
     name: '',
     surname: '',
     phoneNumber: '',

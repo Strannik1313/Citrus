@@ -24,6 +24,10 @@ export class StorageService {
     masterId: '',
     services: [],
     date: '',
+    time: {
+      hour: '',
+      minute: ''
+    },
     name: '',
     surname: '',
     phoneNumber: '',
@@ -129,6 +133,18 @@ export class StorageService {
         }else {
           this.disableButton()
         }
+        break
+      }
+      case 'calendar': {
+        this.clientData.next({
+          ...this.clientData.value,
+          ...this.clientData.value.time,
+          time: action.value,
+          masterId: action.id,
+          
+        })
+        console.log(this.clientData)
+        this.activateButton()
         break
       }
     }

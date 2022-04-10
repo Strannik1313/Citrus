@@ -25,6 +25,10 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
     masterId: '',
     services: [],
     date: '',
+    time: {
+      hour: '',
+      minute: ''
+    },
     name: '',
     surname: '',
     phoneNumber: '',

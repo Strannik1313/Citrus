@@ -16,8 +16,12 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   public clientData: ClientData = {
     master: '',
     masterId: '',
-    services: [''],
+    services: [],
     date: '',
+    time: {
+      hour: '',
+      minute: ''
+    },
     name: '',
     surname: '',
     phoneNumber: '',

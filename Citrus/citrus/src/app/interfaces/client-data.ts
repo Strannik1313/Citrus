@@ -3,6 +3,10 @@ export interface ClientData {
     masterId: string,
     services: string[],
     date: string,
+    time: {
+        hour: '',
+        minute: ''
+    }
     name: string,
     surname: string,
     phoneNumber: string,

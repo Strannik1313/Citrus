@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CalendarData } from 'src/app/interfaces/calendar-data';
+import { ChoisenTime } from 'src/app/interfaces/choisen-time';
+import { ClientData } from 'src/app/interfaces/client-data';
 import { StudioData } from 'src/app/interfaces/studio-data';
 
 @Component({
@@ -9,24 +10,36 @@ import { StudioData } from 'src/app/interfaces/studio-data';
 })
 export class DateChoiceLayoutComponent implements OnInit {
   @Input() customHeader: any
-  @Input() masterName: string = ''
+  @Input() showCard: boolean = false
   @Input() selected: Date | null = null
-  @Input() calendarValues: CalendarData = {
-    date: new Date,
-    month: 0,
-    day: 0,
-    array: []
+  @Input() clientData: ClientData = {
+    master: '',
+    masterId: '',
+    services: [],
+    date: '',
+    time: {
+      hour: '',
+      minute: ''
+    },
+    name: '',
+    surname: '',
+    phoneNumber: '',
+    comments: ''
   }
-  @Input() studioData: StudioData = {
-    maxLoad: 0,
-    arrayOfFreeTimes: []
-  }
+  @Input() studioData: StudioData[] = []
   @Output() dateWasSelected: EventEmitter<Date> = new EventEmitter
+  @Output() timeWasSelected: EventEmitter<ChoisenTime> = new EventEmitter
   constructor() { }
 
   ngOnInit(): void {
   }
   dateSelected(e: any): void {
     this.dateWasSelected.emit(e)
+  }
+  timeIsChoisen(time: number, masterId: string): void {
+    this.timeWasSelected.emit({
+      time,
+      masterId
+    })
   }
 }

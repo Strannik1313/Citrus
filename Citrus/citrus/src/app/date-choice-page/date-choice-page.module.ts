@@ -10,6 +10,8 @@ import { CustomDateAdapter } from '../CustomDateAdapter';
 import { AppButtonModule } from '../shared/app-button-wrapper/app-button/app-button.module';
 import { CustomCalendarHeader } from './date-choice-wrapper/date-choice-layout/custom-calendar-header/custom-calendar-header.component';
 import { DateChoiceWrapperComponent } from './date-choice-wrapper/date-choice-wrapper.component';
+import { MatButtonModule } from '@angular/material/button';
+import { ColonPipe } from '../pipes/colon.pipe';
 
 
 @NgModule({
@@ -18,10 +20,12 @@ import { DateChoiceWrapperComponent } from './date-choice-wrapper/date-choice-wr
     CalendarComponent,
     CustomCalendarHeader,
     DateChoiceWrapperComponent,
+    ColonPipe
   ],
   imports: [
     CommonModule,
     AppButtonModule,
+    MatButtonModule,
     MatDatepickerModule,
     MatCardModule,
     MatNativeDateModule,

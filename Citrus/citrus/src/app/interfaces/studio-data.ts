@@ -1,4 +1,10 @@
 export interface StudioData {
+    masterName: string,
+    masterId: string,
     arrayOfFreeTimes: Array<number>,
-    maxLoad: number
+    price: number,
+    procedureDuration: {
+        hour: number,
+        minute: number
+    }
 }
