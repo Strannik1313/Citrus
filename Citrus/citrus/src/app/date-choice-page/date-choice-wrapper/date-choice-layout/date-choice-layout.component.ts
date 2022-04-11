@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ChoisenTime } from 'src/app/interfaces/choisen-time';
 import { ClientData } from 'src/app/interfaces/client-data';
 import { StudioData } from 'src/app/interfaces/studio-data';
@@ -6,20 +6,22 @@ import { StudioData } from 'src/app/interfaces/studio-data';
 @Component({
   selector: 'app-date-choice-layout',
   templateUrl: './date-choice-layout.component.html',
-  styleUrls: ['./date-choice-layout.component.scss']
+  styleUrls: ['./date-choice-layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateChoiceLayoutComponent implements OnInit {
   @Input() customHeader: any
   @Input() showCard: boolean = false
   @Input() selected: Date | null = null
+  @Input() selectedTime: boolean = false
   @Input() clientData: ClientData = {
     master: '',
     masterId: '',
     services: [],
-    date: '',
+    date: new Date,
     time: {
-      hour: '',
-      minute: ''
+      hour: 0,
+      minute: 0
     },
     name: '',
     surname: '',
@@ -32,14 +34,22 @@ export class DateChoiceLayoutComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    if (this.showCard) {
+      this.selected != null? this.dateWasSelected.emit(this.selected): null
+    }
   }
   dateSelected(e: any): void {
     this.dateWasSelected.emit(e)
   }
-  timeIsChoisen(time: number, masterId: string): void {
+  timeIsChoisen(
+    time: number,
+    masterId: string,
+    masterName: string
+  ): void {
     this.timeWasSelected.emit({
       time,
-      masterId
+      masterId,
+      masterName
     })
   }
 }

@@ -24,10 +24,10 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
     master: '',
     masterId: '',
     services: [],
-    date: '',
+    date: new Date,
     time: {
-      hour: '',
-      minute: ''
+      hour: 0,
+      minute: 0
     },
     name: '',
     surname: '',
@@ -76,8 +76,8 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
         name: 'services',
         value: []
       })
-      this.subscriptionShouldClientDataBeSaved.unsubscribe()
     }
+    this.subscriptionShouldClientDataBeSaved.unsubscribe()
     this.subscriptionClientData.unsubscribe()
     this.subscriptionMasterData.unsubscribe()
   }

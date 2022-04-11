@@ -12,10 +12,13 @@
       <mat-card-subtitle>{{card.price | currency: 'BYN': 'code'}}</mat-card-subtitle>
       <mat-card-subtitle>{{card.procedureDuration.hour}} час {{card.procedureDuration.minute}} минут</mat-card-subtitle>
     </mat-card-header>
-    
     <mat-card-actions>
       <div class="buttonOfTimes" *ngFor="let item of card.arrayOfFreeTimes">
-        <button mat-button (click)="timeIsChoisen(item, card.masterId)" >{{item | number: '2.2-2' | colon}}</button>
+        <button [disabled]="selectedTime" mat-button color="primary" (click)="timeIsChoisen(item, card.masterId, card.masterName)" >{{item | number: '2.2-2' | colon}}</button>
+        <!-- <ng-template #selectedButton>
+          <button mat-raised-button color="primary"(click)="timeIsChoisen(item, card.masterId, card.masterName)" >{{item | number: '2.2-2' | colon}}</button>
+        </ng-template> -->
+        
       </div>
     </mat-card-actions>
   </mat-card>

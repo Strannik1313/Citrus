@@ -29,7 +29,7 @@ export class HttpService {
           return [{
             masterName: 'Anastasiya',
             masterId: '1',
-            arrayOfFreeTimes: [10, 12, 14, 16, 18],
+            arrayOfFreeTimes: [10.30, 12, 14, 16, 18],
             price: 50,
             procedureDuration: {
               hour: 1,

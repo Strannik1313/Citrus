@@ -1,18 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ConfirmLayoutComponent } from './confirm-layout/confirm-layout.component';
+import { ConfirmLayoutComponent } from './confirm-page-wrapper/confirm-layout/confirm-layout.component';
 import { RouterModule } from '@angular/router';
+import { ConfirmPageWrapperComponent } from './confirm-page-wrapper/confirm-page-wrapper.component';
 
 
 
 @NgModule({
   declarations: [
-    ConfirmLayoutComponent
+    ConfirmLayoutComponent,
+    ConfirmPageWrapperComponent
   ],
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: '', component: ConfirmLayoutComponent }
+      { path: '', component: ConfirmPageWrapperComponent }
     ])
   ]
 })

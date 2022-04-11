@@ -2,10 +2,10 @@ export interface ClientData {
     master: string,
     masterId: string,
     services: string[],
-    date: string,
+    date: Date,
     time: {
-        hour: '',
-        minute: ''
+        hour: number,
+        minute: number
     }
     name: string,
     surname: string,

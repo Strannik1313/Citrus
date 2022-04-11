@@ -1,8 +1,4 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DateRange } from '@angular/material/datepicker';
-import { CalendarData } from 'src/app/interfaces/calendar-data';
-import { StudioData } from 'src/app/interfaces/studio-data';
-
 
 @Component({
   selector: 'app-calendar',
