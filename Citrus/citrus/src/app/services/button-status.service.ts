@@ -11,7 +11,7 @@ export class ButtonStatusService {
   private subscription: Subscription = new Subscription
   private clientData: ClientData = {
     master: '',
-    masterId: '',
+    masterId: 0,
     services: [],
     date: new Date,
     time: {
@@ -61,7 +61,11 @@ export class ButtonStatusService {
         break
       }
       case '/date-choice': {
-        this.storage.disableButton()
+        if (this.clientData.master == '') {
+          this.storage.disableButton()
+        } else {
+          this.storage.activateButton()
+        }
         break
       }
     }

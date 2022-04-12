@@ -12,7 +12,7 @@ export class ConfirmPageWrapperComponent implements OnInit, OnDestroy {
   subscriptionClientData: Subscription
   clientData: ClientData = {
     master: '',
-    masterId: '',
+    masterId: 0,
     services: [],
     date: new Date,
     time: {

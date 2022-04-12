@@ -12,10 +12,10 @@ export class SpecChoiceLayoutComponent implements OnInit{
   @Input() masterData: MasterData[] = [{
     name: '',
     services: [''],
-    id: ''
+    id: 0
   }]
   @Input() isInitialize: boolean = false
-  @Input() selectedOption: string = ''
+  @Input() selectedOption: number = 0
   @Output() selectedItems: EventEmitter<MatSelectionListChange> = new EventEmitter
 
   constructor() { }

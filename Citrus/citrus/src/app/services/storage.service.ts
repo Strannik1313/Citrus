@@ -21,7 +21,7 @@ export class StorageService {
   })
   private clientData: BehaviorSubject<ClientData> = new BehaviorSubject<ClientData>({
     master: '',
-    masterId: '',
+    masterId: 0,
     services: [],
     date: new Date,
     time: {
@@ -146,7 +146,11 @@ export class StorageService {
             minute: action.minute
           }
         })
-        this.activateButton()
+        if (action.masterName){
+          this.activateButton()
+        }else {
+          this.disableButton()
+        }
         break
       }
     }

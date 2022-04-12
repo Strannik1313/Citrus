@@ -15,7 +15,7 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   public masterData: MasterData[] = []
   public clientData: ClientData = {
     master: '',
-    masterId: '',
+    masterId: 0,
     services: [],
     date: new Date,
     time: {
@@ -31,7 +31,7 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   subscriptionMasterData: Subscription
   subscriptionClientData: Subscription
   subscriptionShouldClientDataBeSaved: Subscription
-  selectedOption: string = ''
+  selectedOption: number = 0
   isInitialize: boolean = false
   constructor(
     private http: HttpService,

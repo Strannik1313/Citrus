@@ -1,6 +1,6 @@
 export interface StudioData {
     masterName: string,
-    masterId: string,
+    masterId: number,
     arrayOfFreeTimes: Array<number>,
     price: number,
     procedureDuration: {

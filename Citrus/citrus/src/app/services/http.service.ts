@@ -28,7 +28,7 @@ export class HttpService {
         map((response) => {
           return [{
             masterName: 'Anastasiya',
-            masterId: '1',
+            masterId: 1,
             arrayOfFreeTimes: [10.30, 12, 14, 16, 18],
             price: 50,
             procedureDuration: {
@@ -38,7 +38,7 @@ export class HttpService {
           },
           {
             masterName: 'Lena',
-            masterId: '2',
+            masterId: 2,
             arrayOfFreeTimes: [10, 12, 16, 18],
             price: 40,
             procedureDuration: {
@@ -57,12 +57,12 @@ export class HttpService {
             return [{
               name: 'Anastasiya',
               services: ['manikur', 'pedikur'],
-              id: '1'
+              id: 1
             },
             {
               name: 'Lena',
               services: ['manikur'],
-              id: '2'
+              id: 2
             }
             ]
           }

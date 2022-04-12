@@ -1,6 +1,6 @@
 export interface ClientData {
     master: string,
-    masterId: string,
+    masterId: number,
     services: string[],
     date: Date,
     time: {

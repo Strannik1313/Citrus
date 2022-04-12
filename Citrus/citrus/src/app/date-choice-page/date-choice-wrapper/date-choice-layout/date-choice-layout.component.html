@@ -1,8 +1,4 @@
-<app-calendar
-    [customHeader]="customHeader"
-    (selectedChange)="dateSelected($event)"
-    [selected]="selected"
->
+<app-calendar [customHeader]="customHeader" (selectedChange)="dateSelected($event)" [selected]="selected">
 </app-calendar>
 <div *ngIf="showCard" class="matCardContainer">
   <mat-card *ngFor="let card of studioData" class="example-card">
@@ -14,17 +10,16 @@
     </mat-card-header>
     <mat-card-actions>
       <div class="buttonOfTimes" *ngFor="let item of card.arrayOfFreeTimes">
-        <button [disabled]="selectedTime" mat-button color="primary" (click)="timeIsChoisen(item, card.masterId, card.masterName)" >{{item | number: '2.2-2' | colon}}</button>
-        <!-- <ng-template #selectedButton>
-          <button mat-raised-button color="primary"(click)="timeIsChoisen(item, card.masterId, card.masterName)" >{{item | number: '2.2-2' | colon}}</button>
-        </ng-template> -->
-        
+        <button *ngIf="item==selectedTime && card.masterId==selectedCard; else selectedButton" mat-raised-button
+          color="primary" (click)="timeIsChoisen(item, card.masterId, card.masterName)">{{item
+          | number: '2.2-2' | colon}}</button>
+        <ng-template #selectedButton>
+          <button mat-button color="primary" (click)="timeIsChoisen(item, card.masterId, card.masterName)">{{item |
+            number: '2.2-2' | colon}}</button>
+        </ng-template>
       </div>
     </mat-card-actions>
   </mat-card>
 </div>
 
-<app-app-button-wrapper 
-    [label]="'Продолжить'" 
-    [url]="'/confirm-page'"
-></app-app-button-wrapper>
+<app-app-button-wrapper [label]="'Продолжить'" [url]="'/confirm-page'"></app-app-button-wrapper>

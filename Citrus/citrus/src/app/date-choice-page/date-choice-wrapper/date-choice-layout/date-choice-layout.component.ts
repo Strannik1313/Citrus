@@ -13,10 +13,11 @@ export class DateChoiceLayoutComponent implements OnInit {
   @Input() customHeader: any
   @Input() showCard: boolean = false
   @Input() selected: Date | null = null
-  @Input() selectedTime: boolean = false
+  @Input() selectedTime: number = 0
+  @Input() selectedCard: number = 0
   @Input() clientData: ClientData = {
     master: '',
-    masterId: '',
+    masterId: 0,
     services: [],
     date: new Date,
     time: {
@@ -43,7 +44,7 @@ export class DateChoiceLayoutComponent implements OnInit {
   }
   timeIsChoisen(
     time: number,
-    masterId: string,
+    masterId: number,
     masterName: string
   ): void {
     this.timeWasSelected.emit({

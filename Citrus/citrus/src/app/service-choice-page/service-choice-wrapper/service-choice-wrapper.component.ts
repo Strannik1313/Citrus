@@ -18,11 +18,11 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
   masterData: MasterData[] = [{
     name: '',
     services: [],
-    id: ''
+    id: 0
   }]
   clientData: ClientData = {
     master: '',
-    masterId: '',
+    masterId: 0,
     services: [],
     date: new Date,
     time: {

@@ -17,7 +17,8 @@ import { CustomCalendarHeader } from './date-choice-layout/custom-calendar-heade
 export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
   selected: Date | null = null
   showCard: boolean = false
-  selectedTime: boolean = false
+  selectedTime: number = 0
+  selectedCard: number = 0
   shouldClientDataBeSaved: boolean = false
   subscriptionCalendar: Subscription = new Subscription
   subscriptionClientData: Subscription = new Subscription
@@ -25,7 +26,7 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
   customHeader = CustomCalendarHeader
   clientData: ClientData = {
     master: '',
-    masterId: '',
+    masterId: 0,
     services: [],
     date: new Date,
     time: {
@@ -52,6 +53,8 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
     if (this.clientData.time.hour != 0) {
       this.selected = this.clientData.date
       this.showCard = true
+      this.selectedTime = this.clientData.time.hour
+      this.selectedCard = this.clientData.masterId
     }
   }
   ngOnDestroy(): void {
@@ -78,10 +81,10 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
       masterName: e.masterName,
       date: this.selected
     })
-    this.selectedTime = true
+    this.selectedTime = e.time
+    this.selectedCard = e.masterId
   }
   dateWasSelected(e: Date): void {
-
     this.subscriptionCalendar = this.http.getCalendarData(
       e.getDate(),
       e.getMonth(),
@@ -90,6 +93,7 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
     )
       .subscribe((response) => {
         this.studioData = []
+        // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         if (this.clientData.masterId) {
           for (let i = 0; i < response.length; i++) {
             if (response[i].masterId == this.clientData.masterId) {
