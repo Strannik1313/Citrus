@@ -1,6 +1,7 @@
 export interface ClientData {
     master: string,
     masterId: number,
+    masterWasSelected: boolean,
     services: string[],
     date: Date,
     time: {

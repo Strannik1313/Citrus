@@ -27,6 +27,7 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
   clientData: ClientData = {
     master: '',
     masterId: 0,
+    masterWasSelected: false,
     services: [],
     date: new Date,
     time: {
@@ -59,14 +60,25 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     if (!this.shouldClientDataBeSaved) {
-      this.storage.setClientData({
-        name: 'calendar',
-        hour: 0,
-        minute: 0,
-        id: 0,
-        masterName: '',
-        date: null
-      })
+      if (this.clientData.masterWasSelected) {
+        this.storage.setClientData({
+          name: 'calendar',
+          hour: 0,
+          minute: 0,
+          id: this.clientData.masterId,
+          masterName: this.clientData.master,
+          date: null
+        })
+      } else {
+        this.storage.setClientData({
+          name: 'calendar',
+          hour: 0,
+          minute: 0,
+          id: 0,
+          masterName: '',
+          date: null
+        })
+      }
     }
     this.subscriptionShouldClientDataBeSaved.unsubscribe()
     this.subscriptionCalendar.unsubscribe()
@@ -94,17 +106,16 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
       .subscribe((response) => {
         this.studioData = []
         // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-        if (this.clientData.masterId) {
+        if (this.clientData.masterWasSelected) {
           for (let i = 0; i < response.length; i++) {
             if (response[i].masterId == this.clientData.masterId) {
               this.studioData.push(response[i])
             }
           }
         } else {
-          if (this.clientData.services.length > 0) {
-            this.studioData = response
-          }
+          this.studioData = response
         }
+
 
         this.selected = e
         this.showCard = true

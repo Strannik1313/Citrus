@@ -18,6 +18,7 @@ export class DateChoiceLayoutComponent implements OnInit {
   @Input() clientData: ClientData = {
     master: '',
     masterId: 0,
+    masterWasSelected: false,
     services: [],
     date: new Date,
     time: {

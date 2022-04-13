@@ -23,6 +23,7 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
   clientData: ClientData = {
     master: '',
     masterId: 0,
+    masterWasSelected: false,
     services: [],
     date: new Date,
     time: {
@@ -43,7 +44,7 @@ export class ServiceChoiceWrapperComponent implements OnInit, OnDestroy {
   ) {
     this.subscriptionClientData = this.storage.clientData$.subscribe(data => this.clientData = data)
     this.subscriptionMasterData = this.http.getMasterData().subscribe((data) => {
-      if (this.clientData.masterId) {
+      if (this.clientData.masterWasSelected) {
         this.masterData = data.filter((m) => {
           return m.id == this.clientData.masterId
         })

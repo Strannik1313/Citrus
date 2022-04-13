@@ -12,6 +12,7 @@ export class ButtonStatusService {
   private clientData: ClientData = {
     master: '',
     masterId: 0,
+    masterWasSelected: false,
     services: [],
     date: new Date,
     time: {
@@ -61,7 +62,7 @@ export class ButtonStatusService {
         break
       }
       case '/date-choice': {
-        if (this.clientData.master == '') {
+        if (this.clientData.time.hour == 0) {
           this.storage.disableButton()
         } else {
           this.storage.activateButton()

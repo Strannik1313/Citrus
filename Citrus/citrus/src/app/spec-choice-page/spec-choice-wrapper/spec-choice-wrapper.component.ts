@@ -16,6 +16,7 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   public clientData: ClientData = {
     master: '',
     masterId: 0,
+    masterWasSelected: false,
     services: [],
     date: new Date,
     time: {
@@ -60,7 +61,8 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
       this.storage.setClientData({
         name: 'master',
         value: '',
-        id: ''
+        id: '',
+        masterChoiceToogle: false
       })
     }
     this.subscriptionMasterData.unsubscribe()
@@ -71,7 +73,8 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
     this.storage.setClientData({
       name: 'master',
       value: e.source.selectedOptions.selected[0].value.name,
-      id: e.source.selectedOptions.selected[0].value.id
+      id: e.source.selectedOptions.selected[0].value.id,
+      masterChoiceToogle: true
     })
   }
 }

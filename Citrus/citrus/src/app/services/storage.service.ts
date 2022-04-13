@@ -22,6 +22,7 @@ export class StorageService {
   private clientData: BehaviorSubject<ClientData> = new BehaviorSubject<ClientData>({
     master: '',
     masterId: 0,
+    masterWasSelected: false,
     services: [],
     date: new Date,
     time: {
@@ -118,7 +119,8 @@ export class StorageService {
         this.clientData.next({
           ...this.clientData.value,
           master: action.value,
-          masterId: action.id
+          masterId: action.id,
+          masterWasSelected: action.masterChoiceToogle
         })
         this.activateButton()
         break
@@ -136,6 +138,7 @@ export class StorageService {
         break
       }
       case 'calendar': {
+        debugger
         this.clientData.next({
           ...this.clientData.value,
           masterId: action.id,

@@ -13,6 +13,7 @@ export class ConfirmPageWrapperComponent implements OnInit, OnDestroy {
   clientData: ClientData = {
     master: '',
     masterId: 0,
+    masterWasSelected: false,
     services: [],
     date: new Date,
     time: {
