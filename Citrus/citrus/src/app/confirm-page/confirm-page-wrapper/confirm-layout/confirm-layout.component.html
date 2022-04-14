@@ -1,1 +1,39 @@
-<p>confirm-layout works!</p>
+<form class="example-form" [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
+    <mat-form-field class="input-master-name" appearance="fill">
+        <mat-label>Имя мастера</mat-label>
+        <input matInput value="clientData.master" formControlName="masterName">
+    </mat-form-field>
+    <mat-form-field class="input-services" appearance="fill">
+        <mat-label>Выбранные услуги</mat-label>
+        <!-- nado sdelat pipe kotoryj mapit massiv v stroku -->
+        <input matInput value="clientData.services" formControlName="services">
+    </mat-form-field>
+    <mat-form-field class="input-date" appearance="fill">
+        <mat-label>Дата и время записи</mat-label>
+        <!-- Sdelat pipe dlya dat i vremeni => v stroku -->
+        <input matInput value="clientData.date" formControlName="date">
+    </mat-form-field>
+    <mat-form-field class="input-client-name" appearance="fill">
+        <mat-label>Введите Ваше имя</mat-label>
+        <input matInput formControlName="clientName" required>
+        <mat-error *ngIf="submitForm.controls['clientName'].invalid">{{getErrorMessage('clientName')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="input-client-lastname" appearance="fill">
+        <mat-label>Введите Вашу фамилию</mat-label>
+        <input matInput formControlName="clientLastname" required>
+        <mat-error *ngIf="submitForm.controls['clientLastname'].invalid">{{getErrorMessage('clientLastname')}}</mat-error>
+    </mat-form-field>
+    <!-- sdelat pipe dlya nomera telefona, chtoby byl kod+skobky -->
+    <mat-form-field class="input-client-phone-number" appearance="fill">
+        <mat-label>введите номер телефона</mat-label>
+        <input matInput formControlName="phoneNumber" required>
+        <mat-error *ngIf="submitForm.controls['phoneNumber'].invalid">{{getErrorMessage('phoneNumber')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field class="textarea-comments" appearance="fill">
+        <mat-label>Комментарии</mat-label>
+        <textarea matInput></textarea>
+    </mat-form-field>
+    <button class="btn btn-default" [disabled]="submitForm.invalid">
+        Записаться
+      </button>
+</form>

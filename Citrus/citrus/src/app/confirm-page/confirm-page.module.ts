@@ -3,6 +3,9 @@ import { CommonModule } from '@angular/common';
 import { ConfirmLayoutComponent } from './confirm-page-wrapper/confirm-layout/confirm-layout.component';
 import { RouterModule } from '@angular/router';
 import { ConfirmPageWrapperComponent } from './confirm-page-wrapper/confirm-page-wrapper.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -13,6 +16,9 @@ import { ConfirmPageWrapperComponent } from './confirm-page-wrapper/confirm-page
   ],
   imports: [
     CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       { path: '', component: ConfirmPageWrapperComponent }
     ])

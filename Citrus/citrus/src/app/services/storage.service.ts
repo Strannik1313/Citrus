@@ -138,7 +138,6 @@ export class StorageService {
         break
       }
       case 'calendar': {
-        debugger
         this.clientData.next({
           ...this.clientData.value,
           masterId: action.id,
