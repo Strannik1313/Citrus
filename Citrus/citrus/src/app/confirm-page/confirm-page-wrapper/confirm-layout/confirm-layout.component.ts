@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ClientData } from 'src/app/interfaces/client-data';
 
@@ -10,7 +10,7 @@ import { ClientData } from 'src/app/interfaces/client-data';
 })
 export class ConfirmLayoutComponent implements OnInit {
   @Input() clientData: ClientData = {
-    master: '13',
+    master: '',
     masterId: 0,
     masterWasSelected: false,
     services: [],
@@ -24,20 +24,19 @@ export class ConfirmLayoutComponent implements OnInit {
     phoneNumber: '',
     comments: ''
   }
+  // @Output() formValue: EventEmitter = new EventEmitter
   submitForm: FormGroup
   constructor() {
     this.submitForm = new FormGroup({
-      'masterName': new FormControl(''),
-      'services': new FormControl(''),
-      'date': new FormControl(''),
       'clientName': new FormControl('', [Validators.required]),
-      'clientLastname': new FormControl('', [Validators.required, Validators.minLength(5)]),
+      'clientLastname': new FormControl('', [Validators.required]),
       'phoneNumber': new FormControl('', [Validators.required, Validators.pattern("[0-9 ]{9}")]),
-      'comments': new FormControl('', [Validators.required, Validators.minLength(5)]),
+      'comments': new FormControl(''),
     });
   }
 
   ngOnInit(): void {
+    console.log(this.clientData)
   }
   submit() {
     console.log(this.submitForm.value);
@@ -55,7 +54,8 @@ export class ConfirmLayoutComponent implements OnInit {
       }
       default: return 'SomeError'
     }
-
-
+  }
+  getValue() {
+    return `${this.clientData.time.hour}:${this.clientData.time.minute}`
   }
 }

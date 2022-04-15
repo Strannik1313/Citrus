@@ -1,39 +1,40 @@
-<form class="example-form" [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
-    <mat-form-field class="input-master-name" appearance="fill">
+<form class="submit-form" [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
+    <mat-form-field class="input-master-name" appearance="outline">
         <mat-label>Имя мастера</mat-label>
-        <input matInput value="clientData.master" formControlName="masterName">
+        <input matInput readonly="true" [value]="clientData.master">
     </mat-form-field>
-    <mat-form-field class="input-services" appearance="fill">
+    <mat-form-field class="input-services" appearance="outline">
         <mat-label>Выбранные услуги</mat-label>
-        <!-- nado sdelat pipe kotoryj mapit massiv v stroku -->
-        <input matInput value="clientData.services" formControlName="services">
+        <input matInput readonly="true" [value]="clientData.services">
     </mat-form-field>
-    <mat-form-field class="input-date" appearance="fill">
+    <mat-form-field class="input-date" appearance="outline">
         <mat-label>Дата и время записи</mat-label>
-        <!-- Sdelat pipe dlya dat i vremeni => v stroku -->
-        <input matInput value="clientData.date" formControlName="date">
+        <input matInput readonly="true" [value]="clientData.date | date: 'dd MMMM'">
+        <input matInput readonly="true" [value]="getValue()">
     </mat-form-field>
-    <mat-form-field class="input-client-name" appearance="fill">
+    <mat-form-field class="input-client-name" appearance="outline">
         <mat-label>Введите Ваше имя</mat-label>
         <input matInput formControlName="clientName" required>
         <mat-error *ngIf="submitForm.controls['clientName'].invalid">{{getErrorMessage('clientName')}}</mat-error>
     </mat-form-field>
-    <mat-form-field class="input-client-lastname" appearance="fill">
+   <mat-form-field class="input-client-lastname" appearance="outline">
         <mat-label>Введите Вашу фамилию</mat-label>
         <input matInput formControlName="clientLastname" required>
         <mat-error *ngIf="submitForm.controls['clientLastname'].invalid">{{getErrorMessage('clientLastname')}}</mat-error>
     </mat-form-field>
-    <!-- sdelat pipe dlya nomera telefona, chtoby byl kod+skobky -->
-    <mat-form-field class="input-client-phone-number" appearance="fill">
-        <mat-label>введите номер телефона</mat-label>
+     <mat-form-field class="input-client-phone-number" appearance="outline">
+        <mat-label>Введите номер телефона</mat-label>
         <input matInput formControlName="phoneNumber" required>
         <mat-error *ngIf="submitForm.controls['phoneNumber'].invalid">{{getErrorMessage('phoneNumber')}}</mat-error>
     </mat-form-field>
-    <mat-form-field class="textarea-comments" appearance="fill">
+    <mat-form-field class="textarea-comments" appearance="outline">
         <mat-label>Комментарии</mat-label>
-        <textarea matInput></textarea>
+        <textarea matInput formControlName="comments"></textarea>
     </mat-form-field>
     <button class="btn btn-default" [disabled]="submitForm.invalid">
         Записаться
       </button>
 </form>
+ <!-- nado sdelat pipe kotoryj mapit massiv v stroku -->
+ <!-- Sdelat pipe dlya dat i vremeni => v stroku -->
+  <!-- sdelat pipe dlya nomera telefona, chtoby byl kod+skobky -->
