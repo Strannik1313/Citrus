@@ -1,5 +1,5 @@
 const app = require ('./app')
-const port = process.env.PORT || 5000
-app.listen(port, () => {
-    console.log(`Server has been started on ${port}`)
+const config = require('./config')
+app.listen(config.port, () => {
+    console.log(`Server has been started on ${config.port}`)
 })
