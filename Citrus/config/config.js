@@ -12,10 +12,11 @@ const {
     PROJECT_ID,
     STORAGE_BUCKET,
     MESSAGING_SENDER_ID,
-    APP_ID
+    APP_ID,
+    JWT
 } = process.env
 
-assert(PORT, 'PORT is reuired')
+assert(PORT, 'PORT is required')
 assert(HOST, 'HOST is required')
 
 module.exports = {
@@ -29,5 +30,6 @@ module.exports = {
         storage_bucket: STORAGE_BUCKET,
         messaging_sender_id: MESSAGING_SENDER_ID,
         app_id: APP_ID
-    }
+    },
+    jwt: JWT
 }
