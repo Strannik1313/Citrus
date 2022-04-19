@@ -23,13 +23,5 @@ module.exports = {
     port: PORT,
     host: HOST,
     url: HOST_URL,
-    firebaseConfig: {
-        api_key: API_KEY,
-        auth_domain: AUTH_DOMAIN,
-        project_id: PROJECT_ID,
-        storage_bucket: STORAGE_BUCKET,
-        messaging_sender_id: MESSAGING_SENDER_ID,
-        app_id: APP_ID
-    },
     jwt: JWT
 }
