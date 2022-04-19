@@ -58,3 +58,7 @@ module.exports.register = async (req, res) => {
 
 
 }
+
+module.exports.auth = async (req, res) => {
+    
+}
