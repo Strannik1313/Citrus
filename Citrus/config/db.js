@@ -26,11 +26,7 @@
 
 const { initializeApp, cert } = require('firebase-admin/app');
 const { getFirestore } = require('firebase-admin/firestore');
-<<<<<<< HEAD
 const serviceAccount = require('./serviceAccount.json');
-=======
-const serviceAccount = require('./service-account.json');
->>>>>>> 466ea4c0195ac88dc6f1a6c7dfbb449fedba41b2
 
 initializeApp({
   credential: cert(serviceAccount)
