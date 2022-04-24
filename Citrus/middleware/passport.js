@@ -1,5 +1,6 @@
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+const errorHandler = require('../utils/errorHandler')
 const db = require('../config/db')
 const config = require('../config/config')
 const opts = {
@@ -9,18 +10,19 @@ const opts = {
 module.exports = passport => {
     passport.use(new JwtStrategy(opts, async (payload, done) => {
         try {
-            const candidate = await db.collection('users').get()
-            const equality = candidate.docs.find(d => {
-                return d.data().email == payload.email
-            })
-            if (equality!== undefined) {
-                done(null, equality)
-            } else {
-                done(null, false)
-            } 
+            await db.collection('authorizedClients').get()
+                .then(collection => {
+                    const candidate = collection.docs.find(d => {
+                        return d.data().email == payload.email
+                    })
+                    if (candidate !== undefined) {
+                        done(null, candidate.data())
+                    } else {
+                        done(null, false)
+                    }
+                })
         } catch (error) {
-            console.log(error)
+            errorHandler(res, error)
         }
-        
     }))
 }
