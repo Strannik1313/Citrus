@@ -1,0 +1,16 @@
+<p *ngFor="let item of masterData">{{item.name}}</p>
+<mat-form-field appearance="fill">
+  <mat-label>Выбор услуг</mat-label>
+  <mat-select 
+   (selectionChange)="selectIsTouched($event)"
+   [value]="preSelection"
+  >
+    <mat-option *ngFor="let item of services" [value]="item">{{item}}</mat-option>
+  </mat-select>
+</mat-form-field>
+<app-app-button-wrapper 
+    [label]="'Продолжить'" 
+    [url]="'/date-choice'"
+></app-app-button-wrapper>
+
+    

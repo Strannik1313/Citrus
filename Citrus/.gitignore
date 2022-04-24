@@ -12,6 +12,7 @@ npm-debug.log
 yarn-error.log
 /client/node_modules
 # IDEs and editors
+client/.angular
 .idea/
 .project
 .classpath

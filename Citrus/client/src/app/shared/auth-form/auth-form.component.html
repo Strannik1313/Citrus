@@ -1,0 +1,21 @@
+<div class="form-container">
+    <form [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>Введите email</mat-label>
+        <input matInput placeholder="pat@example.com" formControlName="email" required>
+        <mat-error *ngIf="submitForm.controls['email'].invalid">{{getErrorMessage('email')}}</mat-error>
+      </mat-form-field>
+      <mat-form-field class="form-item" appearance="outline">
+        <mat-label>Введите пароль</mat-label>
+        <input matInput formControlName="password" required [type]="hide ? 'password' : 'text'">
+        <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="submitForm.controls['password'].invalid">{{getErrorMessage('password')}}</mat-error>
+      </mat-form-field>
+      <button class="btn btn-default" [disabled]="submitForm.invalid || disabledForm" type="submit">
+        Отправить
+      </button>
+    </form>
+  </div>

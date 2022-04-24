@@ -1,0 +1,11 @@
+<app-account-page
+    (formValue)="setFormValue($event)"
+    [disabledForm]="disableForm(disabledForm)"
+    [authorizedClientData]="authorizedClientData"
+    [haveAccountData]="haveAccountData"
+></app-account-page>
+<button (click)="logout()">logout</button>
+<hr>
+<div>
+    <p>История посещений</p>
+</div>
