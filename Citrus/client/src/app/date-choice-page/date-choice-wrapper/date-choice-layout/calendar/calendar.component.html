@@ -1,8 +1,8 @@
 <mat-card class="demo-inline-calendar-card">
   <mat-calendar 
    [headerComponent]="customHeader"
-   [minDate]="date3" 
-   [maxDate]="date4" 
+   [minDate]="startDisabledDate" 
+   [maxDate]="endDisabledDates" 
    [dateFilter]="disableDate" 
    (selectedChange)="dateSelected($event)"
    [selected]="selected"

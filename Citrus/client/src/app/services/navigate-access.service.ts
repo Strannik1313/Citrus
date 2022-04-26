@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { AccessMap } from '../interfaces/access-map';
+import { AccessMap } from '../models/access-map';
 import { StorageService } from './storage.service';
 
 @Injectable({

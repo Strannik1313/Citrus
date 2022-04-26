@@ -2,10 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, map, Observable, of, tap } from 'rxjs';
-import { ClientData } from '../interfaces/client-data';
+import { ClientData } from '../models/client-data';
 import { MasterData } from '../interfaces/master-data';
 import { StudioData } from '../interfaces/studio-data';
 import { StorageService } from './storage.service';
+import { BlockedDate } from '../interfaces/blocked-date';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +34,11 @@ export class HttpService {
     })
   }
 
-  makeOrder(formValue: ClientData): Observable<boolean> {
+  getDisabledDates(): Observable<BlockedDate[]> {
+    return this.http.get<BlockedDate[]>('http://localhost:8080/api/disabled')
+  }
+
+  makeOrder(formValue: ClientData): Observable<{message: boolean}> {
     return this.http.post<any>('http://localhost:8080/api/order', formValue)
   }
 

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
-import { ClientData } from '../interfaces/client-data';
+import { ClientData } from '../models/client-data';
 import { StorageService } from './storage.service';
 
 @Injectable({

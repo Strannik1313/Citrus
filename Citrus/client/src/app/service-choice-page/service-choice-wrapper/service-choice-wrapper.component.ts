@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
-import { ClientData } from 'src/app/interfaces/client-data';
+import { ClientData } from 'src/app/models/client-data';
 import { MasterData } from 'src/app/interfaces/master-data';
 import { HttpService } from 'src/app/services/http.service';
 import { StorageService } from 'src/app/services/storage.service';

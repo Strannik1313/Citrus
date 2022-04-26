@@ -20,7 +20,7 @@
                 <mat-error *ngIf="submitForm.controls['phoneNumber'].invalid">{{getErrorMessage('phoneNumber')}}
                 </mat-error>
             </mat-form-field>
-            <button class="btn btn-default" [disabled]="submitForm.invalid || disabledForm" type="submit">
+            <button mat-button color="primary" class="btn btn-default" [disabled]="submitForm.invalid || disabledForm" type="submit">
                 Сохранить
             </button>
         </mat-card>

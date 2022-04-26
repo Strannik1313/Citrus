@@ -9,10 +9,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
 export class CalendarComponent implements OnInit {
   @Input() customHeader: any
   @Input() date: Date = new Date
+  @Input() startDisabledDate: Date = new Date
+  @Input() endDisabledDates: Date = new Date
   @Input() selected: Date | null  = null
   @Output() selectedChange: EventEmitter<Date> = new EventEmitter
   date2: Date = new Date(2022, 2, 10)
-  date3: Date = new Date(2022, 3, 8)
   date4: Date = new Date(2022, 4, 30)
   constructor() { }
   ngOnInit(): void { }

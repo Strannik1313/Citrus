@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ChoisenTime } from 'src/app/interfaces/choisen-time';
-import { ClientData } from 'src/app/interfaces/client-data';
+import { ClientData } from 'src/app/models/client-data';
 import { StudioData } from 'src/app/interfaces/studio-data';
 
 @Component({
@@ -11,6 +11,8 @@ import { StudioData } from 'src/app/interfaces/studio-data';
 })
 export class DateChoiceLayoutComponent implements OnInit {
   @Input() customHeader: any
+  @Input() startDisabledDate: Date = new Date
+  @Input() endDisabledDates: Date = new Date
   @Input() showCard: boolean = false
   @Input() selected: Date | null = null
   @Input() selectedTime: number = 0

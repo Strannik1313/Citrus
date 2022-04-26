@@ -8,7 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AccountPageWrapperComponent } from './account-page-wrapper/account-page-wrapper.component';
 import { AccountPageComponent } from './account-page-wrapper/account-page-layout/account-page.component';
-import {MatCardModule} from '@angular/material/card'
+import {MatCardModule} from '@angular/material/card';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
@@ -22,6 +23,7 @@ import {MatCardModule} from '@angular/material/card'
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     ReactiveFormsModule,
     MatIconModule,
     MatSnackBarModule,

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AccessMap } from '../interfaces/access-map';
-import { ClientData } from '../interfaces/client-data';
+import { AccessMap } from '../models/access-map';
+import { ClientData } from '../models/client-data';
 
 @Injectable({
   providedIn: 'root'
@@ -155,7 +155,6 @@ export class StorageService {
           phoneNumber: action.phoneNumber,
           comments: action.comments? action.comments: ''
         })
-        console.log(this.clientData.value)
         break
       }
     }

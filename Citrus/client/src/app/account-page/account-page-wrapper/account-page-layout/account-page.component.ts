@@ -1,6 +1,6 @@
 import { Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthorizedClientData } from 'src/app/interfaces/authorized-client-data';
+import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
 
 @Component({
   selector: 'app-account-page',

@@ -2,7 +2,7 @@ const db = require('../config/db')
 const errorHandler = require('../utils/errorHandler')
 
 module.exports.calendar = async (req, res) => {
-   
+
     const tempArray = []
     const tempTimesArray = []
     const mastersArray = db.collection('masters')
@@ -21,13 +21,13 @@ module.exports.calendar = async (req, res) => {
                         })
                     } else {
                         if (req.body.masterId == d.id) {
+                            
                             tempArray.push({
                                 masterName: d.data().name,
                                 masterId: d.id
                             })
                         }
                     }
-
                 })
             } catch (error) {
                 errorHandler(res, error)
@@ -41,13 +41,13 @@ module.exports.calendar = async (req, res) => {
                     if (date.getMonth() == d.data().date.toDate().getMonth() && date.getDate() == d.data().date.toDate().getDate()) {
                         if (req.body.masterId == 0) {
                             tempTimesArray.push({
-                                date: d.data().date,
+                                date: d.data().date.toDate().getHours(),
                                 masterId: d.data().masterId
                             })
                         } else {
                             if (d.data().masterId == req.body.masterId) {
                                 tempTimesArray.push({
-                                    date: d.data().date,
+                                    date: d.data().date.toDate().getHours(),
                                     masterId: d.data().masterId
                                 })
                             }
@@ -71,7 +71,7 @@ module.exports.calendar = async (req, res) => {
                             }
                         }
                     } else {
-                        if (d.id == tempArray[0].masterName) {
+                        if (d.id == tempArray[0].masterId) {
                             tempArray[0].arrayOfFreeTimes = []
                             for (y = 0; y < d.data().freeTimes.length; y++) {
                                 if (date.getMonth() == d.data().freeTimes[y].toDate().getMonth() && date.getDate() == d.data().freeTimes[y].toDate().getDate()) {
@@ -82,7 +82,13 @@ module.exports.calendar = async (req, res) => {
                     }
                     i++
                 })
-                
+                tempTimesArray.forEach(t => {
+                    for (i = 0; i < tempArray.length; i++) {
+                        if (t.masterId == tempArray[i].masterId) {
+                            tempArray[i].arrayOfFreeTimes.splice(tempArray[i].arrayOfFreeTimes.indexOf(t.date), 1)
+                        }
+                    }
+                })
             } catch (error) {
                 errorHandler(res, error)
             }
@@ -111,30 +117,8 @@ module.exports.calendar = async (req, res) => {
                 } else {
                     res.status(200).json(finalArray)
                 }
-                console.log(finalArray)
             } catch (error) {
                 errorHandler(res, error)
             }
         })
-
-
-    // const mastersArray = db.collection('masters')
-    // await mastersArray.get()
-    //     .then((data) => {
-    //         try {
-
-    //             // const array = []
-    //             // data.forEach(d => {
-    //             //     array.push({
-    //             //         ...d.data(),
-    //             //         services: d.data().services,
-    //             //         id: d.id
-    //             //     })
-    //             // })
-    //             res.status(200).json(array)
-    //         } catch (error) {
-    //             errorHandler(res, error)
-    //         }
-
-    //     })
 } 

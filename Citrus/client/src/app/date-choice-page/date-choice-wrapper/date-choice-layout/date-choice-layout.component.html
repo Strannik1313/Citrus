@@ -1,4 +1,10 @@
-<app-calendar [customHeader]="customHeader" (selectedChange)="dateSelected($event)" [selected]="selected">
+<app-calendar 
+  [customHeader]="customHeader" 
+  (selectedChange)="dateSelected($event)" 
+  [selected]="selected" 
+  [startDisabledDate]="startDisabledDate"
+  [endDisabledDates]="endDisabledDates"
+>
 </app-calendar>
 <div *ngIf="showCard" class="matCardContainer">
   <mat-card *ngFor="let card of studioData" class="example-card">

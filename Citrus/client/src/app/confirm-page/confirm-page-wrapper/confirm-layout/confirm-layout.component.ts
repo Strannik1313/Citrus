@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthorizedClientData } from 'src/app/interfaces/authorized-client-data';
-import { ClientData } from 'src/app/interfaces/client-data';
+import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
+import { ClientData } from 'src/app/models/client-data';
 
 
 export interface SubmitData {
