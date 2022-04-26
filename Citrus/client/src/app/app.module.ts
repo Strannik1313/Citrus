@@ -9,7 +9,6 @@ import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { MainPageLayoutComponent } from './mainPage/main-page-layout/main-page-layout.component';
 import { MainPageLayoutHeaderComponent } from './mainPage/header-wrapper/main-page-layout-header/main-page-layout-header.component';
-import { MainPageLayoutFooterComponent } from './mainPage/main-page-layout-footer/main-page-layout-footer.component';
 import { AppButtonModule } from './shared/app-button-wrapper/app-button.module';
 import { TokenInterceptor } from './services/token-interceptor';
 import { HeaderWrapperComponent } from './mainPage/header-wrapper/header-wrapper.component';
@@ -21,7 +20,6 @@ registerLocaleData(localeRu);
     AppComponent,
     MainPageLayoutComponent,
     MainPageLayoutHeaderComponent,
-    MainPageLayoutFooterComponent,
     HeaderWrapperComponent,
   ],
   imports: [

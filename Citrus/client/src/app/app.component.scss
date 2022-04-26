@@ -1,4 +1,33 @@
 * {
-    display: flex;
-    justify-content: center;
+    padding: 0.5rem;
+}
+body {
+    width: 1400;
+    background: #fafafa;
+    font-size: .8vw;
+}
+
+.document {
+    
+    width: calc(100% - 27.5vw);
+    margin: 0px auto;
+    border: 1px solid #ffffff;
+    background: #ffffff;
+    border-left: 1px solid rgba(0, 0, 0, .05);
+    border-right: 1px solid rgba(0, 0, 0, .05);
+    display: grid;
+    grid-template-areas:
+        "header"
+        "content";
+    grid-template-rows: 1fr 5fr;
+    grid-template-columns: 1fr;
+}
+
+.header {
+    grid-area: header;
+    margin-left: auto
+}
+
+.content {
+    grid-area: content;
 }

@@ -27,6 +27,7 @@ export class DateChoiceLayoutComponent implements OnInit {
     if (this.showCard) {
       this.selected != null? this.dateWasSelected.emit(this.selected): null
     }
+    
   }
   dateSelected(e: any): void {
     this.dateWasSelected.emit(e)

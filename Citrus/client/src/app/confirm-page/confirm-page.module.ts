@@ -7,6 +7,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
@@ -19,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
+    MatButtonModule,
     MatSnackBarModule,
     ReactiveFormsModule,
     RouterModule.forChild([

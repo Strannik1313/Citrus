@@ -60,9 +60,7 @@ export class ConfirmLayoutComponent implements OnInit {
     }
   }
   getValue() {
-    return `${this.clientData.time.hour}:${this.clientData.time.minute}`
+    return `${this.clientData.time.hour}:${this.clientData.time.minute}0`
   }
-  // formValueOutput() {
-  //   this.formValue.emit(this.submitForm.value)
-  // }
+  
 }

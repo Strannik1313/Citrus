@@ -6,7 +6,7 @@ import { AppButtonModule } from '../shared/app-button-wrapper/app-button.module'
 import { ServiceChoiceWrapperComponent } from './service-choice-wrapper/service-choice-wrapper.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import {MatCardModule} from '@angular/material/card';
 
 
 
@@ -18,6 +18,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     AppButtonModule,
+    MatCardModule,
     MatSelectModule,
     MatFormFieldModule,
     RouterModule.forChild([

@@ -31,7 +31,7 @@
         <mat-label>Комментарии</mat-label>
         <textarea matInput formControlName="comments"></textarea>
     </mat-form-field>
-    <button class="btn btn-default" [disabled]="submitForm.invalid">
+    <button mat-button color="primary" class="btn btn-default" [disabled]="submitForm.invalid">
         Записаться
       </button>
 </form>
