@@ -3,7 +3,7 @@ export class ClientData {
     masterId: number = 0
     masterWasSelected: boolean = false
     service: string = ''
-    date: Date = new Date
+    date: Date | null = null
     time: {
         hour: number,
         minute: number
