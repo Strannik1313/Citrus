@@ -1,0 +1,20 @@
+<ng-container *ngIf="!isAuthorized; else haveToken">
+    <app-app-button-wrapper 
+        [label]="'Войти'" 
+        [url]="'/login'"
+    ></app-app-button-wrapper>
+    <app-app-button-wrapper 
+        [label]="'Регистрация'" 
+        [url]="'/register'"
+    ></app-app-button-wrapper>
+</ng-container>
+<ng-template #haveToken>
+    <app-app-button-wrapper 
+    [label]="'Личный кабинет'" 
+    [url]="'/account'"
+></app-app-button-wrapper>
+</ng-template>
+<app-app-button-wrapper 
+        [label]="'Назад'" 
+        [url]="'/..'"
+></app-app-button-wrapper>
