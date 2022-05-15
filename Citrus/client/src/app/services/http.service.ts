@@ -7,6 +7,7 @@ import { MasterData } from '../interfaces/master-data';
 import { StudioData } from '../interfaces/studio-data';
 import { StorageService } from './storage.service';
 import { BlockedDate } from '../interfaces/blocked-date';
+import { NewMasterFormData } from '../models/new-master-form-data';
 
 @Injectable({
   providedIn: 'root'
@@ -37,6 +38,12 @@ export class HttpService {
   getDisabledDates(): Observable<BlockedDate[]> {
     return this.http.get<BlockedDate[]>('http://localhost:8080/api/disabled')
   }
+  getStudioServices(): Observable<string[]> {
+    return this.http.get<string[]>('http://localhost:8080/api/admin/services')
+  }
+  createNewMaster(formValue: NewMasterFormData): Observable<string[]> {
+    return this.http.post<any>('http://localhost:8080/api/admin/master', formValue)
+  }
 
   makeOrder(formValue: ClientData): Observable<{message: boolean}> {
     return this.http.post<any>('http://localhost:8080/api/order', formValue)
@@ -54,6 +61,7 @@ export class HttpService {
             localStorage.setItem('authToken', token)
             this.setToken(token)
             this.storage.setIsTokenValid(true)
+            this.storage.setIsAdmin(true)
             this.storage.setAuthorizedUserData({ ...payload })
             this.storage.setHaveAccountFormData(true)
           }
@@ -70,7 +78,10 @@ export class HttpService {
   me(): Observable<any> {
     return this.http.get<any>('http://localhost:8080/api/auth/me')
       .pipe(
-        tap(() => {
+        tap((data) => {
+          if (data.admin) {
+            this.storage.setIsAdmin(true)
+          }
           this.storage.setIsTokenValid(true)
           this.storage.setHaveAccountFormData(true)
         }),
@@ -78,6 +89,7 @@ export class HttpService {
           this.setToken('')
           localStorage.clear()
           this.storage.setIsTokenValid(false)
+          this.storage.setIsAdmin(false)
           this.storage.setHaveAccountFormData(false)
           return of()
         })

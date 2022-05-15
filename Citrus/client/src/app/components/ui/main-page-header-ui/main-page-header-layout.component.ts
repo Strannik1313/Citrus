@@ -7,7 +7,8 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class MainPageHeaderLayoutComponent implements OnInit {
 
-  @Input() isAuthorized: boolean = false
+  @Input() isAuthorized: boolean | null = false
+  @Input() isAdmin: boolean | null = false
 
   constructor() { }
 

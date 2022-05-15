@@ -9,8 +9,8 @@ import { CustomCalendarHeader } from '../../ui/date-choice-ui/custom-calendar-he
 
 @Component({
   selector: 'app-date-choice-wrapper',
-  templateUrl: './date-choice-wrapper.component.html',
-  styleUrls: ['./date-choice-wrapper.component.scss']
+  templateUrl: './date-choice-page-wrapper.component.html',
+  styleUrls: ['./date-choice-page-wrapper.component.scss']
 })
 export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
   selected: Date | null = null;
@@ -33,6 +33,7 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
       this.shouldClientDataBeSaved = data
     }));
     this.subscriptions.push(this.http.getDisabledDates().subscribe(data => {
+      console.log(data)
       if (this.clientData.masterId !== 0) {
         data.forEach(d => {
           if (d.masterId == this.clientData.masterId) {

@@ -27,6 +27,24 @@ export class NavigateAccess implements CanActivate, OnDestroy {
         }
         return this.accessMap.accountPage
       }
+      case '/admin': {
+        if (!this.accessMap.adminPage) {
+          this.route.navigate(['/']);
+        }
+        return this.accessMap.adminPage
+      }
+      case '/admin/create-master': {
+        if (!this.accessMap.adminPage) {
+          this.route.navigate(['/']);
+        }
+        return this.accessMap.adminPage
+      }
+      case '/admin/create-service': {
+        if (!this.accessMap.adminPage) {
+          this.route.navigate(['/']);
+        }
+        return this.accessMap.adminPage
+      }
       case '/register': {
         if (!this.accessMap.registerPage) {
           this.route.navigate(['/']);

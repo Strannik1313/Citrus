@@ -11,6 +11,7 @@ export class StorageService {
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   private haveAccountData: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   private isTokenValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
+  private isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   private authButtonActive: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false)
   private isClientDataShouldSaved: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
   private isBackButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true)
@@ -24,6 +25,7 @@ export class StorageService {
   buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable()
   haveAccountData$: Observable<boolean> = this.haveAccountData.asObservable()
   isTokenValid$: Observable<boolean> = this.isTokenValid.asObservable()
+  isAdmin$: Observable<boolean> = this.isAdmin.asObservable()
   authButtonActive$: Observable<boolean> = this.authButtonActive.asObservable()
   shouldClientDataSaved$: Observable<boolean> = this.isClientDataShouldSaved.asObservable()
   backButtonDisabled$: Observable<boolean> = this.isBackButtonDisabled.asObservable()
@@ -62,7 +64,8 @@ export class StorageService {
           ...this.accessMap.value,
           loginPage: true,
           registerPage: true,
-          accountPage: true
+          accountPage: true,
+          adminPage: true
         })
         break
       }
@@ -176,6 +179,10 @@ export class StorageService {
 
   setIsTokenValid(value: boolean): void {
     this.isTokenValid.next(value)
+  }
+
+  setIsAdmin(value: boolean): void {
+    this.isAdmin.next(value)
   }
 
   constructor() { }

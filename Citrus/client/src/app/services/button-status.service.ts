@@ -70,6 +70,9 @@ export class ButtonStatusService {
       case '/account':{
         return this.storage.authButtonActive$
       }
+      case '/admin':{
+        return this.storage.authButtonActive$
+      }
       default:
         return this.storage.buttonStatus$;
     }

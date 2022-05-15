@@ -9,12 +9,22 @@
     ></app-app-button-wrapper>
 </ng-container>
 <ng-template #haveToken>
-    <app-app-button-wrapper 
-    [label]="'Личный кабинет'" 
-    [url]="'/account'"
-></app-app-button-wrapper>
+    <ng-container *ngIf="!isAdmin; else admin">
+        <app-app-button-wrapper 
+        [label]="'Личный кабинет'" 
+        [url]="'/account'"
+        ></app-app-button-wrapper>
+    </ng-container>
+    <ng-template #admin>
+        <app-app-button-wrapper 
+        [label]="'Личный кабинет'" 
+        [url]="'/admin'"
+    ></app-app-button-wrapper>
+    </ng-template>
 </ng-template>
 <app-app-button-wrapper 
         [label]="'Назад'" 
         [url]="'/..'"
 ></app-app-button-wrapper>
+
+

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,7 +7,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./auth-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AuthFormComponent implements OnInit, DoCheck {
+export class AuthFormComponent implements OnInit, OnChanges {
   submitForm: FormGroup
   hide = true;
   @Input() disabledForm: boolean = false
@@ -19,13 +19,14 @@ export class AuthFormComponent implements OnInit, DoCheck {
       'password': new FormControl('', [Validators.required, Validators.minLength(5)])
     });
   }
-  ngDoCheck(): void {
-    if (this.disabledForm) {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['disabledForm'].currentValue) {
       this.submitForm.disable()
     } else {
       this.submitForm.enable()
     }
   }
+  
   submit() {
     this.submitForm.disable()
     this.formValue.emit(this.submitForm.value);

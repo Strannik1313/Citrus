@@ -11,14 +11,13 @@ module.exports.login = async (req, res) => {
                 return d.data().email == req.body.email
             })
             if (candidate !== undefined) {
-                const passwordResult = bcrypt.compareSync(req.body.password, candidate.data().password)
+                const candidateData = candidate.data()
+                const passwordResult = bcrypt.compareSync(req.body.password, candidateData.password)
                 if (passwordResult) {
-                    const token = jwt.sign({
-                        email: candidate.data().email
-                    }, config.jwt, { expiresIn: 3600 })
+                    const token = jwt.sign({ email: candidateData.email }, config.jwt, { expiresIn: 3600 })
                     res.status(200).json({
                         token: `Bearer ${token}`,
-                        payload: candidate.data()
+                        payload: candidateData
                     })
                 } else {
                     res.status(401).json({

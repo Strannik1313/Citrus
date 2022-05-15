@@ -19,8 +19,9 @@ export class AppComponent implements OnInit {
     if (potentialToken !== null) {
       this.http.setToken(potentialToken)
       this.http.me().subscribe(data => {
-        this.storage.setAuthorizedUserData(data)
-        
+        if (data) {
+          this.storage.setAuthorizedUserData(data)
+        }
       }
     )
     }

@@ -20,7 +20,7 @@ registerLocaleData(localeRu);
     AppComponent,
     MainPageLayoutComponent,
     MainPageHeaderLayoutComponent,
-    HeaderWrapperComponent,
+    HeaderWrapperComponent
   ],
   imports: [
     BrowserModule,

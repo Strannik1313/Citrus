@@ -8,22 +8,14 @@ import { StorageService } from 'src/app/services/storage.service';
   styleUrls: ['./header-wrapper.component.scss']
 })
 export class HeaderWrapperComponent implements OnInit, OnDestroy {
-  
-  subscription: Subscription
-  isAuthorized: boolean = false
-
+ 
   constructor(
-    private storage: StorageService
-  ) {
-    this.subscription = this.storage.isTokenValid$.subscribe(data => {
-      this.isAuthorized = data
-    })
-   }
+    public storage: StorageService
+  ) { }
 
   ngOnInit(): void {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe()
   }
 }

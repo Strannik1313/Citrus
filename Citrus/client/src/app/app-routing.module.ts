@@ -5,12 +5,20 @@ import { AuthGuardService } from './services/auth-guard.service';
 import { NavigateAccess } from './services/navigate-access.service';
 
 const routes: Routes = [
-  { path: '', component: MainPageLayoutComponent, pathMatch: 'full' },
+  { 
+    path: '', component: MainPageLayoutComponent, pathMatch: 'full' 
+  },
   {
     path: 'login',
     loadChildren: () => import('./modules/login-page/login-page.module')
       .then(m => m.LoginPageModule),
       canActivate: [NavigateAccess]
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./modules/admin-page/admin-page.module')
+      .then(m => m.AdminPageModule),
+      canActivate: [AuthGuardService, NavigateAccess]
   },
   {
     path: 'account',

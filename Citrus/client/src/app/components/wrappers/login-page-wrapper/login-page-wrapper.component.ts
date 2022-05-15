@@ -38,8 +38,12 @@ export class LoginPageWrapperComponent implements OnInit, OnDestroy {
     this.disableForm(true)
     this.subscriptions.push(this.http.login(e).subscribe(
       {
-        next: () => {
-          this.router.navigate(['/account'])
+        next: (data) => {
+          if (data.payload.admin) {
+            this.router.navigate(['/admin'])
+          } else {
+            this.router.navigate(['/account'])
+          }
         },
         error: (error) => {
           this.disableForm(false)
