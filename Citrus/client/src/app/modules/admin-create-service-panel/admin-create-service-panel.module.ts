@@ -15,7 +15,8 @@ import { AdminCreateServicePanelWrapperComponent } from 'src/app/components/wrap
 
 @NgModule({
   declarations: [
-    AdminCreateServicePanelWrapperComponent
+    AdminCreateServicePanelWrapperComponent,
+    
   ],
   imports: [
     CommonModule,
