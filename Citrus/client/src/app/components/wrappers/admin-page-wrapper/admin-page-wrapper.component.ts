@@ -20,4 +20,7 @@ export class AdminPageWrapperComponent implements OnInit {
   goToCreateMasterService(): void {
     this.router.navigate(['/admin/create-service'])
   }
+  goToOrderList(): void {
+    this.router.navigate(['/admin/order-list'])
+  }
 }

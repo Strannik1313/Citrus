@@ -63,7 +63,7 @@ const routes: Routes = [
     canActivate: [NavigateAccess]
   },
   {
-    path: '**', component: MainPageLayoutComponent
+    path: '**', redirectTo: ''
   }
 ];
 

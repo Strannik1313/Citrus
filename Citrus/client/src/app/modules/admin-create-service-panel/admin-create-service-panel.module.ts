@@ -4,11 +4,10 @@ import { RouterModule } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AdminCreateMasterPanelWrapperComponent } from 'src/app/components/wrappers/admin-create-panel-wrapper/admin-create-panel-wrapper.component';
-import { AdminCreateMasterPanelComponent } from 'src/app/components/ui/admin-create-panel/admin-create-panel.component';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 import { AdminCreateServicePanelWrapperComponent } from 'src/app/components/wrappers/admin-create-service-panel-wrapper/admin-create-service-panel-wrapper.component';
+import { AdminCreateServicePanelUiComponent } from 'src/app/components/ui/admin-create-service-panel-ui/admin-create-service-panel-ui.component';
 
 
 
@@ -16,17 +15,17 @@ import { AdminCreateServicePanelWrapperComponent } from 'src/app/components/wrap
 @NgModule({
   declarations: [
     AdminCreateServicePanelWrapperComponent,
-    
+    AdminCreateServicePanelUiComponent
+
   ],
   imports: [
     CommonModule,
     MatCardModule,
     MatInputModule,
-    MatListModule,
-    MatButtonModule,
     ReactiveFormsModule,
+    MatButtonModule,
     RouterModule.forChild([
-      {path: 'create-service', component: AdminCreateServicePanelWrapperComponent}
+      {path: '', component: AdminCreateServicePanelWrapperComponent}
     ])
   ],
   exports: [

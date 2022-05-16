@@ -8,8 +8,8 @@ import { HttpService } from 'src/app/services/http.service';
 
 @Component({
   selector: 'app-admin-create-master-panel-wrapper',
-  templateUrl: './admin-create-panel-wrapper.component.html',
-  styleUrls: ['./admin-create-panel-wrapper.component.scss']
+  templateUrl: './admin-create-master-panel-wrapper.component.html',
+  styleUrls: ['./admin-create-master-panel-wrapper.component.scss']
 })
 export class AdminCreateMasterPanelWrapperComponent implements OnInit, OnDestroy {
   disabledForm: boolean = false

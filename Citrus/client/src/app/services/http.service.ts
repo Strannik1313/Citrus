@@ -1,13 +1,15 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import { ClientData } from '../models/client-data';
 import { MasterData } from '../interfaces/master-data';
 import { StudioData } from '../interfaces/studio-data';
 import { StorageService } from './storage.service';
 import { BlockedDate } from '../interfaces/blocked-date';
 import { NewMasterFormData } from '../models/new-master-form-data';
+import { NewServiceData } from '../interfaces/new-service-data';
+import { OrderData } from '../models/order-data';
 
 @Injectable({
   providedIn: 'root'
@@ -38,11 +40,22 @@ export class HttpService {
   getDisabledDates(): Observable<BlockedDate[]> {
     return this.http.get<BlockedDate[]>('http://localhost:8080/api/disabled')
   }
+  getOrdersData(pageSize: number, startItem: number): Observable<OrderData[]> {
+    return this.http.get<OrderData[]>('http://localhost:8080/api/admin/orders', {
+      headers: new HttpHeaders({
+        pageSize: pageSize.toString(),
+        startItem: startItem.toString()
+      })
+    })
+  }
   getStudioServices(): Observable<string[]> {
     return this.http.get<string[]>('http://localhost:8080/api/admin/services')
   }
   createNewMaster(formValue: NewMasterFormData): Observable<string[]> {
     return this.http.post<any>('http://localhost:8080/api/admin/master', formValue)
+  }
+  createNewService(formValue: NewServiceData): Observable<string[]> {
+    return this.http.post<any>('http://localhost:8080/api/admin/service', formValue)
   }
 
   makeOrder(formValue: ClientData): Observable<{message: boolean}> {

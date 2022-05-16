@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AdminCreateMasterPanelWrapperComponent } from 'src/app/components/wrappers/admin-create-panel-wrapper/admin-create-panel-wrapper.component';
-import { AdminCreateMasterPanelComponent } from 'src/app/components/ui/admin-create-panel/admin-create-panel.component';
+import { AdminCreateMasterPanelWrapperComponent } from 'src/app/components/wrappers/admin-create-master-panel-wrapper/admin-create-master-panel-wrapper.component';
+import { AdminCreateMasterPanelComponent } from 'src/app/components/ui/admin-create-master-panel-ui/admin-create-master-panel-ui.component';
 import {MatListModule} from '@angular/material/list';
 import {MatButtonModule} from '@angular/material/button';
 
@@ -25,7 +25,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatButtonModule,
     ReactiveFormsModule,
     RouterModule.forChild([
-      {path: 'create-master', component: AdminCreateMasterPanelWrapperComponent}
+      {path: '', component: AdminCreateMasterPanelWrapperComponent}
     ])
   ],
   exports: [

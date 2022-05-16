@@ -28,7 +28,7 @@
         </ng-container>
       </mat-card>
     </ng-container>
-    <button mat-button color="primary" class="btn btn-default" [disabled]=" disabledForm"
+    <button mat-button color="primary" class="btn btn-default" [disabled]="createMasterForm.invalid || disabledForm"
       type="submit">
       Отправить
     </button>

@@ -1,0 +1,37 @@
+<mat-form-field>
+    <mat-label>Сортировать</mat-label>
+    <mat-select 
+    [disabled]="disabled"
+    (selectionChange)="onSelectionChange($event)"
+    >
+      <mat-option [value]="'all'">
+        Все записи
+      </mat-option>
+      <mat-option [value]="'futureOrders'">
+       Неоплаченные записи
+      </mat-option>
+      <mat-option [value]="'pastOrders'">
+       Оплаченные записи
+      </mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-paginator [length]="paginatorData.length"
+              [pageSize]="paginatorData.pageSize"
+              [pageSizeOptions]="[3, 5, 10]"
+              (page)="onPaginatorChanged($event)"
+              aria-label="Select page"
+              [disabled]="disabled">
+</mat-paginator>
+<mat-card>
+    <ng-container *ngFor="let order of ordersArray">
+        <mat-card class="order-card">
+        <p>Дата: {{order.date | date: 'dd MMMM'}}</p>
+        <p>Клиент: {{order.clientName}} {{order.clientSurname}}</p>
+        <p>Мастер: {{order.master}}</p>
+        <p>Услуга: {{order.service}}</p>
+        <p>Время: {{order.date | date: 'HH:mm'}}</p>
+        <p *ngIf="!!order.comments">Комментарий: {{order.comments}}</p>
+        </mat-card>
+    </ng-container>
+</mat-card>

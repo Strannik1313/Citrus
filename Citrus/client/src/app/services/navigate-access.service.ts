@@ -45,6 +45,12 @@ export class NavigateAccess implements CanActivate, OnDestroy {
         }
         return this.accessMap.adminPage
       }
+      case '/admin/order-list': {
+        if (!this.accessMap.adminPage) {
+          this.route.navigate(['/']);
+        }
+        return this.accessMap.adminPage
+      }
       case '/register': {
         if (!this.accessMap.registerPage) {
           this.route.navigate(['/']);

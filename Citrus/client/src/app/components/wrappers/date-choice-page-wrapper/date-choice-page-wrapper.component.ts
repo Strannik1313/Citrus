@@ -33,7 +33,6 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
       this.shouldClientDataBeSaved = data
     }));
     this.subscriptions.push(this.http.getDisabledDates().subscribe(data => {
-      console.log(data)
       if (this.clientData.masterId !== 0) {
         data.forEach(d => {
           if (d.masterId == this.clientData.masterId) {

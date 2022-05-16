@@ -4,9 +4,9 @@ import { MatSelectionListChange } from '@angular/material/list';
 import { PriceList } from 'src/app/models/price-list';
 
 @Component({
-  selector: 'app-admin-create-master-panel',
-  templateUrl: './admin-create-panel.component.html',
-  styleUrls: ['./admin-create-panel.component.scss'],
+  selector: 'app-admin-create-master-panel-ui',
+  templateUrl: './admin-create-master-panel-ui.component.html',
+  styleUrls: ['./admin-create-master-panel-ui.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AdminCreateMasterPanelComponent implements OnInit, OnChanges {
@@ -80,7 +80,7 @@ export class AdminCreateMasterPanelComponent implements OnInit, OnChanges {
   getErrorMessage(inputName: string) {
     switch (inputName) {
       case 'masterName': {
-        if (this.createMasterForm.controls['masterName'].hasError('masterName')) {
+        if (this.createMasterForm.controls['masterName'].hasError('required')) {
           return 'Поле обязательно для заполнения';
         }
         return this.createMasterForm.controls['masterName'].hasError('pattern') ? 'Введите корректное имя' : '';
