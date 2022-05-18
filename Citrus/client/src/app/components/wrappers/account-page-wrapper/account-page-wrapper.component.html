@@ -9,3 +9,11 @@
 <div>
     <p>История посещений</p>
 </div>
+<app-order-card
+    [ordersArray]="ordersArray"
+    [buttonConfiguration]="buttonConfiguration"
+    [disabled]="disabled"
+    [paginatorData]="paginatorData"
+    (onPaginatorClick)="onPaginatorClick($event)"
+    (onButtonClicked)="onButtonClicked($event)"
+></app-order-card>

@@ -10,6 +10,7 @@ import { AccountPageWrapperComponent } from '../../components/wrappers/account-p
 import { AccountPageComponent } from '../../components/ui/account-page-ui/account-page-layout.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
+import { OrderCardModule } from 'src/app/shared/order-card/order-card.module';
 
 
 
@@ -20,6 +21,7 @@ import {MatButtonModule} from '@angular/material/button';
   ],
   imports: [
     CommonModule,
+    OrderCardModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

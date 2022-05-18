@@ -60,7 +60,6 @@ module.exports.orders = async (req, res) => {
             try {
                 let array = []
                 let tempArray = []
-                let completedOrders = 0
                 let newCollection = []
                 collection.forEach(coll => {
                     if (!coll.data().isDoneByAdmin) {

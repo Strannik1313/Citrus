@@ -16,7 +16,7 @@
             </mat-form-field>
             <mat-form-field class="form-item" appearance="outline">
                 <mat-label>Введите Ваш номер телефона</mat-label>
-                <input matInput placeholder="+375__ ___ __ __" formControlName="phoneNumber" required>
+                <input matInput placeholder="33 333 22 11" formControlName="phoneNumber" required>
                 <mat-error *ngIf="submitForm.controls['phoneNumber'].invalid">{{getErrorMessage('phoneNumber')}}
                 </mat-error>
             </mat-form-field>

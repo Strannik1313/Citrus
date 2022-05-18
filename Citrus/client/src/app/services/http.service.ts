@@ -48,6 +48,14 @@ export class HttpService {
       })
     })
   }
+  getPersonalOrders(pageSize: number, startItem: number): Observable<OrderData[]> {
+    return this.http.get<OrderData[]>('http://localhost:8080/api/personal/orders', {
+      headers: new HttpHeaders({
+        pageSize: pageSize.toString(),
+        startItem: startItem.toString()
+      })
+    })
+  }
   getStudioServices(): Observable<string[]> {
     return this.http.get<string[]>('http://localhost:8080/api/admin/services')
   }
@@ -57,7 +65,7 @@ export class HttpService {
   createNewService(formValue: NewServiceData): Observable<string[]> {
     return this.http.post<any>('http://localhost:8080/api/admin/service', formValue)
   }
-  hideOrder(orderId: number): Observable<any> {
+  cancelOrder(orderId: number): Observable<any> {
     return this.http.delete<any>('http://localhost:8080/api/admin/orders', {
       headers: new HttpHeaders({
         orderId: orderId.toString()
@@ -65,9 +73,9 @@ export class HttpService {
     })
   }
   completeOrder(orderId: number): Observable<any> {
-    return this.http.patch<any>('http://localhost:8080/api/admin/orders', {orderId})
+    return this.http.patch<any>('http://localhost:8080/api/admin/orders', { orderId })
   }
-  makeOrder(formValue: ClientData): Observable<{message: boolean}> {
+  makeOrder(formValue: ClientData): Observable<{ message: boolean }> {
     return this.http.post<any>('http://localhost:8080/api/order', formValue)
   }
 
@@ -85,9 +93,13 @@ export class HttpService {
             this.storage.setIsTokenValid(true)
             if (payload.admin) {
               this.storage.setIsAdmin(true)
+            } else {
+              this.storage.setIsAdmin(false)
+              this.storage.setAuthorizedUserData({ ...payload })
+              this.storage.setHaveAccountFormData(true)
             }
-            this.storage.setAuthorizedUserData({ ...payload })
-            this.storage.setHaveAccountFormData(true)
+            this.storage.setRoadMap('clear')
+            this.storage.setBackButtonStatus()
           }
         )
       )
@@ -138,5 +150,7 @@ export class HttpService {
     this.storage.setIsTokenValid(false)
     this.storage.setHaveAccountFormData(false)
     this.router.navigate(['/'])
+    this.storage.setRoadMap('clear')
+    this.storage.setBackButtonStatus()
   }
 }

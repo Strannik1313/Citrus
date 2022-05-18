@@ -19,7 +19,7 @@ export class AccountPageComponent implements OnInit, DoCheck {
     this.submitForm = new FormGroup({
       'name': new FormControl('', [Validators.required, Validators.pattern("[А-ЯЁ][а-яё]{1,}")]),
       'surname': new FormControl('', [Validators.required, Validators.pattern("[А-ЯЁ][а-яё]{1,}")]),
-      'phoneNumber': new FormControl('', [Validators.required, Validators.pattern("[0-9]{1,}")])
+      'phoneNumber': new FormControl('', [Validators.required, Validators.pattern("[0-9]{9}")])
     });
   }
   ngDoCheck(): void {
@@ -38,16 +38,19 @@ export class AccountPageComponent implements OnInit, DoCheck {
     if (this.haveAccountData) {
       if (!!this.authorizedClientData.name) {
         this.submitForm.setValue({
-          name: this.authorizedClientData.name
+          ...this.submitForm.value,
+          name: this.authorizedClientData.name,
         })
       }
       if (!!this.authorizedClientData.surname) {
         this.submitForm.setValue({
+          ...this.submitForm.value,
           surname: this.authorizedClientData.surname
         })
       }
       if (!!this.authorizedClientData.phoneNumber) {
         this.submitForm.setValue({
+          ...this.submitForm.value,
           phoneNumber: this.authorizedClientData.phoneNumber
         })
       }
@@ -72,6 +75,9 @@ export class AccountPageComponent implements OnInit, DoCheck {
       case 'phoneNumber': {
         if (this.submitForm.controls['phoneNumber'].hasError('required')) {
           return 'Поле обязательно для заполнения';
+        }
+        if (this.submitForm.controls['phoneNumber'].hasError('pattern')) {
+          return 'Необходимо ввести номер телефона вместе с кодом (9 цифр)';
         }
         return this.submitForm.controls['phoneNumber'] ? 'Используйте только цифры' : '';
       }

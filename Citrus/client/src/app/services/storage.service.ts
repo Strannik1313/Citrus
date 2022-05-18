@@ -38,10 +38,16 @@ export class StorageService {
       this._tempArray.pop()
       this.roadMapSubject.next(this._tempArray)
     } else {
-      if (this._tempArray.find(a => a == newValue) == undefined) {
-        this._tempArray.push(newValue)
-        this.roadMapSubject.next(this._tempArray)
+      if (newValue == 'clear') {
+        this.roadMapSubject.next([''])
+        this._tempArray=['']
+      } else {
+        if (this._tempArray.find(a => a == newValue) == undefined) {
+          this._tempArray.push(newValue)
+          this.roadMapSubject.next(this._tempArray)
+        }
       }
+
     }
   }
   activateButton(): void {
@@ -59,16 +65,36 @@ export class StorageService {
   }
   setAccessMap(url: string): void {
     switch (url) {
-      case '/': {
-        this.accessMap.next({
-          ...this.accessMap.value,
-          loginPage: true,
-          registerPage: true,
-          accountPage: true,
-          adminPage: true
-        })
+      case '/admin': {
+        if (this.isAdmin.value) {
+          this.accessMap.next({
+            ...this.accessMap.value,
+            loginPage: true,
+            registerPage: true,
+            accountPage: false,
+            adminPage: true
+          })
+        } else {
+          this.accessMap.next({
+            ...this.accessMap.value,
+            loginPage: true,
+            registerPage: true,
+            accountPage: false,
+            adminPage: false
+          })
+        }
         break
       }
+        case '/account': {
+          this.accessMap.next({
+            ...this.accessMap.value,
+            loginPage: true,
+            registerPage: true,
+            accountPage: true,
+            adminPage: false
+          })
+          break
+        }
       case '/crossroad': {
         this.accessMap.next({
           ...this.accessMap.value,
@@ -156,7 +182,7 @@ export class StorageService {
           name: action.clientName,
           surname: action.clientSurname,
           phoneNumber: action.phoneNumber,
-          comments: action.comments? action.comments: ''
+          comments: action.comments ? action.comments : ''
         })
         break
       }
@@ -170,7 +196,7 @@ export class StorageService {
           name: action.clientName,
           surname: action.clientSurname,
           phoneNumber: action.phoneNumber,
-          comments: action.comments? action.comments: ''
+          comments: action.comments ? action.comments : ''
         })
         break
       }

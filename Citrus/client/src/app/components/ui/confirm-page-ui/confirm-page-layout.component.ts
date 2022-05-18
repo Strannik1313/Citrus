@@ -37,16 +37,19 @@ export class ConfirmLayoutComponent implements OnInit {
     if (this.haveAccountData) {
       if (!!this.authorizedClientData.name) {
         this.submitForm.setValue({
-          name: this.authorizedClientData.name
+          ...this.submitForm.value,
+          clientName: this.authorizedClientData.name
         })
       }
       if (!!this.authorizedClientData.surname) {
         this.submitForm.setValue({
-          surname: this.authorizedClientData.surname
+          ...this.submitForm.value,
+          clientLastname: this.authorizedClientData.surname
         })
       }
       if (!!this.authorizedClientData.phoneNumber) {
         this.submitForm.setValue({
+          ...this.submitForm.value,
           phoneNumber: this.authorizedClientData.phoneNumber
         })
       }

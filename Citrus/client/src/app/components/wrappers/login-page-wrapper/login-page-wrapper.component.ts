@@ -40,9 +40,9 @@ export class LoginPageWrapperComponent implements OnInit, OnDestroy {
       {
         next: (data) => {
           if (data.payload.admin) {
-            this.router.navigate(['/admin'])
+            this.router.navigate(['/'])
           } else {
-            this.router.navigate(['/account'])
+            this.router.navigate(['/'])
           }
         },
         error: (error) => {

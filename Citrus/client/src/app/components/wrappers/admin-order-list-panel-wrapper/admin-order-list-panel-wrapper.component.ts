@@ -59,7 +59,7 @@ export class AdminOrderListPanelWrapperComponent implements OnInit, OnDestroy {
   onButtonClick(e: { action: string, orderId: number }): void {
     switch (e.action) {
       case 'cancel':
-        this.subscriptions.push(this.http.hideOrder(e.orderId).subscribe({
+        this.subscriptions.push(this.http.cancelOrder(e.orderId).subscribe({
           next: (response) => {
             if (response.statusCode == 0) {
               this.getOrdersData(this.pageSize, this.startItem)
