@@ -21,6 +21,7 @@ export class ConfirmLayoutComponent implements OnInit {
   @Input() clientData: ClientData = new ClientData
   @Input() authorizedClientData: AuthorizedClientData = new AuthorizedClientData
   @Input() haveAccountData: boolean = false
+  @Input() isAdmin: boolean = false
   @Output() formValue: EventEmitter<any> = new EventEmitter
   submitForm: FormGroup
   constructor() {
@@ -34,12 +35,21 @@ export class ConfirmLayoutComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.haveAccountData) {
-      this.submitForm.setValue({
-        clientName: this.authorizedClientData.name,
-        clientLastname: this.authorizedClientData.surname,
-        phoneNumber: this.authorizedClientData.phoneNumber,
-        comments: ''
-      })
+      if (!!this.authorizedClientData.name) {
+        this.submitForm.setValue({
+          name: this.authorizedClientData.name
+        })
+      }
+      if (!!this.authorizedClientData.surname) {
+        this.submitForm.setValue({
+          surname: this.authorizedClientData.surname
+        })
+      }
+      if (!!this.authorizedClientData.phoneNumber) {
+        this.submitForm.setValue({
+          phoneNumber: this.authorizedClientData.phoneNumber
+        })
+      }
     }
   }
   submit() {

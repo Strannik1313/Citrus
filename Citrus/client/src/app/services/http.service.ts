@@ -57,7 +57,16 @@ export class HttpService {
   createNewService(formValue: NewServiceData): Observable<string[]> {
     return this.http.post<any>('http://localhost:8080/api/admin/service', formValue)
   }
-
+  hideOrder(orderId: number): Observable<any> {
+    return this.http.delete<any>('http://localhost:8080/api/admin/orders', {
+      headers: new HttpHeaders({
+        orderId: orderId.toString()
+      })
+    })
+  }
+  completeOrder(orderId: number): Observable<any> {
+    return this.http.patch<any>('http://localhost:8080/api/admin/orders', {orderId})
+  }
   makeOrder(formValue: ClientData): Observable<{message: boolean}> {
     return this.http.post<any>('http://localhost:8080/api/order', formValue)
   }
@@ -74,7 +83,9 @@ export class HttpService {
             localStorage.setItem('authToken', token)
             this.setToken(token)
             this.storage.setIsTokenValid(true)
-            this.storage.setIsAdmin(true)
+            if (payload.admin) {
+              this.storage.setIsAdmin(true)
+            }
             this.storage.setAuthorizedUserData({ ...payload })
             this.storage.setHaveAccountFormData(true)
           }

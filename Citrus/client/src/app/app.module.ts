@@ -13,7 +13,7 @@ import { AppButtonModule } from './shared/app-button-wrapper/app-button.module';
 import { TokenInterceptor } from './services/token-interceptor';
 import { HeaderWrapperComponent } from './components/wrappers/header-wrapper/header-wrapper.component';
 import { MatPaginatorIntl } from '@angular/material/paginator';
-import { MatPaginatorIntlCro } from './components/ui/main-page-ui/custom-paginators-label/CustomPaginatorsLabel';
+import { MatPaginatorIntlCro } from './components/custom-components-material-ui/custom-paginators-label/CustomPaginatorsLabel';
 
 registerLocaleData(localeRu);
 

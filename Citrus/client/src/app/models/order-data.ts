@@ -8,4 +8,6 @@ export class OrderData {
     phoneNumber: string = ''
     comments: string = ''
     quantityOfOrders: number = 0
+    orderId: number = 0
+    isDoneByAdmin: boolean = false
 }

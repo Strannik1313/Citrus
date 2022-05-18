@@ -19,7 +19,7 @@ export class AccountPageComponent implements OnInit, DoCheck {
     this.submitForm = new FormGroup({
       'name': new FormControl('', [Validators.required, Validators.pattern("[А-ЯЁ][а-яё]{1,}")]),
       'surname': new FormControl('', [Validators.required, Validators.pattern("[А-ЯЁ][а-яё]{1,}")]),
-      'phoneNumber': new FormControl('', [Validators.required,  Validators.pattern("[0-9]{1,}")])
+      'phoneNumber': new FormControl('', [Validators.required, Validators.pattern("[0-9]{1,}")])
     });
   }
   ngDoCheck(): void {
@@ -36,13 +36,23 @@ export class AccountPageComponent implements OnInit, DoCheck {
 
   ngOnInit(): void {
     if (this.haveAccountData) {
-      this.submitForm.setValue({
-        name: this.authorizedClientData.name,
-        surname: this.authorizedClientData.surname,
-        phoneNumber: this.authorizedClientData.phoneNumber
-      })
+      if (!!this.authorizedClientData.name) {
+        this.submitForm.setValue({
+          name: this.authorizedClientData.name
+        })
+      }
+      if (!!this.authorizedClientData.surname) {
+        this.submitForm.setValue({
+          surname: this.authorizedClientData.surname
+        })
+      }
+      if (!!this.authorizedClientData.phoneNumber) {
+        this.submitForm.setValue({
+          phoneNumber: this.authorizedClientData.phoneNumber
+        })
+      }
     }
-    
+
   }
 
   getErrorMessage(inputName: string) {
@@ -67,7 +77,7 @@ export class AccountPageComponent implements OnInit, DoCheck {
       }
       default: return 'Ошибка'
     }
-    
-    
+
+
   }
 }

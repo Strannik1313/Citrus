@@ -20,7 +20,8 @@ module.exports.order = async (req, res) => {
                     master: req.body.master,
                     masterId: req.body.masterId,
                     phoneNumber: req.body.phoneNumber,
-                    service: req.body.service
+                    service: req.body.service,
+                    isDoneByAdmin: false
                 })
                
                 res.status(200).json({message: true})

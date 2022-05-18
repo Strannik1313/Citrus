@@ -16,7 +16,7 @@ export class AdminOrderListPanelUiComponent implements OnInit, OnChanges {
   @Input() disabled: boolean = false
   @Input() paginatorData: PaginatorData = new PaginatorData
   @Output() onPaginatorClick: EventEmitter<PageEvent> = new EventEmitter
-  @Output() onSortTypeChoise: EventEmitter<string> = new EventEmitter
+  @Output() onButtonClicked: EventEmitter<{action: string, orderId: number}> = new EventEmitter
 
   constructor() { }
 
@@ -29,7 +29,6 @@ export class AdminOrderListPanelUiComponent implements OnInit, OnChanges {
           
         break;
         case 'disabled':
-          console.log(changes['disabled'])
         break;
       
         default:
@@ -40,8 +39,8 @@ export class AdminOrderListPanelUiComponent implements OnInit, OnChanges {
   onPaginatorChanged(e: PageEvent): void {
     this.onPaginatorClick.emit(e)
   }
-  onSelectionChange(e: MatSelectChange): void {
-    this.onSortTypeChoise.emit(e.value)
+  onButtonClick(e: {action: string, orderId: number}): void {
+    this.onButtonClicked.emit(e)
   }
 
 }

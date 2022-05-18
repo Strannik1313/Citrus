@@ -8,15 +8,49 @@ module.exports.services = async (req, res) => {
             try {
                 const array = []
                 collection.docs.forEach(d => {
-                array.push(d.id)
-               })
+                    array.push(d.id)
+                })
                 res.status(200).json(array)
             } catch (error) {
                 errorHandler(res, error)
             }
 
         })
-} 
+}
+module.exports.updateOrder = async (req, res) => {
+    const ordersArray = db.collection('orders')
+    await ordersArray.get()
+        .then(collection => {
+            try {
+                ordersArray.doc(req.headers.orderid).delete()
+                res.status(200).json({
+                    statusCode: 0,
+                    message: 'Данные успешно удалены'
+                })
+            } catch (error) {
+                errorHandler(res, error)
+            }
+
+        })
+}
+module.exports.completeOrder = async (req, res) => {
+    const ordersArray = db.collection('orders')
+    await ordersArray.get()
+        .then(collection => {
+            try {
+                ordersArray.doc(req.body.orderId).update({
+                    isDoneByAdmin: true
+                })
+                res.status(200).json({
+                    statusCode: 0,
+                    message: 'Операция прошла успешно'
+                })
+            } catch (error) {
+                errorHandler(res, error)
+            }
+
+        })
+}
 module.exports.orders = async (req, res) => {
     const ordersArray = db.collection('orders')
     const startItem = Number(req.headers.startitem)
@@ -26,13 +60,24 @@ module.exports.orders = async (req, res) => {
             try {
                 let array = []
                 let tempArray = []
-                for (let i = 1; i <= collection.docs.length; i++) {
+                let completedOrders = 0
+                let newCollection = []
+                collection.forEach(coll => {
+                    if (!coll.data().isDoneByAdmin) {
+                        newCollection.push({
+                            ...coll.data(),
+                            orderId: coll.id
+                        })
+                    }
+
+                })
+                for (let i = 1; i <= newCollection.length; i++) {
                     if (i >= req.headers.startitem && i < startItem + pageSize) {
-                        tempArray = collection.docs[i-1].data()
+                        tempArray = newCollection[i - 1]
                         tempArray = {
                             ...tempArray,
                             date: tempArray.date.toDate(),
-                            quantityOfOrders: collection.docs.length
+                            quantityOfOrders: newCollection.length
                         }
                         array.push(tempArray)
                     }
@@ -43,7 +88,7 @@ module.exports.orders = async (req, res) => {
             }
 
         })
-} 
+}
 
 module.exports.service = async (req, res) => {
     const servicesArray = db.collection('procedureDuration')
@@ -62,7 +107,7 @@ module.exports.service = async (req, res) => {
             }
 
         })
-} 
+}
 
 module.exports.master = async (req, res) => {
     const mastersArray = db.collection('masters')

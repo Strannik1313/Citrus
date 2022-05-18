@@ -160,6 +160,20 @@ export class StorageService {
         })
         break
       }
+      case 'admin': {
+        this.clientData.next({
+          ...this.clientData.value,
+          master: action.master,
+          masterId: action.masterId,
+          masterWasSelected: action.masterWasSelected,
+          service: action.service,
+          name: action.clientName,
+          surname: action.clientSurname,
+          phoneNumber: action.phoneNumber,
+          comments: action.comments? action.comments: ''
+        })
+        break
+      }
     }
   }
 

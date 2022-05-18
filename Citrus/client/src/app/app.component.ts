@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { catchError, of } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { catchError, of, Subscription } from 'rxjs';
 import { HttpService } from './services/http.service';
 import { StorageService } from './services/storage.service';
 
@@ -8,8 +8,9 @@ import { StorageService } from './services/storage.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   title = 'citrus';
+  subscription: Subscription[] = []
   constructor(
     private http: HttpService,
     private storage: StorageService
@@ -18,12 +19,15 @@ export class AppComponent implements OnInit {
     const potentialToken = localStorage.getItem('authToken')
     if (potentialToken !== null) {
       this.http.setToken(potentialToken)
-      this.http.me().subscribe(data => {
+      this.subscription.push(this.http.me().subscribe(data => {
         if (data) {
           this.storage.setAuthorizedUserData(data)
         }
       }
-    )
+    ))
     }
+  }
+  ngOnDestroy(): void {
+    this.subscription.forEach(sub => sub.unsubscribe())
   }
 }

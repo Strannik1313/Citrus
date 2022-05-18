@@ -18,6 +18,7 @@ export class ConfirmPageWrapperComponent implements OnInit, OnDestroy {
   horizontalPosition: MatSnackBarHorizontalPosition = 'center'
   verticalPosition: MatSnackBarVerticalPosition = 'top'
   haveAccountData: boolean = false
+  isAdmin: boolean = false
   authorizedClientData: AuthorizedClientData = new AuthorizedClientData
   clientData: ClientData = new ClientData
   constructor(
@@ -29,6 +30,9 @@ export class ConfirmPageWrapperComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.storage.clientData$.subscribe(data => this.clientData = data))
     this.subscriptions.push(this.storage.authorizedUserData$.subscribe(data => {
       this.authorizedClientData = data
+    }))
+    this.subscriptions.push(this.storage.isAdmin$.subscribe(data => {
+      this.isAdmin = data
     }))
     this.subscriptions.push(this.storage.haveAccountData$.subscribe(data => {
       this.haveAccountData = data

@@ -5,7 +5,7 @@ import { ClientData } from 'src/app/models/client-data';
 import { StudioData } from 'src/app/interfaces/studio-data';
 import { HttpService } from 'src/app/services/http.service';
 import { StorageService } from 'src/app/services/storage.service';
-import { CustomCalendarHeader } from '../../ui/date-choice-ui/custom-calendar-header/custom-calendar-header.component';
+import { CustomCalendarHeader } from '../../custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
 
 @Component({
   selector: 'app-date-choice-wrapper',
