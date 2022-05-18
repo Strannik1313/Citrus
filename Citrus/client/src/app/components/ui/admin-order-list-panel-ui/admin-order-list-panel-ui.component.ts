@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnI
 import { PageEvent } from '@angular/material/paginator';
 import { MatSelectChange } from '@angular/material/select';
 import { OrderData } from 'src/app/models/order-data';
+import { OrderListButtonConfiguration } from 'src/app/models/order-list-button-configuration';
 import { PaginatorData } from 'src/app/models/paginator-data';
 
 @Component({
@@ -10,37 +11,39 @@ import { PaginatorData } from 'src/app/models/paginator-data';
   styleUrls: ['./admin-order-list-panel-ui.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminOrderListPanelUiComponent implements OnInit, OnChanges {
+export class AdminOrderListPanelUiComponent implements OnInit {
 
+  buttonConfiguration: OrderListButtonConfiguration[] = [{
+    buttonLabel: "Отменить",
+    color: "warn",
+    action: "cancel"
+  },
+  {
+    buttonLabel: "Оформить",
+    color: "primary",
+    action: "done"
+  },
+  {
+    buttonLabel: "Именить",
+    color: "",
+    action: "change"
+  }
+  ]
   @Input() ordersArray: Array<OrderData> = []
   @Input() disabled: boolean = false
   @Input() paginatorData: PaginatorData = new PaginatorData
-  @Output() onPaginatorClick: EventEmitter<PageEvent> = new EventEmitter
-  @Output() onButtonClicked: EventEmitter<{action: string, orderId: number}> = new EventEmitter
+  @Output() onPaginatorChanged: EventEmitter<PageEvent> = new EventEmitter
+  @Output() onButtonClick: EventEmitter<{ action: string, orderId: number }> = new EventEmitter
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    for (let props in changes) {
-      switch (props) {
-        case 'ordersArray':
-          
-        break;
-        case 'disabled':
-        break;
-      
-        default:
-          break;
-      }
-    }
+  onPaginatorClick(e: PageEvent): void {
+    this.onPaginatorChanged.emit(e)
   }
-  onPaginatorChanged(e: PageEvent): void {
-    this.onPaginatorClick.emit(e)
-  }
-  onButtonClick(e: {action: string, orderId: number}): void {
-    this.onButtonClicked.emit(e)
+  onButtonClicked(e: { action: string, orderId: number }): void {
+    this.onButtonClick.emit(e)
   }
 
 }

@@ -91,8 +91,6 @@ export class AdminOrderListPanelWrapperComponent implements OnInit, OnDestroy {
           phoneNumber: clientOrder[0].phoneNumber,
           comments: clientOrder[0].comments
         })
-        // !!!!!!!!!!!!!!!!!!!!на конфирм пейдже при изменении записи надо исправить отображение имени; выставлять admin httpService при логине и me()
-        // сейчас неправильно
         this.storage.setAccessMap('/crossroad')
         this.route.navigate(['/crossroad'])
         break;

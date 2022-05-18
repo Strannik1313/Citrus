@@ -7,6 +7,7 @@ import { AdminOrderListPanelWrapperComponent } from 'src/app/components/wrappers
 import { AdminOrderListPanelUiComponent } from 'src/app/components/ui/admin-order-list-panel-ui/admin-order-list-panel-ui.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSelectModule} from '@angular/material/select';
+import { OrderCardModule } from 'src/app/shared/order-card/order-card.module';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
   ],
   imports: [
     CommonModule,
+    OrderCardModule,
     MatPaginatorModule,
     MatSelectModule,
     MatCardModule,
