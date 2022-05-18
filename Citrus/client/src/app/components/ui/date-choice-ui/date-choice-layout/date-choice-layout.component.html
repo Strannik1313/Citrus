@@ -8,14 +8,13 @@
 </app-calendar>
 <div *ngIf="showCard" class="matCardContainer">
   <mat-card *ngFor="let card of studioData" class="example-card">
-    <img mat-card-sm-image src="../../../../assets/images/avatar.png" alt="Photo of a Shiba Inu">
+    <img mat-card-sm-image src="../../../../assets/images/avatar.png" alt="avatar">
     <mat-card-header>
       <mat-card-title>{{card.masterName}}</mat-card-title>
-      <!-- <mat-card-subtitle>{{card.price | currency: 'BYN': 'code'}}</mat-card-subtitle> -->
       <mat-card-subtitle>Продолжительность услуги: {{card.procedureDuration.hour}} час {{card.procedureDuration.minute}} минут</mat-card-subtitle>
     </mat-card-header>
     <mat-card-actions>
-      <div class="buttonOfTimes" *ngFor="let item of card.arrayOfFreeTimes">
+      <div class="buttonOfTimes" *ngFor="let item of card.arrayOfFreeTimes; trackBy: trackByFn">
         <button *ngIf="item==selectedTime && card.masterId==selectedCard; else selectedButton" mat-raised-button
           color="primary" (click)="timeIsChoisen(item, card.masterId, card.masterName)">{{item
           | number: '2.2-2' | colon}}</button>
@@ -27,7 +26,6 @@
     </mat-card-actions>
   </mat-card>
 </div>
-
 <app-app-button-wrapper 
   [label]="'Продолжить'" 
   [url]="'/confirm-page'"

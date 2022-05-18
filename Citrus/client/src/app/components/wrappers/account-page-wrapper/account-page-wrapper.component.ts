@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
@@ -15,29 +15,28 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './account-page-wrapper.component.html',
   styleUrls: ['./account-page-wrapper.component.scss']
 })
-export class AccountPageWrapperComponent implements OnInit, OnDestroy {
-
-  subscriptions: Subscription[] = []
-  haveAccountData: boolean = false
-  authorizedClientData: AuthorizedClientData = new AuthorizedClientData
-  disabledForm: boolean = false
-  horizontalPosition: MatSnackBarHorizontalPosition = 'center'
-  verticalPosition: MatSnackBarVerticalPosition = 'top'
-  ordersArray: OrderData[] = []
-  buttonConfiguration: Array<OrderListButtonConfiguration> = [{
+export class AccountPageWrapperComponent implements OnDestroy {
+  public haveAccountData: boolean = false;
+  public authorizedClientData: AuthorizedClientData = new AuthorizedClientData;
+  public disabledForm: boolean = false;
+  public ordersArray: OrderData[] = [];
+  public buttonConfiguration: Array<OrderListButtonConfiguration> = [{
     buttonLabel: "Изменить",
     action: "change",
     color: ""
-  },{
+  },
+  {
     buttonLabel: "Удалить",
     action: "cancel",
     color: "warn"
-  }
-]
-  disabled: boolean = false
-  paginatorData: PaginatorData = new PaginatorData
-  pageSize: number = 3
-  startItem: number = 1
+  }];
+  public disabled: boolean = false;
+  public paginatorData: PaginatorData = new PaginatorData;
+  private subscriptions: Subscription[] = [];
+  private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
+  private verticalPosition: MatSnackBarVerticalPosition = 'top';
+  private pageSize: number = 3;
+  private startItem: number = 1;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -46,63 +45,64 @@ export class AccountPageWrapperComponent implements OnInit, OnDestroy {
     private route: Router
   ) {
     this.subscriptions.push(this.storage.authorizedUserData$.subscribe(data => {
-      this.authorizedClientData = data
-    }))
+      this.authorizedClientData = {
+        ...data
+      };
+    }));
     this.subscriptions.push(this.storage.haveAccountData$.subscribe(data => {
-      this.haveAccountData = data
-    }))
-    this.getOrdersData(this.pageSize, this.startItem)
-  }
-
-  ngOnInit(): void {
-  }
+      this.haveAccountData = data;
+    }));
+    this.getOrdersData(this.pageSize, this.startItem);
+  };
 
   ngOnDestroy(): void {
-    this.subscriptions.forEach(sub => sub.unsubscribe())
-  }
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  };
+
   getOrdersData(pageSize: number, startItem: number): void {
-    this.disabled = true
+    this.disabled = true;
     this.subscriptions.push(this.http.getPersonalOrders(pageSize, startItem).subscribe(data => {
       if (data.length > 0) {
-        let paginatorLenght = Math.ceil(data[0].quantityOfOrders)
+        let paginatorLenght = Math.ceil(data[0].quantityOfOrders);
         this.paginatorData = {
           length: paginatorLenght,
           pageSize: 3
-        }
-        this.ordersArray = data
-        this.disabled = false
+        };
+        this.ordersArray = [
+          ...data
+        ];
+        this.disabled = false;
       } else {
-        this.disabled = true
+        this.disabled = true;
         this.paginatorData = {
           length: 0,
           pageSize: 3
-        }
-        this.ordersArray = []
-        this.disabled = false
-      }
-
+        };
+        this.ordersArray = [];
+        this.disabled = false;
+      };
     }))
-  }
+  };
+
   onPaginatorClick(e: PageEvent): void {
-    this.pageSize = e.pageSize
-    this.startItem = e.pageIndex * e.pageSize + 1
-    this.getOrdersData(this.pageSize, this.startItem)
-  }
-  onButtonClicked(e: {action: string, orderId: number}): void {
+    this.pageSize = e.pageSize;
+    this.startItem = e.pageIndex * e.pageSize + 1;
+    this.getOrdersData(this.pageSize, this.startItem);
+  };
+
+  onButtonClicked(e: { action: string, orderId: number }): void {
     switch (e.action) {
       case 'cancel':
-        this.subscriptions.push(this.http.cancelOrder(e.orderId).subscribe({
-          next: (response) => {
+        this.subscriptions.push(this.http.cancelOrder(e.orderId).subscribe((response) => {
             if (response.statusCode === 0) {
-              this.getOrdersData(this.pageSize, this.startItem)
-            }
-          }
-        }))
+              this.getOrdersData(this.pageSize, this.startItem);
+            };
+          }))
         break;
       case 'change':
         let clientOrder: OrderData[] = this.ordersArray.filter(el => {
-          return el.orderId === e.orderId
-        })
+          return el.orderId === e.orderId;
+        });
         this.storage.setClientData({
           name: 'admin',
           master: clientOrder[0].master,
@@ -113,38 +113,38 @@ export class AccountPageWrapperComponent implements OnInit, OnDestroy {
           clientSurname: clientOrder[0].clientSurname,
           phoneNumber: clientOrder[0].phoneNumber,
           comments: clientOrder[0].comments
-        })
-        this.storage.setAccessMap('/crossroad')
-        this.route.navigate(['/crossroad'])
+        });
+        this.storage.setAccessMap('/crossroad');
+        this.route.navigate(['/crossroad']);
         break;
-
       default:
         break;
-    }
-  }
+    };
+  };
+
   logout(): void {
-    this.http.logout()
-  }
+    this.http.logout();
+  };
 
   disableForm(value: boolean): boolean {
-    return this.disabledForm = value
-  }
+    return this.disabledForm = value;
+  };
 
   setFormValue(e: any) {
-    this.disableForm(true)
+    this.disableForm(true);
     this.subscriptions.push(this.http.personal(e).subscribe(
       {
         next: () => {
+          this.disableForm(false);
         },
         error: (error) => {
-          this.disableForm(false)
+          this.disableForm(false);
           this._snackBar.open(error.error.message, 'Ok', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
-          })
+          });
         }
       }
-    ))
-    this.disableForm(false)
-  }
+    ));
+  };
 }

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { MasterData } from 'src/app/interfaces/master-data';
 
@@ -8,19 +8,16 @@ import { MasterData } from 'src/app/interfaces/master-data';
   styleUrls: ['./spec-choice-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SpecChoiceLayoutComponent implements OnInit{
-  @Input() masterData: MasterData[] = []
-  @Input() isInitialize: boolean = false
-  @Input() selectedOption: number = 0
-  @Output() selectedItems: EventEmitter<MatSelectionListChange> = new EventEmitter
+export class SpecChoiceLayoutComponent {
+  @Input() masterData: MasterData[] = [];
+  @Input() selectedOption: number = 0;
+  @Output() selectedItems: EventEmitter<MatSelectionListChange> = new EventEmitter;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-  
   selectedItem(e: MatSelectionListChange): void {
-    this.selectedItems.emit(e)
-  }
+    this.selectedItems.emit(e);
+  };
 
+  trackByFn(index: number, item: MasterData): number {
+    return index;
+  };
 }

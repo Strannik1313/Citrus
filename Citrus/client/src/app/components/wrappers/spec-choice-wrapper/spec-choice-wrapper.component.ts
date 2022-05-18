@@ -11,36 +11,34 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './spec-choice-wrapper.component.html',
   styleUrls: ['./spec-choice-wrapper.component.scss']
 })
+
 export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
-  public masterData: MasterData[] = []
-  public clientData: ClientData = new ClientData
-  shouldClientDataBeSaved: boolean = false
-  subscriptionMasterData: Subscription
-  subscriptionClientData: Subscription
-  subscriptionShouldClientDataBeSaved: Subscription
-  selectedOption: number = 0
-  isInitialize: boolean = false
+  public masterData: MasterData[] = [];
+  public clientData: ClientData = new ClientData;
+  public shouldClientDataBeSaved: boolean = false;
+  private subscritions: Subscription[] = [];
+  selectedOption: number = 0;
+
   constructor(
     private http: HttpService,
     private storage: StorageService
   ) {
-    this.subscriptionMasterData = this.http.getMasterData().subscribe((data) => {
-      this.masterData = data
-      this.isInitialize = true
-    })
-    this.subscriptionClientData = this.storage.clientData$.subscribe((data) => {
-      this.clientData = data
-    })
-    this.subscriptionShouldClientDataBeSaved = this.storage.shouldClientDataSaved$.subscribe((data) => {
-      this.shouldClientDataBeSaved = data
-    })
+    this.subscritions.push(this.http?.getMasterData()?.subscribe((data) => {
+      this.masterData = data;
+    }));
+    this.subscritions.push(this.storage?.clientData$?.subscribe((data) => {
+      this.clientData = data;
+    }));
+    this.subscritions.push(this.storage?.shouldClientDataSaved$?.subscribe((data) => {
+      this.shouldClientDataBeSaved = data;
+    }));
   }
 
   ngOnInit(): void {
     if (!!this.clientData.masterId) {
-      this.selectedOption = this.clientData.masterId
-    }
-  }
+      this.selectedOption = this.clientData.masterId;
+    };
+  };
 
   ngOnDestroy(): void {
     if (!this.shouldClientDataBeSaved) {
@@ -49,18 +47,17 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
         value: '',
         id: '',
         masterChoiceToogle: false
-      })
+      });
     }
-    this.subscriptionMasterData.unsubscribe()
-    this.subscriptionClientData.unsubscribe()
-    this.subscriptionShouldClientDataBeSaved.unsubscribe()
-  }
+    this.subscritions.forEach(sub => sub.unsubscribe());
+  };
+
   updateChoisenMaster(e: MatSelectionListChange): void {
     this.storage.setClientData({
       name: 'master',
       value: e.source.selectedOptions.selected[0].value.name,
       id: e.source.selectedOptions.selected[0].value.id,
       masterChoiceToogle: true
-    })
-  }
+    });
+  };
 }

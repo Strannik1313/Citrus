@@ -1,18 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-main-page-header-layout',
   templateUrl: './main-page-header-layout.component.html',
-  styleUrls: ['./main-page-header-layout.component.scss']
+  styleUrls: ['./main-page-header-layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainPageHeaderLayoutComponent implements OnInit {
-
+export class MainPageHeaderLayoutComponent {
   @Input() isAuthorized: boolean | null = false
   @Input() isAdmin: boolean | null = false
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

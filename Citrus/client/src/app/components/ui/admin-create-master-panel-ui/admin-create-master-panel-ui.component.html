@@ -1,5 +1,5 @@
 <mat-card class="content">
-  <form [formGroup]="createMasterForm" novalidate (ngSubmit)="submit()">
+  <form [formGroup]="createMasterForm" novalidate (ngSubmit)="onSubmit()">
     <mat-form-field class="form-item" appearance="outline">
       <mat-label>Введите имя мастера</mat-label>
       <input matInput formControlName="masterName" required>

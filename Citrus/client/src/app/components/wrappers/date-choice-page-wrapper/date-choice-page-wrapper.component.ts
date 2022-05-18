@@ -13,49 +13,50 @@ import { CustomCalendarHeader } from '../../custom-components-material-ui/custom
   styleUrls: ['./date-choice-page-wrapper.component.scss']
 })
 export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
-  selected: Date | null = null;
-  startDisabledDate: Date = new Date;
-  endDisabledDates: Date = new Date;
-  showCard: boolean = false;
-  selectedTime: number = 0;
-  selectedCard: number = 0;
-  shouldClientDataBeSaved: boolean = false;
-  subscriptions: Subscription[] = [];
-  customHeader = CustomCalendarHeader;
-  clientData: ClientData = new ClientData;
-  studioData: StudioData[] = [];
+  private subscriptions: Subscription[] = [];
+  public selected: Date | null = null;
+  public startDisabledDate: Date = new Date;
+  public endDisabledDates: Date = new Date;
+  public showCard: boolean = false;
+  public selectedTime: number = 0;
+  public selectedCard: number = 0;
+  public shouldClientDataBeSaved: boolean = false;
+  public customHeader = CustomCalendarHeader;
+  public clientData: ClientData = new ClientData;
+  public studioData: StudioData[] = [];
+
   constructor(
     private storage: StorageService,
     private http: HttpService
   ) {
-    this.subscriptions.push(this.storage.clientData$.subscribe(data => this.clientData = data));
-    this.subscriptions.push(this.storage.shouldClientDataSaved$.subscribe((data) => {
-      this.shouldClientDataBeSaved = data
+    this.subscriptions.push(this.storage?.clientData$?.subscribe(data => this.clientData = data));
+    this.subscriptions.push(this.storage?.shouldClientDataSaved$?.subscribe((data) => {
+      this.shouldClientDataBeSaved = data;
     }));
-    this.subscriptions.push(this.http.getDisabledDates().subscribe(data => {
+    this.subscriptions.push(this.http?.getDisabledDates()?.subscribe(data => {
       if (this.clientData.masterId !== 0) {
         data.forEach(d => {
           if (d.masterId == this.clientData.masterId) {
             this.endDisabledDates = new Date(2022, d.lastMonth, d.lastDay);
             this.startDisabledDate = new Date(2022, d.firstMonth, d.firstDay);
-          }
-        })
+          };
+        });
       } else {
-        let tempFirstArray: Array<number> = []
-        let tempEndArray: Array<number> = []
-        let end = 0
-        let first = 0
+        let tempFirstArray: Array<number> = [];
+        let tempEndArray: Array<number> = [];
+        let end = 0;
+        let first = 0;
         data.forEach(d => {
-          first = new Date(2022, d.firstMonth, d.firstDay).getTime()
-          tempFirstArray.push(first)
-          end = new Date(2022, d.lastMonth, d.lastDay).getTime()
-          tempEndArray.push(end)
-        })
+          first = new Date(2022, d.firstMonth, d.firstDay).getTime();
+          tempFirstArray.push(first);
+          end = new Date(2022, d.lastMonth, d.lastDay).getTime();
+          tempEndArray.push(end);
+        });
         this.endDisabledDates = new Date(Math.max(...tempEndArray))
         this.startDisabledDate = new Date(Math.min(...tempFirstArray))
-      }
-    }))
-  }
+      };
+    }));
+  };
 
   ngOnInit(): void {
     if (this.clientData.time.hour != 0) {
@@ -63,34 +64,36 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
       this.showCard = true;
       this.selectedTime = this.clientData.time.hour;
       this.selectedCard = this.clientData.masterId;
-    }
-  }
+    };
+  };
+
   ngOnDestroy(): void {
     if (!this.shouldClientDataBeSaved) {
       if (this.clientData.masterWasSelected) {
-        this.storage.setClientData({
+        this.storage?.setClientData({
           name: 'calendar',
           hour: 0,
           minute: 0,
           id: this.clientData.masterId,
           masterName: this.clientData.master,
           date: null
-        })
+        });
       } else {
-        this.storage.setClientData({
+        this.storage?.setClientData({
           name: 'calendar',
           hour: 0,
           minute: 0,
           id: 0,
           masterName: '',
           date: null
-        })
+        });
       };
     }
     this.subscriptions.forEach(sub => sub.unsubscribe());
-  }
+  };
+
   timeIsChoisen(e: ChoisenTime): void {
-    this.storage.setClientData({
+    this.storage?.setClientData({
       name: 'calendar',
       hour: Math.trunc(e.time),
       minute: Math.floor((e.time - Math.trunc(e.time)) * 100),
@@ -100,27 +103,27 @@ export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
     });
     this.selectedTime = e.time;
     this.selectedCard = e.masterId;
-  }
+  };
+
   dateWasSelected(e: Date): void {
-    this.subscriptions.push(this.http.getCalendarData(
+    this.subscriptions.push(this.http?.getCalendarData(
       e.getDate(),
       e.getMonth(),
       Number(this.clientData.masterId),
       this.clientData.service
-    )
-      .subscribe((response) => {
+    )?.subscribe((response) => {
         this.studioData = [];
         if (this.clientData.masterWasSelected) {
           for (let i = 0; i < response.length; i++) {
             if (response[i].masterId == this.clientData.masterId) {
-              this.studioData.push(response[i])
-            }
-          }
+              this.studioData.push(response[i]);
+            };
+          };
         } else {
           this.studioData = response
         };
         this.selected = e;
         this.showCard = true;
       }));
-  }
+  };
 }

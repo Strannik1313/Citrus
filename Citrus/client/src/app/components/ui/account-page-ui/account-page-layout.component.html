@@ -2,7 +2,7 @@
     <p>Ваш личный кабинет</p>
 </div>
 <div class="form-container">
-    <form [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
+    <form [formGroup]="submitForm" novalidate (ngSubmit)="onSubmit()">
         <mat-card>
             <mat-form-field class="form-item" appearance="outline">
                 <mat-label>Введите Ваше имя</mat-label>

@@ -10,24 +10,26 @@ import { StorageService } from './services/storage.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'citrus';
-  subscription: Subscription[] = []
+  subscription: Subscription[] = [];
   constructor(
     private http: HttpService,
     private storage: StorageService
-  ) { }
+  ) { };
+
   ngOnInit(): void {
-    const potentialToken = localStorage.getItem('authToken')
+    const potentialToken = localStorage.getItem('authToken');
     if (potentialToken !== null) {
-      this.http.setToken(potentialToken)
+      this.http.setToken(potentialToken);
       this.subscription.push(this.http.me().subscribe(data => {
         if (data) {
-          this.storage.setAuthorizedUserData(data)
-        }
+          this.storage.setAuthorizedUserData(data);
+        };
       }
-    ))
-    }
-  }
+    ));
+    };
+  };
+
   ngOnDestroy(): void {
     this.subscription.forEach(sub => sub.unsubscribe())
-  }
+  };
 }

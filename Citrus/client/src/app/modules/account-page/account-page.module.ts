@@ -8,8 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AccountPageWrapperComponent } from '../../components/wrappers/account-page-wrapper/account-page-wrapper.component';
 import { AccountPageComponent } from '../../components/ui/account-page-ui/account-page-layout.component';
-import {MatCardModule} from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
 import { OrderCardModule } from 'src/app/shared/order-card/order-card.module';
 
 

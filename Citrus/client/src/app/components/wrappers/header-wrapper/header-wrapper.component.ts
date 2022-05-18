@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
@@ -7,15 +6,9 @@ import { StorageService } from 'src/app/services/storage.service';
   templateUrl: './header-wrapper.component.html',
   styleUrls: ['./header-wrapper.component.scss']
 })
-export class HeaderWrapperComponent implements OnInit, OnDestroy {
+export class HeaderWrapperComponent {
  
   constructor(
     public storage: StorageService
   ) { }
-
-  ngOnInit(): void {
-  }
-
-  ngOnDestroy(): void {
-  }
 }

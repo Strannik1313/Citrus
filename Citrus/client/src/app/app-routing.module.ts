@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageLayoutComponent } from './components/ui/main-page-ui/main-page-layout.component';
+import { MainPageLayoutWrapperComponent } from './components/wrappers/main-page-layout-wrapper/main-page-layout-wrapper.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { NavigateAccess } from './services/navigate-access.service';
 
 const routes: Routes = [
   { 
-    path: '', component: MainPageLayoutComponent, pathMatch: 'full' 
+    path: '', component: MainPageLayoutWrapperComponent, pathMatch: 'full' 
   },
   {
     path: 'login',

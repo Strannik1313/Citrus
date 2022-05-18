@@ -5,8 +5,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { AdminOrderListPanelWrapperComponent } from 'src/app/components/wrappers/admin-order-list-panel-wrapper/admin-order-list-panel-wrapper.component';
 import { AdminOrderListPanelUiComponent } from 'src/app/components/ui/admin-order-list-panel-ui/admin-order-list-panel-ui.component';
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSelectModule} from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSelectModule } from '@angular/material/select';
 import { OrderCardModule } from 'src/app/shared/order-card/order-card.module';
 
 

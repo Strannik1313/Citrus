@@ -1,19 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { StorageService } from 'src/app/services/storage.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
   selector: 'app-main-page-layout',
   templateUrl: './main-page-layout.component.html',
-  styleUrls: ['./main-page-layout.component.scss']
+  styleUrls: ['./main-page-layout.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainPageLayoutComponent implements OnInit {
-
-  constructor(
-    private storage: StorageService
-  ) { }
-
-  ngOnInit(): void {
-    this.storage.setAccessMap('/')
-  }
-
+export class MainPageLayoutComponent  {
 }

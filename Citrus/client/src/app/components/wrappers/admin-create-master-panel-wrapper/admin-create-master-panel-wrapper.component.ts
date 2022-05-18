@@ -11,47 +11,50 @@ import { HttpService } from 'src/app/services/http.service';
   templateUrl: './admin-create-master-panel-wrapper.component.html',
   styleUrls: ['./admin-create-master-panel-wrapper.component.scss']
 })
-export class AdminCreateMasterPanelWrapperComponent implements OnInit, OnDestroy {
-  disabledForm: boolean = false
-  priceList: PriceList = new PriceList
-  services: Array<string> = []
-  private subscriptions: Subscription[] = []
+export class AdminCreateMasterPanelWrapperComponent implements OnDestroy {
+  public disabledForm: boolean = false;
+  public priceList: PriceList = new PriceList;
+  public services: Array<string> = [];
+  private subscriptions: Subscription[] = [];
   constructor(
     public http: HttpService,
     private route: Router
   ) {
     this.subscriptions.push(this.http.getStudioServices().subscribe(data => {
-      this.services = data
-    }))
-  }
+      this.services = [
+        ... this.services,
+        ...data
+      ];
+    }));
+  };
 
-  ngOnInit(): void {
-  }
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => {
-      sub.unsubscribe()
-    })
+      sub.unsubscribe();
+    });
+  };
+
+  onSaveFormValue(e: NewMasterFormData) {
+    this.subscriptions.push(this.http?.createNewMaster(e)?.subscribe());
+    this.disabledForm = true;
+    this.route?.navigate(['/admin']);
   }
-  formValue(e: NewMasterFormData) {
-    this.subscriptions.push(this.http.createNewMaster(e).subscribe())
-    this.disabledForm = true
-    this.route.navigate(['/admin'])
-  }
+
   showPriceList(e: MatSelectionListChange): void {
     if (e.source.selectedOptions.selected.length > 0) {
-      this.priceList = {...this.priceList}
+      this.priceList = {...this.priceList};
       this.priceList.priceListVisible = true;
       let tempArray: Array<string> = [];
       let i = 0;
       e.source.selectedOptions.selected.forEach(d => {
-        tempArray[i] = d.value
-        i++
-      })
-      this.priceList.selectionList = tempArray
+        tempArray[i] = d.value;
+        i++;
+      });
+      this.priceList.selectionList = tempArray;
     } else {
-      this.priceList = {...this.priceList}
-      this.priceList.selectionList = []
-      this.priceList.priceListVisible = false
-    }
-  }
+      this.priceList = {...this.priceList};
+      this.priceList.selectionList = [];
+      this.priceList.priceListVisible = false;
+    };
+  };
 }

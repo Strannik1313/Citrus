@@ -1,3 +1,7 @@
+<app-app-button-wrapper 
+        [label]="'На главную'" 
+        [url]="'/home'"
+    ></app-app-button-wrapper>
 <ng-container *ngIf="!isAuthorized; else haveToken">
     <app-app-button-wrapper 
         [label]="'Войти'" 

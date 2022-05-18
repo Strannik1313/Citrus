@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AppButtonModule } from '../../shared/app-button-wrapper/app-button.module';
 import { SpecChoiceWrapperComponent } from '../../components/wrappers/spec-choice-wrapper/spec-choice-wrapper.component';
 import { MatListModule } from '@angular/material/list';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 
 

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
 import { MasterData } from 'src/app/interfaces/master-data';
 
@@ -8,17 +8,17 @@ import { MasterData } from 'src/app/interfaces/master-data';
   styleUrls: ['./service-choice-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ServiceChoiceLayoutComponent implements OnInit {
-  @Input() masterData: MasterData[] = []
-  @Input() services: Array<string> = []
-  @Input() preSelection: string = ''
-  @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter
-  constructor() { }
+export class ServiceChoiceLayoutComponent {
+  @Input() masterData: MasterData[] = [];
+  @Input() services: Array<string> = [];
+  @Input() preSelection: string = '';
+  @Output() selectionChange: EventEmitter<MatSelectChange> = new EventEmitter;
 
-  ngOnInit(): void {
-  }
-  
   selectIsTouched(e: MatSelectChange): void {
-    this.selectionChange.emit(e)
-  }
+    this.selectionChange.emit(e);
+  };
+
+  trackByFn(index: number, item: string): string {
+    return  item;
+  };
 }

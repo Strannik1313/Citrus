@@ -1,4 +1,4 @@
-<form class="submit-form" [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
+<form class="submit-form" [formGroup]="submitForm" novalidate (ngSubmit)="onSubmit()">
     <mat-form-field class="input-master-name" appearance="outline">
         <mat-label>Имя мастера</mat-label>
         <input matInput readonly="true" [value]="clientData.master">
@@ -35,6 +35,3 @@
         Записаться
       </button>
 </form>
- <!-- nado sdelat pipe kotoryj mapit massiv v stroku -->
- <!-- Sdelat pipe dlya dat i vremeni => v stroku -->
-  <!-- sdelat pipe dlya nomera telefona, chtoby byl kod+skobky -->

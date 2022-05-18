@@ -1,51 +1,46 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-create-service-panel-ui',
   templateUrl: './admin-create-service-panel-ui.component.html',
-  styleUrls: ['./admin-create-service-panel-ui.component.scss']
+  styleUrls: ['./admin-create-service-panel-ui.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AdminCreateServicePanelUiComponent implements OnInit, OnChanges {
-  createServiceForm: FormGroup
-  myTimePicker: Date = new Date
-  @Input() disabledForm: boolean = false
-  @Output() formValue: EventEmitter<any> = new EventEmitter
-  constructor() { 
+export class AdminCreateServicePanelUiComponent {
+  public createServiceForm: FormGroup;
+  @Input() disabledForm: boolean = false;
+  @Output() formValue: EventEmitter<any> = new EventEmitter;
+
+  constructor() {
     this.createServiceForm = new FormGroup({
       'service': new FormControl('', [Validators.required, Validators.pattern("[А-ЯЁ]|[а-яё]{1,}")]),
       'duration': new FormControl('', [Validators.required, Validators.pattern("[0-9]{1}:[0-9]{2}")]),
     });
-  }
+  };
 
-  ngOnInit(): void {
-  }
-  ngOnChanges(changes: SimpleChanges): void {
-    
-  }
-  submit() {
-    this.createServiceForm.disable()
+  onSubmit(): void {
+    this.createServiceForm.disable();
     this.formValue.emit(this.createServiceForm.value);
-  }
+  };
+
   getErrorMessage(inputName: string) {
     switch (inputName) {
       case 'service': {
         if (this.createServiceForm.controls['service'].hasError('required')) {
           return 'Поле обязательно для заполнения';
-        }
+        };
         return this.createServiceForm.controls['service'].hasError('pattern') ? 'Введите корректное имя' : '';
-      }
+      };
       case 'duration': {
         if (this.createServiceForm.controls['duration'].hasError('required')) {
           return 'Поле обязательно для заполнения';
-        }
+        };
         return this.createServiceForm.controls['duration'].hasError('pattern') ? 'Введите длительность процедуры в таком виде: \'1:30\' ' : '';
-      }
-      default: return 'Ошибка'
-    }
-
-
-  }
+      };
+      default: return 'Ошибка';
+    };
+  };
 }
 
 

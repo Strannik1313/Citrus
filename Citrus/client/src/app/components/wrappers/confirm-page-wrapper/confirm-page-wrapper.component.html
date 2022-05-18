@@ -1,7 +1,7 @@
 <app-confirm-layout
-[clientData]="clientData"
-[isAdmin]="isAdmin"
-[authorizedClientData]="authorizedClientData"
-[haveAccountData]="haveAccountData"
-(formValue)="formValue($event)"
+    [clientData]="clientData"
+    [isAdmin]="isAdmin"
+    [authorizedClientData]="authorizedClientData"
+    [haveAccountData]="haveAccountData"
+    (onSaveFormValue)="onSaveFormValue($event)"
 ></app-confirm-layout>

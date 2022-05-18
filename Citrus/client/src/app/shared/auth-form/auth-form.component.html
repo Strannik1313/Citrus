@@ -1,5 +1,5 @@
 <div class="form-container">
-    <form [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
+    <form [formGroup]="submitForm" novalidate (ngSubmit)="onSubmit()">
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>Введите email</mat-label>
         <input matInput placeholder="pat@example.com" formControlName="email" required>

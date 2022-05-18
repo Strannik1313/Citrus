@@ -38,12 +38,12 @@ export class CustomCalendarHeader<D> implements OnDestroy {
 
   previousClicked() {
     this._calendar.activeDate =
-      this._dateAdapter.addCalendarMonths(this._calendar.activeDate, -1)
+      this._dateAdapter.addCalendarMonths(this._calendar.activeDate, -1);
   }
 
   nextClicked() {
     this._calendar.activeDate =
-      this._dateAdapter.addCalendarMonths(this._calendar.activeDate, 1)
+      this._dateAdapter.addCalendarMonths(this._calendar.activeDate, 1);
 
   }
 }

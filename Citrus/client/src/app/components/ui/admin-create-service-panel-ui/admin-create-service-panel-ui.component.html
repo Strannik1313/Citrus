@@ -1,5 +1,5 @@
 <mat-card class="content">
-    <form [formGroup]="createServiceForm" novalidate (ngSubmit)="submit()">
+    <form [formGroup]="createServiceForm" novalidate (ngSubmit)="onSubmit()">
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>Введите название услуги</mat-label>
         <input matInput formControlName="service" required>
@@ -15,4 +15,4 @@
         Отправить
       </button>
     </form>
-  </mat-card>
+</mat-card>
