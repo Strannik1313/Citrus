@@ -15,8 +15,8 @@ import { CustomCalendarHeader } from '../../custom-components-material-ui/custom
 export class DateChoiceWrapperComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   public selected: Date | null = null;
-  public startDisabledDate: Date = new Date;
-  public endDisabledDates: Date = new Date;
+  public startDisabledDate: Date | null =null;
+  public endDisabledDates: Date | null =null;
   public showCard: boolean = false;
   public selectedTime: number = 0;
   public selectedCard: number = 0;

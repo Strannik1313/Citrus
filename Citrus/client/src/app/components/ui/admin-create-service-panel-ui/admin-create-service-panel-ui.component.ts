@@ -10,7 +10,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class AdminCreateServicePanelUiComponent {
   public createServiceForm: FormGroup;
   @Input() disabledForm: boolean = false;
-  @Output() formValue: EventEmitter<any> = new EventEmitter;
+  @Output() onSaveFormValue: EventEmitter<{ service: string, duration: string }> = new EventEmitter;
 
   constructor() {
     this.createServiceForm = new FormGroup({
@@ -21,7 +21,7 @@ export class AdminCreateServicePanelUiComponent {
 
   onSubmit(): void {
     this.createServiceForm.disable();
-    this.formValue.emit(this.createServiceForm.value);
+    this.onSaveFormValue.emit(this.createServiceForm.value);
   };
 
   getErrorMessage(inputName: string) {

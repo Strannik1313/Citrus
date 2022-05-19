@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { SubmitData } from 'src/app/interfaces/confirm-page-submit-data';
 import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
 import { ClientData } from 'src/app/models/client-data';
 
@@ -16,8 +17,8 @@ export class ConfirmLayoutComponent implements OnInit {
   @Input() authorizedClientData: AuthorizedClientData = new AuthorizedClientData;
   @Input() haveAccountData: boolean = false;
   @Input() isAdmin: boolean = false;
-  @Output() onSaveFormValue: EventEmitter<any> = new EventEmitter;
-  
+  @Output() onSaveFormValue: EventEmitter<SubmitData> = new EventEmitter;
+
   constructor() {
     this.submitForm = new FormGroup({
       'clientName': new FormControl('', [Validators.required]),

@@ -14,7 +14,7 @@ export class AccountPageComponent implements OnInit, OnChanges {
   @Input() disabledForm: boolean = false;
   @Input() haveAccountData: boolean = false;
   @Input() authorizedClientData: AuthorizedClientData = new AuthorizedClientData;
-  @Output() onSaveFormValue: EventEmitter<any> = new EventEmitter;
+  @Output() onSaveFormValue: EventEmitter<{ name: string, surname: string, phoneNumber: string }> = new EventEmitter;
 
   constructor() {
     this.submitForm = new FormGroup({

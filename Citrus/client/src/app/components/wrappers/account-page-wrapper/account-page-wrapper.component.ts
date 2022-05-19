@@ -130,7 +130,7 @@ export class AccountPageWrapperComponent implements OnDestroy {
     return this.disabledForm = value;
   };
 
-  setFormValue(e: any) {
+  setFormValue(e: { name: string, surname: string, phoneNumber: string }) {
     this.disableForm(true);
     this.subscriptions.push(this.http.personal(e).subscribe(
       {

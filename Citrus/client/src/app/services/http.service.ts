@@ -10,6 +10,7 @@ import { BlockedDate } from '../interfaces/blocked-date';
 import { NewMasterFormData } from '../models/new-master-form-data';
 import { NewServiceData } from '../interfaces/new-service-data';
 import { OrderData } from '../models/order-data';
+import { AuthFormData } from '../models/auth-form-data';
 
 @Injectable({
   providedIn: 'root'
@@ -51,7 +52,7 @@ export class HttpService {
   };
 
   getPersonalOrders(pageSize: number, startItem: number): Observable<OrderData[]> {
-    return this.http?.get<OrderData[]>('http://localhost:8080/api/personal/orders', {
+    return this.http?.get<OrderData[]>('/api/personal/orders', {
       headers: new HttpHeaders({
         pageSize: pageSize.toString(),
         startItem: startItem.toString()
@@ -60,39 +61,39 @@ export class HttpService {
   };
 
   getStudioServices(): Observable<string[]> {
-    return this.http?.get<string[]>('http://localhost:8080/api/admin/services')
+    return this.http?.get<string[]>('/api/admin/services')
   };
 
-  createNewMaster(formValue: NewMasterFormData): Observable<string[]> {
-    return this.http?.post<any>('http://localhost:8080/api/admin/master', formValue);
+  createNewMaster(formValue: NewMasterFormData): Observable<{ message: string }> {
+    return this.http?.post<{ message: string }>('/api/admin/master', formValue);
   };
 
-  createNewService(formValue: NewServiceData): Observable<string[]> {
-    return this.http?.post<any>('http://localhost:8080/api/admin/service', formValue);
+  createNewService(formValue: NewServiceData): Observable<{ message: string }> {
+    return this.http?.post<{ message: string }>('/api/admin/service', formValue);
   };
 
-  cancelOrder(orderId: number): Observable<any> {
-    return this.http?.delete<any>('http://localhost:8080/api/admin/orders', {
+  cancelOrder(orderId: number): Observable<{ message: string, statusCode: number }> {
+    return this.http?.delete<{ message: string, statusCode: number }>('/api/admin/orders', {
       headers: new HttpHeaders({
         orderId: orderId.toString()
       })
     });
   };
 
-  completeOrder(orderId: number): Observable<any> {
-    return this.http?.patch<any>('http://localhost:8080/api/admin/orders', { orderId });
+  completeOrder(orderId: number): Observable<{ message: string, statusCode: number }> {
+    return this.http?.patch<{ message: string, statusCode: number }>('/api/admin/orders', { orderId });
   };
 
   makeOrder(formValue: ClientData): Observable<{ message: boolean }> {
-    return this.http?.post<any>('http://localhost:8080/api/order', formValue);
+    return this.http?.post<{ message: boolean }>('/api/order', formValue);
   };
 
   getMasterData(): Observable<MasterData[]> {
-    return this.http?.get<MasterData[]>('http://localhost:8080/api/masters');
+    return this.http?.get<MasterData[]>('/api/masters');
   };
 
-  login(formValue: any): Observable<{ token: string, payload: any }> {
-    return this.http?.post<{ token: string, payload: any }>('http://localhost:8080/api/auth/login', formValue)
+  login(formValue: AuthFormData): Observable<{ token: string, payload?: any }> {
+    return this.http?.post<{ token: string, payload: any }>('/api/auth/login', formValue)
       .pipe(
         tap(
           ({ token, payload }) => {
@@ -113,16 +114,16 @@ export class HttpService {
       );
   };
 
-  register(formValue: any): Observable<{ message: string }> {
-    return this.http?.post<{ message: string }>('http://localhost:8080/api/auth/register', formValue);
+  register(formValue: AuthFormData): Observable<{ message: string }> {
+    return this.http?.post<{ message: string }>('/api/auth/register', formValue);
   };
 
-  personal(formValue: any): Observable<{ email: string, password: string }> {
-    return this.http?.post<{ email: string, password: string }>('http://localhost:8080/api/personal', formValue);
+  personal(formValue: { name: string, surname: string, phoneNumber: string }): Observable<{ email: string, password: string }> {
+    return this.http?.post<{ email: string, password: string }>('/api/personal', formValue);
   };
 
   me(): Observable<any> {
-    return this.http?.get<any>('http://localhost:8080/api/auth/me')
+    return this.http?.get<any>('/api/auth/me')
       .pipe(
         tap((data) => {
           if (data?.admin) {

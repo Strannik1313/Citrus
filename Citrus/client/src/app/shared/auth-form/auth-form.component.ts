@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthFormData } from 'src/app/models/auth-form-data';
 
 @Component({
   selector: 'app-auth-form',
@@ -11,7 +12,7 @@ export class AuthFormComponent implements OnChanges {
   public submitForm: FormGroup;
   public hide = true;
   @Input() disabledForm: boolean = false;
-  @Output() formValue: EventEmitter<any> = new EventEmitter;
+  @Output() onSafeFormValue: EventEmitter<AuthFormData> = new EventEmitter;
 
   constructor() {
     this.submitForm = new FormGroup({
@@ -30,7 +31,7 @@ export class AuthFormComponent implements OnChanges {
   
   onSubmit() {
     this.submitForm.disable();
-    this.formValue.emit(this.submitForm.value);
+    this.onSafeFormValue.emit(this.submitForm.value);
   };
 
   getErrorMessage(inputName: string) {

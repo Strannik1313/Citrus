@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HttpService } from 'src/app/services/http.service';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+import { AuthFormData } from 'src/app/models/auth-form-data';
 
 @Component({
   selector: 'app-login-page-wrapper',
@@ -29,7 +30,7 @@ export class LoginPageWrapperComponent implements OnDestroy {
     return this.disabledForm = value;
   };
 
-  formValue(e: any): void {
+  onSafeFormValue(e: AuthFormData): void {
     this.disableForm(true);
     this.subscriptions.push(this.http?.login(e)?.subscribe(
       {

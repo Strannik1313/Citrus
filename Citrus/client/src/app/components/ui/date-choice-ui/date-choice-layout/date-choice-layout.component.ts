@@ -12,8 +12,8 @@ import { CustomCalendarHeader } from 'src/app/components/custom-components-mater
 })
 export class DateChoiceLayoutComponent implements OnInit {
   @Input() customHeader = CustomCalendarHeader;
-  @Input() startDisabledDate: Date = new Date;
-  @Input() endDisabledDates: Date = new Date;
+  @Input() startDisabledDate: Date | null =null;
+  @Input() endDisabledDates: Date | null =null;
   @Input() showCard: boolean = false;
   @Input() selected: Date | null = null;
   @Input() selectedTime: number = 0;
@@ -29,7 +29,7 @@ export class DateChoiceLayoutComponent implements OnInit {
     }; 
   };
 
-  dateSelected(e: any): void {
+  dateSelected(e: Date): void {
     this.dateWasSelected.emit(e);
   };
 

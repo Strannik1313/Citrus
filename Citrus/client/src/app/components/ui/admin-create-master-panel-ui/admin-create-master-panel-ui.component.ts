@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSelectionListChange } from '@angular/material/list';
+import { NewMasterFormData } from 'src/app/models/new-master-form-data';
 import { PriceList } from 'src/app/models/price-list';
 
 @Component({
@@ -14,8 +15,8 @@ export class AdminCreateMasterPanelComponent implements OnChanges {
   @Input() disabledForm: boolean = false;
   @Input() priceList: PriceList = new PriceList;
   @Input() services: Array<string> | null = [];
-  @Output() onSaveFormValue: EventEmitter<any> = new EventEmitter;
-  @Output() selectionListChanged: EventEmitter<any> = new EventEmitter;
+  @Output() onSaveFormValue: EventEmitter<NewMasterFormData> = new EventEmitter;
+  @Output() selectionListChanged: EventEmitter<MatSelectionListChange> = new EventEmitter;
 
   constructor() {
     this.createMasterForm = new FormGroup({
