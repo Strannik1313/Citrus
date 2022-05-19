@@ -14,7 +14,7 @@
         </button>
         <mat-error *ngIf="submitForm.controls['password'].invalid">{{getErrorMessage('password')}}</mat-error>
       </mat-form-field>
-      <button class="btn btn-default" [disabled]="submitForm.invalid || disabledForm" type="submit">
+      <button mat-button class="btn btn-default" [disabled]="submitForm.invalid || disabledForm" type="submit">
         Отправить
       </button>
     </form>

@@ -5,7 +5,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import {MatSnackBarModule} from '@angular/material/snack-bar'
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatButtonModule} from '@angular/material/button';
 
 
 
@@ -16,6 +17,7 @@ import {MatSnackBarModule} from '@angular/material/snack-bar'
   imports: [
     CommonModule,
     MatFormFieldModule,
+    MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
     MatIconModule,

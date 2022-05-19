@@ -4,6 +4,7 @@ import { AdminPageWrapperComponent } from 'src/app/components/wrappers/admin-pag
 import { RouterModule } from '@angular/router';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { NavigateAccess } from 'src/app/services/navigate-access.service';
+import { MatButtonModule } from '@angular/material/button';
 
 
 
@@ -14,6 +15,7 @@ import { NavigateAccess } from 'src/app/services/navigate-access.service';
   ],
   imports: [
     CommonModule,
+    MatButtonModule,
     RouterModule.forChild([
       {path: '', component: AdminPageWrapperComponent},
       {

@@ -1,4 +1,38 @@
-* {
-    display: inline-block;
+.header__container {
+    display: grid;
     padding: 1rem;
+    grid-template-areas:
+        "h a back ";
+    grid-template-rows: 1fr;
+    grid-template-columns: 5fr 3fr 1fr;
+
+}
+
+.button__auth {
+    grid-area: a;
+    justify-self: center;
+    display: grid;
+    grid-template-areas:
+    "enter register ";
+    grid-template-rows: 1fr;
+    grid-template-columns: 1fr 1fr;
+    .button__auth__enter {
+        grid-area: enter;
+        justify-self: center;
+    }
+    .button__auth__enter {
+        grid-area: register;
+        justify-self: center;
+    }
+}
+
+.button__home {
+    grid-area: h;
+    padding-left: 8vw;
+    justify-self: left;
+}
+
+.button__back {
+    grid-area: acc;
+    justify-self: center;
 }

@@ -1,4 +1,37 @@
-img {
-    width: 35%;
-    justify-content: center;
+.content__container {
+    max-height: 90%;
+    display: grid;
+    grid-template-areas: 
+        "img text"
+        "btn btn";
+    grid-template-rows: 8fr 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+.content__img {
+    grid-area: img;
+    padding-left: 5vw;
+    justify-self: center;
+    img {
+        max-width: 95%;
+        border-radius: 10px;
+    }
+}
+
+.content__text {
+    grid-area: text;
+    border: 3px solid #f4f6fc;
+    border-radius: 10px;
+    max-width: 80%;
+    align-self: center;
+  justify-self: center;
+    text-align:center;
+    font-size:1.5em;
+    line-height:2.65;
+}
+
+.content__custom__button {
+    grid-area: btn;
+    justify-self: center;
+    align-self: center;
 }

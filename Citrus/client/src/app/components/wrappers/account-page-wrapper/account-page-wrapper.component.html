@@ -1,13 +1,13 @@
+<button mat-button color="primary" (click)="logout()">Выйти из аккаунта</button>
 <app-account-page
-    (onSaveFormValue)="setFormValue($event)"
-    [disabledForm]="disableForm(disabledForm)"
-    [authorizedClientData]="authorizedClientData"
-    [haveAccountData]="haveAccountData"
+        (onSaveFormValue)="setFormValue($event)"
+        [disabledForm]="disableForm(disabledForm)"
+        [authorizedClientData]="authorizedClientData"
+        [haveAccountData]="haveAccountData"
 ></app-account-page>
-<button mat-button color="primary" (click)="logout()">logout</button>
 <hr>
 <div>
-    <p>История посещений</p>
+        <p>История посещений</p>
 </div>
 <app-order-card
     [ordersArray]="ordersArray"
