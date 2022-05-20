@@ -7,34 +7,45 @@ import { StorageService } from './storage.service';
   providedIn: 'root'
 })
 export class RouteService {
-  subscription: Subscription
-
-  private currentUrl: Array<string> = []
+  private subscription: Subscription;
+  private currentUrl: Array<string> = [];
 
   constructor(
     private storage: StorageService,
     private route: Router
-
   ) {
-    this.subscription = this.storage.roadMapUrls$.subscribe(data => this.currentUrl = data)
+    this.subscription = this.storage?.roadMapUrls$?.subscribe(data => this.currentUrl = data);
+  };
 
-  }
   goToNextPage(url: string): void {
-    if (url == '/..') {
-      this.goToPreviousPage(url)
-    } else {
-      this.storage.setRoadMap(url)
-      this.storage.setAccessMap(url)
-      this.route.navigate([url])
-      this.storage.setBackButtonStatus()
-      this.storage.setClientDataSaved(true)
-    }
-    
+    switch (url) {
+      case '/..': {
+        this.goToPreviousPage(url);
+        break;
+      };
+      case '/home': {
+        this.storage?.setRoadMap('clear');
+        this.storage?.setAccessMap('/');
+        this.route?.navigate(['/']);
+        this.storage?.setBackButtonStatus();
+        this.storage?.setClientDataSaved(false);
+        break;
+      };
+      default: {
+        this.storage?.setRoadMap(url);
+        this.storage?.setAccessMap(url);
+        this.route?.navigate([url]);
+        this.storage?.setBackButtonStatus();
+        this.storage?.setClientDataSaved(true);
+      };
+        break;
+    };
   }
+
   goToPreviousPage(url: string): void {
-    this.storage.setRoadMap(url)
-    this.route.navigate([this.currentUrl[this.currentUrl.length - 1]])
-    this.storage.setBackButtonStatus()
-    this.storage.setClientDataSaved(false)
-  }
+    this.storage?.setRoadMap(url);
+    this.route?.navigate([this.currentUrl[this.currentUrl.length - 1]]);
+    this.storage?.setBackButtonStatus();
+    this.storage?.setClientDataSaved(false);
+  };
 }

@@ -1,0 +1,54 @@
+<div class="confirm__page__container">
+    <form class="submit-form" [formGroup]="submitForm" novalidate (ngSubmit)="onSubmit()">
+    <div class="confirm__page__nonchange__inputs">
+        <mat-form-field appearance="outline">
+            <mat-label>Имя мастера</mat-label>
+            <input matInput readonly="true" [value]="clientData.master">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Выбранные услуги</mat-label>
+            <input matInput readonly="true" [value]="clientData.service">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Дата и время записи</mat-label>
+            <input matInput readonly="true" [value]="clientData.date | date: 'dd MMMM'">
+            <input matInput readonly="true" [value]="getValue()">
+        </mat-form-field>
+    </div>
+    <div class="confirm__page__change__inputs">
+        <div class="confirm__page__input__client__name">
+            <mat-form-field appearance="outline">
+                <mat-label>Введите Ваше имя</mat-label>
+                <input matInput formControlName="clientName" required>
+                <mat-error *ngIf="submitForm.controls['clientName'].invalid">{{getErrorMessage('clientName')}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="confirm__page__input__client__last__name">
+            <mat-form-field appearance="outline">
+                <mat-label>Введите Вашу фамилию</mat-label>
+                <input matInput formControlName="clientLastname" required>
+                <mat-error *ngIf="submitForm.controls['clientLastname'].invalid">{{getErrorMessage('clientLastname')}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="confirm__page__input__client__phone__number">
+            <mat-form-field appearance="outline">
+                <mat-label>Введите номер телефона</mat-label>
+                <input matInput formControlName="phoneNumber" required>
+                <mat-error *ngIf="submitForm.controls['phoneNumber'].invalid">{{getErrorMessage('phoneNumber')}}</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="confirm__page__input__textarea__comments">
+            <mat-form-field appearance="outline">
+                <mat-label>Комментарии</mat-label>
+                <textarea matInput formControlName="comments"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+        
+    <div class="confirm__page__submit__button">
+        <button mat-button color="primary" class="btn btn-default" [disabled]="submitForm.invalid">
+            Записаться
+          </button>
+    </div>
+    </form>
+</div>

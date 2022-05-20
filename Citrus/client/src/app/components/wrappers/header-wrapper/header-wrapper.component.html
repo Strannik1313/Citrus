@@ -1,0 +1,4 @@
+<app-main-page-header-layout
+    [isAuthorized]="storage.isTokenValid$ | async"
+    [isAdmin]="storage.isAdmin$ | async"
+></app-main-page-header-layout>

@@ -6,21 +6,24 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
-import localeRu from '@angular/common/locales/ru';
-import { MainPageLayoutComponent } from './mainPage/main-page-layout/main-page-layout.component';
-import { MainPageLayoutHeaderComponent } from './mainPage/header-wrapper/main-page-layout-header/main-page-layout-header.component';
+import { MainPageLayoutComponent } from './components/ui/main-page-ui/main-page-layout.component';
+import { MainPageHeaderLayoutComponent } from './components/ui/main-page-header-ui/main-page-header-layout.component';
 import { AppButtonModule } from './shared/app-button-wrapper/app-button.module';
 import { TokenInterceptor } from './services/token-interceptor';
-import { HeaderWrapperComponent } from './mainPage/header-wrapper/header-wrapper.component';
-
+import { HeaderWrapperComponent } from './components/wrappers/header-wrapper/header-wrapper.component';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlCro } from './components/custom-components-material-ui/custom-paginators-label/CustomPaginatorsLabel';
+import { MainPageLayoutWrapperComponent } from './components/wrappers/main-page-layout-wrapper/main-page-layout-wrapper.component';
+import localeRu from '@angular/common/locales/ru';
 registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
     AppComponent,
     MainPageLayoutComponent,
-    MainPageLayoutHeaderComponent,
+    MainPageHeaderLayoutComponent,
     HeaderWrapperComponent,
+    MainPageLayoutWrapperComponent
   ],
   imports: [
     BrowserModule,
@@ -28,12 +31,12 @@ registerLocaleData(localeRu);
     HttpClientModule,
     BrowserAnimationsModule,
     AppButtonModule
-
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
     { provide: LOCALE_ID, useValue: 'ru' },
-    {provide: HTTP_INTERCEPTORS, multi: true, useClass: TokenInterceptor}
+    { provide: HTTP_INTERCEPTORS, multi: true, useClass: TokenInterceptor },
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }
   ],
   bootstrap: [AppComponent]
 })

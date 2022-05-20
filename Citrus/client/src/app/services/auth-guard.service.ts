@@ -13,11 +13,11 @@ export class AuthGuardService implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | boolean {
     if (this.http.getToken() !== '') {
-      return true
-    }
-    this.router.navigate(['/'])
-    return false
-  }
+      return true;
+    };
+    this.router.navigate(['/']);
+    return false;
+  };
 
   constructor(
     private http: HttpService,

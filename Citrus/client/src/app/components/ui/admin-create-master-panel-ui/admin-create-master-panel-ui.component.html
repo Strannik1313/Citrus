@@ -1,0 +1,36 @@
+<mat-card class="content">
+  <form [formGroup]="createMasterForm" novalidate (ngSubmit)="onSubmit()">
+    <mat-form-field class="form-item" appearance="outline">
+      <mat-label>Введите имя мастера</mat-label>
+      <input matInput formControlName="masterName" required>
+      <mat-error *ngIf="createMasterForm.controls['masterName'].invalid">{{getErrorMessage('masterName')}}</mat-error>
+    </mat-form-field>
+    <mat-card>
+      <mat-selection-list formControlName="services" (selectionChange)="matListSelectionChange($event)" required
+        color="primary">
+        <mat-list-option [value]="item" *ngFor="let item of services; trackBy: trackByFn">
+          {{item}}
+        </mat-list-option>
+      </mat-selection-list>
+    </mat-card>
+    <ng-container *ngIf="priceList.priceListVisible">
+      <mat-card class="price-container">
+        <p>Введите цену на каждую выбранную услугу:</p>
+        <ng-container formArrayName="price"
+          *ngFor="let item of priceList.selectionList;let i=index; trackBy: trackByFn">
+          <p>
+            {{item}}
+            <mat-form-field class="form-item" appearance="outline">
+              <input matInput formControlName="{{i}}" required>
+              <mat-error *ngIf="createMasterForm.controls['price'].invalid">{{getErrorMessage('price')}}</mat-error>
+            </mat-form-field>
+          </p>
+        </ng-container>
+      </mat-card>
+    </ng-container>
+    <button mat-button color="primary" class="btn btn-default" [disabled]="createMasterForm.invalid || disabledForm"
+      type="submit">
+      Отправить
+    </button>
+  </form>
+</mat-card>

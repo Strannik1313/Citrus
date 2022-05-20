@@ -2,14 +2,19 @@
     padding: 0.5rem;
 }
 body {
-    width: 1400;
+    width: 85%;
     background: #fafafa;
+    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     font-size: .8vw;
 }
 
-.document {
-    
+.wrapper {
+    min-height: 100%;
+}
+
+.document { 
     width: calc(100% - 27.5vw);
+    height: 95%;
     margin: 0px auto;
     border: 1px solid #ffffff;
     background: #ffffff;
@@ -19,13 +24,15 @@ body {
     grid-template-areas:
         "header"
         "content";
-    grid-template-rows: 1fr 5fr;
+    grid-template-rows: 1fr 7fr;
     grid-template-columns: 1fr;
 }
 
 .header {
     grid-area: header;
-    margin-left: auto
+    max-height: 5vw;
+    background-color: #f4f6fc;
+    border-radius: 10px;
 }
 
 .content {

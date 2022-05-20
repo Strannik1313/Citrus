@@ -8,7 +8,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   constructor(
     private http: HttpService
-  ) { }
+  ) { };
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (this.http.isAuthenticated()) {
@@ -16,8 +16,8 @@ export class TokenInterceptor implements HttpInterceptor {
         setHeaders: {
           Authorization: this.http.getToken()
         }
-      })
-    }
-    return next.handle(req)
-  }
+      });
+    };
+    return next.handle(req);
+  };
 }

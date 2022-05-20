@@ -1,5 +1,5 @@
 <div class="form-container">
-    <form [formGroup]="submitForm" novalidate (ngSubmit)="submit()">
+    <form [formGroup]="submitForm" novalidate (ngSubmit)="onSubmit()">
       <mat-form-field class="form-item" appearance="outline">
         <mat-label>Введите email</mat-label>
         <input matInput placeholder="pat@example.com" formControlName="email" required>
@@ -14,7 +14,7 @@
         </button>
         <mat-error *ngIf="submitForm.controls['password'].invalid">{{getErrorMessage('password')}}</mat-error>
       </mat-form-field>
-      <button class="btn btn-default" [disabled]="submitForm.invalid || disabledForm" type="submit">
+      <button mat-button class="btn btn-default" [disabled]="submitForm.invalid || disabledForm" type="submit">
         Отправить
       </button>
     </form>
