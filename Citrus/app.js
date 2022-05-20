@@ -2,7 +2,6 @@ const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
 const passport = require('passport')
-
 const bodyParser = require('body-parser')
 const AuthRoutes = require('./routes/auth')
 const CalendarRoutes = require('./routes/calendar')
