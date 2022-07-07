@@ -13,7 +13,7 @@ export class AppComponent implements OnInit, OnDestroy {
   subscription: Subscription[] = [];
   constructor(
     private http: HttpService,
-    private storage: StorageService
+    public storage: StorageService
   ) { };
 
   ngOnInit(): void {

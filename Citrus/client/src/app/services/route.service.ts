@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { ServerErrorHandleService } from './server-error-handle.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -12,7 +13,8 @@ export class RouteService {
 
   constructor(
     private storage: StorageService,
-    private route: Router
+    private route: Router,
+    private serverErrorHandler: ServerErrorHandleService
   ) {
     this.subscription = this.storage?.roadMapUrls$?.subscribe(data => this.currentUrl = data);
   };
@@ -29,6 +31,7 @@ export class RouteService {
         this.route?.navigate(['/']);
         this.storage?.setBackButtonStatus();
         this.storage?.setClientDataSaved(false);
+        this.storage?.setIsResponseError(false);
         break;
       };
       default: {

@@ -1,0 +1,17 @@
+<div  class="cover-div">
+</div>
+<div class="dialog-window-content">
+    <button (click)="onCloseButtonClick()">123</button>
+    <div class="text_container">
+        <h2>{{data.windowHeaderText}}</h2>
+        <p>{{data.windowText}}</p>
+        <p>{{data.customMessage}}</p>
+    </div>
+    <div class="btn_container">
+        <app-app-button-wrapper
+        [label]="data.buttonLabel"
+        [url]="'/home'"
+        ></app-app-button-wrapper>
+    </div>
+    
+</div>

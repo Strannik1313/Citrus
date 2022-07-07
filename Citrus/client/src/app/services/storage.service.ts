@@ -7,7 +7,8 @@ import { ClientData } from '../models/client-data';
   providedIn: 'root'
 })
 export class StorageService {
-  private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject(['']);
+  private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(['']);
+  private isResponseError: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private haveAccountData: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isTokenValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -21,6 +22,7 @@ export class StorageService {
   private _tempArray: Array<string> = ['/'];
 
   roadMapUrls$: Observable<string[]> = this.roadMapSubject.asObservable();
+  isResponseError$: Observable<boolean> = this.isResponseError.asObservable();
   buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable();
   haveAccountData$: Observable<boolean> = this.haveAccountData.asObservable();
   isTokenValid$: Observable<boolean> = this.isTokenValid.asObservable();
@@ -235,4 +237,7 @@ export class StorageService {
   setIsAdmin(value: boolean): void {
     this.isAdmin.next(value);
   };
+  setIsResponseError(value: boolean): void {
+    this.isResponseError.next(value)
+  }
 }

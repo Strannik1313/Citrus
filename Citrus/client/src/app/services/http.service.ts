@@ -30,7 +30,7 @@ export class HttpService {
     id: number,
     procedure: string
   ): Observable<StudioData[]> {
-    return this.http?.post<StudioData[]>('http://localhost:8080/api/calendar', {
+    return this.http?.post<StudioData[]>('/api/calendar', {
       day: d,
       month: m,
       masterId: id,
@@ -39,11 +39,11 @@ export class HttpService {
   };
 
   getDisabledDates(): Observable<BlockedDate[]> {
-    return this.http.get<BlockedDate[]>('http://localhost:8080/api/disabled');
+    return this.http.get<BlockedDate[]>('/api/disabled');
   };
 
   getOrdersData(pageSize: number, startItem: number): Observable<OrderData[]> {
-    return this.http?.get<OrderData[]>('http://localhost:8080/api/admin/orders', {
+    return this.http?.get<OrderData[]>('/api/admin/orders', {
       headers: new HttpHeaders({
         pageSize: pageSize.toString(),
         startItem: startItem.toString()

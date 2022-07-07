@@ -12,8 +12,8 @@ import { CustomCalendarHeader } from 'src/app/components/custom-components-mater
 })
 export class DateChoiceLayoutComponent implements OnInit {
   @Input() customHeader = CustomCalendarHeader;
-  @Input() startDisabledDate: Date | null =null;
-  @Input() endDisabledDates: Date | null =null;
+  @Input() startDisabledDate: Date = new Date();
+  @Input() endDisabledDates: Date = new Date();
   @Input() showCard: boolean = false;
   @Input() selected: Date | null = null;
   @Input() selectedTime: number = 0;

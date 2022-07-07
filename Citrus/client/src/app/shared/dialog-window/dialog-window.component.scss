@@ -1,0 +1,32 @@
+.dialog-window-content {
+    width: 70%;
+    position: relative;
+    bottom: 200%;
+    left: 15%;
+    border: 2px solid black;
+    border-radius: 5px;
+    z-index: 9000;
+    background-color: white;
+    padding: 1em;
+
+    .text_container {
+        text-align: center;
+    }
+
+    .btn_container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.cover-div {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: gray;
+    opacity: 0.3;
+    z-index: 1000;
+}
