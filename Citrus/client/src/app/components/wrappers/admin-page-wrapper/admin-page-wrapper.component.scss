@@ -1,5 +1,42 @@
 .admin__page__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+        "n c";
+    grid-template-columns: 1fr 3fr;
+    justify-items: stretch;
+
+    .admin__navbar {
+        grid-area: n;
+        background-color: #f0f0f0;
+
+        .btn__create__master {
+            padding-top: 1em;
+
+            button {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        .btn__create__master__service {
+            button {
+                width: 100%;
+                text-align: left;
+            }
+        }
+
+        .btn__order__list {
+            button {
+                text-align: left;
+            }
+        }
+    }
+
+    .admin__create__panel {
+        width: 100%;
+        padding-left: 1em;
+        grid-area: c;
+        justify-self: center;
+    }
 }

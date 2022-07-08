@@ -1,3 +1,5 @@
+import { AdHostModule } from './../ad-host/ad-host.module';
+import { DialogWindowDirective } from './../../directives/dialog-window.directive';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminPageWrapperComponent } from 'src/app/components/wrappers/admin-page-wrapper/admin-page-wrapper.component';
@@ -5,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { AuthGuardService } from 'src/app/services/auth-guard.service';
 import { NavigateAccess } from 'src/app/services/navigate-access.service';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 
 
@@ -16,6 +19,7 @@ import { MatButtonModule } from '@angular/material/button';
   imports: [
     CommonModule,
     MatButtonModule,
+    AdHostModule,
     RouterModule.forChild([
       {path: '', component: AdminPageWrapperComponent},
       {

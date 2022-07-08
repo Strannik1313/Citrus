@@ -1,3 +1,4 @@
+import { AdHostModule } from './modules/ad-host/ad-host.module';
 import { DialogWindowDirective } from './directives/dialog-window.directive';
 import { DialogWindowModule } from './shared/dialog-window/dialog-window.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
@@ -27,8 +28,7 @@ registerLocaleData(localeRu);
     MainPageHeaderLayoutComponent,
     HeaderWrapperComponent,
     MainPageLayoutWrapperComponent,
-    ErrorWindowWrapperComponent,
-    DialogWindowDirective
+    ErrorWindowWrapperComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +36,8 @@ registerLocaleData(localeRu);
     HttpClientModule,
     BrowserAnimationsModule,
     AppButtonModule,
-    DialogWindowModule
+    DialogWindowModule,
+    AdHostModule
   ],
   providers: [
     httpInterceptorProviders,
