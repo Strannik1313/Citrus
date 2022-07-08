@@ -1,4 +1,4 @@
-.dialog-window-content {
+.dialog__window__content {
     width: 70%;
     position: relative;
     bottom: 200%;
@@ -9,18 +9,59 @@
     background-color: white;
     padding: 1em;
 
-    .text_container {
+    .text__container {
         text-align: center;
     }
 
-    .btn_container {
+    .header__container {
+        display: grid;
+        grid-template-areas:
+            "i ht btn"
+            "i wt btn";
+            grid-template-columns: 1fr 3fr 1fr;
+            grid-template-rows: 1fr 0.5fr;
+            align-items: start;
+            img {
+                grid-area: i;
+                width: 6em;
+            }
+            h2 {
+                grid-area: ht;
+                justify-self: center;
+            }
+            p {
+                grid-area: wt;
+                justify-self: center;
+            }
+            .bnt__close {
+                grid-area: btn;
+                justify-self: end;
+            }
+            .bnt__close:hover {
+                background-color: rgb(214, 214, 214);
+                border-radius: 3px;
+            }
+    }
+
+    .btn__ok__container {
         display: flex;
         align-items: center;
         justify-content: center;
+
+        .btn__ok {
+            background-color: white;
+            border-radius: 3px;
+            height: 2em;
+        }
+        .btn__ok:hover {
+            background-color: rgb(214, 214, 214);
+        }
     }
+
+    
 }
 
-.cover-div {
+.cover__div {
     position: fixed;
     top: 0;
     left: 0;

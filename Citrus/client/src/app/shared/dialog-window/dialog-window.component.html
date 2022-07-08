@@ -1,17 +1,20 @@
-<div  class="cover-div">
+<div  class="cover__div">
 </div>
-<div class="dialog-window-content">
-    <button (click)="onCloseButtonClick()">123</button>
-    <div class="text_container">
+<div class="dialog__window__content">
+    <div class="error__image">
+        
+    </div>
+    <div class="header__container">
+        <img src="{{data.imgLink}}" alt="error">
         <h2>{{data.windowHeaderText}}</h2>
         <p>{{data.windowText}}</p>
+        <button class="bnt__close" (click)="onCloseButtonClick()">X</button>
+    </div>
+    <div class="text__container">
         <p>{{data.customMessage}}</p>
     </div>
-    <div class="btn_container">
-        <app-app-button-wrapper
-        [label]="data.buttonLabel"
-        [url]="'/home'"
-        ></app-app-button-wrapper>
+    <div class="btn__ok__container">
+        <button class="btn__ok" (click)="onCloseButtonClick()">{{data.buttonLabel}}</button>
     </div>
     
 </div>

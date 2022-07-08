@@ -4,7 +4,8 @@
         <app-error-window-wrapper
             *ngIf="storage.isResponseError$ | async"
             [buttonLabel]="'Понятно'"
-            [customMessage]="'Попробуйте перезагрузить страницу или зайти позже'"
+            [customMessage]="'Попробуйте перезагрузить страницу или зайдите позже'"
+            [imgLink]="'../../../assets/images/error__image.svg'"
         ></app-error-window-wrapper>
     </div>
     <div class="content">
