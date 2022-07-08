@@ -1,6 +1,7 @@
+import { ComponentProviderService } from './../../../services/component-provider.service';
 import { AdminCreateMasterPanelWrapperComponent } from './../admin-create-master-panel-wrapper/admin-create-master-panel-wrapper.component';
-import { DialogWindowDirective } from './../../../directives/dialog-window.directive';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { AdHostDirective } from '../../../directives/ad-host';
+import { Component, ViewChild, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
 
@@ -12,19 +13,25 @@ import { HttpService } from 'src/app/services/http.service';
 export class AdminPageWrapperComponent implements OnInit {
 
   component = AdminCreateMasterPanelWrapperComponent
-  @ViewChild(DialogWindowDirective, { static: true }) adHost!: DialogWindowDirective;
+  @ViewChild(AdHostDirective, { static: true }) adHost!: AdHostDirective;
   constructor(
     private router: Router,
-    private http: HttpService
+    private http: HttpService,
+    private factory: ComponentProviderService
   ) { }
 
   ngOnInit(): void {
   };
 
-  loadAdminPanelContent():void {
-    const viewContainerRef = this.adHost.viewContainerRef;
-    viewContainerRef.clear();
-    viewContainerRef.createComponent<AdminCreateMasterPanelWrapperComponent>(this.component);
+  loadAdminPanelContent(key: string):void {
+    this.destroyWindow()
+    this.factory.getComponent({
+      host: this.adHost,
+      key
+    })
+    // const viewContainerRef = this.adHost.viewContainerRef;
+    // viewContainerRef.clear();
+    // viewContainerRef.createComponent<AdminCreateMasterPanelWrapperComponent>(this.component);
   }
   destroyWindow():void {
     const viewContainerRef = this.adHost.viewContainerRef;
@@ -34,7 +41,7 @@ export class AdminPageWrapperComponent implements OnInit {
 
   goToCreateMaster(): void {
     // this.router.navigate(['/admin/create-master']);
-    this.loadAdminPanelContent()
+    // this.loadAdminPanelContent()
   };
 
   goToCreateMasterService(): void {

@@ -2,7 +2,7 @@ import { StorageService } from 'src/app/services/storage.service';
 import { Subscription } from 'rxjs';
 import { ServerErrorHandleService } from './../../../services/server-error-handle.service';
 import { DialogWindowComponent } from './../../../shared/dialog-window/dialog-window.component';
-import { DialogWindowDirective } from './../../../directives/dialog-window.directive';
+import { AdHostDirective } from '../../../directives/ad-host';
 import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy } from '@angular/core';
 
 @Component({
@@ -18,7 +18,7 @@ export class ErrorWindowWrapperComponent implements OnInit, OnDestroy {
   private errorStatusText: string = '';
   private subscriptions: Subscription[] = [];
   component = DialogWindowComponent
-  @ViewChild(DialogWindowDirective, { static: true }) adHost!: DialogWindowDirective;
+  @ViewChild(AdHostDirective, { static: true }) adHost!: AdHostDirective;
   constructor(
     private serverErrorHandle: ServerErrorHandleService,
     private storage: StorageService

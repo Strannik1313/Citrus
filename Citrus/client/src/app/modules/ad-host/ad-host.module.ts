@@ -1,4 +1,4 @@
-import { DialogWindowDirective } from './../../directives/dialog-window.directive';
+import { AdHostDirective } from '../../directives/ad-host';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -6,13 +6,13 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    DialogWindowDirective
+    AdHostDirective
   ],
   imports: [
     CommonModule
   ],
   exports: [
-    DialogWindowDirective
+    AdHostDirective
   ]
 })
 export class AdHostModule { }

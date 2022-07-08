@@ -3,7 +3,7 @@ import { Directive, ViewContainerRef } from '@angular/core';
 @Directive({
   selector: '[dialogWindow]'
 })
-export class DialogWindowDirective {
+export class AdHostDirective {
 
   constructor(
     public viewContainerRef: ViewContainerRef
