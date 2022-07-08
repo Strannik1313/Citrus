@@ -1,3 +1,4 @@
+import { ClientData } from 'src/app/models/client-data';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -32,6 +33,18 @@ export class RouteService {
         this.storage?.setBackButtonStatus();
         this.storage?.setClientDataSaved(false);
         this.storage?.setIsResponseError(false);
+        this.storage?.setClientData({
+          name: 'home',
+          master: '',
+          masterId: 0,
+          masterWasSelected: false,
+          service: '',
+          date: null,
+          time: {
+            hour: 0,
+            minute: 0
+          }
+        })
         break;
       };
       default: {

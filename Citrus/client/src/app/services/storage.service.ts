@@ -213,6 +213,21 @@ export class StorageService {
         });
         break;
       };
+      case 'home': {
+        this.clientData.next({
+          ...this.clientData.value,
+          master: action.master,
+          masterId: action.masterId,
+          masterWasSelected: action.masterWasSelected,
+          service: action.service,
+          date: action.date,
+          time: {
+            hour: action.hour,
+            minute: action.minute
+          }
+        });
+        break;
+      };
     };
   };
 
