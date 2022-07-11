@@ -1,12 +1,12 @@
 <div class="document">
     <app-header-wrapper class="header"></app-header-wrapper>
     <div class="dialog-window">
-        <app-error-window-wrapper
-            *ngIf="storage.isResponseError$ | async"
-            [buttonLabel]="'Понятно'"
-            [customMessage]="'Попробуйте перезагрузить страницу или зайдите позже'"
-            [windowClass]="'error__window'"
-        ></app-error-window-wrapper>
+        <app-dialog-window
+            *ngIf="isActive"
+            (destroyWindow)="onButtonClick($event)"
+            [textData]="dialogTextData"
+            [type]="'error'"
+        ></app-dialog-window>
     </div>
     <div class="content">
         <router-outlet></router-outlet>

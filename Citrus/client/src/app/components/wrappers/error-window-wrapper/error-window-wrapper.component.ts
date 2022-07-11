@@ -10,52 +10,52 @@ import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy } from
   templateUrl: './error-window-wrapper.component.html',
   styleUrls: ['./error-window-wrapper.component.scss']
 })
-export class ErrorWindowWrapperComponent implements OnInit, OnDestroy {
-  @Input() buttonLabel: string = '';
-  @Input() customMessage: string = '';
-  @Input() windowClass: string = '';
-  private errorStatus: number = 0;
-  private errorStatusText: string = '';
-  private subscriptions: Subscription[] = [];
-  component = DialogWindowComponent
-  @ViewChild(AdHostDirective, { static: true }) adHost!: AdHostDirective;
-  constructor(
-    private serverErrorHandle: ServerErrorHandleService,
-    private storage: StorageService
-  ) { 
-    this.errorStatus = this.serverErrorHandle.getErrorInstance().status;
-    this.errorStatusText = this.serverErrorHandle.getErrorInstance().statusText;
-  }
+export class ErrorWindowWrapperComponent {
+  // @Input() buttonLabel: string = '';
+  // @Input() customMessage: string = '';
+  // @Input() windowClass: string = '';
+  // private errorStatus: number = 0;
+  // private errorStatusText: string = '';
+  // private subscriptions: Subscription[] = [];
+  // component = DialogWindowComponent
+  // @ViewChild(AdHostDirective, { static: true }) adHost!: AdHostDirective;
+  // constructor(
+  //   private serverErrorHandle: ServerErrorHandleService,
+  //   private storage: StorageService
+  // ) { 
+  //   this.errorStatus = this.serverErrorHandle.getErrorInstance().status;
+  //   this.errorStatusText = this.serverErrorHandle.getErrorInstance().statusText;
+  // }
 
-  ngOnInit(): void {
-    this.loadModalWindow();
-  };
-  ngOnDestroy(): void {
-    this.subscriptions.forEach(s => {
-      s.unsubscribe();
-    })
-  }
+  // ngOnInit(): void {
+  //   this.loadModalWindow();
+  // };
+  // ngOnDestroy(): void {
+  //   this.subscriptions.forEach(s => {
+  //     s.unsubscribe();
+  //   })
+  // }
 
-  loadModalWindow(): void {
-    const viewContainerRef = this.adHost.viewContainerRef;
-    viewContainerRef.clear();
-    const componentRef = viewContainerRef.createComponent<DialogWindowComponent>(this.component);
-    componentRef.instance.data = {
-      ...componentRef.instance.data,
-      windowHeaderText: `Ошибка ${this.errorStatus}!`,
-      windowText: this.errorStatusText,
-      buttonLabel: this.buttonLabel,
-      customMessage: this.customMessage,
-      windowClass: this.windowClass
-    }
-    this.subscriptions.push(componentRef.instance.destroyWindow.subscribe(data => {
-      this.destroyWindow();
-    }));
-  }
-  destroyWindow():void {
-    const viewContainerRef = this.adHost.viewContainerRef;
-    viewContainerRef.clear();
-    viewContainerRef.remove();
-    this.storage.setIsResponseError(false);
-  }
+  // loadModalWindow(): void {
+  //   const viewContainerRef = this.adHost.viewContainerRef;
+  //   viewContainerRef.clear();
+  //   const componentRef = viewContainerRef.createComponent<DialogWindowComponent>(this.component);
+  //   componentRef.instance.data = {
+  //     ...componentRef.instance.data,
+  //     windowHeaderText: `Ошибка ${this.errorStatus}!`,
+  //     windowText: this.errorStatusText,
+  //     buttonLabel: this.buttonLabel,
+  //     customMessage: this.customMessage,
+  //     windowClass: this.windowClass
+  //   }
+  //   this.subscriptions.push(componentRef.instance.destroyWindow.subscribe(data => {
+  //     this.destroyWindow();
+  //   }));
+  // }
+  // destroyWindow():void {
+  //   const viewContainerRef = this.adHost.viewContainerRef;
+  //   viewContainerRef.clear();
+  //   viewContainerRef.remove();
+  //   this.storage.setIsResponseError(false);
+  // }
 }

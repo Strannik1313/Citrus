@@ -1,20 +1,17 @@
 <div  class="cover__div">
 </div>
 <div class="dialog__window__content">
-    <div class="error__image">
-        
-    </div>
     <div class="header__container">
-        <img #img class="{{data.windowClass}}">
-        <h2>{{data.windowHeaderText}}</h2>
-        <p>{{data.windowText}}</p>
+        <img #img class="{{textData.dialogWindowImgClass}}">
+        <h2>{{textData.windowHeaderText}}</h2>
+        <p>{{textData.windowText}}</p>
         <button class="bnt__close" (click)="onCloseButtonClick()">X</button>
     </div>
     <div class="text__container">
-        <p>{{data.customMessage}}</p>
+        <p>{{textData.customMessage}}</p>
     </div>
     <div class="btn__ok__container">
-        <button class="btn__ok" (click)="onCloseButtonClick()">{{data.buttonLabel}}</button>
+        <button class="btn__ok" (click)="onCloseButtonClick()">{{textData.buttonLabel}}</button>
     </div>
     
 </div>

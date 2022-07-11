@@ -32,7 +32,7 @@ export class RouteService {
         this.route?.navigate(['/']);
         this.storage?.setBackButtonStatus();
         this.storage?.setClientDataSaved(false);
-        this.storage?.setIsResponseError(false);
+        this.storage?.setIsDialogWindowOpen(false);
         this.storage?.setClientData({
           name: 'home',
           master: '',

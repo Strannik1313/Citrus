@@ -6,18 +6,14 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ServerErrorHandleService {
-  private isServerError: boolean = false;
   private errorInstance: HttpErrorResponse = new HttpErrorResponse({});
   constructor(
     private storage: StorageService
   ) { };
 
-  setIsServerError(isError: boolean): void {
-    this.isServerError = isError;
-  };
   setErrorInstance(error: HttpErrorResponse): void {
     this.errorInstance = error;
-    this.storage.setIsResponseError(this.isServerError);
+    this.storage?.setIsDialogWindowOpen(true);
   }; 
   getErrorInstance(): HttpErrorResponse {
     return this.errorInstance

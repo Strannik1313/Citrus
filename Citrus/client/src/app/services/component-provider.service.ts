@@ -1,5 +1,4 @@
 import { AdHostDirective } from './../directives/ad-host';
-import { Router } from '@angular/router';
 import { AdminOrderListPanelWrapperComponent } from './../components/wrappers/admin-order-list-panel-wrapper/admin-order-list-panel-wrapper.component';
 import { AdminCreateServicePanelWrapperComponent } from 'src/app/components/wrappers/admin-create-service-panel-wrapper/admin-create-service-panel-wrapper.component';
 import { AdminCreateMasterPanelWrapperComponent } from 'src/app/components/wrappers/admin-create-master-panel-wrapper/admin-create-master-panel-wrapper.component';
@@ -11,7 +10,6 @@ import { Injectable } from '@angular/core';
 })
 export class ComponentProviderService {
   constructor(
-    private router: Router
   ) { }
 
   getComponent(action: any): any {

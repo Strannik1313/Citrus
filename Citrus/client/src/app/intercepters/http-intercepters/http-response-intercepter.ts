@@ -17,10 +17,8 @@ export class HttpResponseIntercepter implements HttpInterceptor {
     .pipe(
       tap({
         next: (event) => {
-          this.serverErrorHandler.setIsServerError(false);
         },
         error: (error) => {
-          this.serverErrorHandler.setIsServerError(true);
           this.serverErrorHandler.setErrorInstance(error);
         }
       }),
