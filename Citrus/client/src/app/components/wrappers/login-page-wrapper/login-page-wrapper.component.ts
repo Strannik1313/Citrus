@@ -12,12 +12,9 @@ import { AuthFormData } from 'src/app/models/auth-form-data';
 })
 export class LoginPageWrapperComponent implements OnDestroy {
   private subscriptions: Subscription[] = [];
-  private horizontalPosition: MatSnackBarHorizontalPosition = 'center';
-  private verticalPosition: MatSnackBarVerticalPosition = 'top';
   public disabledForm: boolean = false;
 
   constructor(
-    private _snackBar: MatSnackBar,
     private http: HttpService,
     private router: Router
   ) { };
@@ -43,10 +40,6 @@ export class LoginPageWrapperComponent implements OnDestroy {
         },
         error: (error) => {
           this.disableForm(false);
-          this._snackBar.open(error.error.message, 'Ok', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
         }
       }
     ));

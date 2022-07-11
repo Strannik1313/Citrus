@@ -13,7 +13,7 @@ import { Component, Input, OnInit, ViewChild, ViewContainerRef, OnDestroy } from
 export class ErrorWindowWrapperComponent implements OnInit, OnDestroy {
   @Input() buttonLabel: string = '';
   @Input() customMessage: string = '';
-  @Input() imgLink: string = '';
+  @Input() windowClass: string = '';
   private errorStatus: number = 0;
   private errorStatusText: string = '';
   private subscriptions: Subscription[] = [];
@@ -41,11 +41,12 @@ export class ErrorWindowWrapperComponent implements OnInit, OnDestroy {
     viewContainerRef.clear();
     const componentRef = viewContainerRef.createComponent<DialogWindowComponent>(this.component);
     componentRef.instance.data = {
+      ...componentRef.instance.data,
       windowHeaderText: `Ошибка ${this.errorStatus}!`,
       windowText: this.errorStatusText,
       buttonLabel: this.buttonLabel,
       customMessage: this.customMessage,
-      imgLink: this.imgLink
+      windowClass: this.windowClass
     }
     this.subscriptions.push(componentRef.instance.destroyWindow.subscribe(data => {
       this.destroyWindow();

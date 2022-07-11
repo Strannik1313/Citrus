@@ -5,7 +5,7 @@
         
     </div>
     <div class="header__container">
-        <img src="{{data.imgLink}}" alt="error">
+        <img #img class="{{data.windowClass}}">
         <h2>{{data.windowHeaderText}}</h2>
         <p>{{data.windowText}}</p>
         <button class="bnt__close" (click)="onCloseButtonClick()">X</button>

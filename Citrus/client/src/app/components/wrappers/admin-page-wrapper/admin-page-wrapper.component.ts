@@ -17,39 +17,21 @@ export class AdminPageWrapperComponent implements OnInit {
   constructor(
     private router: Router,
     private http: HttpService,
-    private factory: ComponentProviderService
+    private provider: ComponentProviderService
   ) { }
 
   ngOnInit(): void {
   };
 
   loadAdminPanelContent(key: string):void {
-    this.destroyWindow()
-    this.factory.getComponent({
+    this.destroyWindow();
+    this.provider.getComponent({
       host: this.adHost,
       key
-    })
-    // const viewContainerRef = this.adHost.viewContainerRef;
-    // viewContainerRef.clear();
-    // viewContainerRef.createComponent<AdminCreateMasterPanelWrapperComponent>(this.component);
+    });
   }
   destroyWindow():void {
-    const viewContainerRef = this.adHost.viewContainerRef;
-    viewContainerRef.clear();
-    viewContainerRef.remove();
-  };
-
-  goToCreateMaster(): void {
-    // this.router.navigate(['/admin/create-master']);
-    // this.loadAdminPanelContent()
-  };
-
-  goToCreateMasterService(): void {
-    this.router.navigate(['/admin/create-service']);
-  };
-
-  goToOrderList(): void {
-    this.router.navigate(['/admin/order-list']);
+    this.provider.destroyComponent(this.adHost);
   };
 
   logout(): void {
