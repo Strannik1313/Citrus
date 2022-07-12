@@ -29,8 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isActive = data;
       if (this.isActive) {
         this.dialogTextData = {
-          windowHeaderText: this.serverErrorHandle.getErrorInstance().status.toString(),
-          windowText: this.serverErrorHandle.getErrorInstance().statusText
+          windowHeaderText: this.serverErrorHandle?.getErrorInstance().status.toString(),
+          windowText: this.serverErrorHandle?.getErrorInstance().statusText
         }
       }
     }))
@@ -52,7 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.forEach(sub => sub.unsubscribe())
   };
-  onButtonClick(e: Event) {
-    this.storage.setIsDialogWindowOpen(false)
+  onButtonClick(e: boolean) {
+    this.storage.setIsDialogWindowOpen(false);
   }
 }

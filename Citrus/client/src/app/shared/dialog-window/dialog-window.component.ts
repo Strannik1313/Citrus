@@ -21,7 +21,7 @@ export class DialogWindowComponent implements OnInit {
     buttonLabel: '',
     customMessage: ''
   }
-  @Output() destroyWindow: EventEmitter<any> = new EventEmitter
+  @Output() destroyWindow: EventEmitter<boolean> = new EventEmitter
   constructor(
   ) { }
   
@@ -30,11 +30,11 @@ export class DialogWindowComponent implements OnInit {
       case DialogType.Error:
         this.textData = {
           ...this.textData,
-          windowHeaderText: `Ошибка ${this.textData.windowHeaderText}!`,
+          windowHeaderText: `Ошибка ${this.textData.windowHeaderText}`,
           windowText: this.textData.windowText,
           buttonLabel: this.textData.buttonLabel? this.textData.buttonLabel: 'Понятно',
           customMessage: this.textData.customMessage? this.textData.customMessage: 'Попробуйте перезагрузить страницу или зайдите позже',
-          dialogWindowImgClass: 'error__window'
+          imgClass: 'error__window'
         }
         break;
       case DialogType.Warning:
@@ -44,7 +44,7 @@ export class DialogWindowComponent implements OnInit {
           windowText: this.textData.windowText,
           buttonLabel: this.textData.buttonLabel? this.textData.buttonLabel: 'Ok',
           customMessage: this.textData.customMessage? this.textData.customMessage: 'Что-то пошло не так',
-          dialogWindowImgClass: 'warning__window'
+          imgClass: 'warning__window'
         }
         break;
       case DialogType.Confirm:
@@ -54,7 +54,7 @@ export class DialogWindowComponent implements OnInit {
           windowText: this.textData.windowText,
           buttonLabel: this.textData.buttonLabel? this.textData.buttonLabel: 'Ok',
           customMessage: this.textData.customMessage? this.textData.customMessage: 'Вы уверены, что хотите это сделать?',
-          dialogWindowImgClass: 'confirm__window'
+          imgClass: 'confirm__window'
         }
         break;
       default:
@@ -64,13 +64,13 @@ export class DialogWindowComponent implements OnInit {
           windowText: '',
           buttonLabel: 'Ok',
           customMessage: '',
-          dialogWindowImgClass: 'error__window'
+          imgClass: 'error__window'
         }
         break;
     }
   }
   
   onCloseButtonClick(): void {
-    this.destroyWindow.emit()
+    this.destroyWindow.emit(true)
   }
 }

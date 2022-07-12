@@ -1,11 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpService } from 'src/app/services/http.service';
 
-enum AdminPanelContent {
-  CreateMaster = 'create-master',
-  CreateService = 'create-service',
-  OrderList = 'order-list',
-  None = ''
+interface AdminPanelContent {
+  createMaster: string,
+  createService: string,
+  orderList: string,
+  noone: string
+}
+
+interface ButtonConf {
+  label: string,
+  key: string
 }
 
 @Component({
@@ -13,33 +18,35 @@ enum AdminPanelContent {
   templateUrl: './admin-page-wrapper.component.html',
   styleUrls: ['./admin-page-wrapper.component.scss']
 })
-export class AdminPageWrapperComponent implements OnInit {
-
-  public adminPanelButtonConfiguration: Array<any> = [{
-    buttonLabel: 'Создать нового мастера',
-    buttonClickArg: AdminPanelContent.CreateMaster
+export class AdminPageWrapperComponent {
+  public adminPanelContent: AdminPanelContent = {
+    createMaster: 'create-master',
+    createService: 'create-service',
+    orderList: 'order-list',
+    noone: ''
+  }
+  public buttonsConf: Array<ButtonConf> = [{
+    label: 'Создать нового мастера',
+    key: this.adminPanelContent.createMaster
   }, {
-    buttonLabel: 'Создать новую услугу',
-    buttonClickArg: AdminPanelContent.CreateService
+    label: 'Создать новую услугу',
+    key: this.adminPanelContent.createService
   },
   {
-    buttonLabel: 'Забронированные места',
-    buttonClickArg: AdminPanelContent.OrderList
+    label: 'Забронированные места',
+    key: this.adminPanelContent.orderList
   }];
-  public adminPanelContent: AdminPanelContent = AdminPanelContent.None;
+  public currentContent: string = this.adminPanelContent.noone;
   constructor(
     private http: HttpService
   ) { }
 
-  ngOnInit(): void {
-  };
-
-  loadAdminPanelContent(action: AdminPanelContent): void {
-    this.adminPanelContent = action
+  setContent(action: string): void {
+    this.currentContent = action
   }
 
-  trackByFn(index: number, item: { buttonLabel: string, buttonClickArg: string }): string {
-    return item.buttonClickArg;
+  trackByFn(index: number, item: ButtonConf): string {
+    return item.key;
   }
 
   logout(): void {

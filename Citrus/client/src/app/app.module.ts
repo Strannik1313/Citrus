@@ -1,4 +1,3 @@
-import { AdHostModule } from './modules/ad-host/ad-host.module';
 import { DialogWindowModule } from './shared/dialog-window/dialog-window.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -33,8 +32,7 @@ registerLocaleData(localeRu);
     HttpClientModule,
     BrowserAnimationsModule,
     AppButtonModule,
-    DialogWindowModule,
-    AdHostModule
+    DialogWindowModule
   ],
   providers: [
     httpInterceptorProviders,

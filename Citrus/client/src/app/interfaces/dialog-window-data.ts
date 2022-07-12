@@ -3,5 +3,5 @@ export interface DialogWindowData {
     windowText: string
     buttonLabel?: string
     customMessage?: string,
-    dialogWindowImgClass?: string
+    imgClass?: string
 }
