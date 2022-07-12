@@ -1,3 +1,4 @@
+import { MatButtonModule } from '@angular/material/button';
 import { DialogWindowModule } from './shared/dialog-window/dialog-window.module';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -32,6 +33,7 @@ registerLocaleData(localeRu);
     HttpClientModule,
     BrowserAnimationsModule,
     AppButtonModule,
+    MatButtonModule,
     DialogWindowModule
   ],
   providers: [

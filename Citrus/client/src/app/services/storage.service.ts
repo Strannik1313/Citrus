@@ -1,7 +1,9 @@
+import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AccessMap } from '../models/access-map';
 import { ClientData } from '../models/client-data';
+
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,7 @@ export class StorageService {
   private isBackButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private accessMap: BehaviorSubject<AccessMap> = new BehaviorSubject<AccessMap>(new AccessMap);
   private clientData: BehaviorSubject<ClientData> = new BehaviorSubject<ClientData>(new ClientData);
-  private authorizedUserData: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  private authorizedUserData: BehaviorSubject<AuthorizedClientData> = new BehaviorSubject<AuthorizedClientData>(new AuthorizedClientData);
   private _tempArray: Array<string> = ['/'];
 
   roadMapUrls$: Observable<string[]> = this.roadMapSubject.asObservable();
@@ -32,7 +34,7 @@ export class StorageService {
   backButtonDisabled$: Observable<boolean> = this.isBackButtonDisabled.asObservable();
   accessMap$: Observable<AccessMap> = this.accessMap.asObservable();
   clientData$: Observable<ClientData> = this.clientData.asObservable();
-  authorizedUserData$: Observable<any> = this.authorizedUserData.asObservable();
+  authorizedUserData$: Observable<AuthorizedClientData> = this.authorizedUserData.asObservable();
 
   setRoadMap(newValue: string) {
     if (newValue == '/..') {
@@ -235,7 +237,7 @@ export class StorageService {
     this.isClientDataShouldSaved.next(value);
   };
 
-  setAuthorizedUserData(data: any): void {
+  setAuthorizedUserData(data: AuthorizedClientData): void {
     this.authorizedUserData.next({
       ...data
     });

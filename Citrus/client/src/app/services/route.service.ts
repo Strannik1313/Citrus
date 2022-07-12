@@ -1,3 +1,4 @@
+import { HttpService } from 'src/app/services/http.service';
 import { ClientData } from 'src/app/models/client-data';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -15,7 +16,7 @@ export class RouteService {
   constructor(
     private storage: StorageService,
     private route: Router,
-    private serverErrorHandler: ServerErrorHandleService
+    private http: HttpService
   ) {
     this.subscription = this.storage?.roadMapUrls$?.subscribe(data => this.currentUrl = data);
   };
@@ -45,6 +46,14 @@ export class RouteService {
             minute: 0
           }
         })
+        break;
+      };
+      case '/logout': {
+        this.storage?.setRoadMap('clear');
+        this.storage?.setAccessMap('/');
+        this.route?.navigate(['/']);
+        this.storage?.setBackButtonStatus();
+        this.http.logout();
         break;
       };
       default: {

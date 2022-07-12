@@ -12,7 +12,6 @@ import { DialogType } from './shared/dialog-window/dialog-window.component';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'citrus';
   private subscription: Subscription[] = [];
   public dialogTextData: DialogWindowData = {
     windowHeaderText: '',
@@ -28,9 +27,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.push(this.storage.isDialogWindowOpen$.subscribe(data => {
       this.isActive = data;
       if (this.isActive) {
+        const error = this.serverErrorHandle?.getErrorInstance();
         this.dialogTextData = {
-          windowHeaderText: this.serverErrorHandle?.getErrorInstance().status.toString(),
-          windowText: this.serverErrorHandle?.getErrorInstance().statusText
+          windowHeaderText: error.status.toString(),
+          windowText: error.statusText
         }
       }
     }))

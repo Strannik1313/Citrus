@@ -122,10 +122,6 @@ export class AccountPageWrapperComponent implements OnDestroy {
     };
   };
 
-  logout(): void {
-    this.http.logout();
-  };
-
   disableForm(value: boolean): boolean {
     return this.disabledForm = value;
   };

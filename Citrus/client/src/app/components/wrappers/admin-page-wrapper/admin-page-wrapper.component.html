@@ -1,7 +1,4 @@
 <div class="admin__page__container">
-    <div class="btn__logout">
-        <button mat-button mat-button color="primary" (click)="logout()">Выйти из аккаунта</button>
-    </div>
     <div class="btn__group">
         <ng-container *ngFor="let button of buttonsConf; trackBy: trackByFn">
             <button mat-button (click)="setContent(button.key)">{{button.label}}</button>

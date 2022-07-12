@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { HttpService } from 'src/app/services/http.service';
 
 interface AdminPanelContent {
   createMaster: string,
@@ -24,7 +23,7 @@ export class AdminPageWrapperComponent {
     createService: 'create-service',
     orderList: 'order-list',
     noone: ''
-  }
+  };
   public buttonsConf: Array<ButtonConf> = [{
     label: 'Создать нового мастера',
     key: this.adminPanelContent.createMaster
@@ -37,19 +36,12 @@ export class AdminPageWrapperComponent {
     key: this.adminPanelContent.orderList
   }];
   public currentContent: string = this.adminPanelContent.noone;
-  constructor(
-    private http: HttpService
-  ) { }
 
   setContent(action: string): void {
     this.currentContent = action
-  }
+  };
 
   trackByFn(index: number, item: ButtonConf): string {
     return item.key;
-  }
-
-  logout(): void {
-    this.http.logout();
   };
 }

@@ -4,7 +4,7 @@ import { RouteService } from 'src/app/services/route.service';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
-  selector: 'app-app-button-wrapper',
+  selector: 'app-button-wrapper',
   templateUrl: './app-button-wrapper.component.html',
   styleUrls: ['./app-button-wrapper.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
