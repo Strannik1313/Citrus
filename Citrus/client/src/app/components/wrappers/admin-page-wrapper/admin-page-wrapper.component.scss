@@ -2,36 +2,14 @@
     height: 100%;
     display: grid;
     grid-template-areas:
-        "n c";
+        "gr c";
     grid-template-columns: 1fr 3fr;
-    justify-items: stretch;
 
-    .admin__navbar {
-        grid-area: n;
+    .btn__group {
+        grid-area: gr;
+        align-self: start;
+        display: grid;
         background-color: #f0f0f0;
-
-        .btn__create__master {
-            padding-top: 1em;
-
-            button {
-                width: 100%;
-                text-align: left;
-            }
-        }
-
-        .btn__create__master__service {
-            button {
-                width: 100%;
-                text-align: left;
-            }
-        }
-
-        .btn__order__list {
-            button {
-                width: 100%;
-                text-align: left;
-            }
-        }
     }
 
     .admin__create__panel {

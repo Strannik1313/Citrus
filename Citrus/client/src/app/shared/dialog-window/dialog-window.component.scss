@@ -23,7 +23,7 @@
             "i ht btn"
             "i wt btn";
         grid-template-columns: 1fr 3fr 1fr;
-        grid-template-rows: 1fr 0.5fr;
+        grid-template-rows: 0.5fr 1fr;
         align-items: start;
 
         img {
@@ -31,15 +31,15 @@
             width: 6em;
         }
         .error__window {
-            content: url('../../../assets/images/error.png')
+            content: url('//localhost:4200/assets/images/error.png');
         }
 
         .warning__window {
-            content: url('../../../assets/images/warning.png')
+            content: url('//localhost:4200/assets/images/warning.png')
         }
 
         .confirm__window {
-            content: url('../../../assets/images/confirm.png')
+            content: url('//localhost:4200/assets/images/confirm.png')
         }
 
         h2 {

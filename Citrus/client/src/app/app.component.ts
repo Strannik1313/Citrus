@@ -4,6 +4,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { HttpService } from './services/http.service';
 import { StorageService } from './services/storage.service';
+import { DialogType } from './shared/dialog-window/dialog-window.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit, OnDestroy {
     windowText: ''
   };
   public isActive: boolean = false;
+  public dialogType: DialogType = DialogType.Error;
   constructor(
     private http: HttpService,
     public storage: StorageService,

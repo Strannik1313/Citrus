@@ -5,7 +5,7 @@
             *ngIf="isActive"
             (destroyWindow)="onButtonClick($event)"
             [textData]="dialogTextData"
-            [type]="'error'"
+            [type]="dialogType"
         ></app-dialog-window>
     </div>
     <div class="content">

@@ -17,7 +17,6 @@ import { MatPaginatorIntlCro } from './components/custom-components-material-ui/
 import { MainPageLayoutWrapperComponent } from './components/wrappers/main-page-layout-wrapper/main-page-layout-wrapper.component';
 import localeRu from '@angular/common/locales/ru';
 import { httpInterceptorProviders } from './intercepters/http-intercepter-providers';
-import { ErrorWindowWrapperComponent } from './components/wrappers/error-window-wrapper/error-window-wrapper.component';
 registerLocaleData(localeRu);
 
 @NgModule({
@@ -26,8 +25,7 @@ registerLocaleData(localeRu);
     MainPageLayoutComponent,
     MainPageHeaderLayoutComponent,
     HeaderWrapperComponent,
-    MainPageLayoutWrapperComponent,
-    ErrorWindowWrapperComponent
+    MainPageLayoutWrapperComponent
   ],
   imports: [
     BrowserModule,

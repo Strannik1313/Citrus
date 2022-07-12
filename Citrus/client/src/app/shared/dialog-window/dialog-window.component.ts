@@ -1,7 +1,7 @@
 import { DialogWindowData } from './../../interfaces/dialog-window-data';
-import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges } from '@angular/core';
 
-enum WindowType {
+export enum DialogType {
   Error = 'error',
   Warning = 'warning',
   Confirm = 'confirm'
@@ -15,7 +15,7 @@ enum WindowType {
 })
 export class DialogWindowComponent implements OnInit {
   @Input() type: string = '';
-  @Input() textData: DialogWindowData =  {
+  @Input() textData: DialogWindowData = {
     windowHeaderText: '',
     windowText: '',
     buttonLabel: '',
@@ -24,36 +24,36 @@ export class DialogWindowComponent implements OnInit {
   @Output() destroyWindow: EventEmitter<any> = new EventEmitter
   constructor(
   ) { }
-
+  
   ngOnInit(): void {
     switch (this.type) {
-      case WindowType.Error:
+      case DialogType.Error:
         this.textData = {
           ...this.textData,
           windowHeaderText: `Ошибка ${this.textData.windowHeaderText}!`,
           windowText: this.textData.windowText,
-          buttonLabel: 'Понятно',
-          customMessage: 'Попробуйте перезагрузить страницу или зайдите позже',
+          buttonLabel: this.textData.buttonLabel? this.textData.buttonLabel: 'Понятно',
+          customMessage: this.textData.customMessage? this.textData.customMessage: 'Попробуйте перезагрузить страницу или зайдите позже',
           dialogWindowImgClass: 'error__window'
         }
         break;
-      case WindowType.Warning:
+      case DialogType.Warning:
         this.textData = {
           ...this.textData,
           windowHeaderText: this.textData.windowHeaderText,
           windowText: this.textData.windowText,
-          buttonLabel: 'Ok',
-          customMessage: 'Просто информация',
+          buttonLabel: this.textData.buttonLabel? this.textData.buttonLabel: 'Ok',
+          customMessage: this.textData.customMessage? this.textData.customMessage: 'Что-то пошло не так',
           dialogWindowImgClass: 'warning__window'
         }
         break;
-      case WindowType.Confirm:
+      case DialogType.Confirm:
         this.textData = {
           ...this.textData,
           windowHeaderText: this.textData.windowHeaderText,
           windowText: this.textData.windowText,
-          buttonLabel: 'Ok',
-          customMessage: 'Вы уверены, что хотите это сделать?',
+          buttonLabel: this.textData.buttonLabel? this.textData.buttonLabel: 'Ok',
+          customMessage: this.textData.customMessage? this.textData.customMessage: 'Вы уверены, что хотите это сделать?',
           dialogWindowImgClass: 'confirm__window'
         }
         break;
