@@ -11,13 +11,15 @@ import { NewMasterFormData } from '../models/new-master-form-data';
 import { NewServiceData } from '../interfaces/new-service-data';
 import { OrderData } from '../models/order-data';
 import { AuthFormData } from '../models/auth-form-data';
+import { UserModel } from '../models/user-model';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
   private token: string = '';
-
+  private userModel: UserModel = UserModel.Unauth;
   constructor(
     private http: HttpClient,
     private storage: StorageService,
@@ -100,7 +102,8 @@ export class HttpService {
             localStorage.setItem('authToken', token);
             this.setToken(token);
             this.storage?.setIsTokenValid(true);
-            if (payload?.admin) {
+            this.storage?.setCurrentUserModel({isAdmin: payload?.admin, isAuth: true})
+            if (this.userModel === UserModel.Admin) {
               this.storage?.setIsAdmin(true);
             } else {
               this.storage?.setIsAdmin(false);
@@ -126,11 +129,10 @@ export class HttpService {
     return this.http?.get<any>('/api/auth/me')
       .pipe(
         tap((data) => {
-          if (data?.admin) {
-            this.storage?.setIsAdmin(true);
-          };
           this.storage?.setIsTokenValid(true);
           this.storage?.setHaveAccountFormData(true);
+          this.storage?.setCurrentUserModel({isAdmin: data?.admin, isAuth: true});
+
         }),
         catchError(() => {
           this.setToken('');
@@ -138,6 +140,7 @@ export class HttpService {
           this.storage?.setIsTokenValid(false);
           this.storage?.setIsAdmin(false);
           this.storage?.setHaveAccountFormData(false);
+          this.storage?.setCurrentUserModel({isAdmin: false, isAuth: false})
           return of();
         })
       );
@@ -164,5 +167,7 @@ export class HttpService {
     this.router?.navigate(['/']);
     this.storage?.setRoadMap('clear');
     this.storage?.setBackButtonStatus();
+    this.storage?.setCurrentUserModel({isAdmin: false, isAuth: false})
   };
-}
+
+};

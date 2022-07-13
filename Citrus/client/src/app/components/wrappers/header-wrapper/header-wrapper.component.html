@@ -1,4 +1,3 @@
 <app-header-ui
-    [isAuthorized]="storage.isTokenValid$ | async"
-    [isAdmin]="storage.isAdmin$ | async"
+    [userModel]="storage.currentUserModel$ | async"
 ></app-header-ui>

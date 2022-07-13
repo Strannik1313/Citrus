@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { AccessMap } from '../models/access-map';
 import { ClientData } from '../models/client-data';
+import { UserModel } from '../models/user-model';
 
 
 @Injectable({
@@ -11,6 +12,7 @@ import { ClientData } from '../models/client-data';
 export class StorageService {
   private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(['']);
   private isDialogWindowOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private currentUserModel: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(UserModel.Unauth);
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private haveAccountData: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private isTokenValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -25,6 +27,7 @@ export class StorageService {
 
   roadMapUrls$: Observable<string[]> = this.roadMapSubject.asObservable();
   isDialogWindowOpen$: Observable<boolean> = this.isDialogWindowOpen.asObservable();
+  currentUserModel$: Observable<UserModel> = this.currentUserModel.asObservable();
   buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable();
   haveAccountData$: Observable<boolean> = this.haveAccountData.asObservable();
   isTokenValid$: Observable<boolean> = this.isTokenValid.asObservable();
@@ -82,7 +85,7 @@ export class StorageService {
         break;
       };
       case '/admin': {
-        if (this.isAdmin.value) {
+        if (this.currentUserModel.value === UserModel.Admin) {
           this.accessMap.next({
             ...this.accessMap.value,
             loginPage: true,
@@ -257,4 +260,13 @@ export class StorageService {
   setIsDialogWindowOpen(value: boolean): void {
     this.isDialogWindowOpen.next(value)
   }
+  setCurrentUserModel(userFlags: {isAdmin: boolean, isAuth: boolean}): void {
+    if (userFlags.isAdmin) {
+      this.currentUserModel.next(UserModel.Admin);
+    } else if (userFlags.isAuth) {
+      this.currentUserModel.next(UserModel.Auth);
+    } else {
+      this.currentUserModel.next(UserModel.Unauth);
+    };
+  };
 }

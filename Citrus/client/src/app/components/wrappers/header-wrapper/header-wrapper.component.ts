@@ -10,5 +10,7 @@ export class HeaderWrapperComponent {
  
   constructor(
     public storage: StorageService
-  ) { }
+  ) {
+    
+   }
 }
