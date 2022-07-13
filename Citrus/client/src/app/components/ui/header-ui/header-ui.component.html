@@ -1,6 +1,6 @@
 <div class="header__container">
     <ng-container *ngFor="let button of buttonConf; trackBy: trackByFn">
-        <ng-container *ngIf="compareValues(button.user)">
+        <ng-container *ngIf="button.isShow">
             <app-button-wrapper class="{{button.class}}" [label]="button.label" [url]="button.url"></app-button-wrapper>
         </ng-container>
     </ng-container>

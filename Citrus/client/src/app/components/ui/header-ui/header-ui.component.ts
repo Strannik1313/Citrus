@@ -4,6 +4,7 @@ interface ButtonConf {
   label: string,
   url: string,
   user: UserType,
+  isShow: boolean,
   class: string
 };
 
@@ -36,6 +37,7 @@ export class HeaderUIComponent implements OnChanges {
       auth: true,
       unauth: true
     },
+    isShow: false,
     class: 'btn__home'
   },
   {
@@ -46,6 +48,7 @@ export class HeaderUIComponent implements OnChanges {
       auth: false,
       unauth: true
     },
+    isShow: false,
     class: 'btn__auth__right'
   },
   {
@@ -56,6 +59,7 @@ export class HeaderUIComponent implements OnChanges {
       auth: false,
       unauth: true
     },
+    isShow: false,
     class: 'btn__auth__left'
   },
   {
@@ -66,6 +70,7 @@ export class HeaderUIComponent implements OnChanges {
       auth: true,
       unauth: false
     },
+    isShow: false,
     class: 'btn__auth__left'
   },
   {
@@ -76,6 +81,7 @@ export class HeaderUIComponent implements OnChanges {
       auth: false,
       unauth: false
     },
+    isShow: false,
     class: 'btn__auth__left'
   },
   {
@@ -86,6 +92,7 @@ export class HeaderUIComponent implements OnChanges {
       auth: true,
       unauth: false
     },
+    isShow: false,
     class: 'btn__auth__right'
   },
   {
@@ -96,6 +103,7 @@ export class HeaderUIComponent implements OnChanges {
       auth: true,
       unauth: true
     },
+    isShow: false,
     class: 'btn__back'
   }];
 
@@ -104,7 +112,7 @@ export class HeaderUIComponent implements OnChanges {
       const chng = changes[propName];
       const curnt = chng.currentValue;
       const prev = chng.previousValue;
-      if (curnt !== prev) {
+      if (curnt !== prev && !chng.firstChange) {
         switch (propName) {
           case 'isAuthorized':
             if (curnt) {
@@ -141,19 +149,18 @@ export class HeaderUIComponent implements OnChanges {
         };
       };
     };
+    this.buttonConf.forEach(btn => {
+      if (this.currentUser.admin) {
+        btn.isShow = btn.user.admin;
+      } else if (this.currentUser.auth) {
+        btn.isShow = btn.user.auth;
+      } else {
+        btn.isShow = btn.user.unauth
+      }
+    });
   };
 
   trackByFn(index: number, item: ButtonConf): string {
     return item.url;
-  };
-
-  compareValues(value: UserType): boolean {
-    if (this.currentUser.admin) {
-      return value.admin;
-    };
-    if (this.currentUser.auth) {
-      return value.auth;
-    };
-    return value.unauth;
   };
 };
