@@ -159,6 +159,7 @@ export class HttpService {
     this.setToken('');
     localStorage?.clear();
     this.storage?.setIsTokenValid(false);
+    this.storage?.setIsAdmin(false);
     this.storage?.setHaveAccountFormData(false);
     this.router?.navigate(['/']);
     this.storage?.setRoadMap('clear');

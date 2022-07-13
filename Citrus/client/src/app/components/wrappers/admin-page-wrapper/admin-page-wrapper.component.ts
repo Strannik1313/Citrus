@@ -5,12 +5,12 @@ interface AdminPanelContent {
   createService: string,
   orderList: string,
   noone: string
-}
+};
 
 interface ButtonConf {
   label: string,
   key: string
-}
+};
 
 @Component({
   selector: 'app-admin-page-wrapper',
@@ -38,10 +38,10 @@ export class AdminPageWrapperComponent {
   public currentContent: string = this.adminPanelContent.noone;
 
   setContent(action: string): void {
-    this.currentContent = action
+    this.currentContent = action;
   };
 
   trackByFn(index: number, item: ButtonConf): string {
     return item.key;
   };
-}
+};
