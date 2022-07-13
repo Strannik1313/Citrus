@@ -6,6 +6,7 @@
         "btn btn";
     grid-template-rows: 8fr 1fr;
     grid-template-columns: 1fr 1fr;
+    gap: 3em;
 }
 
 .content__img {
@@ -13,7 +14,7 @@
     padding-left: 5vw;
     justify-self: center;
     img {
-        max-width: 75%;
+        max-width: 30em;
         border-radius: 10px;
     }
 }
@@ -22,7 +23,8 @@
     grid-area: text;
     border: 3px solid #f4f6fc;
     border-radius: 10px;
-    max-width: 80%;
+    max-width: 30em;
+    max-height: 30rem;
     align-self: center;
   justify-self: center;
     text-align:center;

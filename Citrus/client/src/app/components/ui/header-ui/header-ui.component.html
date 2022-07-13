@@ -1,12 +1,6 @@
 <div class="header__container">
     <ng-container *ngFor="let button of buttonConf; trackBy: trackByFn">
-        <ng-container *ngIf="button.user === currentUserType.all">
-            <app-button-wrapper class="{{button.class}}" [label]="button.label" [url]="button.url"></app-button-wrapper>
-        </ng-container>
-        <ng-container *ngIf="button.user === currentUser">
-            <app-button-wrapper class="{{button.class}}" [label]="button.label" [url]="button.url"></app-button-wrapper>
-        </ng-container>
-        <ng-container *ngIf="button.user === currentUserType.allAuth && currentUser !==  currentUserType.unauth">
+        <ng-container *ngIf="compareValues(button.user)">
             <app-button-wrapper class="{{button.class}}" [label]="button.label" [url]="button.url"></app-button-wrapper>
         </ng-container>
     </ng-container>

@@ -1,23 +1,27 @@
 .header__container {
     display: grid;
     grid-template-areas:
-        "h al ar b";
-    grid-template-columns: 1fr 0.3fr 0.3fr 1fr;
+        "h b al ar";
+    grid-template-columns: 0.3fr 1fr 1fr 0.3fr;
     justify-items: center;
 
     .btn__home {
         grid-area: h;
+        justify-self: start;
     }
 
     .btn__auth__left{
         grid-area: al;
+        justify-self: end;
     }
 
     .btn__auth__right{
         grid-area: ar;
+        justify-self: end;
     }
 
     .btn__back {
         grid-area: b;
+        justify-self: start;
     }
 }

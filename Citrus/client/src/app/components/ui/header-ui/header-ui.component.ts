@@ -3,16 +3,14 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } f
 interface ButtonConf {
   label: string,
   url: string,
-  user: string,
+  user: UserType,
   class: string
 };
 
 interface UserType {
-  admin: string,
-  auth: string,
-  allAuth: string,
-  unauth: string,
-  all: string
+  admin: boolean,
+  auth: boolean,
+  unauth: boolean
 };
 
 @Component({
@@ -24,54 +22,80 @@ interface UserType {
 export class HeaderUIComponent implements OnChanges {
   @Input() isAuthorized: boolean | null = false;
   @Input() isAdmin: boolean | null = false;
-  public currentUserType: UserType = {
-    admin: 'admin',
-    auth: 'auth',
-    unauth: 'unauth',
-    allAuth: 'allAuth',
-    all: 'all'
+  public temp: boolean = false;
+  public currentUser: UserType = {
+    admin: false,
+    auth: false,
+    unauth: true
   };
-  public currentUser: string = this.currentUserType.unauth
   public buttonConf: Array<ButtonConf> = [{
     label: 'На главную',
     url: '/home',
-    user: this.currentUserType.all,
+    user: {
+      admin: true,
+      auth: true,
+      unauth: true
+    },
     class: 'btn__home'
   },
   {
     label: 'Войти',
     url: '/login',
-    user: this.currentUserType.unauth,
+    user: {
+      admin: false,
+      auth: false,
+      unauth: true
+    },
     class: 'btn__auth__right'
   },
   {
     label: 'Регистрация',
     url: '/register',
-    user: this.currentUserType.unauth,
+    user: {
+      admin: false,
+      auth: false,
+      unauth: true
+    },
     class: 'btn__auth__left'
   },
   {
     label: 'Личный кабинет',
     url: '/account',
-    user: this.currentUserType.auth,
+    user: {
+      admin: false,
+      auth: true,
+      unauth: false
+    },
     class: 'btn__auth__left'
   },
   {
     label: 'Личный кабинет',
     url: '/admin',
-    user: this.currentUserType.admin,
+    user: {
+      admin: true,
+      auth: false,
+      unauth: false
+    },
     class: 'btn__auth__left'
   },
   {
     label: 'Выйти',
     url: '/logout',
-    user: this.currentUserType.allAuth,
+    user: {
+      admin: true,
+      auth: true,
+      unauth: false
+    },
     class: 'btn__auth__right'
   },
   {
     label: 'Назад',
     url: '/..',
-    user: this.currentUserType.all,
+    user: {
+      admin: true,
+      auth: true,
+      unauth: true
+    },
     class: 'btn__back'
   }];
 
@@ -84,17 +108,31 @@ export class HeaderUIComponent implements OnChanges {
         switch (propName) {
           case 'isAuthorized':
             if (curnt) {
-              this.currentUser = this.currentUserType.auth;
+              this.currentUser = {
+                ...this.currentUser,
+                auth: true,
+                unauth: false
+              };
             } else {
-              this.currentUser = this.currentUserType.unauth;
+              this.currentUser = {
+                ...this.currentUser,
+                auth: false,
+                unauth: true
+              };
             };
             break;
           case 'isAdmin':
             if (curnt) {
-              this.currentUser = this.currentUserType.admin;
+              this.currentUser = this.currentUser = {
+                ...this.currentUser,
+                admin: true,
+                unauth: false
+              };
             } else {
-              if (this.currentUser !== this.currentUserType.auth) {
-                this.currentUser = this.currentUserType.unauth;
+              this.currentUser = this.currentUser = {
+                ...this.currentUser,
+                admin: false,
+                unauth: true
               };
             };
             break;
@@ -107,5 +145,15 @@ export class HeaderUIComponent implements OnChanges {
 
   trackByFn(index: number, item: ButtonConf): string {
     return item.url;
+  };
+
+  compareValues(value: UserType): boolean {
+    if (this.currentUser.admin) {
+      return value.admin;
+    };
+    if (this.currentUser.auth) {
+      return value.auth;
+    };
+    return value.unauth;
   };
 };

@@ -5,20 +5,23 @@
         "spec_btn serv_btn";
     grid-template-rows: 10fr 1fr;
     grid-template-columns: 1fr 1fr;
-    
+    gap: 3em;
+
     .crossroad__service_img {
         grid-area: serv_ph;
         justify-self: center;
+
         img {
-            max-width: 75%;
+            max-width: 30em;
             border-radius: 10px;
         }
     }
 
     .crossroad__spec_img {
         grid-area: spec_ph;
+
         img {
-            max-width: 75%;
+            max-width: 30em;
             border-radius: 10px;
         }
     }
