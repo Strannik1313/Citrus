@@ -1,7 +1,10 @@
+import { DialogWindowData } from './interfaces/dialog-window-data';
+import { ServerErrorHandleService } from './services/server-error-handle.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { catchError, of, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { HttpService } from './services/http.service';
 import { StorageService } from './services/storage.service';
+import { DialogType } from './shared/dialog-window/dialog-window.component';
 
 @Component({
   selector: 'app-root',
@@ -10,11 +13,28 @@ import { StorageService } from './services/storage.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   title = 'citrus';
-  subscription: Subscription[] = [];
+  private subscription: Subscription[] = [];
+  public dialogTextData: DialogWindowData = {
+    windowHeaderText: '',
+    windowText: ''
+  };
+  public isActive: boolean = false;
+  public dialogType: DialogType = DialogType.Error;
   constructor(
     private http: HttpService,
-    private storage: StorageService
-  ) { };
+    public storage: StorageService,
+    private serverErrorHandle: ServerErrorHandleService
+  ) {
+    this.subscription.push(this.storage.isDialogWindowOpen$.subscribe(data => {
+      this.isActive = data;
+      if (this.isActive) {
+        this.dialogTextData = {
+          windowHeaderText: this.serverErrorHandle?.getErrorInstance().status.toString(),
+          windowText: this.serverErrorHandle?.getErrorInstance().statusText
+        }
+      }
+    }))
+   };
 
   ngOnInit(): void {
     const potentialToken = localStorage.getItem('authToken');
@@ -32,4 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscription.forEach(sub => sub.unsubscribe())
   };
+  onButtonClick(e: boolean) {
+    this.storage.setIsDialogWindowOpen(false);
+  }
 }

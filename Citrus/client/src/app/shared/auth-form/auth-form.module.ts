@@ -20,8 +20,7 @@ import {MatButtonModule} from '@angular/material/button';
     MatButtonModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatIconModule,
-    MatSnackBarModule
+    MatIconModule
   ],
   exports: [
     AuthFormComponent

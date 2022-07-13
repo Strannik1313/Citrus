@@ -54,7 +54,7 @@ module.exports.disabled = async (req, res) => {
                     }
                     i++
                 })
-                res.status(200).json(array)
+                res.status(417).json(array)
             } catch (error) {
                 errorHandler(res, error)
             }

@@ -1,31 +1,54 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { HttpService } from 'src/app/services/http.service';
+
+interface AdminPanelContent {
+  createMaster: string,
+  createService: string,
+  orderList: string,
+  noone: string
+}
+
+interface ButtonConf {
+  label: string,
+  key: string
+}
 
 @Component({
   selector: 'app-admin-page-wrapper',
   templateUrl: './admin-page-wrapper.component.html',
   styleUrls: ['./admin-page-wrapper.component.scss']
 })
-export class AdminPageWrapperComponent  {
-
+export class AdminPageWrapperComponent {
+  public adminPanelContent: AdminPanelContent = {
+    createMaster: 'create-master',
+    createService: 'create-service',
+    orderList: 'order-list',
+    noone: ''
+  }
+  public buttonsConf: Array<ButtonConf> = [{
+    label: 'Создать нового мастера',
+    key: this.adminPanelContent.createMaster
+  }, {
+    label: 'Создать новую услугу',
+    key: this.adminPanelContent.createService
+  },
+  {
+    label: 'Забронированные места',
+    key: this.adminPanelContent.orderList
+  }];
+  public currentContent: string = this.adminPanelContent.noone;
   constructor(
-    private router: Router,
     private http: HttpService
   ) { }
 
-  goToCreateMaster(): void {
-    this.router.navigate(['/admin/create-master']);
-  };
+  setContent(action: string): void {
+    this.currentContent = action
+  }
 
-  goToCreateMasterService(): void {
-    this.router.navigate(['/admin/create-service']);
-  };
+  trackByFn(index: number, item: ButtonConf): string {
+    return item.key;
+  }
 
-  goToOrderList(): void {
-    this.router.navigate(['/admin/order-list']);
-  };
-  
   logout(): void {
     this.http.logout();
   };
