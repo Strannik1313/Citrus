@@ -1,6 +1,7 @@
-import { ButtonConf } from "../shared/app-button-group/app-button-group/app-button-group.component"
+import { ButtonConf } from '../shared/app-button-group/app-button-group.component';
+import { UserModel } from './user-model';
 
-export const AdminBtnConf: Array<ButtonConf> = [{
+const AdminBtnConf: Array<ButtonConf> = [{
     label: 'На главную',
     url: '/home',
     class: 'btn__home'
@@ -20,8 +21,8 @@ export const AdminBtnConf: Array<ButtonConf> = [{
     url: '/..',
     class: 'btn__back'
 }
-]
-export const AuthBtnConf: Array<ButtonConf> = [{
+];
+const AuthBtnConf: Array<ButtonConf> = [{
     label: 'На главную',
     url: '/home',
     class: 'btn__home'
@@ -41,8 +42,8 @@ export const AuthBtnConf: Array<ButtonConf> = [{
     url: '/..',
     class: 'btn__back'
 }
-]
-export const UnauthBtnConf: Array<ButtonConf> = [{
+];
+const UnauthBtnConf: Array<ButtonConf> = [{
     label: 'На главную',
     url: '/home',
     class: 'btn__home'
@@ -62,4 +63,24 @@ export const UnauthBtnConf: Array<ButtonConf> = [{
     url: '/..',
     class: 'btn__back'
 }
-]
+];
+
+export const btnConfMap = {
+    btnConf: {
+        admin: AdminBtnConf,
+        auth: AuthBtnConf,
+        unauth: UnauthBtnConf
+    },
+    getBtnConfByUser(value: UserModel): Array<ButtonConf> {
+        switch (value) {
+            case UserModel.Admin:
+                return this.btnConf.admin;
+            case UserModel.Auth:
+                return this.btnConf.auth;
+            case UserModel.Unauth:
+                return this.btnConf.unauth;
+            default:
+                return this.btnConf.unauth;
+        };
+    }
+};

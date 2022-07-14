@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DateChoiceLayoutComponent } from '../../components/ui/date-choice-ui/date-choice-layout/date-choice-layout.component';
+import { DateChoiceLayoutComponent } from '../../components/ui/date-choice-ui/layout/date-choice-layout.component';
 import { CalendarComponent } from '../../components/ui/date-choice-ui/calendar/calendar.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCardModule } from '@angular/material/card';

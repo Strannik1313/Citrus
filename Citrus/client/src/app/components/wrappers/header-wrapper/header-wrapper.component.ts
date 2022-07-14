@@ -1,9 +1,9 @@
-import { AdminBtnConf, AuthBtnConf, UnauthBtnConf } from './../../../models/header-button-conf';
 import { UserModel } from './../../../models/user-model';
 import { Subscription } from 'rxjs';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
-import { ButtonConf } from 'src/app/shared/app-button-group/app-button-group/app-button-group.component';
+import { ButtonConf } from 'src/app/shared/app-button-group/app-button-group.component';
+import { btnConfMap } from 'src/app/models/header-button-conf';
 
 @Component({
   selector: 'app-header-wrapper',
@@ -21,26 +21,11 @@ export class HeaderWrapperComponent implements OnDestroy {
   ) {
     this.subscriptions.push(this.storage?.currentUserModel$.subscribe(data => {
       this.userModel = data;
-      this.setButtonConf();
+      this.buttonConf = btnConfMap.getBtnConfByUser(this.userModel);
+      this.cdr.markForCheck();
     }));
   };
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
-  };
-  setButtonConf(): void {
-    switch (this.userModel) {
-      case UserModel.Admin:
-        this.buttonConf = [...AdminBtnConf];
-        break;
-      case UserModel.Auth:
-        this.buttonConf = [...AuthBtnConf];
-        break;
-      case UserModel.Unauth:
-        this.buttonConf = [...UnauthBtnConf];
-        break;
-      default:
-        break;
-    };
-    this.cdr.markForCheck();
   };
 };
