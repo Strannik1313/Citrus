@@ -1,8 +1,9 @@
-import { ButtonConf, AdminBtnConf, AuthBtnConf, UnauthBtnConf } from './../../../models/header-button-conf';
+import { AdminBtnConf, AuthBtnConf, UnauthBtnConf } from './../../../models/header-button-conf';
 import { UserModel } from './../../../models/user-model';
 import { Subscription } from 'rxjs';
-import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
+import { ButtonConf } from 'src/app/shared/app-button-group/app-button-group/app-button-group.component';
 
 @Component({
   selector: 'app-header-wrapper',
@@ -15,7 +16,8 @@ export class HeaderWrapperComponent implements OnDestroy {
   public buttonConf: Array<ButtonConf> = [];
   public userModel: UserModel = UserModel.Unauth;
   constructor(
-    private storage: StorageService
+    private storage: StorageService,
+    private cdr: ChangeDetectorRef
   ) {
     this.subscriptions.push(this.storage?.currentUserModel$.subscribe(data => {
       this.userModel = data;
@@ -28,16 +30,17 @@ export class HeaderWrapperComponent implements OnDestroy {
   setButtonConf(): void {
     switch (this.userModel) {
       case UserModel.Admin:
-        this.buttonConf = AdminBtnConf;
+        this.buttonConf = [...AdminBtnConf];
         break;
       case UserModel.Auth:
-        this.buttonConf = AuthBtnConf;
+        this.buttonConf = [...AuthBtnConf];
         break;
       case UserModel.Unauth:
-        this.buttonConf = UnauthBtnConf;
+        this.buttonConf = [...UnauthBtnConf];
         break;
       default:
         break;
     };
+    this.cdr.markForCheck();
   };
 };

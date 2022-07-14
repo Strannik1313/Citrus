@@ -1,5 +1,5 @@
 import { DialogWindowComponent } from './dialog-window.component'
-import { AppButtonModule } from '../app-button-wrapper/app-button.module';
+import { AppButtonGroupModule } from '../app-button-group/app-button-group.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -11,8 +11,7 @@ import { CommonModule } from '@angular/common';
   ],
   imports: [
     CommonModule,
-    AppButtonModule,
-    AppButtonModule
+    AppButtonGroupModule
   ],
   exports: [
     DialogWindowComponent

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CrossroadPageLayoutComponent } from '../../components/ui/crossroad-page-ui/crossroad-page-layout.component';
 import { RouterModule } from '@angular/router';
-import { AppButtonModule } from '../../shared/app-button-wrapper/app-button.module';
+import { AppButtonGroupModule } from 'src/app/shared/app-button-group/app-button-group.module';
 
 
 
@@ -12,7 +12,7 @@ import { AppButtonModule } from '../../shared/app-button-wrapper/app-button.modu
   ],
   imports: [
     CommonModule,
-    AppButtonModule,
+    AppButtonGroupModule,
     RouterModule.forChild([
       {path: '', component: CrossroadPageLayoutComponent}
     ])

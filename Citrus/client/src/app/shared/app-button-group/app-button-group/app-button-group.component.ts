@@ -1,13 +1,18 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { ButtonConf } from 'src/app/models/header-button-conf';
+
+export interface ButtonConf {
+  label: string,
+  url: string,
+  class: string
+};
 
 @Component({
-  selector: 'app-header-ui',
-  templateUrl: './header-ui.component.html',
-  styleUrls: ['./header-ui.component.scss'],
+  selector: 'app-button-group',
+  templateUrl: './app-button-group.component.html',
+  styleUrls: ['./app-button-group.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class HeaderUIComponent  {
+export class ButtonGroupComponent {
 
   @Input() buttonConf: Array<ButtonConf> = [];
   trackByFn(index: number, item: ButtonConf): string {

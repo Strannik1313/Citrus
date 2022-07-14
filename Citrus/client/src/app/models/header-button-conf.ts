@@ -1,8 +1,4 @@
-export interface ButtonConf {
-    label: string,
-    url: string,
-    class: string
-};
+import { ButtonConf } from "../shared/app-button-group/app-button-group/app-button-group.component"
 
 export const AdminBtnConf: Array<ButtonConf> = [{
     label: 'На главную',

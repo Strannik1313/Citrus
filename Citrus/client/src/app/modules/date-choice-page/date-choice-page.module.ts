@@ -7,11 +7,11 @@ import { MatCardModule } from '@angular/material/card';
 import { DateAdapter, MatNativeDateModule } from '@angular/material/core';
 import { RouterModule } from '@angular/router';
 import { CustomDateAdapter } from '../../components/custom-components-material-ui/custom-date-adapter/CustomDateAdapter';
-import { AppButtonModule } from '../../shared/app-button-wrapper/app-button.module';
 import { CustomCalendarHeader } from '../../components/custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
 import { DateChoiceWrapperComponent } from '../../components/wrappers/date-choice-page-wrapper/date-choice-page-wrapper.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ColonPipe } from '../../pipes/colon.pipe';
+import { AppButtonGroupModule } from 'src/app/shared/app-button-group/app-button-group.module';
 
 
 @NgModule({
@@ -24,7 +24,7 @@ import { ColonPipe } from '../../pipes/colon.pipe';
   ],
   imports: [
     CommonModule,
-    AppButtonModule,
+    AppButtonGroupModule,
     MatButtonModule,
     MatDatepickerModule,
     MatCardModule,
