@@ -42,7 +42,7 @@ registerLocaleData(localeRu);
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
     { provide: LOCALE_ID, useValue: 'ru' },
     { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
-    { provide: SPINNER_TIME, useValue: 300 }
+    { provide: SPINNER_TIME, useValue: 200 }
   ],
   bootstrap: [AppComponent]
 })
