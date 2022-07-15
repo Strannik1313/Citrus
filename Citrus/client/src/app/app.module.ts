@@ -16,6 +16,8 @@ import { MatPaginatorIntlCro } from './components/custom-components-material-ui/
 import { MainPageLayoutWrapperComponent } from './components/wrappers/main-page-layout-wrapper/main-page-layout-wrapper.component';
 import localeRu from '@angular/common/locales/ru';
 import { httpInterceptorProviders } from './intercepters/http-intercepter-providers';
+import { SPINNER_TIME } from './InjectionsToken/InjectionToken';
+import { SpinnerModule } from './shared/spinner/spinner.module';
 registerLocaleData(localeRu);
 
 @NgModule({
@@ -32,13 +34,15 @@ registerLocaleData(localeRu);
     BrowserAnimationsModule,
     AppButtonGroupModule,
     MatButtonModule,
-    DialogWindowModule
+    DialogWindowModule,
+    SpinnerModule
   ],
   providers: [
     httpInterceptorProviders,
     { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
     { provide: LOCALE_ID, useValue: 'ru' },
-    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro }
+    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
+    { provide: SPINNER_TIME, useValue: 300 }
   ],
   bootstrap: [AppComponent]
 })

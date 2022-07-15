@@ -78,6 +78,9 @@ export class ButtonStatusService {
       case '/home':{
         return this.storage?.authButtonActive$;
       };
+      case '/logout':{
+        return this.storage?.authButtonActive$;
+      };
       default:
         return this.storage?.buttonStatus$;;
     };

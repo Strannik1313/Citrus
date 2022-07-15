@@ -6,5 +6,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
   styleUrls: ['./main-page-layout.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MainPageLayoutComponent  {
+export class MainPageLayoutComponent {
+  constructor() { }
 }

@@ -8,11 +8,8 @@ body {
     font-size: .8vw;
 }
 
-.wrapper {
-    min-height: 100%;
-}
-
 .document { 
+    height: 70vw;
     display: grid;
     grid-template-areas:
         "header"
@@ -31,6 +28,7 @@ body {
 }
 
 .content {
+    height: 100hw;
     grid-area: content;
     position: absolute;
 }

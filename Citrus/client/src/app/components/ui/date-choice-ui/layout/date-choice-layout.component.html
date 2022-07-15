@@ -10,7 +10,7 @@
   </div>
   <div *ngIf="showCard" class="date__choice__matCardContainer">
     <mat-card *ngFor="let card of studioData" class="date__choice__exampleCard">
-      <img mat-card-sm-image src="../../../../assets/images/avatar.png" alt="avatar">
+      <img mat-card-sm-image src="/assets/images/avatar.png" alt="avatar">
       <mat-card-header>
         <mat-card-title>{{card.masterName}}</mat-card-title>
         <mat-card-subtitle>Продолжительность услуги: {{card.procedureDuration.hour}} час {{card.procedureDuration.minute}} минут</mat-card-subtitle>

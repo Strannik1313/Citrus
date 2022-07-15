@@ -37,12 +37,12 @@ export class AdminCreateMasterPanelWrapperComponent implements OnDestroy {
   onSaveFormValue(e: NewMasterFormData) {
     this.subscriptions.push(this.http?.createNewMaster(e)?.subscribe());
     this.disabledForm = true;
-    this.route?.navigate(['/admin']);
+    this.route?.navigate(['/']);
   }
 
   showPriceList(e: MatSelectionListChange): void {
     if (e.source.selectedOptions.selected.length > 0) {
-      this.priceList = {...this.priceList};
+      this.priceList = { ...this.priceList };
       this.priceList.priceListVisible = true;
       let tempArray: Array<string> = [];
       let i = 0;
@@ -52,7 +52,7 @@ export class AdminCreateMasterPanelWrapperComponent implements OnDestroy {
       });
       this.priceList.selectionList = tempArray;
     } else {
-      this.priceList = {...this.priceList};
+      this.priceList = { ...this.priceList };
       this.priceList.selectionList = [];
       this.priceList.priceListVisible = false;
     };

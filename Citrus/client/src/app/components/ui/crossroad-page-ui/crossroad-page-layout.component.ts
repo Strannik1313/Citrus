@@ -6,5 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./crossroad-page-layout.component.scss']
 })
 export class CrossroadPageLayoutComponent {
- 
-}
+  public specImgUrl: string = '';
+  public serviceImgUrl: string = '';
+  constructor() { };
+};

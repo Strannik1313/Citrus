@@ -1,11 +1,13 @@
 .service__choice__container {
+    width: 100vw;
     display: grid;
     align-items: baseline;
     grid-template-areas:
         "select"
         "btn";
-    grid-template-rows: 4fr 1fr;
+    grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr;
+    align-items: center;
 
     .service__choice__select {
         grid-area: select;
@@ -29,5 +31,6 @@
         grid-area: btn;
         padding-top: 0.2vw;
         justify-self: center;
+        align-self: start;
     }
 }

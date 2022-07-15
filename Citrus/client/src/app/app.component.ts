@@ -1,6 +1,6 @@
 import { DialogWindowData } from './interfaces/dialog-window-data';
 import { ServerErrorHandleService } from './services/server-error-handle.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { HttpService } from './services/http.service';
 import { StorageService } from './services/storage.service';
@@ -17,26 +17,31 @@ export class AppComponent implements OnInit, OnDestroy {
     windowHeaderText: '',
     windowText: ''
   };
-  public isActive: boolean = false;
+  public isDialogActive: boolean = false;
+  public isSpinnerActive: boolean = false;
   public dialogType: DialogType = DialogType.Error;
   constructor(
     private http: HttpService,
     public storage: StorageService,
-    private serverErrorHandle: ServerErrorHandleService
-  ) {
+    private serverErrorHandle: ServerErrorHandleService,
+    private cdr: ChangeDetectorRef
+  ) { };
+
+  ngOnInit(): void {
     this.subscription.push(this.storage.isDialogWindowOpen$.subscribe(data => {
-      this.isActive = data;
-      if (this.isActive) {
+      this.isDialogActive = data;
+      if (this.isDialogActive) {
         const error = this.serverErrorHandle?.getErrorInstance();
         this.dialogTextData = {
           windowHeaderText: error.status.toString(),
           windowText: error.statusText
-        }
-      }
-    }))
-   };
-
-  ngOnInit(): void {
+        };
+      };
+    }));
+    this.subscription.push(this.storage.isInitiallize$.subscribe(data => {
+      this.isSpinnerActive = data;
+      this.cdr.detectChanges();
+    }));
     const potentialToken = localStorage.getItem('authToken');
     if (potentialToken !== null) {
       this.http.setToken(potentialToken);
@@ -44,13 +49,12 @@ export class AppComponent implements OnInit, OnDestroy {
         if (data) {
           this.storage.setAuthorizedUserData(data);
         };
-      }
-    ));
+      }));
     };
   };
 
   ngOnDestroy(): void {
-    this.subscription.forEach(sub => sub.unsubscribe())
+    this.subscription.forEach(sub => sub.unsubscribe());
   };
   onButtonClick(e: boolean) {
     this.storage.setIsDialogWindowOpen(false);

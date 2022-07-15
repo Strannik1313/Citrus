@@ -33,7 +33,7 @@ export class AdminCreateServicePanelWrapperComponent implements OnInit, OnDestro
         continue
       }
       tempNumber = tempNumber + e.duration[i]
-      if (i == e.duration.length-1) {
+      if (i == e.duration.length - 1) {
         minute = tempNumber
       }
     }
@@ -43,9 +43,9 @@ export class AdminCreateServicePanelWrapperComponent implements OnInit, OnDestro
         hour: Number(hour),
         minute: Number(minute)
       }
-    }).subscribe())
+    }).subscribe());
     this.disabledForm = true
-    this.route.navigate(['/admin'])
+    this.route.navigate(['/'])
   }
-  
+
 }

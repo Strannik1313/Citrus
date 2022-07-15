@@ -12,6 +12,7 @@ import { UserModel } from '../models/user-model';
 export class StorageService {
   private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(['']);
   private isDialogWindowOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private isInitiallize: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private currentUserModel: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(UserModel.Unauth);
   private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private haveAccountData: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -27,6 +28,7 @@ export class StorageService {
 
   roadMapUrls$: Observable<string[]> = this.roadMapSubject.asObservable();
   isDialogWindowOpen$: Observable<boolean> = this.isDialogWindowOpen.asObservable();
+  isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
   currentUserModel$: Observable<UserModel> = this.currentUserModel.asObservable();
   buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable();
   haveAccountData$: Observable<boolean> = this.haveAccountData.asObservable();
@@ -269,4 +271,7 @@ export class StorageService {
       this.currentUserModel.next(UserModel.Unauth);
     };
   };
-}
+  setInitializeStatus(status: boolean): void {
+    this.isInitiallize.next(status);
+  };
+};

@@ -1,12 +1,13 @@
 .content__container {
-    max-height: 90%;
+    width: 100vw;
     display: grid;
     grid-template-areas: 
         "img text"
         "btn btn";
-    grid-template-rows: 8fr 1fr;
+    grid-template-rows: 7fr 1fr;
     grid-template-columns: 1fr 1fr;
     gap: 3em;
+    align-items: start;
 }
 
 .content__img {
@@ -21,12 +22,11 @@
 
 .content__text {
     grid-area: text;
+    justify-self: center;
+    align-self: center;
+    max-width: 15em;
     border: 3px solid #f4f6fc;
     border-radius: 10px;
-    max-width: 30em;
-    max-height: 30rem;
-    align-self: center;
-  justify-self: center;
     text-align:center;
     font-size:1.5em;
     line-height:1.5;
@@ -35,5 +35,5 @@
 .content__custom__button {
     grid-area: btn;
     justify-self: center;
-    align-self: center;
+    align-self: start;
 }

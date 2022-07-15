@@ -22,7 +22,12 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
   constructor(
     private http: HttpService,
     private storage: StorageService
-  ) {
+  ) { }
+
+  ngOnInit(): void {
+    if (!!this.clientData.masterId) {
+      this.selectedOption = this.clientData.masterId;
+    };
     this.subscritions.push(this.http?.getMasterData()?.subscribe((data) => {
       this.masterData = data;
     }));
@@ -32,12 +37,6 @@ export class SpecChoiceWrapperComponent implements OnInit, OnDestroy {
     this.subscritions.push(this.storage?.shouldClientDataSaved$?.subscribe((data) => {
       this.shouldClientDataBeSaved = data;
     }));
-  }
-
-  ngOnInit(): void {
-    if (!!this.clientData.masterId) {
-      this.selectedOption = this.clientData.masterId;
-    };
   };
 
   ngOnDestroy(): void {

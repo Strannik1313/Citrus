@@ -1,4 +1,5 @@
 .crossroad_content {
+    width: 100vw;
     display: grid;
     grid-template-areas:
         "spec_ph serv_ph"
@@ -6,7 +7,7 @@
     grid-template-rows: 10fr 1fr;
     grid-template-columns: 1fr 1fr;
     gap: 3em;
-
+    align-items: center;
     .crossroad__service_img {
         grid-area: serv_ph;
         justify-self: center;
@@ -34,7 +35,7 @@
 
     .crossroad__service_btn {
         grid-area: serv_btn;
-        align-self: center;
         justify-self: center;
+        align-self: start;
     }
 }
