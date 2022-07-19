@@ -9,16 +9,6 @@
     "test": "ng test",
     "prepare": "cd ../../ && husky install"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged --relative"
-    }
-  },
-  "lint-staged": {
-    "*.{js,ts}": [
-      "eslint --fix"
-    ]
-  },
   "private": true,
   "dependencies": {
     "@angular/animations": "~13.2.0",

@@ -30,9 +30,7 @@ export class SpinnerActivator implements HttpInterceptor {
 		this.storage.setInitializeStatus(true);
 		return next.handle(req).pipe(
 			combineLatestWith(timer(this.spinnerTime).pipe(take(1))),
-			map(([e1, e2]) => {
-				return e1;
-			}),
+			map(([e1, e2]) => e1),
 			finalize(() => {
 				this.storage.setInitializeStatus(false);
 			}),

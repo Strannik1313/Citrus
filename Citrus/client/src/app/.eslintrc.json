@@ -21,7 +21,6 @@
 		"default-param-last": ["error"],
 		"arrow-spacing": ["error", { "before": true, "after": true }],
 		"arrow-body-style": ["error", "as-needed"],
-		"no-useless-constructor": "error",
 		"eqeqeq": "error",
 		"no-nested-ternary": "error",
 		"keyword-spacing": "error",
