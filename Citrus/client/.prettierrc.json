@@ -5,6 +5,6 @@
 	"singleQuote": true,
 	"max_line_length": 100,
 	"useTabs": true,
-	"bracketSameLine": true,
+	"bracketSameLine": false,
 	"arrowParens": "avoid"
 }

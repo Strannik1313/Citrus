@@ -1,12 +1,17 @@
 {
-	"env": { "browser": true, "es2021": true, "node": true },
+	"env": {
+		"browser": true,
+		"es2021": true,
+		"node": true
+	},
 	"extends": ["prettier"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": "latest"
 	},
-	"plugins": ["@typescript-eslint"],
+	"plugins": ["@typescript-eslint", "prettier"],
 	"rules": {
+		"prettier/prettier": "error",
 		"object-property-newline": [
 			"error",
 			{ "allowAllPropertiesOnSameLine": true }
@@ -20,11 +25,12 @@
 		"semi-spacing": ["error", { "before": false, "after": true }],
 		"default-param-last": ["error"],
 		"arrow-spacing": ["error", { "before": true, "after": true }],
-		"arrow-body-style": ["error", "as-needed"],
 		"eqeqeq": "error",
 		"no-nested-ternary": "error",
 		"space-infix-ops": "error",
 		"no-multiple-empty-lines": "error",
-		"comma-spacing": ["error", { "before": false, "after": true }]
+		"comma-spacing": ["error", { "before": false, "after": true }],
+		"no-console": "error",
+		"no-debugger": "error"
 	}
 }
