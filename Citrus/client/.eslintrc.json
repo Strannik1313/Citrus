@@ -23,7 +23,6 @@
 		"arrow-body-style": ["error", "as-needed"],
 		"eqeqeq": "error",
 		"no-nested-ternary": "error",
-		"keyword-spacing": "error",
 		"space-infix-ops": "error",
 		"no-multiple-empty-lines": "error",
 		"comma-spacing": ["error", { "before": false, "after": true }]
