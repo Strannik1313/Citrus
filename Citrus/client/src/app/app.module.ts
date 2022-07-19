@@ -21,29 +21,29 @@ import { SpinnerModule } from './shared/spinner/spinner.module';
 registerLocaleData(localeRu);
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    MainPageLayoutComponent,
-    HeaderWrapperComponent,
-    MainPageLayoutWrapperComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    BrowserAnimationsModule,
-    AppButtonGroupModule,
-    MatButtonModule,
-    DialogWindowModule,
-    SpinnerModule
-  ],
-  providers: [
-    httpInterceptorProviders,
-    { provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
-    { provide: LOCALE_ID, useValue: 'ru' },
-    { provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
-    { provide: SPINNER_TIME, useValue: 200 }
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent,
+		MainPageLayoutComponent,
+		HeaderWrapperComponent,
+		MainPageLayoutWrapperComponent,
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		HttpClientModule,
+		BrowserAnimationsModule,
+		AppButtonGroupModule,
+		MatButtonModule,
+		DialogWindowModule,
+		SpinnerModule,
+	],
+	providers: [
+		httpInterceptorProviders,
+		{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
+		{ provide: LOCALE_ID, useValue: 'ru' },
+		{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
+		{ provide: SPINNER_TIME, useValue: 500 },
+	],
+	bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

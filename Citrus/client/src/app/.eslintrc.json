@@ -1,0 +1,32 @@
+{
+	"env": { "browser": true, "es2021": true, "node": true },
+	"extends": ["prettier"],
+	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": "latest"
+	},
+	"plugins": ["@typescript-eslint"],
+	"rules": {
+		"object-property-newline": [
+			"error",
+			{ "allowAllPropertiesOnSameLine": true }
+		],
+		"no-unused-vars": ["error", { "args": "none" }],
+		"object-curly-spacing": ["error", "always"],
+		"brace-style": ["error"],
+		"space-before-blocks": ["error"],
+		"block-spacing": ["error"],
+		"semi-style": ["error", "last"],
+		"semi-spacing": ["error", { "before": false, "after": true }],
+		"default-param-last": ["error"],
+		"arrow-spacing": ["error", { "before": true, "after": true }],
+		"arrow-body-style": ["error", "as-needed"],
+		"no-useless-constructor": "error",
+		"eqeqeq": "error",
+		"no-nested-ternary": "error",
+		"keyword-spacing": "error",
+		"space-infix-ops": "error",
+		"no-multiple-empty-lines": "error",
+		"comma-spacing": ["error", { "before": false, "after": true }]
+	}
+}
