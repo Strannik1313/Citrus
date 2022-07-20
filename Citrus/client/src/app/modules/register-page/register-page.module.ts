@@ -4,21 +4,15 @@ import { RegisterPageWrapperComponent } from '../../components/wrappers/register
 import { RouterModule } from '@angular/router';
 import { AuthFormModule } from '../../shared/auth-form/auth-form.module';
 
-
-
 @NgModule({
-  declarations: [
-    RegisterPageWrapperComponent
-  ],
-  imports: [
-    CommonModule,
-    AuthFormModule,
-    RouterModule.forChild([
-      {path: '', component: RegisterPageWrapperComponent}
-    ])
-  ],
-  exports: [
-    RouterModule
-  ]
+	declarations: [RegisterPageWrapperComponent],
+	imports: [
+		CommonModule,
+		AuthFormModule,
+		RouterModule.forChild([
+			{ path: '', component: RegisterPageWrapperComponent },
+		]),
+	],
+	exports: [RouterModule],
 })
-export class RegisterPageModule { }
+export class RegisterPageModule {}

@@ -6,21 +6,15 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 
-
-
 @NgModule({
-  declarations: [
-    OrderCardComponent
-  ],
-  imports: [
-    CommonModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatCardModule,
-    MatButtonModule,
-  ],
-  exports: [
-    OrderCardComponent
-  ]
+	declarations: [OrderCardComponent],
+	imports: [
+		CommonModule,
+		MatPaginatorModule,
+		MatSelectModule,
+		MatCardModule,
+		MatButtonModule,
+	],
+	exports: [OrderCardComponent],
 })
-export class OrderCardModule { }
+export class OrderCardModule {}

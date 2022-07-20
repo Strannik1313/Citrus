@@ -1,4 +1,4 @@
 export interface Time {
-    hour: string,
-    minute: string
+	hour: string;
+	minute: string;
 }

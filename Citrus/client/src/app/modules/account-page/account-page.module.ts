@@ -12,29 +12,22 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { OrderCardModule } from 'src/app/shared/order-card/order-card.module';
 
-
-
 @NgModule({
-  declarations: [
-    AccountPageComponent,
-    AccountPageWrapperComponent
-  ],
-  imports: [
-    CommonModule,
-    OrderCardModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-    MatIconModule,
-    MatSnackBarModule,
-    RouterModule.forChild([
-      {path: '', component: AccountPageWrapperComponent}
-    ])
-  ],
-  exports: [
-    RouterModule
-  ]
+	declarations: [AccountPageComponent, AccountPageWrapperComponent],
+	imports: [
+		CommonModule,
+		OrderCardModule,
+		MatCardModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatButtonModule,
+		ReactiveFormsModule,
+		MatIconModule,
+		MatSnackBarModule,
+		RouterModule.forChild([
+			{ path: '', component: AccountPageWrapperComponent },
+		]),
+	],
+	exports: [RouterModule],
 })
-export class AccountPageModule { }
+export class AccountPageModule {}

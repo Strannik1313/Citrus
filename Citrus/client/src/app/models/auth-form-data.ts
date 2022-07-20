@@ -1,4 +1,4 @@
 export class AuthFormData {
-    email: string = ''
-    password: string = ''
+	email: string = '';
+	password: string = '';
 }

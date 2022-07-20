@@ -17,36 +17,29 @@ import { AdminPageWrapperComponent } from 'src/app/components/wrappers/admin-pag
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 
-
-
-
 @NgModule({
-  declarations: [
-    AdminPageWrapperComponent,
-    AdminCreateMasterPanelWrapperComponent,
-    AdminCreateMasterPanelComponent,
-    AdminCreateServicePanelWrapperComponent,
-    AdminCreateServicePanelUiComponent,
-    AdminOrderListPanelWrapperComponent,
-    AdminOrderListPanelUiComponent
-  ],
-  imports: [
-    CommonModule,
-    MatButtonModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatListModule,
-    MatCardModule,
-    MatButtonModule,
-    MatInputModule,
-    OrderCardModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-      {path: '', component: AdminPageWrapperComponent}
-    ])
-  ],
-  exports: [
-    RouterModule
-  ]
+	declarations: [
+		AdminPageWrapperComponent,
+		AdminCreateMasterPanelWrapperComponent,
+		AdminCreateMasterPanelComponent,
+		AdminCreateServicePanelWrapperComponent,
+		AdminCreateServicePanelUiComponent,
+		AdminOrderListPanelWrapperComponent,
+		AdminOrderListPanelUiComponent,
+	],
+	imports: [
+		CommonModule,
+		MatButtonModule,
+		MatPaginatorModule,
+		MatSelectModule,
+		MatListModule,
+		MatCardModule,
+		MatButtonModule,
+		MatInputModule,
+		OrderCardModule,
+		ReactiveFormsModule,
+		RouterModule.forChild([{ path: '', component: AdminPageWrapperComponent }]),
+	],
+	exports: [RouterModule],
 })
-export class AdminPageModule { }
+export class AdminPageModule {}

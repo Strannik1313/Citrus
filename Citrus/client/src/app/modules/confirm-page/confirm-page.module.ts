@@ -9,23 +9,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
 
-
-
 @NgModule({
-  declarations: [
-    ConfirmLayoutComponent,
-    ConfirmPageWrapperComponent
-  ],
-  imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSnackBarModule,
-    ReactiveFormsModule,
-    RouterModule.forChild([
-      { path: '', component: ConfirmPageWrapperComponent }
-    ])
-  ]
+	declarations: [ConfirmLayoutComponent, ConfirmPageWrapperComponent],
+	imports: [
+		CommonModule,
+		MatFormFieldModule,
+		MatInputModule,
+		MatButtonModule,
+		MatSnackBarModule,
+		ReactiveFormsModule,
+		RouterModule.forChild([
+			{ path: '', component: ConfirmPageWrapperComponent },
+		]),
+	],
 })
-export class ConfirmPageModule { }
+export class ConfirmPageModule {}

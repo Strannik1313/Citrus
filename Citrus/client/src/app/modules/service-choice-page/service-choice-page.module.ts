@@ -8,22 +8,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 
-
-
 @NgModule({
-  declarations: [
-    ServiceChoiceLayoutComponent,
-    ServiceChoiceWrapperComponent
-  ],
-  imports: [
-    CommonModule,
-    AppButtonGroupModule,
-    MatCardModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    RouterModule.forChild([
-      { path: '', component: ServiceChoiceWrapperComponent }
-    ]),
-  ]
+	declarations: [ServiceChoiceLayoutComponent, ServiceChoiceWrapperComponent],
+	imports: [
+		CommonModule,
+		AppButtonGroupModule,
+		MatCardModule,
+		MatSelectModule,
+		MatFormFieldModule,
+		RouterModule.forChild([
+			{ path: '', component: ServiceChoiceWrapperComponent },
+		]),
+	],
 })
-export class ServiceChoicePageModule { }
+export class ServiceChoicePageModule {}

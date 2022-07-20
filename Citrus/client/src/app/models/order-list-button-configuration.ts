@@ -1,5 +1,5 @@
 export class OrderListButtonConfiguration {
-    buttonLabel: string = ""
-    color: string = ""
-    action: string = ""
+	buttonLabel: string = '';
+	color: string = '';
+	action: string = '';
 }

@@ -4,21 +4,15 @@ import { CrossroadPageLayoutComponent } from '../../components/ui/crossroad-page
 import { RouterModule } from '@angular/router';
 import { AppButtonGroupModule } from 'src/app/shared/app-button-group/app-button-group.module';
 
-
-
 @NgModule({
-  declarations: [
-    CrossroadPageLayoutComponent,
-  ],
-  imports: [
-    CommonModule,
-    AppButtonGroupModule,
-    RouterModule.forChild([
-      {path: '', component: CrossroadPageLayoutComponent}
-    ])
-  ],
-  exports: [
-    RouterModule
-  ]
+	declarations: [CrossroadPageLayoutComponent],
+	imports: [
+		CommonModule,
+		AppButtonGroupModule,
+		RouterModule.forChild([
+			{ path: '', component: CrossroadPageLayoutComponent },
+		]),
+	],
+	exports: [RouterModule],
 })
-export class CrossroadPageModule { }
+export class CrossroadPageModule {}

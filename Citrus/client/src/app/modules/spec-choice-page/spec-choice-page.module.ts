@@ -7,23 +7,16 @@ import { SpecChoiceWrapperComponent } from '../../components/wrappers/spec-choic
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
 
-
-
 @NgModule({
-  declarations: [
-    SpecChoiceLayoutComponent,
-    SpecChoiceWrapperComponent
-  ],
-  imports: [
-    CommonModule,
-    AppButtonGroupModule,
-    MatCardModule,
-    MatListModule,
-    RouterModule.forChild([
-      {path: '', component: SpecChoiceWrapperComponent}
-    ]),
- 
-  ]
-  
+	declarations: [SpecChoiceLayoutComponent, SpecChoiceWrapperComponent],
+	imports: [
+		CommonModule,
+		AppButtonGroupModule,
+		MatCardModule,
+		MatListModule,
+		RouterModule.forChild([
+			{ path: '', component: SpecChoiceWrapperComponent },
+		]),
+	],
 })
-export class SpecChoicePageModule { }
+export class SpecChoicePageModule {}

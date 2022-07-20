@@ -1,5 +1,5 @@
 export interface ChoisenTime {
-    time: number,
-    masterId: number,
-    masterName: string
+	time: number;
+	masterId: number;
+	masterName: string;
 }

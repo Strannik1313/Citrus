@@ -13,29 +13,25 @@ import { MatButtonModule } from '@angular/material/button';
 import { ColonPipe } from '../../pipes/colon.pipe';
 import { AppButtonGroupModule } from 'src/app/shared/app-button-group/app-button-group.module';
 
-
 @NgModule({
-  declarations: [
-    DateChoiceLayoutComponent,
-    CalendarComponent,
-    CustomCalendarHeader,
-    DateChoiceWrapperComponent,
-    ColonPipe
-  ],
-  imports: [
-    CommonModule,
-    AppButtonGroupModule,
-    MatButtonModule,
-    MatDatepickerModule,
-    MatCardModule,
-    MatNativeDateModule,
-    RouterModule.forChild([
-      {path:'', component: DateChoiceWrapperComponent}
-    ])
-    
-  ],
-  providers: [
-    { provide: DateAdapter, useClass: CustomDateAdapter },
-  ]
+	declarations: [
+		DateChoiceLayoutComponent,
+		CalendarComponent,
+		CustomCalendarHeader,
+		DateChoiceWrapperComponent,
+		ColonPipe,
+	],
+	imports: [
+		CommonModule,
+		AppButtonGroupModule,
+		MatButtonModule,
+		MatDatepickerModule,
+		MatCardModule,
+		MatNativeDateModule,
+		RouterModule.forChild([
+			{ path: '', component: DateChoiceWrapperComponent },
+		]),
+	],
+	providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
 })
-export class DateChoicePageModule { }
+export class DateChoicePageModule {}
