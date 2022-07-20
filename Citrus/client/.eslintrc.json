@@ -5,15 +5,17 @@
 		"es2021": true,
 		"node": true
 	},
-	"extends": ["prettier"],
+	"extends": ["plugin:@typescript-eslint/recommended", "prettier"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
 		"ecmaVersion": "latest"
 	},
 	"plugins": ["@typescript-eslint", "prettier"],
 	"rules": {
-		"@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
 		"prettier/prettier": "error",
+		"@typescript-eslint/no-unused-vars": ["error", { "args": "none" }],
+		"@typescript-eslint/no-inferrable-types": "off",
+		"prefer-const": "off",
 		"object-property-newline": [
 			"error",
 			{ "allowAllPropertiesOnSameLine": true }

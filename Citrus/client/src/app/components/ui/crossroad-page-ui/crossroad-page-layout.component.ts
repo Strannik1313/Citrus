@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
 export class CrossroadPageLayoutComponent {
 	public specImgUrl: string = '';
 	public serviceImgUrl: string = '';
-	constructor() {}
 }

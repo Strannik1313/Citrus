@@ -30,7 +30,6 @@ export class DateChoiceLayoutComponent implements OnInit {
 	@Output() dateWasSelected: EventEmitter<Date> = new EventEmitter();
 	@Output() timeWasSelected: EventEmitter<ChoisenTime> = new EventEmitter();
 	public masterImageUrl: string = '';
-	constructor() {}
 	ngOnInit(): void {
 		if (this.showCard) {
 			this.selected !== null ? this.dateWasSelected.emit(this.selected) : null;

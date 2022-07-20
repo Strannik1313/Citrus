@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { NewServiceFormData } from 'src/app/interfaces/new-service-form-data';
@@ -9,14 +9,11 @@ import { HttpService } from 'src/app/services/http.service';
 	templateUrl: './admin-create-service-panel-wrapper.component.html',
 	styleUrls: ['./admin-create-service-panel-wrapper.component.scss'],
 })
-export class AdminCreateServicePanelWrapperComponent
-	implements OnInit, OnDestroy
-{
+export class AdminCreateServicePanelWrapperComponent implements OnDestroy {
 	disabledForm: boolean = false;
 	subscriptions: Array<Subscription> = [];
 	constructor(private http: HttpService, private route: Router) {}
 
-	ngOnInit(): void {}
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(s => s.unsubscribe());
 	}

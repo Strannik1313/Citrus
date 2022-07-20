@@ -29,7 +29,6 @@ export class DialogWindowComponent implements OnInit {
 		customMessage: '',
 	};
 	@Output() destroyWindow: EventEmitter<boolean> = new EventEmitter();
-	constructor() {}
 
 	ngOnInit(): void {
 		switch (this.type) {

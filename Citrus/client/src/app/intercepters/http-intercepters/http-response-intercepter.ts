@@ -1,5 +1,5 @@
 import { ServerErrorHandleService } from './../../services/server-error-handle.service';
-import { finalize, Observable, tap } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import {
 	HttpInterceptor,
 	HttpHandler,
@@ -19,12 +19,10 @@ export class HttpResponseIntercepter implements HttpInterceptor {
 	): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
 			tap({
-				next: event => {},
 				error: error => {
 					this.serverErrorHandler.setErrorInstance(error);
 				},
 			}),
-			finalize(() => {}),
 		);
 	}
 }
