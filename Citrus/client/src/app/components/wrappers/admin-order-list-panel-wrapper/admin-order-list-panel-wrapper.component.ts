@@ -1,12 +1,12 @@
 import { Component, OnDestroy } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
+import { OrderData } from '@models/order-data';
+import { OrderListButtonConfiguration } from '@models/order-list-button-configuration';
+import { PaginatorData } from '@models/paginator-data';
+import { HttpService } from '@services/http.service';
+import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
-import { OrderData } from 'src/app/models/order-data';
-import { OrderListButtonConfiguration } from 'src/app/models/order-list-button-configuration';
-import { PaginatorData } from 'src/app/models/paginator-data';
-import { HttpService } from 'src/app/services/http.service';
-import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
 	selector: 'app-admin-order-list-panel-wrapper',

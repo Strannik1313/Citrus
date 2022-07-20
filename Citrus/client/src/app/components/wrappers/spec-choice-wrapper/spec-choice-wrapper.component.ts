@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
+import { MasterData } from '@interfaces/master-data';
+import { ClientData } from '@models/client-data';
+import { HttpService } from '@services/http.service';
+import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
-import { ClientData } from 'src/app/models/client-data';
-import { MasterData } from 'src/app/interfaces/master-data';
-import { HttpService } from 'src/app/services/http.service';
-import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
 	selector: 'app-spec-choice-wrapper',

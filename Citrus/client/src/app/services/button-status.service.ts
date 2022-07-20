@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ClientData } from '@models/client-data';
+import { StorageService } from '@services/storage.service';
 import { Observable } from 'rxjs';
-import { ClientData } from '../models/client-data';
-import { StorageService } from './storage.service';
 
 @Injectable({
 	providedIn: 'root',

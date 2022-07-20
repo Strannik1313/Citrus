@@ -9,8 +9,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatSelectionListChange } from '@angular/material/list';
-import { NewMasterFormData } from 'src/app/models/new-master-form-data';
-import { PriceList } from 'src/app/models/price-list';
+import { NewMasterFormData } from '@models/new-master-form-data';
+import { PriceList } from '@models/price-list';
 
 @Component({
 	selector: 'app-admin-create-master-panel-ui',

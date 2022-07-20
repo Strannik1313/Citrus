@@ -5,9 +5,9 @@ import {
 	Router,
 	RouterStateSnapshot,
 } from '@angular/router';
+import { AccessMap } from '@models/access-map';
+import { StorageService } from '@services/storage.service';
 import { Observable, Subscription } from 'rxjs';
-import { AccessMap } from '../models/access-map';
-import { StorageService } from './storage.service';
 
 @Injectable({
 	providedIn: 'root',

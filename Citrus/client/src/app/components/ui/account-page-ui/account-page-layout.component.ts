@@ -9,7 +9,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
+import { AuthorizedClientData } from '@models/authorized-client-data';
 
 @Component({
 	selector: 'app-account-page',

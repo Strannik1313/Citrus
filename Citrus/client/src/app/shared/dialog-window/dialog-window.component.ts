@@ -1,4 +1,3 @@
-import { DialogWindowData } from './../../interfaces/dialog-window-data';
 import {
 	Component,
 	OnInit,
@@ -7,6 +6,7 @@ import {
 	ChangeDetectionStrategy,
 	Input,
 } from '@angular/core';
+import { DialogWindowData } from '@interfaces/dialog-window-data';
 
 export enum DialogType {
 	Error = 'error',

@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { CustomCalendarHeader } from '@components/custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
+import { ChoisenTime } from '@interfaces/choisen-time';
+import { StudioData } from '@interfaces/studio-data';
+import { ClientData } from '@models/client-data';
+import { HttpService } from '@services/http.service';
+import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
-import { ChoisenTime } from 'src/app/interfaces/choisen-time';
-import { ClientData } from 'src/app/models/client-data';
-import { StudioData } from 'src/app/interfaces/studio-data';
-import { HttpService } from 'src/app/services/http.service';
-import { StorageService } from 'src/app/services/storage.service';
-import { CustomCalendarHeader } from '../../custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
 
 @Component({
 	selector: 'app-date-choice-wrapper',

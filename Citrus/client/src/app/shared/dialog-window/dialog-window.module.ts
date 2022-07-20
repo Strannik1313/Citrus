@@ -1,7 +1,7 @@
-import { DialogWindowComponent } from './dialog-window.component';
-import { AppButtonGroupModule } from '../app-button-group/app-button-group.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DialogWindowComponent } from '@shared/dialog-window/dialog-window.component';
+import { AppButtonGroupModule } from '@shared/app-button-group/app-button-group.module';
 
 @NgModule({
 	declarations: [DialogWindowComponent],

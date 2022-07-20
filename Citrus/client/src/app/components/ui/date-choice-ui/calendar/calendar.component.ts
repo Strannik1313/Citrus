@@ -5,7 +5,7 @@ import {
 	Input,
 	Output,
 } from '@angular/core';
-import { CustomCalendarHeader } from 'src/app/components/custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
+import { CustomCalendarHeader } from '@components/custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
 
 @Component({
 	selector: 'app-calendar',

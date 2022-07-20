@@ -5,6 +5,7 @@ import {
 	HttpRequest,
 } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
+import { StorageService } from '@services/storage.service';
 import {
 	combineLatestWith,
 	finalize,
@@ -14,7 +15,6 @@ import {
 	timer,
 } from 'rxjs';
 import { SPINNER_TIME } from 'src/app/InjectionsToken/InjectionToken';
-import { StorageService } from 'src/app/services/storage.service';
 
 @Injectable()
 export class SpinnerActivator implements HttpInterceptor {

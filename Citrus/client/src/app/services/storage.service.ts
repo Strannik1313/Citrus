@@ -1,9 +1,9 @@
-import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
 import { Injectable } from '@angular/core';
+import { AccessMap } from '@models/access-map';
+import { AuthorizedClientData } from '@models/authorized-client-data';
+import { ClientData } from '@models/client-data';
+import { UserModel } from '@models/user-model';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { AccessMap } from '../models/access-map';
-import { ClientData } from '../models/client-data';
-import { UserModel } from '../models/user-model';
 
 @Injectable({
 	providedIn: 'root',

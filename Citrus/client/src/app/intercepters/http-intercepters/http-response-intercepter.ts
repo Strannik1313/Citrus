@@ -1,4 +1,3 @@
-import { ServerErrorHandleService } from './../../services/server-error-handle.service';
 import { Observable, tap } from 'rxjs';
 import {
 	HttpInterceptor,
@@ -7,6 +6,7 @@ import {
 	HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ServerErrorHandleService } from '@services/server-error-handle.service';
 
 @Injectable({
 	providedIn: 'root',

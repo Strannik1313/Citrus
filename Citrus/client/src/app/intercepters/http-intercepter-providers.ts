@@ -1,7 +1,7 @@
-import { HttpResponseIntercepter } from './../intercepters/http-intercepters/http-response-intercepter';
-import { TokenInterceptor } from './http-intercepters/token-interceptor';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { SpinnerActivator } from './http-intercepters/spinner-activator';
+import { HttpResponseIntercepter } from '@intercepters/http-intercepters/http-response-intercepter';
+import { SpinnerActivator } from '@intercepters/http-intercepters/spinner-activator';
+import { TokenInterceptor } from '@intercepters/http-intercepters/token-interceptor';
 
 export const httpInterceptorProviders = [
 	{ provide: HTTP_INTERCEPTORS, useClass: SpinnerActivator, multi: true },

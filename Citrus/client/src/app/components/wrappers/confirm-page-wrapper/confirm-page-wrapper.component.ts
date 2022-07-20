@@ -1,16 +1,16 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { HttpService } from 'src/app/services/http.service';
-import { StorageService } from 'src/app/services/storage.service';
 import {
 	MatSnackBar,
 	MatSnackBarHorizontalPosition,
 	MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
-import { ClientData } from 'src/app/models/client-data';
-import { SubmitData } from 'src/app/interfaces/confirm-page-submit-data';
+import { StorageService } from '@services/storage.service';
+import { HttpService } from '@services/http.service';
+import { SubmitData } from '@interfaces/confirm-page-submit-data';
+import { AuthorizedClientData } from '@models/authorized-client-data';
+import { ClientData } from '@models/client-data';
 
 @Component({
 	selector: 'app-confirm-page-wrapper',

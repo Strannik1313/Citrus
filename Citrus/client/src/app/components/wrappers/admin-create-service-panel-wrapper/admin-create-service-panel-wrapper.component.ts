@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { NewServiceFormData } from '@interfaces/new-service-form-data';
+import { HttpService } from '@services/http.service';
 import { Subscription } from 'rxjs';
-import { NewServiceFormData } from 'src/app/interfaces/new-service-form-data';
-import { HttpService } from 'src/app/services/http.service';
 
 @Component({
 	selector: 'admin-create-service-panel-wrapper',

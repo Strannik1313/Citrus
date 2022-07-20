@@ -1,10 +1,10 @@
-import { DialogWindowData } from './interfaces/dialog-window-data';
-import { ServerErrorHandleService } from './services/server-error-handle.service';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { HttpService } from './services/http.service';
-import { StorageService } from './services/storage.service';
-import { DialogType } from './shared/dialog-window/dialog-window.component';
+import { DialogWindowData } from '@interfaces/dialog-window-data';
+import { DialogType } from '@shared/dialog-window/dialog-window.component';
+import { HttpService } from '@services/http.service';
+import { StorageService } from '@services/storage.service';
+import { ServerErrorHandleService } from '@services/server-error-handle.service';
 
 @Component({
 	selector: 'app-root',

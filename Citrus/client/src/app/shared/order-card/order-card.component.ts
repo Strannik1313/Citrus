@@ -6,9 +6,9 @@ import {
 	Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { OrderData } from 'src/app/models/order-data';
-import { OrderListButtonConfiguration } from 'src/app/models/order-list-button-configuration';
-import { PaginatorData } from 'src/app/models/paginator-data';
+import { OrderData } from '@models/order-data';
+import { OrderListButtonConfiguration } from '@models/order-list-button-configuration';
+import { PaginatorData } from '@models/paginator-data';
 
 @Component({
 	selector: 'app-order-card',

@@ -4,9 +4,9 @@ import {
 	Input,
 	OnInit,
 } from '@angular/core';
-import { ButtonStatusService } from 'src/app/services/button-status.service';
-import { RouteService } from 'src/app/services/route.service';
-import { StorageService } from 'src/app/services/storage.service';
+import { ButtonStatusService } from '@services/button-status.service';
+import { RouteService } from '@services/route.service';
+import { StorageService } from '@services/storage.service';
 
 @Component({
 	selector: 'app-button-wrapper',

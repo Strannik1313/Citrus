@@ -6,7 +6,7 @@ import {
 	Output,
 } from '@angular/core';
 import { MatSelectChange } from '@angular/material/select';
-import { MasterData } from 'src/app/interfaces/master-data';
+import { MasterData } from '@interfaces/master-data';
 
 @Component({
 	selector: 'app-service-choice-layout',

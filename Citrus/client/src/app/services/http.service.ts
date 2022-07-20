@@ -1,17 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BlockedDate } from '@interfaces/blocked-date';
+import { MasterData } from '@interfaces/master-data';
+import { NewServiceData } from '@interfaces/new-service-data';
+import { StudioData } from '@interfaces/studio-data';
+import { AuthFormData } from '@models/auth-form-data';
+import { ClientData } from '@models/client-data';
+import { NewMasterFormData } from '@models/new-master-form-data';
+import { OrderData } from '@models/order-data';
+import { UserModel } from '@models/user-model';
+import { StorageService } from '@services/storage.service';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { ClientData } from '../models/client-data';
-import { MasterData } from '../interfaces/master-data';
-import { StudioData } from '../interfaces/studio-data';
-import { StorageService } from './storage.service';
-import { BlockedDate } from '../interfaces/blocked-date';
-import { NewMasterFormData } from '../models/new-master-form-data';
-import { NewServiceData } from '../interfaces/new-service-data';
-import { OrderData } from '../models/order-data';
-import { AuthFormData } from '../models/auth-form-data';
-import { UserModel } from '../models/user-model';
 
 @Injectable({
 	providedIn: 'root',

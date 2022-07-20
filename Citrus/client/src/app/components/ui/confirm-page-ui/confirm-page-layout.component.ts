@@ -7,9 +7,9 @@ import {
 	Output,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { SubmitData } from 'src/app/interfaces/confirm-page-submit-data';
-import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
-import { ClientData } from 'src/app/models/client-data';
+import { SubmitData } from '@interfaces/confirm-page-submit-data';
+import { AuthorizedClientData } from '@models/authorized-client-data';
+import { ClientData } from '@models/client-data';
 
 @Component({
 	selector: 'app-confirm-layout',

@@ -1,8 +1,8 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthFormData } from '@models/auth-form-data';
+import { HttpService } from '@services/http.service';
 import { Subscription } from 'rxjs';
-import { HttpService } from 'src/app/services/http.service';
-import { AuthFormData } from 'src/app/models/auth-form-data';
 
 @Component({
 	selector: 'app-register-page-wrapper',

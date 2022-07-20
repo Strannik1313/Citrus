@@ -1,4 +1,3 @@
-import { UserModel } from './../../../models/user-model';
 import { Subscription } from 'rxjs';
 import {
 	ChangeDetectionStrategy,
@@ -6,9 +5,10 @@ import {
 	Component,
 	OnDestroy,
 } from '@angular/core';
-import { StorageService } from 'src/app/services/storage.service';
-import { ButtonConf } from 'src/app/shared/app-button-group/app-button-group.component';
-import { btnConfMap } from 'src/app/models/header-button-conf';
+import { ButtonConf } from '@shared/app-button-group/app-button-group.component';
+import { StorageService } from '@services/storage.service';
+import { btnConfMap } from '@models/header-button-conf';
+import { UserModel } from '@models/user-model';
 
 @Component({
 	selector: 'app-header-wrapper',

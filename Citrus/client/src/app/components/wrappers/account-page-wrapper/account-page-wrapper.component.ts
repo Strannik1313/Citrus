@@ -6,13 +6,13 @@ import {
 	MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { AuthorizedClientData } from '@models/authorized-client-data';
+import { OrderData } from '@models/order-data';
+import { OrderListButtonConfiguration } from '@models/order-list-button-configuration';
+import { PaginatorData } from '@models/paginator-data';
+import { HttpService } from '@services/http.service';
+import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
-import { AuthorizedClientData } from 'src/app/models/authorized-client-data';
-import { OrderData } from 'src/app/models/order-data';
-import { OrderListButtonConfiguration } from 'src/app/models/order-list-button-configuration';
-import { PaginatorData } from 'src/app/models/paginator-data';
-import { HttpService } from 'src/app/services/http.service';
-import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
 	selector: 'app-account-page-wrapper',

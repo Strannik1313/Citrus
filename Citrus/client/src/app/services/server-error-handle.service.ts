@@ -1,6 +1,6 @@
-import { StorageService } from './storage.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { StorageService } from '@services/storage.service';
 
 @Injectable({
 	providedIn: 'root',

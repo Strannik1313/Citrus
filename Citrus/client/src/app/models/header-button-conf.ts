@@ -1,5 +1,5 @@
-import { ButtonConf } from '../shared/app-button-group/app-button-group.component';
-import { UserModel } from './user-model';
+import { UserModel } from '@models/user-model';
+import { ButtonConf } from '@shared/app-button-group/app-button-group.component';
 
 const AdminBtnConf: Array<ButtonConf> = [
 	{

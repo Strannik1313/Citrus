@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthFormData } from 'src/app/models/auth-form-data';
+import { AuthFormData } from '@models/auth-form-data';
 
 @Component({
 	selector: 'app-auth-form',

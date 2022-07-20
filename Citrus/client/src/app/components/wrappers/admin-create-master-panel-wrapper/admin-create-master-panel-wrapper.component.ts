@@ -1,10 +1,10 @@
 import { Component, OnDestroy } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
 import { Router } from '@angular/router';
+import { NewMasterFormData } from '@models/new-master-form-data';
+import { PriceList } from '@models/price-list';
+import { HttpService } from '@services/http.service';
 import { Subscription } from 'rxjs';
-import { NewMasterFormData } from 'src/app/models/new-master-form-data';
-import { PriceList } from 'src/app/models/price-list';
-import { HttpService } from 'src/app/services/http.service';
 
 @Component({
 	selector: 'app-admin-create-master-panel-wrapper',

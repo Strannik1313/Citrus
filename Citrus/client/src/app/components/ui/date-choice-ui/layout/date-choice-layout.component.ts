@@ -6,10 +6,10 @@ import {
 	OnInit,
 	Output,
 } from '@angular/core';
-import { ChoisenTime } from 'src/app/interfaces/choisen-time';
-import { ClientData } from 'src/app/models/client-data';
-import { StudioData } from 'src/app/interfaces/studio-data';
-import { CustomCalendarHeader } from 'src/app/components/custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
+import { CustomCalendarHeader } from '@components/custom-components-material-ui/custom-calendar-header/custom-calendar-header.component';
+import { ChoisenTime } from '@interfaces/choisen-time';
+import { StudioData } from '@interfaces/studio-data';
+import { ClientData } from '@models/client-data';
 
 @Component({
 	selector: 'app-date-choice-layout',
