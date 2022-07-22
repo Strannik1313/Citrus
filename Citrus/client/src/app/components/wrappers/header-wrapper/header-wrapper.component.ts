@@ -9,6 +9,7 @@ import { ButtonConf } from '@shared/app-button-group/app-button-group.component'
 import { StorageService } from '@services/storage.service';
 import { btnConfMap } from '@models/header-button-conf';
 import { UserModel } from '@models/user-model';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-header-wrapper',
@@ -20,7 +21,11 @@ export class HeaderWrapperComponent implements OnDestroy {
 	private subscriptions: Subscription[] = [];
 	public buttonConf: Array<ButtonConf> = [];
 	public userModel: UserModel = UserModel.Unauth;
-	constructor(private storage: StorageService, private cdr: ChangeDetectorRef) {
+	constructor(
+		private storage: StorageService,
+		private cdr: ChangeDetectorRef,
+		private router: Router,
+	) {
 		this.subscriptions.push(
 			this.storage?.currentUserModel$.subscribe(data => {
 				this.userModel = data;
@@ -29,6 +34,10 @@ export class HeaderWrapperComponent implements OnDestroy {
 			}),
 		);
 	}
+	onHomeBtnClick(): void {
+		this.router.navigate(['/']);
+	}
+
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(sub => sub.unsubscribe());
 	}

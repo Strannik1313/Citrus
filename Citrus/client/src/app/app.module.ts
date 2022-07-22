@@ -17,6 +17,7 @@ import { DialogWindowModule } from '@shared/dialog-window/dialog-window.module';
 import { SpinnerModule } from '@shared/spinner/spinner.module';
 import { httpInterceptorProviders } from '@intercepters/http-intercepter-providers';
 import { MatPaginatorIntlCro } from '@components/custom-components-material-ui/custom-paginators-label/CustomPaginatorsLabel';
+import { MatIconModule } from '@angular/material/icon';
 import {
 	SPINNER_DURATION,
 	SPINNER_TIME,
@@ -33,6 +34,7 @@ registerLocaleData(localeRu);
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
+		MatIconModule,
 		HttpClientModule,
 		BrowserAnimationsModule,
 		AppButtonGroupModule,

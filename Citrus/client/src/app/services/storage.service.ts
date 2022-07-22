@@ -9,9 +9,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class StorageService {
-	private roadMapSubject: BehaviorSubject<string[]> = new BehaviorSubject<
-		string[]
-	>(['']);
 	private isDialogWindowOpen: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private isInitiallize: BehaviorSubject<boolean> =
@@ -42,7 +39,6 @@ export class StorageService {
 		new BehaviorSubject<AuthorizedClientData>(new AuthorizedClientData());
 	private _tempArray: Array<string> = ['/'];
 
-	roadMapUrls$: Observable<string[]> = this.roadMapSubject.asObservable();
 	isDialogWindowOpen$: Observable<boolean> =
 		this.isDialogWindowOpen.asObservable();
 	isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
@@ -62,39 +58,6 @@ export class StorageService {
 	authorizedUserData$: Observable<AuthorizedClientData> =
 		this.authorizedUserData.asObservable();
 
-	setRoadMap(newValue: string) {
-		if (newValue === '/..') {
-			this._tempArray.pop();
-			this.roadMapSubject.next(this._tempArray);
-		} else {
-			if (newValue === 'clear') {
-				this.roadMapSubject.next(['']);
-				this._tempArray = [''];
-			} else {
-				if (this._tempArray.find(a => a === newValue) === undefined) {
-					this._tempArray.push(newValue);
-					this.roadMapSubject.next(this._tempArray);
-				}
-			}
-		}
-	}
-
-	activateButton(): void {
-		this.isButtonDisabled.next(false);
-	}
-
-	disableButton(): void {
-		this.isButtonDisabled.next(true);
-	}
-
-	setBackButtonStatus(): void {
-		if (this._tempArray.length === 1) {
-			this.isBackButtonDisabled.next(true);
-		} else {
-			this.isBackButtonDisabled.next(false);
-		}
-	}
-
 	setAccessMap(url: string): void {
 		switch (url) {
 			case '/': {
@@ -103,28 +66,8 @@ export class StorageService {
 					loginPage: true,
 					registerPage: true,
 					accountPage: false,
-					adminPage: false,
+					wizard: false,
 				});
-				break;
-			}
-			case '/admin': {
-				if (this.currentUserModel.value === UserModel.Admin) {
-					this.accessMap.next({
-						...this.accessMap.value,
-						loginPage: true,
-						registerPage: true,
-						accountPage: false,
-						adminPage: true,
-					});
-				} else {
-					this.accessMap.next({
-						...this.accessMap.value,
-						loginPage: true,
-						registerPage: true,
-						accountPage: false,
-						adminPage: false,
-					});
-				}
 				break;
 			}
 			case '/account': {
@@ -133,42 +76,17 @@ export class StorageService {
 					loginPage: true,
 					registerPage: true,
 					accountPage: true,
-					adminPage: false,
+					wizard: false,
 				});
 				break;
 			}
-			case '/crossroad': {
+			case '/deal': {
 				this.accessMap.next({
 					...this.accessMap.value,
-					crossroadPage: true,
-				});
-				break;
-			}
-			case '/spec-choice': {
-				this.accessMap.next({
-					...this.accessMap.value,
-					specChoicePage: true,
-				});
-				break;
-			}
-			case '/service-choice': {
-				this.accessMap.next({
-					...this.accessMap.value,
-					serviceChoicePage: true,
-				});
-				break;
-			}
-			case '/date-choice': {
-				this.accessMap.next({
-					...this.accessMap.value,
-					dateChoicePage: true,
-				});
-				break;
-			}
-			case '/confirm-page': {
-				this.accessMap.next({
-					...this.accessMap.value,
-					confirmPage: true,
+					loginPage: true,
+					registerPage: true,
+					accountPage: true,
+					wizard: true,
 				});
 				break;
 			}
@@ -182,9 +100,7 @@ export class StorageService {
 					...this.clientData.value,
 					master: action.value,
 					masterId: action.id,
-					masterWasSelected: action.masterChoiceToogle,
 				});
-				this.activateButton();
 				break;
 			}
 			case 'services': {
@@ -192,11 +108,6 @@ export class StorageService {
 					...this.clientData.value,
 					service: action.value,
 				});
-				if (action.value) {
-					this.activateButton();
-				} else {
-					this.disableButton();
-				}
 				break;
 			}
 			case 'calendar': {
@@ -210,11 +121,6 @@ export class StorageService {
 						minute: action.minute,
 					},
 				});
-				if (action.masterName) {
-					this.activateButton();
-				} else {
-					this.disableButton();
-				}
 				break;
 			}
 			case 'confirm': {
@@ -232,7 +138,6 @@ export class StorageService {
 					...this.clientData.value,
 					master: action.master,
 					masterId: action.masterId,
-					masterWasSelected: action.masterWasSelected,
 					service: action.service,
 					name: action.clientName,
 					surname: action.clientSurname,
@@ -246,7 +151,6 @@ export class StorageService {
 					...this.clientData.value,
 					master: action.master,
 					masterId: action.masterId,
-					masterWasSelected: action.masterWasSelected,
 					service: action.service,
 					date: action.date,
 					time: {

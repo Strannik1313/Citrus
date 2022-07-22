@@ -11,28 +11,10 @@ const routes: Routes = [
 		pathMatch: 'full',
 	},
 	{
-		path: 'login',
+		path: 'deal',
 		loadChildren: () =>
-			import('@modules/login-page/login-page.module').then(
-				m => m.LoginPageModule,
-			),
+			import('@modules/wizard/wizard.module').then(m => m.WizardModule),
 		canActivate: [NavigateAccess],
-	},
-	{
-		path: 'admin',
-		loadChildren: () =>
-			import('@modules/admin-page/admin-page.module').then(
-				m => m.AdminPageModule,
-			),
-		canActivate: [AuthGuardService, NavigateAccess],
-	},
-	{
-		path: 'account',
-		loadChildren: () =>
-			import('@modules/account-page/account-page.module').then(
-				m => m.AccountPageModule,
-			),
-		canActivate: [AuthGuardService, NavigateAccess],
 	},
 	{
 		path: 'register',
@@ -43,44 +25,20 @@ const routes: Routes = [
 		canActivate: [NavigateAccess],
 	},
 	{
-		path: 'crossroad',
+		path: 'login',
 		loadChildren: () =>
-			import('@modules/crossroad-page/crossroad-page.module').then(
-				m => m.CrossroadPageModule,
+			import('@modules/login-page/login-page.module').then(
+				m => m.LoginPageModule,
 			),
 		canActivate: [NavigateAccess],
 	},
 	{
-		path: 'spec-choice',
+		path: 'account',
 		loadChildren: () =>
-			import('@modules/spec-choice-page/spec-choice-page.module').then(
-				m => m.SpecChoicePageModule,
+			import('@modules/account-page/account-page.module').then(
+				m => m.AccountPageModule,
 			),
-		canActivate: [NavigateAccess],
-	},
-	{
-		path: 'service-choice',
-		loadChildren: () =>
-			import('@modules/service-choice-page/service-choice-page.module').then(
-				m => m.ServiceChoicePageModule,
-			),
-		canActivate: [NavigateAccess],
-	},
-	{
-		path: 'date-choice',
-		loadChildren: () =>
-			import('@modules/date-choice-page/date-choice-page.module').then(
-				m => m.DateChoicePageModule,
-			),
-		canActivate: [NavigateAccess],
-	},
-	{
-		path: 'confirm-page',
-		loadChildren: () =>
-			import('@modules/confirm-page/confirm-page.module').then(
-				m => m.ConfirmPageModule,
-			),
-		canActivate: [NavigateAccess],
+		canActivate: [AuthGuardService, NavigateAccess],
 	},
 	{
 		path: '**',

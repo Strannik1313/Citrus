@@ -10,7 +10,6 @@ import { Component, Input } from '@angular/core';
 export class AppButtonComponent {
 	@Input() label: string = '';
 	@Input() url: string = '';
-	@Input() isDisabled: boolean | null = false;
 	@Output() goToNextPage = new EventEmitter();
 
 	onButtonClick(url: string): void {

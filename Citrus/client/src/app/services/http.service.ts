@@ -130,8 +130,6 @@ export class HttpService {
 						this.storage?.setAuthorizedUserData({ ...payload });
 						this.storage?.setHaveAccountFormData(true);
 					}
-					this.storage?.setRoadMap('clear');
-					this.storage?.setBackButtonStatus();
 				}),
 			);
 	}
@@ -195,8 +193,6 @@ export class HttpService {
 		this.storage?.setIsAdmin(false);
 		this.storage?.setHaveAccountFormData(false);
 		this.router?.navigate(['/']);
-		this.storage?.setRoadMap('clear');
-		this.storage?.setBackButtonStatus();
 		this.storage?.setCurrentUserModel({ isAdmin: false, isAuth: false });
 	}
 }

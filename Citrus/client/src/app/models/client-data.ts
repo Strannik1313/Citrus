@@ -1,7 +1,6 @@
 export class ClientData {
 	master: string = '';
 	masterId: number = 0;
-	masterWasSelected: boolean = false;
 	service: string = '';
 	date: Date | null = null;
 	time: {
