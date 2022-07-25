@@ -9,6 +9,7 @@ import { AuthFormData } from '@models/auth-form-data';
 import { ClientData } from '@models/client-data';
 import { NewMasterFormData } from '@models/new-master-form-data';
 import { OrderData } from '@models/order-data';
+import { Service } from '@models/service';
 import { UserModel } from '@models/user-model';
 import { StorageService } from '@services/storage.service';
 import { catchError, Observable, of, tap } from 'rxjs';
@@ -109,6 +110,9 @@ export class HttpService {
 
 	getMasterData(): Observable<MasterData[]> {
 		return this.http?.get<MasterData[]>('/api/masters');
+	}
+	getServices(): Observable<Service[]> {
+		return this.http?.get<Service[]>('/api/services');
 	}
 
 	login(formValue: AuthFormData): Observable<{ token: string; payload?: any }> {

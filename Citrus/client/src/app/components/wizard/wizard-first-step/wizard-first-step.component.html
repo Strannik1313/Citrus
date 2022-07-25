@@ -1,0 +1,15 @@
+<div class="service__choice__select__field">
+	<mat-form-field appearance="fill">
+		<input matInput (keyup)="filterChange()" [(ngModel)]="inputValue" />
+	</mat-form-field>
+	<mat-card
+		*ngFor="let service of filteredServices; trackBy: trackByFn; let i = index"
+		[ngClass]="{ active: isChoisen === i }"
+		class="card__item"
+		(click)="stepDone(service, i)">
+		<p>{{ service.title }}</p>
+		<p>{{ service.description }}</p>
+		<p>Продолжительность: {{ service.duration }} мин</p>
+		<p>от {{ service.cost }}</p>
+	</mat-card>
+</div>
