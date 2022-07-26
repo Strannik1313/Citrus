@@ -3,11 +3,13 @@ import {
 	ChangeDetectionStrategy,
 	OnInit,
 	ChangeDetectorRef,
+	OnDestroy,
 } from '@angular/core';
 import { Service } from '@models/service';
 import { FilterService } from '@services/filter.service';
 import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-wizard-first-step',
@@ -15,11 +17,12 @@ import { StorageService } from '@services/storage.service';
 	styleUrls: ['./wizard-first-step.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardFirstStepComponent implements OnInit {
-	public filteredServices: Service[] = [];
+export class WizardFirstStepComponent implements OnInit, OnDestroy {
 	public isChoisen: number | undefined;
 	public inputValue: string = '';
-	private services: Service[] = [];
+	public isAutocompleteOpen: boolean = false;
+	public services: Service[] = [];
+	private subscriptions: Subscription[] = [];
 	constructor(
 		private storage: StorageService,
 		private filter: FilterService,
@@ -31,19 +34,38 @@ export class WizardFirstStepComponent implements OnInit {
 	ngOnInit(): void {
 		this.http.getServices().subscribe(data => {
 			this.services = [...data];
-			this.filteredServices = [...data];
 			this.filter.setData(this.services);
 			this.cdr.detectChanges();
 		});
 	}
+	ngOnDestroy(): void {
+		this.subscriptions.forEach(sub => sub.unsubscribe());
+	}
+	filterChange(): void {
+		this.isAutocompleteOpen = true;
+		this.subscriptions.push(
+			this.filter
+				.setFilter(this.inputValue.toLocaleLowerCase())
+				.subscribe(data => {
+					this.services = [...data];
+					this.services.length === 0 || !this.inputValue
+						? (this.isAutocompleteOpen = false)
+						: null;
+					this.cdr.detectChanges();
+				}),
+		);
+	}
+	onAutocomleteItemClick(item: string): void {
+		this.inputValue = item;
+		this.filterChange();
+		this.isAutocompleteOpen = false;
+	}
 	stepDone(service: Service, index: number): void {
 		this.isChoisen = index;
 		this.storage.setIsWizardStepDone(true);
-	}
-	filterChange(): void {
-		this.filter.setFilter(this.inputValue).subscribe(data => {
-			this.filteredServices = [...data];
-			this.cdr.detectChanges();
+		this.storage.setClientData({
+			name: 'services',
+			value: service.title,
 		});
 	}
 	trackByFn(index: number, item: Service): string {

@@ -1,15 +1,33 @@
 <div class="service__choice__select__field">
-	<mat-form-field appearance="fill">
-		<input matInput (keyup)="filterChange()" [(ngModel)]="inputValue" />
-	</mat-form-field>
-	<mat-card
-		*ngFor="let service of filteredServices; trackBy: trackByFn; let i = index"
-		[ngClass]="{ active: isChoisen === i }"
-		class="card__item"
-		(click)="stepDone(service, i)">
-		<p>{{ service.title }}</p>
-		<p>{{ service.description }}</p>
-		<p>Продолжительность: {{ service.duration }} мин</p>
-		<p>от {{ service.cost }}</p>
-	</mat-card>
+	<input
+		class="filter__input"
+		(keyup)="filterChange()"
+		[(ngModel)]="inputValue"
+		cdkOverlayOrigin
+		#trigger="cdkOverlayOrigin" />
+	<ng-template
+		cdkConnectedOverlay
+		[cdkConnectedOverlayOrigin]="trigger"
+		[cdkConnectedOverlayOpen]="isAutocompleteOpen">
+		<ul class="autocomplete">
+			<div
+				*ngFor="let service of services; trackBy: trackByFn; let i = index"
+				class="autocomplete__item"
+				(click)="onAutocomleteItemClick(service.title)"
+				><li>{{ service.title }}</li></div
+			>
+		</ul>
+	</ng-template>
+	<div class="card__container">
+		<mat-card
+			*ngFor="let service of services; trackBy: trackByFn; let i = index"
+			[ngClass]="{ active: isChoisen === i }"
+			class="card__item"
+			(click)="stepDone(service, i)">
+			<p>{{ service.title | firstLetterUppercase }}</p>
+			<p>{{ service.description }}</p>
+			<p>Продолжительность: {{ service.duration }} мин</p>
+			<p>от {{ service.cost }} рублей</p>
+		</mat-card>
+	</div>
 </div>

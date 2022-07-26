@@ -1,34 +1,33 @@
 * {
-    position: relative;
-    padding: 0.5rem;
+	position: relative;
+	padding: 0.5rem;
 }
 body {
-    background: #fafafa;
-    font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-    font-size: .8vw;
+	background: #fafafa;
+	font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+	font-size: 0.8vw;
 }
 
-.document { 
-    height: 70vw;
-    display: grid;
-    grid-template-areas:
-        "header"
-        "content";
-    grid-template-rows: 1fr 7fr;
-    grid-template-columns: 1fr;
-    align-content: stretch;
+.document {
+	display: grid;
+	grid-template-areas:
+		'header'
+		'content';
+	grid-template-rows: 1fr 7fr;
+	grid-template-columns: 1fr;
+	align-content: stretch;
 }
 
 .header {
-    grid-area: header;
-    max-height: 5em;
-    background-color: #f4f6fc;
-    border-radius: 10px;
-    align-self: center;
+	grid-area: header;
+	max-height: 5em;
+	background-color: #f4f6fc;
+	border-radius: 10px;
+	align-self: center;
 }
 
 .content {
-    height: 100hw;
-    grid-area: content;
-    position: absolute;
+	height: 100hw;
+	grid-area: content;
+	position: absolute;
 }
