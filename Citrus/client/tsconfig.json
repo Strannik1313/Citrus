@@ -13,6 +13,7 @@
 			"@pipes/*": ["./src/app/pipes/*"],
 			"@services/*": ["./src/app/services/*"],
 			"@shared/*": ["./src/app/shared/*"],
+			"@directives/*": ["./src/app/directives/*"],
 			"@environments/*": ["./src/environments/*"]
 		},
 		"outDir": "./dist/out-tsc",

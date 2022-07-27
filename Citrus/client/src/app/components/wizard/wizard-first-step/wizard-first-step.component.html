@@ -1,23 +1,8 @@
 <div class="service__choice__select__field">
-	<input
-		class="filter__input"
-		(keyup)="filterChange()"
-		[(ngModel)]="inputValue"
-		cdkOverlayOrigin
-		#trigger="cdkOverlayOrigin" />
-	<ng-template
-		cdkConnectedOverlay
-		[cdkConnectedOverlayOrigin]="trigger"
-		[cdkConnectedOverlayOpen]="isAutocompleteOpen">
-		<ul class="autocomplete">
-			<div
-				*ngFor="let service of services; trackBy: trackByFn; let i = index"
-				class="autocomplete__item"
-				(click)="onAutocomleteItemClick(service.title)"
-				><li>{{ service.title }}</li></div
-			>
-		</ul>
-	</ng-template>
+	<app-search-string
+		[options]="services"
+		(valueForFilter)="filterChange($event)">
+	</app-search-string>
 	<div class="card__container">
 		<mat-card
 			*ngFor="let service of services; trackBy: trackByFn; let i = index"

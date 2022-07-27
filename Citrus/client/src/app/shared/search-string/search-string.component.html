@@ -1,0 +1,24 @@
+<div class="container" appAutocompleteDirective>
+	<input
+		class="filter__input"
+		(keyup)="onInputChange()"
+		(blur)="searchSubject.next(searchStatusBlur)"
+		[(ngModel)]="inputValue"
+		cdkOverlayOrigin
+		#trigger="cdkOverlayOrigin" />
+	<ng-template
+		cdkConnectedOverlay
+		[cdkConnectedOverlayOrigin]="trigger"
+		[cdkConnectedOverlayOpen]="isAutocompleteOpen">
+		<ul
+			class="autocomplete"
+			(mouseenter)="searchSubject.next(searchStatusMouseEnter)">
+			<div
+				*ngFor="let option of options; trackBy: trackByFn; let i = index"
+				class="autocomplete__item"
+				(click)="onAutocomleteItemClick(option.title)"
+				><li>{{ option.title }}</li></div
+			>
+		</ul>
+	</ng-template>
+</div>

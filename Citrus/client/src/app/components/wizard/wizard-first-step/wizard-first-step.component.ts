@@ -19,8 +19,6 @@ import { Subscription } from 'rxjs';
 })
 export class WizardFirstStepComponent implements OnInit, OnDestroy {
 	public isChoisen: number | undefined;
-	public inputValue: string = '';
-	public isAutocompleteOpen: boolean = false;
 	public services: Service[] = [];
 	private subscriptions: Subscription[] = [];
 	constructor(
@@ -41,24 +39,13 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscriptions.forEach(sub => sub.unsubscribe());
 	}
-	filterChange(): void {
-		this.isAutocompleteOpen = true;
+	filterChange(value: string): void {
 		this.subscriptions.push(
-			this.filter
-				.setFilter(this.inputValue.toLocaleLowerCase())
-				.subscribe(data => {
-					this.services = [...data];
-					this.services.length === 0 || !this.inputValue
-						? (this.isAutocompleteOpen = false)
-						: null;
-					this.cdr.detectChanges();
-				}),
+			this.filter.setFilter(value.toLocaleLowerCase()).subscribe(data => {
+				this.services = [...data];
+				this.cdr.detectChanges();
+			}),
 		);
-	}
-	onAutocomleteItemClick(item: string): void {
-		this.inputValue = item;
-		this.filterChange();
-		this.isAutocompleteOpen = false;
 	}
 	stepDone(service: Service, index: number): void {
 		this.isChoisen = index;
