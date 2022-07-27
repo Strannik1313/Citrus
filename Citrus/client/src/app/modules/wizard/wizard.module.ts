@@ -14,7 +14,6 @@ import { FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
 import { SearchStringComponent } from '@shared/search-string/search-string.component';
-import { AutocompleteDirectiveDirective } from '@directives/autocomplete-directive.directive';
 
 @NgModule({
 	declarations: [
@@ -24,7 +23,6 @@ import { AutocompleteDirectiveDirective } from '@directives/autocomplete-directi
 		WizardThirdStepComponent,
 		FirstLetterUppercasePipe,
 		SearchStringComponent,
-		AutocompleteDirectiveDirective,
 	],
 	imports: [
 		CommonModule,
