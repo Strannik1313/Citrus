@@ -110,6 +110,7 @@ export class StorageService {
 				this.clientData.next({
 					...this.clientData.value,
 					service: action.value,
+					serviceId: action.id,
 				});
 				break;
 			}

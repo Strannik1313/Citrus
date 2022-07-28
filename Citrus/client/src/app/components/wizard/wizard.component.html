@@ -1,4 +1,5 @@
 <div class="wizard__container">
+	<app-stepper [currentStep]="currentStep"></app-stepper>
 	<div class="button__container">
 		<button mat-button color="primary" (click)="onBtnClick(false)"
 			>Назад</button
@@ -13,7 +14,9 @@
 	</div>
 	<div [ngSwitch]="currentStep">
 		<ng-template ngSwitchCase="{{ firstStepComponent }}">
-			<app-wizard-first-step></app-wizard-first-step>
+			<app-wizard-first-step
+				[shouldClientDataBeSaved]="shouldClientDataBeSaved"
+				[choisenService]="preselectedOptionFirstStep"></app-wizard-first-step>
 		</ng-template>
 		<ng-template ngSwitchCase="{{ secondStepComponent }}">
 			<app-wizard-second-step></app-wizard-second-step>

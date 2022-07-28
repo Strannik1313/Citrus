@@ -4,7 +4,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 	name: 'firstLetterUppercase',
 })
 export class FirstLetterUppercasePipe implements PipeTransform {
-	transform(value: string, ...args: unknown[]): unknown {
-		return `${value[0].toUpperCase()}${value.slice(1)}`;
+	transform(value: string | undefined, ...args: unknown[]): unknown {
+		if (!!value) {
+			return `${value[0].toUpperCase()}${value.slice(1)}`;
+		}
+		return '';
 	}
 }

@@ -14,6 +14,6 @@
 	background: rgb(221, 221, 221);
 }
 .card__container {
-	overflow-y: scroll;
+	overflow: auto;
 	height: 500px;
 }

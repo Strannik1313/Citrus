@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
 import { SearchStringComponent } from '@shared/search-string/search-string.component';
+import { StepperModule } from '@modules/stepper/stepper.module';
 
 @NgModule({
 	declarations: [
@@ -32,6 +33,7 @@ import { SearchStringComponent } from '@shared/search-string/search-string.compo
 		MatInputModule,
 		MatFormFieldModule,
 		OverlayModule,
+		StepperModule,
 		FormsModule,
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
 	],

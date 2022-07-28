@@ -6,6 +6,7 @@ import {
 	OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
+import { ClientData } from '@models/client-data';
 import { WizardStepper } from '@models/wizard-stepper';
 import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
@@ -22,9 +23,12 @@ const enum BtnLabel {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardComponent implements OnInit, OnDestroy {
+	public shouldClientDataBeSaved: boolean = false;
 	public currentStep: number = WizardStepper.WizardFirstStepComponent;
 	public nextBtnLabel: string = BtnLabel.next;
 	public isStepDone: boolean = false;
+	public preselectedOptionFirstStep: number = -1;
+	public clientData: ClientData = new ClientData();
 	public firstStepComponent: number = WizardStepper.WizardFirstStepComponent;
 	public secondStepComponent: number = WizardStepper.WizardSecondStepComponent;
 	public thirdStepComponent: number = WizardStepper.WizardThirdStepComponent;
@@ -37,11 +41,21 @@ export class WizardComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.firstStepComponent;
 		this.subscritions.push(
 			this.storage.isWizardStepDone$.subscribe(data => {
 				this.isStepDone = data;
-				this.cdr.detectChanges();
+				this.cdr.markForCheck();
+			}),
+		);
+		this.subscritions.push(
+			this.storage.shouldClientDataSaved$.subscribe(data => {
+				this.shouldClientDataBeSaved = data;
+			}),
+		);
+		this.subscritions.push(
+			this.storage.clientData$.subscribe(data => {
+				this.clientData = data;
+				this.preselectedOptionFirstStep = this.clientData.serviceId;
 			}),
 		);
 	}
@@ -49,9 +63,15 @@ export class WizardComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscritions.forEach(sub => sub.unsubscribe());
 	}
-
 	onBtnClick(action: boolean): void {
-		action ? (this.currentStep += 1) : (this.currentStep -= 1);
+		if (action) {
+			this.currentStep += 1;
+			this.storage.setClientDataSaved(true);
+		} else {
+			this.currentStep -= 1;
+			this.storage.setClientDataSaved(false);
+		}
+		this.storage.setIsWizardStepDone(false);
 		switch (this.currentStep) {
 			case WizardStepper.WizardFirstStepComponent:
 				break;

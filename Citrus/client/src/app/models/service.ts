@@ -1,17 +1,9 @@
-export class Service {
-	constructor(
-		title: string,
-		description: string,
-		cost: number,
-		duration: Date,
-	) {
-		this.title = title;
-		this.description = description;
-		this.cost = cost;
-		this.duration = duration;
-	}
-	title: string;
-	description: string;
-	cost: number;
-	duration: Date;
+import { FilterDataType } from '@services/filter.service';
+
+export class Service implements FilterDataType {
+	title: string = '';
+	description: string = '';
+	cost: number = 0;
+	duration: number = 0;
+	id: number = 0;
 }

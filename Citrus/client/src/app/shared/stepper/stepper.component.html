@@ -1,0 +1,8 @@
+<div class="container">
+	<div
+		class="step"
+		[ngClass]="{ active: currentStep + 1 >= step }"
+		*ngFor="let step of steps; trackBy: trackByFn; let i = index">
+		<span>{{ step }}</span>
+	</div>
+</div>

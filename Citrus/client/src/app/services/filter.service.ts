@@ -1,28 +1,29 @@
 import { Injectable } from '@angular/core';
-import { Service } from '@models/service';
 import { Observable, of } from 'rxjs';
 
-type FilterDataType = Service;
+export interface FilterDataType {
+	title: string;
+}
 
 @Injectable({
 	providedIn: 'root',
 })
-export class FilterService {
-	private service: FilterDataType[] = [];
-	setFilter(filterKey?: string): Observable<FilterDataType[]> {
+export class FilterService<T extends FilterDataType> {
+	private filteredArray: T[] = [];
+	setFilter(filterKey?: string): Observable<T[]> {
 		if (!!filterKey) {
-			const temp: Service[] = [];
-			this.service.forEach(service => {
-				if (service.title.indexOf(filterKey) !== -1) {
-					temp.push(service);
+			const temp: T[] = [];
+			this.filteredArray.forEach(item => {
+				if (item.title.indexOf(filterKey) !== -1) {
+					temp.push(item);
 				}
 			});
 			return of(temp);
 		} else {
-			return of(this.service);
+			return of(this.filteredArray);
 		}
 	}
-	setData(data: FilterDataType[]): void {
-		this.service = data;
+	setData(data: T[]): void {
+		this.filteredArray = data;
 	}
 }

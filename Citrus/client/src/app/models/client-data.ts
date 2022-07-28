@@ -2,6 +2,7 @@ export class ClientData {
 	master: string = '';
 	masterId: number = 0;
 	service: string = '';
+	serviceId: number = -1;
 	date: Date | null = null;
 	time: {
 		hour: number;
