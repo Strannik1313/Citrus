@@ -113,20 +113,20 @@ export class AccountPageWrapperComponent implements OnDestroy {
 				);
 				break;
 			case 'change':
-				let clientOrder: OrderData[] = this.ordersArray.filter(el => {
-					return el.orderId === e.orderId;
-				});
-				this.storage.setClientData({
-					name: 'admin',
-					master: clientOrder[0].master,
-					masterId: clientOrder[0].masterId,
-					masterWasSelected: true,
-					service: clientOrder[0].service,
-					clientName: clientOrder[0].clientName,
-					clientSurname: clientOrder[0].clientSurname,
-					phoneNumber: clientOrder[0].phoneNumber,
-					comments: clientOrder[0].comments,
-				});
+				// let clientOrder: OrderData[] = this.ordersArray.filter(el => {
+				// 	return el.orderId === e.orderId;
+				// });
+				// this.storage.setClientData({
+				// 	name: 'admin',
+				// 	master: clientOrder[0].master,
+				// 	masterId: clientOrder[0].masterId,
+				// 	masterWasSelected: true,
+				// 	service: clientOrder[0].service,
+				// 	clientName: clientOrder[0].clientName,
+				// 	clientSurname: clientOrder[0].clientSurname,
+				// 	phoneNumber: clientOrder[0].phoneNumber,
+				// 	comments: clientOrder[0].comments,
+				// });
 				this.storage.setAccessMap('/crossroad');
 				this.route.navigate(['/crossroad']);
 				break;

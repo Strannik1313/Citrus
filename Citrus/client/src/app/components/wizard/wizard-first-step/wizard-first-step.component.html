@@ -8,7 +8,7 @@
 			*ngFor="let service of services; trackBy: trackByFn; let i = index"
 			[ngClass]="{ active: choisenService === service.id }"
 			class="card__item"
-			(click)="stepDone(service)">
+			(click)="onStepDone(service)">
 			<p>{{ service?.title | firstLetterUppercase }}</p>
 			<p>{{ service?.description }}</p>
 			<p>Продолжительность: {{ service?.duration }} мин</p>

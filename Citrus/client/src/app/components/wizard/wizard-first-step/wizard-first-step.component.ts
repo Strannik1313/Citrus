@@ -5,11 +5,13 @@ import {
 	ChangeDetectorRef,
 	OnDestroy,
 	Input,
+	Output,
+	EventEmitter,
 } from '@angular/core';
+import { ClientDataFirstStepInit } from '@models/client-data';
 import { Service } from '@models/service';
 import { FilterService } from '@services/filter.service';
 import { HttpService } from '@services/http.service';
-import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,10 +23,11 @@ import { Subscription } from 'rxjs';
 export class WizardFirstStepComponent implements OnInit, OnDestroy {
 	@Input() shouldClientDataBeSaved: boolean = false;
 	@Input() choisenService: number = -1;
+	@Output() stepDone: EventEmitter<ClientDataFirstStepInit> =
+		new EventEmitter();
 	public services: Service[] = [];
 	private subscription: Subscription = new Subscription();
 	constructor(
-		private storage: StorageService,
 		private filter: FilterService<Service>,
 		private http: HttpService,
 		private cdr: ChangeDetectorRef,
@@ -35,21 +38,10 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 				this.services = [...data];
 				this.filter.setData(this.services);
 				this.cdr.markForCheck();
-				if (this.choisenService !== -1) {
-					this.storage.setIsWizardStepDone(true);
-				}
 			}),
 		);
 	}
 	ngOnDestroy(): void {
-		if (!this.shouldClientDataBeSaved) {
-			this.storage.setClientData({
-				name: 'services',
-				value: '',
-				id: -1,
-			});
-			this.storage.setIsWizardStepDone(false);
-		}
 		this.subscription.unsubscribe();
 	}
 	filterChange(value: string): void {
@@ -60,15 +52,12 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 			}),
 		);
 	}
-	stepDone(service: Service): void {
+	onStepDone(service: Service): void {
 		this.choisenService = service.id;
-		this.storage.setClientData({
-			name: 'services',
-			value: service.title,
-			id: service.id,
+		this.stepDone.emit({
+			service: service.title,
+			serviceId: service.id,
 		});
-		this.storage.setIsWizardStepDone(true);
-		this.storage.setClientDataSaved(true);
 	}
 	trackByFn(index: number, item: Service): string {
 		return item.title;

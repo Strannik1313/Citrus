@@ -16,7 +16,8 @@
 		<ng-template ngSwitchCase="{{ firstStepComponent }}">
 			<app-wizard-first-step
 				[shouldClientDataBeSaved]="shouldClientDataBeSaved"
-				[choisenService]="preselectedOptionFirstStep"></app-wizard-first-step>
+				[choisenService]="preselectedOptionFirstStep"
+				(stepDone)="firstStepDone($event)"></app-wizard-first-step>
 		</ng-template>
 		<ng-template ngSwitchCase="{{ secondStepComponent }}">
 			<app-wizard-second-step></app-wizard-second-step>

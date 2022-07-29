@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ClientData } from '@models/client-data';
 import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
 
@@ -20,20 +21,8 @@ export class NavigateService {
 			case '/home': {
 				this.storage?.setAccessMap('/');
 				this.route?.navigate(['/']);
-				this.storage?.setClientDataSaved(false);
 				this.storage?.setIsDialogWindowOpen(false);
-				this.storage?.setClientData({
-					name: 'home',
-					master: '',
-					masterId: 0,
-					masterWasSelected: false,
-					service: '',
-					date: null,
-					time: {
-						hour: 0,
-						minute: 0,
-					},
-				});
+				this.storage?.setClientData(new ClientData());
 				break;
 			}
 			case '/logout': {
@@ -46,7 +35,6 @@ export class NavigateService {
 				{
 					this.storage?.setAccessMap(url);
 					this.route?.navigate([url]);
-					this.storage?.setClientDataSaved(true);
 				}
 				break;
 		}

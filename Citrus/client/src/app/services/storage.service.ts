@@ -29,8 +29,6 @@ export class StorageService {
 	);
 	private authButtonActive: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
-	private isClientDataShouldSaved: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(true);
 	private isBackButtonDisabled: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(true);
 	private accessMap: BehaviorSubject<AccessMap> =
@@ -52,8 +50,6 @@ export class StorageService {
 	isTokenValid$: Observable<boolean> = this.isTokenValid.asObservable();
 	isAdmin$: Observable<boolean> = this.isAdmin.asObservable();
 	authButtonActive$: Observable<boolean> = this.authButtonActive.asObservable();
-	shouldClientDataSaved$: Observable<boolean> =
-		this.isClientDataShouldSaved.asObservable();
 	backButtonDisabled$: Observable<boolean> =
 		this.isBackButtonDisabled.asObservable();
 	accessMap$: Observable<AccessMap> = this.accessMap.asObservable();
@@ -96,79 +92,8 @@ export class StorageService {
 		}
 	}
 
-	setClientData(action: any): void {
-		switch (action.name) {
-			case 'master': {
-				this.clientData.next({
-					...this.clientData.value,
-					master: action.value,
-					masterId: action.id,
-				});
-				break;
-			}
-			case 'services': {
-				this.clientData.next({
-					...this.clientData.value,
-					service: action.value,
-					serviceId: action.id,
-				});
-				break;
-			}
-			case 'calendar': {
-				this.clientData.next({
-					...this.clientData.value,
-					masterId: action.id,
-					master: action.masterName,
-					date: action.date,
-					time: {
-						hour: action.hour,
-						minute: action.minute,
-					},
-				});
-				break;
-			}
-			case 'confirm': {
-				this.clientData.next({
-					...this.clientData.value,
-					name: action.clientName,
-					surname: action.clientSurname,
-					phoneNumber: action.phoneNumber,
-					comments: action.comments ? action.comments : '',
-				});
-				break;
-			}
-			case 'admin': {
-				this.clientData.next({
-					...this.clientData.value,
-					master: action.master,
-					masterId: action.masterId,
-					service: action.service,
-					name: action.clientName,
-					surname: action.clientSurname,
-					phoneNumber: action.phoneNumber,
-					comments: action.comments ? action.comments : '',
-				});
-				break;
-			}
-			case 'home': {
-				this.clientData.next({
-					...this.clientData.value,
-					master: action.master,
-					masterId: action.masterId,
-					service: action.service,
-					date: action.date,
-					time: {
-						hour: action.hour,
-						minute: action.minute,
-					},
-				});
-				break;
-			}
-		}
-	}
-
-	setClientDataSaved(value: boolean): void {
-		this.isClientDataShouldSaved.next(value);
+	setClientData(value: ClientData): void {
+		this.clientData.next(value);
 	}
 
 	setAuthorizedUserData(data: AuthorizedClientData): void {
