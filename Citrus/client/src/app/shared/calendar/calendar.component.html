@@ -1,0 +1,8 @@
+<div class="container">
+	<app-calendar-cell
+		*ngFor="let cell of calendarData; let i = index"
+		[date]="cell"
+		class="cell"
+		[ngClass]="{ active: isChoisen === i }"
+		(click)="onDateClick(i)"></app-calendar-cell>
+</div>

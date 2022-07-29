@@ -22,7 +22,7 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 	@Input() shouldClientDataBeSaved: boolean = false;
 	@Input() choisenService: number = -1;
 	public services: Service[] = [];
-	private subscriptions: Subscription[] = [];
+	private subscription: Subscription = new Subscription();
 	constructor(
 		private storage: StorageService,
 		private filter: FilterService<Service>,
@@ -30,17 +30,12 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 		private cdr: ChangeDetectorRef,
 	) {}
 	ngOnInit(): void {
-		this.subscriptions.push(
+		this.subscription.add(
 			this.http.getServices().subscribe(data => {
 				this.services = [...data];
 				this.filter.setData(this.services);
 				this.cdr.markForCheck();
 				if (this.choisenService !== -1) {
-					this.storage.setClientData({
-						name: 'services',
-						value: this.services[this.choisenService].title,
-						id: this.services[this.choisenService].id,
-					});
 					this.storage.setIsWizardStepDone(true);
 				}
 			}),
@@ -55,24 +50,25 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 			});
 			this.storage.setIsWizardStepDone(false);
 		}
-		this.subscriptions.forEach(sub => sub.unsubscribe());
+		this.subscription.unsubscribe();
 	}
 	filterChange(value: string): void {
-		this.subscriptions.push(
+		this.subscription.add(
 			this.filter.setFilter(value.toLocaleLowerCase()).subscribe(data => {
 				this.services = [...data];
 				this.cdr.markForCheck();
 			}),
 		);
 	}
-	stepDone(service: Service, index: number): void {
-		this.choisenService = index;
+	stepDone(service: Service): void {
+		this.choisenService = service.id;
 		this.storage.setClientData({
 			name: 'services',
 			value: service.title,
 			id: service.id,
 		});
 		this.storage.setIsWizardStepDone(true);
+		this.storage.setClientDataSaved(true);
 	}
 	trackByFn(index: number, item: Service): string {
 		return item.title;

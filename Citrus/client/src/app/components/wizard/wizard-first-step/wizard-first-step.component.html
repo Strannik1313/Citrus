@@ -6,9 +6,9 @@
 	<div class="card__container">
 		<mat-card
 			*ngFor="let service of services; trackBy: trackByFn; let i = index"
-			[ngClass]="{ active: choisenService === i }"
+			[ngClass]="{ active: choisenService === service.id }"
 			class="card__item"
-			(click)="stepDone(service, i)">
+			(click)="stepDone(service)">
 			<p>{{ service?.title | firstLetterUppercase }}</p>
 			<p>{{ service?.description }}</p>
 			<p>Продолжительность: {{ service?.duration }} мин</p>

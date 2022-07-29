@@ -25,11 +25,11 @@ export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 	public inputValue: string = '';
 	public isAutocompleteOpen: boolean = false;
 	public isMouseOverAutocomplete: boolean = false;
-	private subscriptions: Subscription[] = [];
+	private subscription: Subscription = new Subscription();
 
 	constructor(private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
-		this.subscriptions.push(
+		this.subscription.add(
 			fromEvent(document, 'click')
 				.pipe(
 					filter(
@@ -56,7 +56,7 @@ export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 		}
 	}
 	ngOnDestroy(): void {
-		this.subscriptions.forEach(sub => sub.unsubscribe());
+		this.subscription.unsubscribe();
 	}
 	onInputChange(): void {
 		this.isAutocompleteOpen = true;

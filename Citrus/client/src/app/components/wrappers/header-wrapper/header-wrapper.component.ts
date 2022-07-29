@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderWrapperComponent implements OnDestroy {
-	private subscriptions: Subscription[] = [];
+	private subscription: Subscription = new Subscription();
 	public buttonConf: Array<ButtonConf> = [];
 	public userModel: UserModel = UserModel.Unauth;
 	constructor(
@@ -26,7 +26,7 @@ export class HeaderWrapperComponent implements OnDestroy {
 		private cdr: ChangeDetectorRef,
 		private router: Router,
 	) {
-		this.subscriptions.push(
+		this.subscription.add(
 			this.storage?.currentUserModel$.subscribe(data => {
 				this.userModel = data;
 				this.buttonConf = btnConfMap.getBtnConfByUser(this.userModel);
@@ -39,6 +39,6 @@ export class HeaderWrapperComponent implements OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscriptions.forEach(sub => sub.unsubscribe());
+		this.subscription.unsubscribe();
 	}
 }

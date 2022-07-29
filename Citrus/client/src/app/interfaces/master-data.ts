@@ -1,5 +1,7 @@
 export interface MasterData {
 	name: string;
+	masterId: number;
 	services: Array<string>;
-	id: number;
+	serviceId: Array<number>;
+	price: Array<number>;
 }

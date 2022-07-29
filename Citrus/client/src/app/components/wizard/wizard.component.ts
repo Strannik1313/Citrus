@@ -32,7 +32,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	public firstStepComponent: number = WizardStepper.WizardFirstStepComponent;
 	public secondStepComponent: number = WizardStepper.WizardSecondStepComponent;
 	public thirdStepComponent: number = WizardStepper.WizardThirdStepComponent;
-	private subscritions: Subscription[] = [];
+	private subscrition: Subscription = new Subscription();
 
 	constructor(
 		private router: Router,
@@ -41,18 +41,18 @@ export class WizardComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.subscritions.push(
+		this.subscrition.add(
 			this.storage.isWizardStepDone$.subscribe(data => {
 				this.isStepDone = data;
 				this.cdr.markForCheck();
 			}),
 		);
-		this.subscritions.push(
+		this.subscrition.add(
 			this.storage.shouldClientDataSaved$.subscribe(data => {
 				this.shouldClientDataBeSaved = data;
 			}),
 		);
-		this.subscritions.push(
+		this.subscrition.add(
 			this.storage.clientData$.subscribe(data => {
 				this.clientData = data;
 				this.preselectedOptionFirstStep = this.clientData.serviceId;
@@ -61,7 +61,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscritions.forEach(sub => sub.unsubscribe());
+		this.subscrition.unsubscribe();
 	}
 	onBtnClick(action: boolean): void {
 		if (action) {

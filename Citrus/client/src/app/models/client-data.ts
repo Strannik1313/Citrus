@@ -1,6 +1,6 @@
 export class ClientData {
 	master: string = '';
-	masterId: number = 0;
+	masterId: number = -1;
 	service: string = '';
 	serviceId: number = -1;
 	date: Date | null = null;

@@ -1,2 +1,5 @@
-<p>wizard-second-step works!</p>
+<app-calendar
+	[calendarData]="calendarData"
+	(dateChoisen)="onDateChoisen($event)">
+</app-calendar>
 <button mat-button color="primary" (click)="stepDone()">Ok</button>

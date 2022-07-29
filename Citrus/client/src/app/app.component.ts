@@ -12,7 +12,7 @@ import { ServerErrorHandleService } from '@services/server-error-handle.service'
 	styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-	private subscription: Subscription[] = [];
+	private subscription: Subscription = new Subscription();
 	public dialogTextData: DialogWindowData = {
 		windowHeaderText: '',
 		windowText: '',
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.subscription.push(
+		this.subscription.add(
 			this.storage.isDialogWindowOpen$.subscribe(data => {
 				this.isDialogActive = data;
 				if (this.isDialogActive) {
@@ -40,7 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
 				}
 			}),
 		);
-		this.subscription.push(
+		this.subscription.add(
 			this.storage.isInitiallize$.subscribe(data => {
 				this.isSpinnerActive = data;
 				this.cdr.detectChanges();
@@ -49,7 +49,7 @@ export class AppComponent implements OnInit, OnDestroy {
 		const potentialToken = localStorage.getItem('authToken');
 		if (potentialToken !== null) {
 			this.http.setToken(potentialToken);
-			this.subscription.push(
+			this.subscription.add(
 				this.http.me().subscribe(data => {
 					if (data) {
 						this.storage.setAuthorizedUserData(data);
@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy(): void {
-		this.subscription.forEach(sub => sub.unsubscribe());
+		this.subscription.unsubscribe();
 	}
 	onButtonClick(e: boolean) {
 		this.storage.setIsDialogWindowOpen(false);

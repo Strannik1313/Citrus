@@ -1,124 +1,63 @@
 const db = require('../config/db')
 const errorHandler = require('../utils/errorHandler')
+const dayjs = require('dayjs')
+dayjs().format()
+var dayOfYear = require('dayjs/plugin/dayOfYear')
+dayjs.extend(dayOfYear)
 
 module.exports.calendar = async (req, res) => {
-
-    const tempArray = []
-    const tempTimesArray = []
-    const mastersArray = db.collection('masters')
-    const timesArray = db.collection('calendar')
-    const orderTimesArray = db.collection('orders')
-    const procedure = db.collection('procedureDuration')
-    const date = new Date(2022, req.body.month, req.body.day, 3)
-    await mastersArray.get()
-        .then(data => {
+    const mastersIdArray = [];
+    const mastersArray = [];
+    const dateArray = [];
+    const freeTimesArray = [];
+    const mastersCollection = db.collection('masters');
+    const datesCollection = db.collection('calendar');
+    await mastersCollection.where('serviceId', 'array-contains', req.body.serviceId).get()
+        .then((data) => {
             try {
-                data.forEach(d => {
-                    if (req.body.masterId == 0) {
-                        tempArray.push({
-                            masterName: d.data().name,
-                            masterId: d.id
-                        })
-                    } else {
-                        if (req.body.masterId == d.id) {
-                            
-                            tempArray.push({
-                                masterName: d.data().name,
-                                masterId: d.id
-                            })
-                        }
+                data.forEach(master => {
+                    if (req.body.masterId === master.data().masterId || req.body.masterId === -1) {
+                        mastersIdArray.push(master.data().masterId);
+                        mastersArray.push({ ...master.data(), masterId: master.id });
                     }
                 })
             } catch (error) {
                 errorHandler(res, error)
             }
         })
-
-    await orderTimesArray.get()
-        .then(data => {
+    await datesCollection.where('masterId', 'in', mastersIdArray).get()
+        .then((data) => {
             try {
-                data.forEach(d => {
-                    if (date.getMonth() == d.data().date.toDate().getMonth() && date.getDate() == d.data().date.toDate().getDate()) {
-                        if (req.body.masterId == 0) {
-                            tempTimesArray.push({
-                                date: d.data().date.toDate().getHours(),
-                                masterId: d.data().masterId
-                            })
-                        } else {
-                            if (d.data().masterId == req.body.masterId) {
-                                tempTimesArray.push({
-                                    date: d.data().date.toDate().getHours(),
-                                    masterId: d.data().masterId
-                                })
-                            }
-                        }
+                data.forEach(masterTimes => {
+                    for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
+                        dateArray.push(masterTimes.data().freeTimes[i].toDate());
                     }
+                })
+                dateArray.sort((a, b) => {
+                    return a - b;
+                })
+                let firstDay = dayjs(req.body.date).isBefore(dateArray[0]) ? dateArray[0] : req.body.date
+                dateArray.forEach(date => {
+                    if (dayjs(firstDay).dayOfYear() === dayjs(date).dayOfYear()) {
+                        freeTimesArray.push(date);
+                    }
+                })
+                const filteredArray = dateArray.filter((value, index, array) => {
+                    if (value.getMonth() >= req.body.month) {
+                        if (index !== 0) {
+                            return value.getDate() !== array[index - 1].getDate();
+                        }
+                        return true
+                    }
+                    return false
+                })
+                res.status(200).json({
+                    filteredDates: [...filteredArray.slice(0, 7)],
+                    masters: [...mastersArray],
+                    freeTimes: [...freeTimesArray],
                 })
             } catch (error) {
                 errorHandler(res, error)
             }
         })
-    await timesArray.get()
-        .then(data => {
-            try {
-                let i = 0
-                data.forEach(d => {
-                    if (req.body.masterId == 0) {
-                        tempArray[i].arrayOfFreeTimes = []
-                        for (y = 0; y < d.data().freeTimes.length; y++) {
-                            if (date.getMonth() == d.data().freeTimes[y].toDate().getMonth() && date.getDate() == d.data().freeTimes[y].toDate().getDate()) {
-                                tempArray[i].arrayOfFreeTimes.push(d.data().freeTimes[y].toDate().getHours())
-                            }
-                        }
-                    } else {
-                        if (d.id == tempArray[0].masterId) {
-                            tempArray[0].arrayOfFreeTimes = []
-                            for (y = 0; y < d.data().freeTimes.length; y++) {
-                                if (date.getMonth() == d.data().freeTimes[y].toDate().getMonth() && date.getDate() == d.data().freeTimes[y].toDate().getDate()) {
-                                    tempArray[0].arrayOfFreeTimes.push(d.data().freeTimes[y].toDate().getHours())
-                                }
-                            }
-                        }
-                    }
-                    i++
-                })
-                tempTimesArray.forEach(t => {
-                    for (i = 0; i < tempArray.length; i++) {
-                        if (t.masterId == tempArray[i].masterId) {
-                            tempArray[i].arrayOfFreeTimes.splice(tempArray[i].arrayOfFreeTimes.indexOf(t.date), 1)
-                        }
-                    }
-                })
-            } catch (error) {
-                errorHandler(res, error)
-            }
-        })
-    await procedure.get()
-        .then(data => {
-            try {
-                for (i = 0; i < tempArray.length; i++) {
-                    tempArray[i].procedureDuration = []
-                    data.forEach(d => {
-                        if (req.body.procedure == d.id.toString()) {
-                            tempArray[i].procedureDuration = ({
-                                hour: d.data().hour,
-                                minute: d.data().minute
-                            })
-                        }
-                    })
-                }
-                for (i = 0; i < tempArray.length; i++) {
-                    finalArray = tempArray.filter(m => {
-                        return m.arrayOfFreeTimes[0] !== undefined
-                    })
-                }
-                if (finalArray.length == 0) {
-                    res.status(404).json('В этот день нет свободных мест')
-                } else {
-                    res.status(200).json(finalArray)
-                }
-            } catch (error) {
-                errorHandler(res, error)
-            }
-        })
-} 
+}

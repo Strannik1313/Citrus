@@ -1,10 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BlockedDate } from '@interfaces/blocked-date';
 import { MasterData } from '@interfaces/master-data';
 import { NewServiceData } from '@interfaces/new-service-data';
-import { StudioData } from '@interfaces/studio-data';
 import { AuthFormData } from '@models/auth-form-data';
 import { ClientData } from '@models/client-data';
 import { NewMasterFormData } from '@models/new-master-form-data';
@@ -26,22 +24,26 @@ export class HttpService {
 		private router: Router,
 	) {}
 
-	getCalendarData(
-		d: number,
-		m: number,
-		id: number,
-		procedure: string,
-	): Observable<StudioData[]> {
-		return this.http?.post<StudioData[]>('/api/calendar', {
-			day: d,
-			month: m,
-			masterId: id,
-			procedure: procedure,
+	getDates(
+		serviceId: number,
+		month: number,
+		masterId: number,
+		date: Date,
+	): Observable<{
+		filteredDates: Date[];
+		masters: MasterData[];
+		freeTimes: Array<number>;
+	}> {
+		return this.http.post<{
+			filteredDates: Date[];
+			masters: MasterData[];
+			freeTimes: Array<number>;
+		}>('/api/calendar', {
+			serviceId,
+			month,
+			masterId,
+			date,
 		});
-	}
-
-	getDisabledDates(): Observable<BlockedDate[]> {
-		return this.http.get<BlockedDate[]>('/api/disabled');
 	}
 
 	getOrdersData(pageSize: number, startItem: number): Observable<OrderData[]> {
