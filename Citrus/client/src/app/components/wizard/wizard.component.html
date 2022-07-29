@@ -15,7 +15,6 @@
 	<div [ngSwitch]="currentStep">
 		<ng-template ngSwitchCase="{{ firstStepComponent }}">
 			<app-wizard-first-step
-				[shouldClientDataBeSaved]="shouldClientDataBeSaved"
 				[choisenService]="preselectedOptionFirstStep"
 				(stepDone)="firstStepDone($event)"></app-wizard-first-step>
 		</ng-template>

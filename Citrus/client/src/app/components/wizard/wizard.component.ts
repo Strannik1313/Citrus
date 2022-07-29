@@ -10,6 +10,7 @@ import {
 	ClientData,
 	ClientDataFirstStepInit,
 	ClientDataSecondStepInit,
+	ClientDataThirdStepInit,
 } from '@models/client-data';
 import { WizardStepper } from '@models/wizard-stepper';
 import { StorageService } from '@services/storage.service';
@@ -68,8 +69,8 @@ export class WizardComponent implements OnInit, OnDestroy {
 			this.currentStep += 1;
 		} else {
 			this.currentStep -= 1;
-			this.isStepDone = false;
 		}
+		this.isStepDone = false;
 		switch (this.currentStep) {
 			case WizardStepper.WizardFirstStepComponent:
 				this.clientData = {
@@ -86,6 +87,10 @@ export class WizardComponent implements OnInit, OnDestroy {
 				this.nextBtnLabel = BtnLabel.next;
 				break;
 			case WizardStepper.WizardThirdStepComponent:
+				this.clientData = {
+					...this.clientData,
+					...(action && new ClientDataThirdStepInit()),
+				};
 				this.nextBtnLabel = BtnLabel.confirm;
 				break;
 			case WizardStepper.WizardConfirm:

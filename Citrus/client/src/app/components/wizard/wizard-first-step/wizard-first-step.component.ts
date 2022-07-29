@@ -37,6 +37,11 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 			this.http.getServices().subscribe(data => {
 				this.services = [...data];
 				this.filter.setData(this.services);
+				if (this.choisenService !== -1) {
+					this.onStepDone(
+						this.services.find(service => service.id === this.choisenService),
+					);
+				}
 				this.cdr.markForCheck();
 			}),
 		);
@@ -52,12 +57,14 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 			}),
 		);
 	}
-	onStepDone(service: Service): void {
-		this.choisenService = service.id;
-		this.stepDone.emit({
-			service: service.title,
-			serviceId: service.id,
-		});
+	onStepDone(service: Service | undefined): void {
+		if (service) {
+			this.choisenService = service.id;
+			this.stepDone.emit({
+				service: service.title,
+				serviceId: service.id,
+			});
+		}
 	}
 	trackByFn(index: number, item: Service): string {
 		return item.title;
