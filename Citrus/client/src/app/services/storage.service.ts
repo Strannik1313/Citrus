@@ -11,8 +11,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class StorageService {
 	private isDialogWindowOpen: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
-	private isWizardStepDone: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(false);
 	private isInitiallize: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private currentUserModel: BehaviorSubject<UserModel> =
@@ -41,7 +39,6 @@ export class StorageService {
 
 	isDialogWindowOpen$: Observable<boolean> =
 		this.isDialogWindowOpen.asObservable();
-	isWizardStepDone$: Observable<boolean> = this.isWizardStepDone.asObservable();
 	isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
 	currentUserModel$: Observable<UserModel> =
 		this.currentUserModel.asObservable();
@@ -127,8 +124,5 @@ export class StorageService {
 	}
 	setInitializeStatus(status: boolean): void {
 		this.isInitiallize.next(status);
-	}
-	setIsWizardStepDone(status: boolean): void {
-		this.isWizardStepDone.next(status);
 	}
 }

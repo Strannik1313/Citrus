@@ -1,0 +1,42 @@
+{
+	"env": {
+		"es2021": true,
+		"node": true
+	},
+	"extends": ["eslint:recommended", "prettier"],
+	"parserOptions": {
+		"ecmaVersion": "latest"
+	},
+	"plugins": ["prettier"],
+	"ignorePatterns": [
+		"**/*.html",
+		"**/*.scss",
+		"**/*.png",
+		"**/*.svg",
+		"**/*.jpg",
+		"**/*.gif",
+		"**/*.ico"
+	],
+	"rules": {
+		"prettier/prettier": "error",
+		"prefer-const": "off",
+		"object-property-newline": [
+			"error",
+			{ "allowAllPropertiesOnSameLine": true }
+		],
+		"object-curly-spacing": ["error", "always"],
+		"space-before-blocks": ["error"],
+		"block-spacing": ["error"],
+		"semi-style": ["error", "last"],
+		"semi-spacing": ["error", { "before": false, "after": true }],
+		"default-param-last": ["error"],
+		"arrow-spacing": ["error", { "before": true, "after": true }],
+		"eqeqeq": "error",
+		"no-nested-ternary": "error",
+		"space-infix-ops": "error",
+		"no-multiple-empty-lines": "error",
+		"comma-spacing": ["error", { "before": false, "after": true }],
+		"no-console": "error",
+		"no-debugger": "error"
+	}
+}

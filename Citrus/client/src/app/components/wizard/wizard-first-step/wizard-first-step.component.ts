@@ -33,40 +33,40 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 		private cdr: ChangeDetectorRef,
 	) {}
 	ngOnInit(): void {
-		this.subscription.add(
-			this.http.getServices().subscribe(data => {
+		this.subscription?.add(
+			this.http?.getServices()?.subscribe(data => {
 				this.services = [...data];
-				this.filter.setData(this.services);
+				this.filter?.setData(this.services);
 				if (this.choisenService !== -1) {
 					this.onStepDone(
 						this.services.find(service => service.id === this.choisenService),
 					);
 				}
-				this.cdr.markForCheck();
+				this.cdr?.markForCheck();
 			}),
 		);
 	}
 	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
+		this.subscription?.unsubscribe();
 	}
 	filterChange(value: string): void {
-		this.subscription.add(
-			this.filter.setFilter(value.toLocaleLowerCase()).subscribe(data => {
+		this.subscription?.add(
+			this.filter?.setFilter(value.toLocaleLowerCase()).subscribe(data => {
 				this.services = [...data];
-				this.cdr.markForCheck();
+				this.cdr?.markForCheck();
 			}),
 		);
 	}
 	onStepDone(service: Service | undefined): void {
 		if (service) {
 			this.choisenService = service.id;
-			this.stepDone.emit({
+			this.stepDone?.emit({
 				service: service.title,
 				serviceId: service.id,
 			});
 		}
 	}
 	trackByFn(index: number, item: Service): string {
-		return item.title;
+		return item?.title;
 	}
 }

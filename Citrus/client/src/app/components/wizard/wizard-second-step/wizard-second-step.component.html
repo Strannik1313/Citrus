@@ -1,5 +1,5 @@
 <app-calendar
 	[calendarData]="calendarData"
+	[isChoisen]="choisenDate"
 	(dateChoisen)="onDateChoisen($event)">
 </app-calendar>
-<button mat-button color="primary" (click)="stepDone()">Ok</button>

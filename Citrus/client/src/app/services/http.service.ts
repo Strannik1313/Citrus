@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { FreeTimesData } from '@interfaces/free-times';
 import { MasterData } from '@interfaces/master-data';
 import { NewServiceData } from '@interfaces/new-service-data';
 import { AuthFormData } from '@models/auth-form-data';
@@ -32,12 +33,14 @@ export class HttpService {
 	): Observable<{
 		filteredDates: Date[];
 		masters: MasterData[];
-		freeTimes: Array<number>;
+		freeTimes: Array<FreeTimesData>;
+		avaibleMonths: Array<number>;
 	}> {
 		return this.http.post<{
 			filteredDates: Date[];
 			masters: MasterData[];
-			freeTimes: Array<number>;
+			freeTimes: Array<FreeTimesData>;
+			avaibleMonths: Array<number>;
 		}>('/api/calendar', {
 			serviceId,
 			month,
@@ -49,8 +52,8 @@ export class HttpService {
 	getOrdersData(pageSize: number, startItem: number): Observable<OrderData[]> {
 		return this.http?.get<OrderData[]>('/api/admin/orders', {
 			headers: new HttpHeaders({
-				pageSize: pageSize.toString(),
-				startItem: startItem.toString(),
+				pageSize: pageSize?.toString(),
+				startItem: startItem?.toString(),
 			}),
 		});
 	}
@@ -61,8 +64,8 @@ export class HttpService {
 	): Observable<OrderData[]> {
 		return this.http?.get<OrderData[]>('/api/personal/orders', {
 			headers: new HttpHeaders({
-				pageSize: pageSize.toString(),
-				startItem: startItem.toString(),
+				pageSize: pageSize?.toString(),
+				startItem: startItem?.toString(),
 			}),
 		});
 	}

@@ -14,11 +14,11 @@ import {
 })
 export class CalendarComponent {
 	@Input() calendarData: Array<Date> = [];
+	@Input() isChoisen: Date = new Date();
 	@Output() dateChoisen: EventEmitter<Date> = new EventEmitter();
-	public isChoisen: number | null = null;
 
-	onDateClick(index: number): void {
-		this.isChoisen = index;
-		this.dateChoisen.emit(this.calendarData[index]);
+	onDateClick(date: Date): void {
+		this.isChoisen = date;
+		this.dateChoisen.emit(date);
 	}
 }

@@ -8,10 +8,5 @@ import { StorageService } from '@services/storage.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardThirdStepComponent {
-	constructor(private storage: StorageService) {
-		this.storage.setIsWizardStepDone(false);
-	}
-	stepDone(): void {
-		this.storage.setIsWizardStepDone(true);
-	}
+	constructor(private storage: StorageService) {}
 }

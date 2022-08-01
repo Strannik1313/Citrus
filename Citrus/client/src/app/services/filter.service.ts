@@ -13,8 +13,8 @@ export class FilterService<T extends FilterDataType> {
 	setFilter(filterKey?: string): Observable<T[]> {
 		if (!!filterKey) {
 			const temp: T[] = [];
-			this.filteredArray.forEach(item => {
-				if (item.title.indexOf(filterKey) !== -1) {
+			this.filteredArray?.forEach(item => {
+				if (item?.title?.indexOf(filterKey) !== -1) {
 					temp.push(item);
 				}
 			});

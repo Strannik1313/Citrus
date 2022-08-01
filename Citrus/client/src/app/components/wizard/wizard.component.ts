@@ -1,6 +1,5 @@
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -10,7 +9,6 @@ import {
 	ClientData,
 	ClientDataFirstStepInit,
 	ClientDataSecondStepInit,
-	ClientDataThirdStepInit,
 } from '@models/client-data';
 import { WizardStepper } from '@models/wizard-stepper';
 import { StorageService } from '@services/storage.service';
@@ -33,30 +31,27 @@ export class WizardComponent implements OnInit, OnDestroy {
 	public nextBtnLabel: string = BtnLabel.next;
 	public isStepDone: boolean = false;
 	public preselectedOptionFirstStep: number = -1;
+	public preselectedOptionSecondStep: Date = new Date();
 	public clientData: ClientData = new ClientData();
 	public firstStepComponent: number = WizardStepper.WizardFirstStepComponent;
 	public secondStepComponent: number = WizardStepper.WizardSecondStepComponent;
 	public thirdStepComponent: number = WizardStepper.WizardThirdStepComponent;
 	private subscrition: Subscription = new Subscription();
 
-	constructor(
-		private router: Router,
-		private storage: StorageService,
-		private cdr: ChangeDetectorRef,
-	) {}
+	constructor(private router: Router, private storage: StorageService) {}
 
 	ngOnInit(): void {
-		this.subscrition.add(
-			this.storage.clientData$.subscribe(data => {
+		this.subscrition?.add(
+			this.storage?.clientData$?.subscribe(data => {
 				this.clientData = data;
-				this.preselectedOptionFirstStep = this.clientData.serviceId;
+				this.preselectedOptionFirstStep = this.clientData?.serviceId;
 			}),
 		);
 	}
 
 	ngOnDestroy(): void {
-		this.subscrition.unsubscribe();
-		this.storage.setClientData({
+		this.subscrition?.unsubscribe();
+		this.storage?.setClientData({
 			...new ClientData(),
 		});
 	}
@@ -83,21 +78,17 @@ export class WizardComponent implements OnInit, OnDestroy {
 					...this.clientData,
 					...(action && new ClientDataSecondStepInit()),
 				};
-				this.storage.setClientData(this.clientData);
+				this.storage?.setClientData(this.clientData);
 				this.nextBtnLabel = BtnLabel.next;
 				break;
 			case WizardStepper.WizardThirdStepComponent:
-				this.clientData = {
-					...this.clientData,
-					...(action && new ClientDataThirdStepInit()),
-				};
 				this.nextBtnLabel = BtnLabel.confirm;
 				break;
 			case WizardStepper.WizardConfirm:
-				this.router.navigate(['/']);
+				this.router?.navigate(['/']);
 				break;
 			default:
-				this.router.navigate(['/']);
+				this.router?.navigate(['/']);
 				break;
 		}
 	}
