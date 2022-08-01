@@ -55,11 +55,10 @@ module.exports.calendar = async (req, res) => {
 					}
 				});
 				const arrayWithDates = dateAndIdArray.map(value => value.date);
-				const avaibleMonths = arrayWithDates.map(value => value.getMonth());
-				const filteredAvaibleMonth = avaibleMonths.filter(
+				const filteredAvailableMonth = arrayWithDates.filter(
 					(value, index, array) => {
 						if (index !== 0) {
-							return value !== array[index - 1];
+							return value.getMonth() !== array[index - 1].getMonth();
 						}
 						return true;
 					},
@@ -78,7 +77,7 @@ module.exports.calendar = async (req, res) => {
 				res.status(200).json({
 					filteredDates: [...filteredDatesArray.slice(0, 7)],
 					masters: [...mastersArray],
-					avaibleMonths: [...filteredAvaibleMonth],
+					availableMonths: [...filteredAvailableMonth],
 					freeTimes: [...freeTimesArray],
 				});
 			} catch (error) {

@@ -10,12 +10,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
-import { OverlayModule } from '@angular/cdk/overlay';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
-import { SearchStringComponent } from '@shared/search-string/search-string.component';
 import { StepperModule } from '@modules/stepper/stepper.module';
-import { CalendarModule } from '@modules/calendar/calendar.module';
+import { FilterModule } from '@shared/filter/filter.module';
+import { CalendarModule } from '@shared/calendar/calendar.module';
+import { SearchStringModule } from '@shared/search-string/search-string.module';
 
 @NgModule({
 	declarations: [
@@ -24,7 +23,6 @@ import { CalendarModule } from '@modules/calendar/calendar.module';
 		WizardSecondStepComponent,
 		WizardThirdStepComponent,
 		FirstLetterUppercasePipe,
-		SearchStringComponent,
 	],
 	imports: [
 		CommonModule,
@@ -33,10 +31,10 @@ import { CalendarModule } from '@modules/calendar/calendar.module';
 		MatListModule,
 		MatInputModule,
 		MatFormFieldModule,
-		OverlayModule,
 		StepperModule,
 		CalendarModule,
-		FormsModule,
+		FilterModule,
+		SearchStringModule,
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
 	],
 })

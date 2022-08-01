@@ -34,13 +34,13 @@ export class HttpService {
 		filteredDates: Date[];
 		masters: MasterData[];
 		freeTimes: Array<FreeTimesData>;
-		avaibleMonths: Array<number>;
+		availableMonths: Array<Date>;
 	}> {
 		return this.http.post<{
 			filteredDates: Date[];
 			masters: MasterData[];
 			freeTimes: Array<FreeTimesData>;
-			avaibleMonths: Array<number>;
+			availableMonths: Array<Date>;
 		}>('/api/calendar', {
 			serviceId,
 			month,

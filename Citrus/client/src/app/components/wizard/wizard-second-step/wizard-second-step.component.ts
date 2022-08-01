@@ -23,6 +23,7 @@ export class WizardSecondStepComponent implements OnInit {
 	public calendarData: Array<Date> = [];
 	public masterData: Array<MasterData> = [];
 	public choisenMonth: number = new Date().getMonth();
+	public availableMonth: Array<Date> = [];
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
 		this.subscription?.add(
@@ -37,6 +38,7 @@ export class WizardSecondStepComponent implements OnInit {
 					this.calendarData = [...data?.filteredDates];
 					this.masterData = [...data?.masters];
 					this.choisenDate = data?.filteredDates[0];
+					this.availableMonth = data.availableMonths;
 					this.cdr?.markForCheck();
 				}),
 		);
