@@ -10,8 +10,8 @@ import {
 } from '@angular/core';
 import { ClientDataFirstStepInit } from '@models/client-data';
 import { Service } from '@models/service';
-import { FilterService } from '@services/filter.service';
 import { HttpService } from '@services/http.service';
+import { SearchService } from '@services/search.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -28,7 +28,7 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 	public services: Service[] = [];
 	private subscription: Subscription = new Subscription();
 	constructor(
-		private filter: FilterService<Service>,
+		private search: SearchService<Service>,
 		private http: HttpService,
 		private cdr: ChangeDetectorRef,
 	) {}
@@ -36,7 +36,7 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 		this.subscription?.add(
 			this.http?.getServices()?.subscribe(data => {
 				this.services = [...data];
-				this.filter?.setData(this.services);
+				this.search?.setData(this.services);
 				if (this.choisenService !== -1) {
 					this.onStepDone(
 						this.services.find(service => service.id === this.choisenService),
@@ -49,9 +49,9 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscription?.unsubscribe();
 	}
-	filterChange(value: string): void {
+	searchChange(value: string): void {
 		this.subscription?.add(
-			this.filter?.setFilter(value.toLocaleLowerCase()).subscribe(data => {
+			this.search?.setFilter(value.toLocaleLowerCase()).subscribe(data => {
 				this.services = [...data];
 				this.cdr?.markForCheck();
 			}),

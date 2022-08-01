@@ -1,6 +1,6 @@
-import { FilterDataType } from '@services/filter.service';
+import { SearchDataType } from '@services/search.service';
 
-export class Service implements FilterDataType {
+export class Service implements SearchDataType {
 	title: string = '';
 	description: string = '';
 	cost: number = 0;

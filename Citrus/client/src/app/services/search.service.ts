@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-export interface FilterDataType {
+export interface SearchDataType {
 	title: string;
 }
 
 @Injectable({
 	providedIn: 'root',
 })
-export class FilterService<T extends FilterDataType> {
+export class SearchService<T extends SearchDataType> {
 	private filteredArray: T[] = [];
 	setFilter(filterKey?: string): Observable<T[]> {
 		if (!!filterKey) {
