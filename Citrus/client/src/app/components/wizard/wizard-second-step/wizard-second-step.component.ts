@@ -4,9 +4,10 @@ import {
 	OnInit,
 	ChangeDetectorRef,
 	Input,
+	OnDestroy,
 } from '@angular/core';
-import { MasterData } from '@interfaces/master-data';
 import { ClientData } from '@models/client-data';
+import { MasterData } from '@models/master-data';
 import { HttpService } from '@services/http.service';
 import { Subscription } from 'rxjs';
 
@@ -16,7 +17,7 @@ import { Subscription } from 'rxjs';
 	styleUrls: ['./wizard-second-step.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardSecondStepComponent implements OnInit {
+export class WizardSecondStepComponent implements OnInit, OnDestroy {
 	@Input() clientData: ClientData = new ClientData();
 	@Input() choisenDate: Date = new Date();
 	private subscription: Subscription = new Subscription();
@@ -43,6 +44,9 @@ export class WizardSecondStepComponent implements OnInit {
 				}),
 		);
 	}
+	ngOnDestroy(): void {
+		this.subscription?.unsubscribe();
+	}
 	onDateChoisen(date: Date): void {
 		this.choisenDate = date;
 		this.subscription?.add(
@@ -59,5 +63,8 @@ export class WizardSecondStepComponent implements OnInit {
 					this.cdr.markForCheck();
 				}),
 		);
+	}
+	onFilterClick(item: Date | MasterData): void {
+		item;
 	}
 }

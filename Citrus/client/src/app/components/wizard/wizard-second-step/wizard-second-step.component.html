@@ -1,4 +1,9 @@
-<app-filter [iterableValue]="availableMonth"></app-filter>
+<app-filter
+	[iterableValue]="masterData"
+	(selectedItem)="onFilterClick($event)"></app-filter>
+<app-filter
+	[iterableValue]="availableMonth"
+	(selectedItem)="onFilterClick($event)"></app-filter>
 <app-calendar
 	[calendarData]="calendarData"
 	[isChoisen]="choisenDate"

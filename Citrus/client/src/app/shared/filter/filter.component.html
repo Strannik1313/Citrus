@@ -1,5 +1,6 @@
 <div
 	class="item"
-	*ngFor="let item of iterableValue; trackBy: trackByFn; let i = index">
+	*ngFor="let item of iterableArray; trackBy: trackByFn; let i = index"
+	(click)="onItemClick(item)">
 	{{ item }}</div
 >
