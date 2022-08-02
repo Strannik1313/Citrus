@@ -12,7 +12,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
 import { StepperModule } from '@modules/stepper/stepper.module';
-import { FilterModule } from '@shared/filter/filter.module';
 import { CalendarModule } from '@shared/calendar/calendar.module';
 import { SearchStringModule } from '@shared/search-string/search-string.module';
 import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
@@ -35,7 +34,6 @@ import { ServiceListComponent } from '@components/ui/service-list/service-list.c
 		MatFormFieldModule,
 		StepperModule,
 		CalendarModule,
-		FilterModule,
 		SearchStringModule,
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
 	],
