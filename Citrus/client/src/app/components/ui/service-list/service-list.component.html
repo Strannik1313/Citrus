@@ -1,8 +1,9 @@
 <mat-card
 	*ngFor="let service of services; trackBy: trackByFn; let i = index"
+	id="{{ service.id }}"
 	[ngClass]="{ active: choisenService === service.id }"
 	class="card__item"
-	(click)="onserviceClick(service)">
+	(click)="onserviceClick(service, i)">
 	<p>{{ service?.title | firstLetterUppercase }}</p>
 	<p>{{ service?.description }}</p>
 	<p>Продолжительность: {{ service?.duration }} мин</p>

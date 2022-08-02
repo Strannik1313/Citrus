@@ -4,6 +4,7 @@ import {
 	Input,
 	Output,
 	EventEmitter,
+	AfterViewChecked,
 } from '@angular/core';
 import { Service } from '@models/service';
 
@@ -13,14 +14,19 @@ import { Service } from '@models/service';
 	styleUrls: ['./service-list.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ServiceListComponent {
+export class ServiceListComponent implements AfterViewChecked {
 	@Input() services: Array<Service> = [];
 	@Input() choisenService: number = -1;
 	@Output() serviceClick: EventEmitter<Service> = new EventEmitter();
-	onserviceClick(service: Service | undefined): void {
+	ngAfterViewChecked(): void {
+		if (this.choisenService !== -1) {
+			const el = document.getElementById(this.choisenService.toString());
+			el?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+		}
+	}
+	onserviceClick(service: Service | undefined, i: number): void {
 		this.serviceClick?.emit(service);
 	}
-
 	trackByFn(index: number, item: Service): string {
 		return item?.title;
 	}
