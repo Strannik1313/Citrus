@@ -15,6 +15,7 @@ import { StepperModule } from '@modules/stepper/stepper.module';
 import { FilterModule } from '@shared/filter/filter.module';
 import { CalendarModule } from '@shared/calendar/calendar.module';
 import { SearchStringModule } from '@shared/search-string/search-string.module';
+import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
 
 @NgModule({
 	declarations: [
@@ -23,6 +24,7 @@ import { SearchStringModule } from '@shared/search-string/search-string.module';
 		WizardSecondStepComponent,
 		WizardThirdStepComponent,
 		FirstLetterUppercasePipe,
+		ServiceListComponent,
 	],
 	imports: [
 		CommonModule,

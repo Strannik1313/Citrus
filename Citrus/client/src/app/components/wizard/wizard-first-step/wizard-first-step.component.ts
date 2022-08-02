@@ -66,7 +66,4 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 			});
 		}
 	}
-	trackByFn(index: number, item: Service): string {
-		return item?.title;
-	}
 }

@@ -4,15 +4,9 @@
 		(valueForFilter)="searchChange($event)">
 	</app-search-string>
 	<div class="card__container">
-		<mat-card
-			*ngFor="let service of services; trackBy: trackByFn; let i = index"
-			[ngClass]="{ active: choisenService === service.id }"
-			class="card__item"
-			(click)="onStepDone(service)">
-			<p>{{ service?.title | firstLetterUppercase }}</p>
-			<p>{{ service?.description }}</p>
-			<p>Продолжительность: {{ service?.duration }} мин</p>
-			<p>от {{ service?.cost }} рублей</p>
-		</mat-card>
+		<app-service-list
+			[services]="services"
+			[choisenService]="choisenService"
+			(serviceClick)="onStepDone($event)"></app-service-list>
 	</div>
 </div>
