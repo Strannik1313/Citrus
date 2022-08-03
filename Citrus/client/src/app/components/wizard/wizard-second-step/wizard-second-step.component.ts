@@ -6,6 +6,7 @@ import {
 	Input,
 	OnDestroy,
 } from '@angular/core';
+import { MasterCard } from '@interfaces/free-times';
 import { ClientData } from '@models/client-data';
 import { MasterData } from '@models/master-data';
 import { HttpService } from '@services/http.service';
@@ -19,11 +20,13 @@ import { Subscription } from 'rxjs';
 })
 export class WizardSecondStepComponent implements OnInit, OnDestroy {
 	@Input() clientData: ClientData = new ClientData();
-	@Input() choisenDate: Date = new Date();
 	private subscription: Subscription = new Subscription();
+	public choisenDate: Date = new Date();
 	public calendarData: Array<Date> = [];
 	public masterData: Array<MasterData> = [];
+	public masterCard: Array<MasterCard> = [];
 	public choisenMonth: number = new Date().getMonth();
+	public choisenMaster: number = -1;
 	public availableMonth: Array<Date> = [];
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
@@ -31,16 +34,33 @@ export class WizardSecondStepComponent implements OnInit, OnDestroy {
 			this.http
 				?.getDates(
 					this.clientData?.serviceId,
-					this.choisenMonth,
-					this.clientData?.masterId,
 					this.choisenDate,
+					this.clientData?.masterId,
 				)
 				?.subscribe(data => {
-					this.calendarData = [...data?.filteredDates];
-					this.masterData = [...data?.masters];
-					this.choisenDate = data?.filteredDates[0];
-					this.availableMonth = data.availableMonths;
-					this.cdr?.markForCheck();
+					this.calendarData = [...data];
+					this.choisenDate = data[0];
+					this.cdr.markForCheck();
+				}),
+		);
+		this.subscription?.add(
+			this.http
+				?.getMasterData(this.clientData?.serviceId, this.clientData?.masterId)
+				?.subscribe(data => {
+					this.masterData = [...data];
+					this.cdr.markForCheck();
+				}),
+		);
+		this.subscription?.add(
+			this.http
+				?.getMasterCard(
+					this.clientData?.serviceId,
+					this.choisenDate,
+					this.clientData?.masterId,
+				)
+				?.subscribe(data => {
+					this.masterCard = [...data];
+					this.cdr.markForCheck();
 				}),
 		);
 	}
@@ -51,20 +71,40 @@ export class WizardSecondStepComponent implements OnInit, OnDestroy {
 		this.choisenDate = date;
 		this.subscription?.add(
 			this.http
-				?.getDates(
+				?.getMasterCard(
 					this.clientData?.serviceId,
-					this.choisenMonth,
-					this.clientData?.masterId,
 					this.choisenDate,
+					this.choisenMaster,
 				)
 				?.subscribe(data => {
-					this.calendarData = [...data.filteredDates];
-					this.masterData = [...data.masters];
+					this.masterCard = [...data];
 					this.cdr.markForCheck();
 				}),
 		);
 	}
-	onFilterClick(item: Date | MasterData): void {
-		item;
+	onMasterFilterChange(id: number): void {
+		this.choisenMaster = id;
+		this.http
+			?.getDates(
+				this.clientData?.serviceId,
+				this.choisenDate,
+				this.choisenMaster,
+			)
+			?.subscribe(data => {
+				this.calendarData = [...data];
+				this.cdr.markForCheck();
+			});
+		this.subscription?.add(
+			this.http
+				?.getMasterCard(
+					this.clientData?.serviceId,
+					this.choisenDate,
+					this.choisenMaster,
+				)
+				?.subscribe(data => {
+					this.masterCard = [...data];
+					this.cdr.markForCheck();
+				}),
+		);
 	}
 }

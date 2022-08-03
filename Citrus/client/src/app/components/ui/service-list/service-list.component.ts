@@ -24,7 +24,7 @@ export class ServiceListComponent implements AfterViewChecked {
 			el?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
 		}
 	}
-	onserviceClick(service: Service | undefined, i: number): void {
+	onServiceClick(service: Service | undefined): void {
 		this.serviceClick?.emit(service);
 	}
 	trackByFn(index: number, item: Service): string {

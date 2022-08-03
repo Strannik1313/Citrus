@@ -1,5 +1,11 @@
+<app-master-filter
+	[masterData]="masterData"
+	(filterChange)="onMasterFilterChange($event)"></app-master-filter>
 <app-calendar
 	[calendarData]="calendarData"
-	[isChoisen]="choisenDate"
+	[choisenDate]="choisenDate"
 	(dateChoisen)="onDateChoisen($event)">
 </app-calendar>
+<app-master-card
+	[masterCard]="masterCard"
+	[choisenMaster]="choisenMaster"></app-master-card>

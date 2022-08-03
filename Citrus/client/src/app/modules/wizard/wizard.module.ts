@@ -15,6 +15,8 @@ import { StepperModule } from '@modules/stepper/stepper.module';
 import { CalendarModule } from '@shared/calendar/calendar.module';
 import { SearchStringModule } from '@shared/search-string/search-string.module';
 import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
+import { MasterFilterModule } from '@shared/master-filter/master-filter.module';
+import { MasterCardModule } from '@shared/master-card/master-card.module';
 
 @NgModule({
 	declarations: [
@@ -35,6 +37,8 @@ import { ServiceListComponent } from '@components/ui/service-list/service-list.c
 		StepperModule,
 		CalendarModule,
 		SearchStringModule,
+		MasterFilterModule,
+		MasterCardModule,
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
 	],
 })

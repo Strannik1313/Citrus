@@ -1,0 +1,16 @@
+<ng-container
+	*ngFor="let card of masterCard; let i = index; trackBy: trackByFn">
+	<div
+		*ngIf="
+			card.dates.length &&
+			(choisenMaster === card.masterId || choisenMaster === -1)
+		">
+		{{ card.name }}
+		<div *ngFor="let time of card.dates; let i = index; trackBy: trackByFn">
+			<p>{{ time | date: 'HH:mm' }}</p>
+		</div>
+	</div>
+	<div *ngIf="choisenMaster === card.masterId && !card.dates.length"
+		>В выбранный день у данного мастера нет свободной записи</div
+	>
+</ng-container>

@@ -41,18 +41,13 @@ export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 					this.cdr.markForCheck();
 				}),
 		);
-		this.isAutocompleteOpen = true;
-		this.cdr.markForCheck();
 	}
 	ngOnChanges(changes: SimpleChanges): void {
 		if (
-			changes[`${this.options}`]?.currentValue?.length > 0 ||
-			this.inputValue
+			changes[`${this.options}`]?.currentValue?.length < 0 ||
+			!this.inputValue
 		) {
-			return;
-		} else {
 			this.isAutocompleteOpen = false;
-			this.cdr.markForCheck();
 		}
 	}
 	ngOnDestroy(): void {
@@ -60,13 +55,11 @@ export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 	}
 	onInputChange(): void {
 		this.isAutocompleteOpen = true;
-		this.cdr.markForCheck();
 		this.valueForFilter.emit(this.inputValue);
 	}
 	onAutocomleteItemClick(value: string): void {
 		this.isAutocompleteOpen = false;
 		this.inputValue = value;
-		this.cdr.markForCheck();
 		this.valueForFilter.emit(value);
 	}
 	trackByFn(index: number, item: Service): string {

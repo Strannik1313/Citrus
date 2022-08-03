@@ -3,6 +3,6 @@
 		*ngFor="let cell of calendarData; let i = index"
 		[date]="cell"
 		class="cell"
-		[ngClass]="{ active: isChoisen === cell }"
+		[ngClass]="{ active: choisenDate === cell }"
 		(click)="onDateClick(cell)"></app-calendar-cell>
 </div>

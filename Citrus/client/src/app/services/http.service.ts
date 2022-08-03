@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { FreeTimesData } from '@interfaces/free-times';
+import { MasterCard } from '@interfaces/free-times';
 import { NewServiceData } from '@interfaces/new-service-data';
 import { AuthFormData } from '@models/auth-form-data';
 import { ClientData } from '@models/client-data';
@@ -27,25 +27,32 @@ export class HttpService {
 
 	getDates(
 		serviceId: number,
-		month: number,
-		masterId: number,
 		date: Date,
-	): Observable<{
-		filteredDates: Date[];
-		masters: MasterData[];
-		freeTimes: Array<FreeTimesData>;
-		availableMonths: Array<Date>;
-	}> {
-		return this.http.post<{
-			filteredDates: Date[];
-			masters: MasterData[];
-			freeTimes: Array<FreeTimesData>;
-			availableMonths: Array<Date>;
-		}>('/api/calendar', {
+		masterId: number,
+	): Observable<Date[]> {
+		return this.http.post<Date[]>('/api/calendar', {
 			serviceId,
-			month,
-			masterId,
 			date,
+			masterId,
+		});
+	}
+
+	getMasterData(serviceId: number, masterId: number): Observable<MasterData[]> {
+		return this.http?.post<MasterData[]>('/api/masters', {
+			serviceId,
+			masterId,
+		});
+	}
+
+	getMasterCard(
+		serviceId: number,
+		date: Date,
+		masterId: number,
+	): Observable<Array<MasterCard>> {
+		return this.http.post<Array<MasterCard>>('/api/calendar/mastercard', {
+			serviceId,
+			date,
+			masterId,
 		});
 	}
 
@@ -113,9 +120,6 @@ export class HttpService {
 		return this.http?.post<{ message: boolean }>('/api/order', formValue);
 	}
 
-	getMasterData(): Observable<MasterData[]> {
-		return this.http?.get<MasterData[]>('/api/masters');
-	}
 	getServices(): Observable<Service[]> {
 		return this.http?.get<Service[]>('/api/services');
 	}

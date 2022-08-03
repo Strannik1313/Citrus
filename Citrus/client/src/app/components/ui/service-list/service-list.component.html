@@ -3,7 +3,7 @@
 	id="{{ service.id }}"
 	[ngClass]="{ active: choisenService === service.id }"
 	class="card__item"
-	(click)="onserviceClick(service, i)">
+	(click)="onServiceClick(service)">
 	<p>{{ service?.title | firstLetterUppercase }}</p>
 	<p>{{ service?.description }}</p>
 	<p>Продолжительность: {{ service?.duration }} мин</p>

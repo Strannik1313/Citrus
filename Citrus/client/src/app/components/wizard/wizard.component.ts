@@ -31,7 +31,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 	public nextBtnLabel: string = BtnLabel.next;
 	public isStepDone: boolean = false;
 	public preselectedOptionFirstStep: number = -1;
-	public preselectedOptionSecondStep: Date = new Date();
 	public clientData: ClientData = new ClientData();
 	public firstStepComponent: number = WizardStepper.WizardFirstStepComponent;
 	public secondStepComponent: number = WizardStepper.WizardSecondStepComponent;
