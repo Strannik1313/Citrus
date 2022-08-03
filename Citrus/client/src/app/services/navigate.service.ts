@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { ClientData } from '@models/client-data';
 import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
 
@@ -22,7 +21,7 @@ export class NavigateService {
 				this.storage?.setAccessMap('/');
 				this.route?.navigate(['/']);
 				this.storage?.setIsDialogWindowOpen(false);
-				this.storage?.setClientData(new ClientData());
+				// this.storage?.setClientData(new ClientData());
 				break;
 			}
 			case '/logout': {

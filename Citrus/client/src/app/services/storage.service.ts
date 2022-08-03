@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Client } from '@interfaces/client';
 import { AccessMap } from '@models/access-map';
 import { AuthorizedClientData } from '@models/authorized-client-data';
-import { ClientData } from '@models/client-data';
 import { UserModel } from '@models/user-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -31,8 +31,16 @@ export class StorageService {
 		new BehaviorSubject<boolean>(true);
 	private accessMap: BehaviorSubject<AccessMap> =
 		new BehaviorSubject<AccessMap>(new AccessMap());
-	private clientData: BehaviorSubject<ClientData> =
-		new BehaviorSubject<ClientData>(new ClientData());
+	private clientData: BehaviorSubject<Client> = new BehaviorSubject<Client>({
+		masterId: -1,
+		masterName: '',
+		serviceName: '',
+		serviceId: -1,
+		name: '',
+		surname: '',
+		phoneNumber: '',
+		dateOrder: null,
+	});
 	private authorizedUserData: BehaviorSubject<AuthorizedClientData> =
 		new BehaviorSubject<AuthorizedClientData>(new AuthorizedClientData());
 	private _tempArray: Array<string> = ['/'];
@@ -50,7 +58,7 @@ export class StorageService {
 	backButtonDisabled$: Observable<boolean> =
 		this.isBackButtonDisabled.asObservable();
 	accessMap$: Observable<AccessMap> = this.accessMap.asObservable();
-	clientData$: Observable<ClientData> = this.clientData.asObservable();
+	clientData$: Observable<Client> = this.clientData.asObservable();
 	authorizedUserData$: Observable<AuthorizedClientData> =
 		this.authorizedUserData.asObservable();
 
@@ -89,7 +97,7 @@ export class StorageService {
 		}
 	}
 
-	setClientData(value: ClientData): void {
+	setClientData(value: Client): void {
 		this.clientData.next(value);
 	}
 

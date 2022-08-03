@@ -8,23 +8,22 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { ClientDataFirstStepInit } from '@models/client-data';
+import { ChoisenService } from '@interfaces/client';
 import { Service } from '@models/service';
 import { HttpService } from '@services/http.service';
 import { SearchService } from '@services/search.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'app-wizard-first-step',
-	templateUrl: './wizard-first-step.component.html',
-	styleUrls: ['./wizard-first-step.component.scss'],
+	selector: 'app-wizard-service-choice-step',
+	templateUrl: './wizard-service-choice-step.component.html',
+	styleUrls: ['./wizard-service-choice-step.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardFirstStepComponent implements OnInit, OnDestroy {
+export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() shouldClientDataBeSaved: boolean = false;
 	@Input() choisenService: number = -1;
-	@Output() stepDone: EventEmitter<ClientDataFirstStepInit> =
-		new EventEmitter();
+	@Output() stepDone: EventEmitter<ChoisenService> = new EventEmitter();
 	public services: Service[] = [];
 	private subscription: Subscription = new Subscription();
 	constructor(
@@ -42,7 +41,7 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 						this.services.find(service => service.id === this.choisenService),
 					);
 				}
-				this.cdr?.markForCheck();
+				this.cdr.markForCheck();
 			}),
 		);
 	}
@@ -53,7 +52,7 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 		this.subscription?.add(
 			this.search?.setFilter(value.toLocaleLowerCase()).subscribe(data => {
 				this.services = [...data];
-				this.cdr?.markForCheck();
+				this.cdr.markForCheck();
 			}),
 		);
 	}
@@ -61,7 +60,7 @@ export class WizardFirstStepComponent implements OnInit, OnDestroy {
 		if (service) {
 			this.choisenService = service.id;
 			this.stepDone?.emit({
-				service: service.title,
+				serviceName: service.title,
 				serviceId: service.id,
 			});
 		}

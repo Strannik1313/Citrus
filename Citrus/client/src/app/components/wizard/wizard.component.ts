@@ -5,19 +5,18 @@ import {
 	OnInit,
 } from '@angular/core';
 import { Router } from '@angular/router';
-import {
-	ClientData,
-	ClientDataFirstStepInit,
-	ClientDataSecondStepInit,
-} from '@models/client-data';
-import { WizardStepper } from '@models/wizard-stepper';
 import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
+import { navigateRoutes } from '@constants/navigate-routes';
+import { btnLabels } from '@constants/btn-labels';
+import { ChoisenService, Client } from '@interfaces/client';
 
-const enum BtnLabel {
-	next = 'Далее',
-	confirm = 'Подтвердить',
-}
+const wizardStepper = {
+	serviceChoice: 1,
+	dateChoice: 2,
+	confirmPage: 3,
+	done: 4,
+};
 
 @Component({
 	selector: 'app-wizard',
@@ -27,19 +26,28 @@ const enum BtnLabel {
 })
 export class WizardComponent implements OnInit, OnDestroy {
 	public shouldClientDataBeSaved: boolean = false;
-	public currentStep: number = WizardStepper.WizardFirstStepComponent;
-	public nextBtnLabel: string = BtnLabel.next;
+	public currentStep: number = wizardStepper.serviceChoice;
+	public nextBtnLabel: string = btnLabels.next;
+	public backBtnLabels: string = btnLabels.back;
 	public isStepDone: boolean = false;
 	public preselectedOptionFirstStep: number = -1;
-	public clientData: ClientData = new ClientData();
-	public firstStepComponent: number = WizardStepper.WizardFirstStepComponent;
-	public secondStepComponent: number = WizardStepper.WizardSecondStepComponent;
-	public thirdStepComponent: number = WizardStepper.WizardThirdStepComponent;
+	public clientData: Client = {
+		masterId: -1,
+		masterName: '',
+		serviceName: '',
+		serviceId: -1,
+		name: '',
+		surname: '',
+		phoneNumber: '',
+		dateOrder: null,
+	};
+	public wizardStepper = wizardStepper;
 	private subscrition: Subscription = new Subscription();
 
 	constructor(private router: Router, private storage: StorageService) {}
 
 	ngOnInit(): void {
+		this.clientData;
 		this.subscrition?.add(
 			this.storage?.clientData$?.subscribe(data => {
 				this.clientData = data;
@@ -51,10 +59,17 @@ export class WizardComponent implements OnInit, OnDestroy {
 	ngOnDestroy(): void {
 		this.subscrition?.unsubscribe();
 		this.storage?.setClientData({
-			...new ClientData(),
+			masterId: -1,
+			masterName: '',
+			serviceName: '',
+			serviceId: -1,
+			name: '',
+			surname: '',
+			phoneNumber: '',
+			dateOrder: null,
 		});
 	}
-	firstStepDone(value: ClientDataFirstStepInit): void {
+	firstStepDone(value: ChoisenService): void {
 		this.clientData = { ...this.clientData, ...value };
 		this.isStepDone = true;
 	}
@@ -66,28 +81,20 @@ export class WizardComponent implements OnInit, OnDestroy {
 		}
 		this.isStepDone = false;
 		switch (this.currentStep) {
-			case WizardStepper.WizardFirstStepComponent:
-				this.clientData = {
-					...this.clientData,
-					...(action && new ClientDataFirstStepInit()),
-				};
+			case this.wizardStepper.serviceChoice:
 				break;
-			case WizardStepper.WizardSecondStepComponent:
-				this.clientData = {
-					...this.clientData,
-					...(action && new ClientDataSecondStepInit()),
-				};
+			case this.wizardStepper.dateChoice:
 				this.storage?.setClientData(this.clientData);
-				this.nextBtnLabel = BtnLabel.next;
+				this.nextBtnLabel = btnLabels.next;
 				break;
-			case WizardStepper.WizardThirdStepComponent:
-				this.nextBtnLabel = BtnLabel.confirm;
+			case this.wizardStepper.confirmPage:
+				this.nextBtnLabel = btnLabels.confirm;
 				break;
-			case WizardStepper.WizardConfirm:
-				this.router?.navigate(['/']);
+			case this.wizardStepper.done:
+				this.router?.navigate([navigateRoutes.home]);
 				break;
 			default:
-				this.router?.navigate(['/']);
+				this.router?.navigate([navigateRoutes.home]);
 				break;
 		}
 	}

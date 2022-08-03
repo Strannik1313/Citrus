@@ -10,6 +10,7 @@ import { StorageService } from '@services/storage.service';
 import { btnConfMap } from '@models/header-button-conf';
 import { UserModel } from '@models/user-model';
 import { Router } from '@angular/router';
+import { navigateRoutes } from '@constants/navigate-routes';
 
 @Component({
 	selector: 'app-header-wrapper',
@@ -35,7 +36,7 @@ export class HeaderWrapperComponent implements OnDestroy {
 		);
 	}
 	onHomeBtnClick(): void {
-		this.router.navigate(['/']);
+		this.router.navigate([navigateRoutes.home]);
 	}
 
 	ngOnDestroy(): void {

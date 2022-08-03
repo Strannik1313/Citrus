@@ -1,11 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 
-const stepper = {
-	one: 1,
-	two: 2,
-	three: 3,
-};
-
 @Component({
 	selector: 'app-stepper',
 	templateUrl: './stepper.component.html',
@@ -13,8 +7,8 @@ const stepper = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StepperComponent {
-	@Input() currentStep: number = stepper.one;
-	public steps: Array<number> = [stepper.one, stepper.two, stepper.three];
+	@Input() currentStep: number = 1;
+	public steps: Array<number> = [1, 2, 3];
 	trackByFn(index: number, item: number): number {
 		return item;
 	}

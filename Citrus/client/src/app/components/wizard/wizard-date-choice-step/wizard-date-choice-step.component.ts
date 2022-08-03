@@ -6,20 +6,29 @@ import {
 	Input,
 	OnDestroy,
 } from '@angular/core';
+import { Client } from '@interfaces/client';
 import { MasterCard } from '@interfaces/free-times';
-import { ClientData } from '@models/client-data';
 import { MasterData } from '@models/master-data';
 import { HttpService } from '@services/http.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-	selector: 'app-wizard-second-step',
-	templateUrl: './wizard-second-step.component.html',
-	styleUrls: ['./wizard-second-step.component.scss'],
+	selector: 'app-wizard-date-choice-step',
+	templateUrl: './wizard-date-choice-step.component.html',
+	styleUrls: ['./wizard-date-choice-step.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardSecondStepComponent implements OnInit, OnDestroy {
-	@Input() clientData: ClientData = new ClientData();
+export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
+	@Input() clientData: Client = {
+		masterId: -1,
+		masterName: '',
+		serviceName: '',
+		serviceId: -1,
+		name: '',
+		surname: '',
+		phoneNumber: '',
+		dateOrder: null,
+	};
 	private subscription: Subscription = new Subscription();
 	public choisenDate: Date = new Date();
 	public calendarData: Array<Date> = [];

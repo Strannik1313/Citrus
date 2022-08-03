@@ -1,9 +1,9 @@
 <div class="wizard__container">
 	<app-stepper [currentStep]="currentStep"></app-stepper>
 	<div class="button__container">
-		<button mat-button color="primary" (click)="onBtnClick(false)"
-			>Назад</button
-		>
+		<button mat-button color="primary" (click)="onBtnClick(false)">{{
+			backBtnLabels
+		}}</button>
 		<button
 			mat-button
 			color="primary"
@@ -13,17 +13,17 @@
 		>
 	</div>
 	<div [ngSwitch]="currentStep">
-		<ng-template ngSwitchCase="{{ firstStepComponent }}">
-			<app-wizard-first-step
+		<ng-template ngSwitchCase="{{ wizardStepper.serviceChoice }}">
+			<app-wizard-service-choice-step
 				[choisenService]="preselectedOptionFirstStep"
-				(stepDone)="firstStepDone($event)"></app-wizard-first-step>
+				(stepDone)="firstStepDone($event)"></app-wizard-service-choice-step>
 		</ng-template>
-		<ng-template ngSwitchCase="{{ secondStepComponent }}">
-			<app-wizard-second-step
-				[clientData]="clientData"></app-wizard-second-step>
+		<ng-template ngSwitchCase="{{ wizardStepper.dateChoice }}">
+			<app-wizard-date-choice-step
+				[clientData]="clientData"></app-wizard-date-choice-step>
 		</ng-template>
-		<ng-template ngSwitchCase="{{ thirdStepComponent }}">
-			<app-wizard-third-step></app-wizard-third-step>
+		<ng-template ngSwitchCase="{{ wizardStepper.confirmPage }}">
+			<app-wizard-confirm-step></app-wizard-confirm-step>
 		</ng-template>
 	</div>
 </div>

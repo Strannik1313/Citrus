@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { MasterCard } from '@interfaces/free-times';
 import { NewServiceData } from '@interfaces/new-service-data';
 import { AuthFormData } from '@models/auth-form-data';
-import { ClientData } from '@models/client-data';
+import { Client } from '@interfaces/client';
 import { MasterData } from '@models/master-data';
 import { NewMasterFormData } from '@models/new-master-form-data';
 import { OrderData } from '@models/order-data';
@@ -116,7 +116,7 @@ export class HttpService {
 		);
 	}
 
-	makeOrder(formValue: ClientData): Observable<{ message: boolean }> {
+	makeOrder(formValue: Client): Observable<{ message: boolean }> {
 		return this.http?.post<{ message: boolean }>('/api/order', formValue);
 	}
 
