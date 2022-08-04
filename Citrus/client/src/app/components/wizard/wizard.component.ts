@@ -38,16 +38,16 @@ export class WizardComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.client;
-		this.subscrition?.add(
-			this.storage?.client$?.subscribe(data => {
+		this.subscrition.add(
+			this.storage.client$.subscribe(data => {
 				this.client = { ...data };
 			}),
 		);
 	}
 
 	ngOnDestroy(): void {
-		this.subscrition?.unsubscribe();
-		this.storage?.setClient(ClientInitValue);
+		this.subscrition.unsubscribe();
+		this.storage.setClient(ClientInitValue);
 	}
 	firstStepDone(value: ChoisenService): void {
 		this.client = { ...this.client, ...value };
@@ -64,17 +64,17 @@ export class WizardComponent implements OnInit, OnDestroy {
 			case this.wizardStepper.serviceChoice:
 				break;
 			case this.wizardStepper.dateChoice:
-				this.storage?.setClient(this.client);
+				this.storage.setClient(this.client);
 				this.nextBtnLabel = btnLabels.next;
 				break;
 			case this.wizardStepper.confirmPage:
 				this.nextBtnLabel = btnLabels.confirm;
 				break;
 			case this.wizardStepper.done:
-				this.router?.navigate([navigateRoutes.home]);
+				this.router.navigate([navigateRoutes.home]);
 				break;
 			default:
-				this.router?.navigate([navigateRoutes.home]);
+				this.router.navigate([navigateRoutes.home]);
 				break;
 		}
 	}

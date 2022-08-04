@@ -13,10 +13,6 @@ import {
 import { Service } from '@interfaces/service';
 import { filter, fromEvent, Subscription } from 'rxjs';
 
-export interface SearchListOptionType {
-	title: string;
-	id: number;
-}
 @Component({
 	selector: 'app-autocomplete',
 	templateUrl: './autocomplete.component.html',

@@ -30,7 +30,7 @@ export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
 		this.subscription.add(
-			this.http?.getServices()?.subscribe(data => {
+			this.http.getServices().subscribe(data => {
 				this.servicesListInit = data;
 				this.servicesList = this.servicesListInit;
 				if (this.client.serviceId !== null) {
