@@ -10,13 +10,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { AccountPageComponent } from '@components/ui/account-page-ui/account-page-layout.component';
 import { AccountPageWrapperComponent } from '@components/wrappers/account-page-wrapper/account-page-wrapper.component';
-import { OrderCardModule } from '@shared/order-card/order-card.module';
 
 @NgModule({
 	declarations: [AccountPageComponent, AccountPageWrapperComponent],
 	imports: [
 		CommonModule,
-		OrderCardModule,
 		MatCardModule,
 		MatFormFieldModule,
 		MatInputModule,

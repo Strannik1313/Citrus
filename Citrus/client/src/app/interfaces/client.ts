@@ -1,23 +1,23 @@
 export interface ChoisenService {
 	serviceName: string;
-	serviceId: number;
+	serviceId: number | null;
 }
 export interface ChoisenDate {
-	master: string;
-	masterId: number;
+	masterName: string;
+	masterId: number | null;
 	dateOrder: Date | null;
 }
 export interface ClientConfirmStep {
 	name: string;
 	surname: string;
 	phoneNumber: string;
-	comments: string;
+	comments?: string;
 }
 export interface Client {
 	masterName: string;
-	masterId: number;
+	masterId: number | null;
 	serviceName: string;
-	serviceId: number;
+	serviceId: number | null;
 	dateOrder: Date | null;
 	name: string;
 	surname: string;

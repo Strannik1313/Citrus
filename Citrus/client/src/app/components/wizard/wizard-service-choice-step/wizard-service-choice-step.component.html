@@ -1,11 +1,11 @@
 <div class="service__choice__select__field">
-	<app-search-string
-		[options]="services"
-		(searchStringChange)="searchChange($event)">
-	</app-search-string>
+	<app-autocomplete
+		[options]="servicesList"
+		(selectedOption)="autocompleteSelected($event)">
+	</app-autocomplete>
 	<div class="card__container">
 		<app-service-list
-			[services]="services"
+			[services]="servicesList"
 			[choisenService]="choisenService"
 			(serviceClick)="onStepDone($event)"></app-service-list>
 	</div>

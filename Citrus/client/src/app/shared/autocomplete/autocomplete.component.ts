@@ -6,25 +6,30 @@ import {
 	Input,
 	Output,
 	EventEmitter,
+	OnDestroy,
 	OnChanges,
 	SimpleChanges,
-	OnDestroy,
 } from '@angular/core';
-import { Service } from '@models/service';
+import { Service } from '@interfaces/service';
 import { filter, fromEvent, Subscription } from 'rxjs';
 
+export interface SearchListOptionType {
+	title: string;
+	id: number;
+}
 @Component({
-	selector: 'app-search-string',
-	templateUrl: './search-string.component.html',
-	styleUrls: ['./search-string.component.scss'],
+	selector: 'app-autocomplete',
+	templateUrl: './autocomplete.component.html',
+	styleUrls: ['./autocomplete.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
-	@Input() options: Service[] = [];
-	@Output() searchStringChange: EventEmitter<string> = new EventEmitter();
+export class AutocompleteComponent implements OnInit, OnChanges, OnDestroy {
+	@Input() options: Array<Service> = [];
+	@Output() selectedOption: EventEmitter<Service | null> = new EventEmitter();
 	public inputValue: string = '';
 	public isAutocompleteOpen: boolean = false;
 	public isMouseOverAutocomplete: boolean = false;
+	public optionsList: Service[] = [];
 	private subscription: Subscription = new Subscription();
 
 	constructor(private cdr: ChangeDetectorRef) {}
@@ -43,21 +48,27 @@ export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 		);
 	}
 	ngOnChanges(changes: SimpleChanges): void {
-		if (changes.options?.currentValue.length < 0 || !this.inputValue) {
-			this.isAutocompleteOpen = false;
-		}
+		this.optionsList = changes.options?.currentValue;
 	}
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
 	}
 	onInputChange(): void {
 		this.isAutocompleteOpen = true;
-		this.searchStringChange.emit(this.inputValue);
+		if (this.inputValue.length === 0) {
+			this.optionsList = this.options;
+			this.selectedOption.emit(null);
+		} else {
+			this.optionsList = this.options.filter(option => {
+				return option.title.includes(this.inputValue);
+			});
+		}
 	}
-	onAutocomleteItemClick(value: string): void {
+
+	onAutocomleteItemClick(value: Service): void {
 		this.isAutocompleteOpen = false;
-		this.inputValue = value;
-		this.searchStringChange.emit(value);
+		this.inputValue = value.title;
+		this.selectedOption.emit(value);
 	}
 	trackByFn(index: number, item: Service): number {
 		return item.id;

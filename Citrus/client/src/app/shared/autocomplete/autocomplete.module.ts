@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchStringComponent } from '@shared/search-string/search-string.component';
 import { FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { AutocompleteComponent } from '@shared/autocomplete/autocomplete.component';
 
 @NgModule({
-	declarations: [SearchStringComponent],
+	declarations: [AutocompleteComponent],
 	imports: [CommonModule, FormsModule, OverlayModule],
-	exports: [SearchStringComponent],
+	exports: [AutocompleteComponent],
 })
-export class SearchStringModule {}
+export class AutocompleteModule {}

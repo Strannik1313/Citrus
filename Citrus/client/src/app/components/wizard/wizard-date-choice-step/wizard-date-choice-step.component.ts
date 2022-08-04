@@ -6,11 +6,12 @@ import {
 	Input,
 	OnDestroy,
 } from '@angular/core';
+import { ClientInitValue } from '@constants/client-init-value';
 import { Client } from '@interfaces/client';
-import { MasterCard } from '@interfaces/free-times';
-import { MasterData } from '@models/master-data';
+import { Order } from '@interfaces/order';
+import { Master } from '@models/master-data';
 import { HttpService } from '@services/http.service';
-import { Subscription } from 'rxjs';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',
@@ -19,101 +20,61 @@ import { Subscription } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
-	@Input() clientData: Client = {
-		masterId: -1,
-		masterName: '',
-		serviceName: '',
-		serviceId: -1,
-		name: '',
-		surname: '',
-		phoneNumber: '',
-		dateOrder: null,
-	};
+	@Input() client: Client = ClientInitValue;
 	private subscription: Subscription = new Subscription();
-	public choisenDate: Date = new Date();
-	public calendarData: Array<Date> = [];
-	public masterData: Array<MasterData> = [];
-	public masterCard: Array<MasterCard> = [];
-	public choisenMonth: number = new Date().getMonth();
-	public choisenMaster: number = -1;
+	private today: Date = new Date();
+	public choisenDate: Date | null = null;
+	public calendarDates: Array<Date> = [];
+	public masters: Array<Master> = [];
+	public orderCards: Array<Order> = [];
+	public choisenMaster: number | null = null;
 	public availableMonth: Array<Date> = [];
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
-		this.subscription?.add(
-			this.http
-				?.getDates(
-					this.clientData?.serviceId,
-					this.choisenDate,
-					this.clientData?.masterId,
-				)
-				?.subscribe(data => {
-					this.calendarData = [...data];
-					this.choisenDate = data[0];
-					this.cdr.markForCheck();
-				}),
-		);
-		this.subscription?.add(
-			this.http
-				?.getMasterData(this.clientData?.serviceId, this.clientData?.masterId)
-				?.subscribe(data => {
-					this.masterData = [...data];
-					this.cdr.markForCheck();
-				}),
-		);
-		this.subscription?.add(
-			this.http
-				?.getMasterCard(
-					this.clientData?.serviceId,
-					this.choisenDate,
-					this.clientData?.masterId,
-				)
-				?.subscribe(data => {
-					this.masterCard = [...data];
-					this.cdr.markForCheck();
-				}),
-		);
+		if (this.client.serviceId !== null) {
+			this.subscription.add(
+				this.http
+					?.getDates(this.client.serviceId, this.today, this.today)
+					.pipe(
+						filter(data => {
+							return data.length > 0;
+						}),
+					)
+					?.subscribe(data => {
+						this.calendarDates = data;
+						this.choisenDate = data[0];
+						this.cdr.markForCheck();
+					}),
+			);
+			this.subscription.add(
+				this.http
+					?.getMasters(this.client.serviceId, this.client.masterId)
+					?.subscribe(data => {
+						this.masters = data;
+						this.cdr.markForCheck();
+					}),
+			);
+			// this.subscription.add(
+			// 	this.http
+			// 		?.getOrders(
+			// 			this.client.serviceId,
+			// 			this.choisenDate,
+			// 			this.client.masterId,
+			// 		)
+			// 		?.subscribe(data => {
+			// 			this.orderCards = data;
+			// 			this.cdr.markForCheck();
+			// 		}),
+			// );
+		}
 	}
 	ngOnDestroy(): void {
 		this.subscription?.unsubscribe();
 	}
 	onDateChoisen(date: Date): void {
-		this.choisenDate = date;
-		this.subscription?.add(
-			this.http
-				?.getMasterCard(
-					this.clientData?.serviceId,
-					this.choisenDate,
-					this.choisenMaster,
-				)
-				?.subscribe(data => {
-					this.masterCard = [...data];
-					this.cdr.markForCheck();
-				}),
-		);
+		date;
 	}
 	onMasterFilterChange(id: number): void {
-		this.choisenMaster = id;
-		this.http
-			?.getDates(
-				this.clientData?.serviceId,
-				this.choisenDate,
-				this.choisenMaster,
-			)
-			?.subscribe(data => {
-				this.calendarData = [...data];
-				this.cdr.markForCheck();
-			});
-		this.subscription?.add(
-			this.http
-				?.getMasterCard(
-					this.clientData?.serviceId,
-					this.choisenDate,
-					this.choisenMaster,
-				)
-				?.subscribe(data => {
-					this.masterCard = [...data];
-					this.cdr.markForCheck();
-				}),
-		);
+		id;
 	}
 }

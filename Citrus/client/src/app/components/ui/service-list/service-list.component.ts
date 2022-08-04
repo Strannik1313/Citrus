@@ -5,7 +5,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { Service } from '@models/service';
+import { Service } from '@interfaces/service';
 
 @Component({
 	selector: 'app-service-list',
@@ -15,7 +15,7 @@ import { Service } from '@models/service';
 })
 export class ServiceListComponent {
 	@Input() services: Array<Service> = [];
-	@Input() choisenService: number = -1;
+	@Input() choisenService: number | null = null;
 	@Output() serviceClick: EventEmitter<Service> = new EventEmitter();
 	onServiceClick(service: Service | undefined): void {
 		this.serviceClick.emit(service);

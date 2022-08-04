@@ -14,9 +14,9 @@
 			(mouseenter)="isMouseOverAutocomplete = true"
 			(mouseleave)="isMouseOverAutocomplete = false">
 			<div
-				*ngFor="let option of options; trackBy: trackByFn; let i = index"
+				*ngFor="let option of optionsList; trackBy: trackByFn; let i = index"
 				class="autocomplete__item"
-				(click)="onAutocomleteItemClick(option.title)"
+				(click)="onAutocomleteItemClick(option)"
 				><li>{{ option.title }}</li></div
 			>
 		</ul>

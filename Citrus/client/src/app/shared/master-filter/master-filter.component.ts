@@ -5,7 +5,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { MasterData } from '@models/master-data';
+import { Master } from '@models/master-data';
 
 @Component({
 	selector: 'app-master-filter',
@@ -14,12 +14,12 @@ import { MasterData } from '@models/master-data';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MasterFilterComponent {
-	@Input() masterData: Array<MasterData> = [];
+	@Input() masters: Array<Master> = [];
 	@Output() filterChange: EventEmitter<number> = new EventEmitter();
 	onFilterClick(id: number): void {
 		this.filterChange.emit(Number(id));
 	}
-	trackByFn(index: number, item: MasterData): string {
+	trackByFn(index: number, item: Master): string {
 		return item?.name;
 	}
 }

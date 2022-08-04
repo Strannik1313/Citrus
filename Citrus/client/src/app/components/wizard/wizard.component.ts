@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs';
 import { navigateRoutes } from '@constants/navigate-routes';
 import { btnLabels } from '@constants/btn-labels';
 import { ChoisenService, Client } from '@interfaces/client';
+import { ClientInitValue } from '@constants/client-init-value';
 
 const wizardStepper = {
 	serviceChoice: 1,
@@ -25,52 +26,31 @@ const wizardStepper = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardComponent implements OnInit, OnDestroy {
-	public shouldClientDataBeSaved: boolean = false;
 	public currentStep: number = wizardStepper.serviceChoice;
 	public nextBtnLabel: string = btnLabels.next;
 	public backBtnLabels: string = btnLabels.back;
 	public isStepDone: boolean = false;
-	public preselectedOptionFirstStep: number = -1;
-	public clientData: Client = {
-		masterId: -1,
-		masterName: '',
-		serviceName: '',
-		serviceId: -1,
-		name: '',
-		surname: '',
-		phoneNumber: '',
-		dateOrder: null,
-	};
+	public client: Client = ClientInitValue;
 	public wizardStepper = wizardStepper;
 	private subscrition: Subscription = new Subscription();
 
 	constructor(private router: Router, private storage: StorageService) {}
 
 	ngOnInit(): void {
-		this.clientData;
+		this.client;
 		this.subscrition?.add(
-			this.storage?.clientData$?.subscribe(data => {
-				this.clientData = data;
-				this.preselectedOptionFirstStep = this.clientData?.serviceId;
+			this.storage?.client$?.subscribe(data => {
+				this.client = { ...data };
 			}),
 		);
 	}
 
 	ngOnDestroy(): void {
 		this.subscrition?.unsubscribe();
-		this.storage?.setClientData({
-			masterId: -1,
-			masterName: '',
-			serviceName: '',
-			serviceId: -1,
-			name: '',
-			surname: '',
-			phoneNumber: '',
-			dateOrder: null,
-		});
+		this.storage?.setClient(ClientInitValue);
 	}
 	firstStepDone(value: ChoisenService): void {
-		this.clientData = { ...this.clientData, ...value };
+		this.client = { ...this.client, ...value };
 		this.isStepDone = true;
 	}
 	onBtnClick(action: boolean): void {
@@ -84,7 +64,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 			case this.wizardStepper.serviceChoice:
 				break;
 			case this.wizardStepper.dateChoice:
-				this.storage?.setClientData(this.clientData);
+				this.storage?.setClient(this.client);
 				this.nextBtnLabel = btnLabels.next;
 				break;
 			case this.wizardStepper.confirmPage:

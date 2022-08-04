@@ -1,11 +1,11 @@
 <app-master-filter
-	[masterData]="masterData"
+	[masters]="masters"
 	(filterChange)="onMasterFilterChange($event)">
 </app-master-filter>
 <app-calendar
-	[calendarData]="calendarData"
+	[calendarDates]="calendarDates"
 	[choisenDate]="choisenDate"
 	(dateChoisen)="onDateChoisen($event)">
 </app-calendar>
-<app-master-card [masterCard]="masterCard" [choisenMaster]="choisenMaster">
-</app-master-card>
+<!-- <app-order-card [orderCards]="orderCards" [choisenMaster]="choisenMaster">
+</app-order-card> -->

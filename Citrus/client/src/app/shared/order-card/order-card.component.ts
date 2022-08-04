@@ -1,14 +1,5 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Input,
-	Output,
-} from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { OrderData } from '@models/order-data';
-import { OrderListButtonConfiguration } from '@models/order-list-button-configuration';
-import { PaginatorData } from '@models/paginator-data';
+import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import { Order } from '@interfaces/order';
 
 @Component({
 	selector: 'app-order-card',
@@ -17,19 +8,9 @@ import { PaginatorData } from '@models/paginator-data';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OrderCardComponent {
-	@Input() ordersArray: Array<OrderData> = [];
-	@Input() buttonConfiguration: Array<OrderListButtonConfiguration> = [];
-	@Input() disabled: boolean = false;
-	@Input() paginatorData: PaginatorData = new PaginatorData();
-	@Output() onPaginatorClick: EventEmitter<PageEvent> = new EventEmitter();
-	@Output() onButtonClicked: EventEmitter<{ action: string; orderId: number }> =
-		new EventEmitter();
-
-	onPaginatorChanged(e: PageEvent): void {
-		this.onPaginatorClick.emit(e);
-	}
-
-	onButtonClick(e: { action: string; orderId: number }): void {
-		this.onButtonClicked.emit(e);
+	@Input() orderCards: Array<Order> = [];
+	@Input() choisenMaster: number | null = null;
+	trackByFn(index: number, item: Order | string): number {
+		return index;
 	}
 }

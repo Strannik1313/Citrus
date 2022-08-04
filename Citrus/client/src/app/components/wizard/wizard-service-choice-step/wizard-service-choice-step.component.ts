@@ -8,10 +8,10 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { ChoisenService } from '@interfaces/client';
-import { Service } from '@models/service';
+import { ClientInitValue } from '@constants/client-init-value';
+import { ChoisenService, Client } from '@interfaces/client';
+import { Service } from '@interfaces/service';
 import { HttpService } from '@services/http.service';
-import { SearchService } from '@services/search.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,24 +21,23 @@ import { Subscription } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
-	@Input() shouldClientDataBeSaved: boolean = false;
-	@Input() choisenService: number = -1;
+	@Input() client: Client = ClientInitValue;
 	@Output() stepDone: EventEmitter<ChoisenService> = new EventEmitter();
-	public services: Service[] = [];
+	public servicesList: Service[] = [];
+	public choisenService: number | null = null;
+	private servicesListInit: Service[] = [];
 	private subscription: Subscription = new Subscription();
-	constructor(
-		private search: SearchService<Service>,
-		private http: HttpService,
-		private cdr: ChangeDetectorRef,
-	) {}
+	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
-		this.subscription?.add(
+		this.subscription.add(
 			this.http?.getServices()?.subscribe(data => {
-				this.services = [...data];
-				this.search?.setData(this.services);
-				if (this.choisenService !== -1) {
+				this.servicesListInit = data;
+				this.servicesList = this.servicesListInit;
+				if (this.client.serviceId !== null) {
 					this.onStepDone(
-						this.services.find(service => service.id === this.choisenService),
+						this.servicesListInit.find(
+							service => service.id === this.client.serviceId,
+						),
 					);
 				}
 				this.cdr.markForCheck();
@@ -46,22 +45,19 @@ export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 		);
 	}
 	ngOnDestroy(): void {
-		this.subscription?.unsubscribe();
+		this.subscription.unsubscribe();
 	}
-	searchChange(value: string): void {
-		this.subscription?.add(
-			this.search?.setFilter(value.toLocaleLowerCase()).subscribe(data => {
-				this.services = [...data];
-				this.cdr.markForCheck();
-			}),
-		);
+	autocompleteSelected(value: Service | null): void {
+		value
+			? (this.servicesList = [value])
+			: (this.servicesList = this.servicesListInit);
 	}
 	onStepDone(service: Service | undefined): void {
 		if (service) {
 			this.choisenService = service.id;
-			this.stepDone?.emit({
-				serviceName: service.title,
+			this.stepDone.emit({
 				serviceId: service.id,
+				serviceName: service.title,
 			});
 		}
 	}

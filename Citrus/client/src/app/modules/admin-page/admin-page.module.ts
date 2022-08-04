@@ -15,7 +15,6 @@ import { AdminCreateServicePanelWrapperComponent } from '@components/wrappers/ad
 import { AdminCreateServicePanelUiComponent } from '@components/ui/admin-create-service-panel-ui/admin-create-service-panel-ui.component';
 import { AdminOrderListPanelWrapperComponent } from '@components/wrappers/admin-order-list-panel-wrapper/admin-order-list-panel-wrapper.component';
 import { AdminOrderListPanelUiComponent } from '@components/ui/admin-order-list-panel-ui/admin-order-list-panel-ui.component';
-import { OrderCardModule } from '@shared/order-card/order-card.module';
 
 @NgModule({
 	declarations: [
@@ -36,7 +35,6 @@ import { OrderCardModule } from '@shared/order-card/order-card.module';
 		MatCardModule,
 		MatButtonModule,
 		MatInputModule,
-		OrderCardModule,
 		ReactiveFormsModule,
 		RouterModule.forChild([{ path: '', component: AdminPageWrapperComponent }]),
 	],

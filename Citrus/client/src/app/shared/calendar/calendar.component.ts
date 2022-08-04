@@ -13,8 +13,8 @@ import {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent {
-	@Input() calendarData: Array<Date> = [];
-	@Input() choisenDate: Date = new Date();
+	@Input() calendarDates: Array<Date> = [];
+	@Input() choisenDate: Date | null = null;
 	@Output() dateChoisen: EventEmitter<Date> = new EventEmitter();
 
 	onDateClick(date: Date): void {

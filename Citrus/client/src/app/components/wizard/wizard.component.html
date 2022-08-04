@@ -15,12 +15,12 @@
 	<div [ngSwitch]="currentStep">
 		<ng-template ngSwitchCase="{{ wizardStepper.serviceChoice }}">
 			<app-wizard-service-choice-step
-				[choisenService]="preselectedOptionFirstStep"
+				[client]="client"
 				(stepDone)="firstStepDone($event)"></app-wizard-service-choice-step>
 		</ng-template>
 		<ng-template ngSwitchCase="{{ wizardStepper.dateChoice }}">
 			<app-wizard-date-choice-step
-				[clientData]="clientData"></app-wizard-date-choice-step>
+				[client]="client"></app-wizard-date-choice-step>
 		</ng-template>
 		<ng-template ngSwitchCase="{{ wizardStepper.confirmPage }}">
 			<app-wizard-confirm-step></app-wizard-confirm-step>

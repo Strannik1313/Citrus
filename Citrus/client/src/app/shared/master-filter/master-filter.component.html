@@ -1,6 +1,6 @@
 <div (click)="onFilterClick(-1)">все мастера</div>
 <div
-	*ngFor="let master of masterData; let i = index; trackBy: trackByFn"
-	(click)="onFilterClick(master.masterId)"
+	*ngFor="let master of masters; let i = index; trackBy: trackByFn"
+	(click)="onFilterClick(master.id)"
 	>{{ master.name }}</div
 >

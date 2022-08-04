@@ -1,17 +1,17 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { MasterCard } from '@interfaces/free-times';
 import { NewServiceData } from '@interfaces/new-service-data';
 import { AuthFormData } from '@models/auth-form-data';
 import { Client } from '@interfaces/client';
-import { MasterData } from '@models/master-data';
 import { NewMasterFormData } from '@models/new-master-form-data';
 import { OrderData } from '@models/order-data';
-import { Service } from '@models/service';
 import { UserModel } from '@models/user-model';
 import { StorageService } from '@services/storage.service';
 import { catchError, Observable, of, tap } from 'rxjs';
+import { Service } from '@interfaces/service';
+import { Master } from '@models/master-data';
+import { Order } from '@interfaces/order';
 
 @Injectable({
 	providedIn: 'root',
@@ -27,29 +27,29 @@ export class HttpService {
 
 	getDates(
 		serviceId: number,
-		date: Date,
-		masterId: number,
+		dateRangeStart: Date,
+		dateRangeEnd: Date,
 	): Observable<Date[]> {
 		return this.http.post<Date[]>('/api/calendar', {
 			serviceId,
-			date,
-			masterId,
+			dateRangeStart,
+			dateRangeEnd,
 		});
 	}
 
-	getMasterData(serviceId: number, masterId: number): Observable<MasterData[]> {
-		return this.http?.post<MasterData[]>('/api/masters', {
+	getMasters(serviceId: number, masterId: number | null): Observable<Master[]> {
+		return this.http?.post<Master[]>('/api/masters', {
 			serviceId,
 			masterId,
 		});
 	}
 
-	getMasterCard(
+	getOrders(
 		serviceId: number,
-		date: Date,
-		masterId: number,
-	): Observable<Array<MasterCard>> {
-		return this.http.post<Array<MasterCard>>('/api/calendar/mastercard', {
+		date: Date | null,
+		masterId: number | null,
+	): Observable<Array<Order>> {
+		return this.http.post<Array<Order>>('/api/calendar/orders', {
 			serviceId,
 			date,
 			masterId,

@@ -1,6 +1,6 @@
 <div class="container">
 	<app-calendar-cell
-		*ngFor="let cell of calendarData; let i = index"
+		*ngFor="let cell of calendarDates; let i = index"
 		[date]="cell"
 		class="cell"
 		[ngClass]="{ active: choisenDate === cell }"
