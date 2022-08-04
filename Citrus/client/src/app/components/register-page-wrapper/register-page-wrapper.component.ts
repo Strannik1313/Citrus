@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthFormData } from '@models/auth-form-data';
-import { HttpService } from '@services/http.service';
+import { AuthHttpService } from '@services/auth-http.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 export class RegisterPageWrapperComponent implements OnDestroy {
 	private subscription: Subscription[] = [];
 	disabledForm: boolean = false;
-	constructor(private http: HttpService, private router: Router) {}
+	constructor(private router: Router, private authHttp: AuthHttpService) {}
 
 	ngOnDestroy(): void {
 		this.subscription.forEach(sub => {
@@ -27,7 +27,7 @@ export class RegisterPageWrapperComponent implements OnDestroy {
 	onSafeFormValue(e: AuthFormData): void {
 		this.disableForm(true);
 		this.subscription.push(
-			this.http?.register(e)?.subscribe({
+			this.authHttp.register(e).subscribe({
 				next: () => {
 					this.router.navigate(['/login']);
 				},

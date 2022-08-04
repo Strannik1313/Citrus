@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
+import { AuthHttpService } from './auth-http.service';
 
 @Injectable({
 	providedIn: 'root',
@@ -12,7 +12,7 @@ export class NavigateService {
 	constructor(
 		private storage: StorageService,
 		private route: Router,
-		private http: HttpService,
+		private authHttp: AuthHttpService,
 	) {}
 
 	goToNextPage(url: string): void {
@@ -27,7 +27,7 @@ export class NavigateService {
 			case '/logout': {
 				this.storage.setAccessMap('/');
 				this.route.navigate(['/']);
-				this.http.logout();
+				this.authHttp.logout();
 				break;
 			}
 			default:

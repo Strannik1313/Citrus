@@ -5,6 +5,7 @@ import { DialogType } from '@shared/dialog-window/dialog-window.component';
 import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
 import { ServerErrorHandleService } from '@services/server-error-handle.service';
+import { AuthHttpService } from '@services/auth-http.service';
 
 @Component({
 	selector: 'app-root',
@@ -22,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	public dialogType: DialogType = DialogType.Error;
 	constructor(
 		private http: HttpService,
+		private authHttp: AuthHttpService,
 		public storage: StorageService,
 		private serverErrorHandle: ServerErrorHandleService,
 		private cdr: ChangeDetectorRef,
@@ -48,9 +50,9 @@ export class AppComponent implements OnInit, OnDestroy {
 		);
 		const potentialToken = localStorage.getItem('authToken');
 		if (potentialToken !== null) {
-			this.http.setToken(potentialToken);
+			this.authHttp.setToken(potentialToken);
 			this.subscription.add(
-				this.http.me().subscribe(data => {
+				this.authHttp.me().subscribe(data => {
 					if (data) {
 						this.storage.setAuthorizedUserData(data);
 					}

@@ -5,21 +5,21 @@ import {
 	HttpRequest,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpService } from '@services/http.service';
+import { AuthHttpService } from '@services/auth-http.service';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-	constructor(private http: HttpService) {}
+	constructor(private authHttp: AuthHttpService) {}
 
 	intercept(
 		req: HttpRequest<any>,
 		next: HttpHandler,
 	): Observable<HttpEvent<any>> {
-		if (this.http.isAuthenticated()) {
+		if (this.authHttp.isAuthenticated()) {
 			req = req.clone({
 				setHeaders: {
-					Authorization: this.http.getToken(),
+					Authorization: this.authHttp.getToken(),
 				},
 			});
 		}
