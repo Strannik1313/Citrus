@@ -23,19 +23,19 @@ import { Subscription } from 'rxjs';
 export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() client: Client = ClientInitValue;
 	@Output() stepDone: EventEmitter<ChoisenService> = new EventEmitter();
+	private subscription: Subscription = new Subscription();
 	public servicesList: Service[] = [];
 	public choisenService: number | null = null;
-	private servicesListInit: Service[] = [];
-	private subscription: Subscription = new Subscription();
+	public completeServicesList: Service[] = [];
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
 		this.subscription.add(
 			this.http.getServices().subscribe(data => {
-				this.servicesListInit = data;
-				this.servicesList = this.servicesListInit;
+				this.completeServicesList = data;
+				this.servicesList = this.completeServicesList;
 				if (this.client.serviceId !== null) {
 					this.onStepDone(
-						this.servicesListInit.find(
+						this.completeServicesList.find(
 							service => service.id === this.client.serviceId,
 						),
 					);
@@ -50,7 +50,7 @@ export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	autocompleteSelected(value: Service | null): void {
 		value
 			? (this.servicesList = [value])
-			: (this.servicesList = this.servicesListInit);
+			: (this.servicesList = this.completeServicesList);
 	}
 	onStepDone(service: Service | undefined): void {
 		if (service) {

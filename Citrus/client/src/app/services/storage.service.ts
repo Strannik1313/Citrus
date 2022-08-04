@@ -94,7 +94,9 @@ export class StorageService {
 	setClient(value: Client): void {
 		this.client.next(value);
 	}
-
+	resetClient(): void {
+		this.client.next(ClientInitValue);
+	}
 	setAuthorizedUserData(data: AuthorizedClientData): void {
 		this.authorizedUserData.next({
 			...data,

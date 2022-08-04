@@ -1,11 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { NewServiceData } from '@interfaces/new-service-data';
 import { AuthFormData } from '@models/auth-form-data';
-import { Client } from '@interfaces/client';
-import { NewMasterFormData } from '@models/new-master-form-data';
-import { OrderData } from '@models/order-data';
 import { UserModel } from '@models/user-model';
 import { StorageService } from '@services/storage.service';
 import { catchError, Observable, of, tap } from 'rxjs';
@@ -29,16 +25,19 @@ export class HttpService {
 		serviceId: number,
 		dateRangeStart: Date,
 		dateRangeEnd: Date,
-	): Observable<Date[]> {
-		return this.http.post<Date[]>('/api/calendar', {
+	): Observable<Array<Date>> {
+		return this.http.post<Array<Date>>('/api/calendar', {
 			serviceId,
 			dateRangeStart,
 			dateRangeEnd,
 		});
 	}
 
-	getMasters(serviceId: number, masterId: number | null): Observable<Master[]> {
-		return this.http?.post<Master[]>('/api/masters', {
+	getMasters(
+		serviceId: number,
+		masterId: number | null,
+	): Observable<Array<Master>> {
+		return this.http?.post<Array<Master>>('/api/masters', {
 			serviceId,
 			masterId,
 		});
@@ -56,72 +55,8 @@ export class HttpService {
 		});
 	}
 
-	getOrdersData(pageSize: number, startItem: number): Observable<OrderData[]> {
-		return this.http?.get<OrderData[]>('/api/admin/orders', {
-			headers: new HttpHeaders({
-				pageSize: pageSize?.toString(),
-				startItem: startItem?.toString(),
-			}),
-		});
-	}
-
-	getPersonalOrders(
-		pageSize: number,
-		startItem: number,
-	): Observable<OrderData[]> {
-		return this.http?.get<OrderData[]>('/api/personal/orders', {
-			headers: new HttpHeaders({
-				pageSize: pageSize?.toString(),
-				startItem: startItem?.toString(),
-			}),
-		});
-	}
-
-	getStudioServices(): Observable<string[]> {
-		return this.http?.get<string[]>('/api/admin/services');
-	}
-
-	createNewMaster(
-		formValue: NewMasterFormData,
-	): Observable<{ message: string }> {
-		return this.http?.post<{ message: string }>('/api/admin/master', formValue);
-	}
-
-	createNewService(formValue: NewServiceData): Observable<{ message: string }> {
-		return this.http?.post<{ message: string }>(
-			'/api/admin/service',
-			formValue,
-		);
-	}
-
-	cancelOrder(
-		orderId: number,
-	): Observable<{ message: string; statusCode: number }> {
-		return this.http?.delete<{ message: string; statusCode: number }>(
-			'/api/admin/orders',
-			{
-				headers: new HttpHeaders({
-					orderId: orderId.toString(),
-				}),
-			},
-		);
-	}
-
-	completeOrder(
-		orderId: number,
-	): Observable<{ message: string; statusCode: number }> {
-		return this.http?.patch<{ message: string; statusCode: number }>(
-			'/api/admin/orders',
-			{ orderId },
-		);
-	}
-
-	makeOrder(formValue: Client): Observable<{ message: boolean }> {
-		return this.http?.post<{ message: boolean }>('/api/order', formValue);
-	}
-
-	getServices(): Observable<Service[]> {
-		return this.http?.get<Service[]>('/api/services');
+	getServices(): Observable<Array<Service>> {
+		return this.http?.get<Array<Service>>('/api/services');
 	}
 
 	login(formValue: AuthFormData): Observable<{ token: string; payload?: any }> {
@@ -150,17 +85,6 @@ export class HttpService {
 	register(formValue: AuthFormData): Observable<{ message: string }> {
 		return this.http?.post<{ message: string }>(
 			'/api/auth/register',
-			formValue,
-		);
-	}
-
-	personal(formValue: {
-		name: string;
-		surname: string;
-		phoneNumber: string;
-	}): Observable<{ email: string; password: string }> {
-		return this.http?.post<{ email: string; password: string }>(
-			'/api/personal',
 			formValue,
 		);
 	}

@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MainPageLayoutWrapperComponent } from '@components/wrappers/main-page-layout-wrapper/main-page-layout-wrapper.component';
-import { AuthGuardService } from '@services/auth-guard.service';
+import { MainPageLayoutWrapperComponent } from '@components/main-page-layout-wrapper/main-page-layout-wrapper.component';
 import { NavigateAccess } from '@services/navigate-access.service';
 
 const routes: Routes = [
@@ -31,14 +30,6 @@ const routes: Routes = [
 				m => m.LoginPageModule,
 			),
 		canActivate: [NavigateAccess],
-	},
-	{
-		path: 'account',
-		loadChildren: () =>
-			import('@modules/account-page/account-page.module').then(
-				m => m.AccountPageModule,
-			),
-		canActivate: [AuthGuardService, NavigateAccess],
 	},
 	{
 		path: '**',

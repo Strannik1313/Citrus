@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LoginPageWrapperComponent } from '@components/wrappers/login-page-wrapper/login-page-wrapper.component';
+import { LoginPageWrapperComponent } from '@components/login-page-wrapper/login-page-wrapper.component';
 import { AuthFormModule } from '@shared/auth-form/auth-form.module';
 
 @NgModule({

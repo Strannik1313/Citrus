@@ -26,13 +26,13 @@ const wizardStepper = {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardComponent implements OnInit, OnDestroy {
+	private subscrition: Subscription = new Subscription();
 	public currentStep: number = wizardStepper.serviceChoice;
 	public nextBtnLabel: string = btnLabels.next;
 	public backBtnLabels: string = btnLabels.back;
 	public isStepDone: boolean = false;
 	public client: Client = ClientInitValue;
 	public wizardStepper = wizardStepper;
-	private subscrition: Subscription = new Subscription();
 
 	constructor(private router: Router, private storage: StorageService) {}
 
@@ -47,7 +47,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 
 	ngOnDestroy(): void {
 		this.subscrition.unsubscribe();
-		this.storage.setClient(ClientInitValue);
+		this.storage.resetClient();
 	}
 	firstStepDone(value: ChoisenService): void {
 		this.client = { ...this.client, ...value };

@@ -28,7 +28,6 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	public masters: Array<Master> = [];
 	public orderCards: Array<Order> = [];
 	public choisenMaster: number | null = null;
-	public availableMonth: Array<Date> = [];
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
 		if (this.client.serviceId !== null) {

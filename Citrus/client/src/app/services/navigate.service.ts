@@ -18,22 +18,22 @@ export class NavigateService {
 	goToNextPage(url: string): void {
 		switch (url) {
 			case '/home': {
-				this.storage?.setAccessMap('/');
-				this.route?.navigate(['/']);
-				this.storage?.setIsDialogWindowOpen(false);
-				// this.storage?.setClientData(new ClientData());
+				this.storage.setAccessMap('/');
+				this.route.navigate(['/']);
+				this.storage.setIsDialogWindowOpen(false);
+				this.storage.resetClient();
 				break;
 			}
 			case '/logout': {
-				this.storage?.setAccessMap('/');
-				this.route?.navigate(['/']);
+				this.storage.setAccessMap('/');
+				this.route.navigate(['/']);
 				this.http.logout();
 				break;
 			}
 			default:
 				{
-					this.storage?.setAccessMap(url);
-					this.route?.navigate([url]);
+					this.storage.setAccessMap(url);
+					this.route.navigate([url]);
 				}
 				break;
 		}
