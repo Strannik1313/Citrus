@@ -21,7 +21,7 @@ import { filter, fromEvent, Subscription } from 'rxjs';
 })
 export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 	@Input() options: Service[] = [];
-	@Output() valueForFilter: EventEmitter<string> = new EventEmitter();
+	@Output() searchStringChange: EventEmitter<string> = new EventEmitter();
 	public inputValue: string = '';
 	public isAutocompleteOpen: boolean = false;
 	public isMouseOverAutocomplete: boolean = false;
@@ -43,10 +43,7 @@ export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 		);
 	}
 	ngOnChanges(changes: SimpleChanges): void {
-		if (
-			changes[`${this.options}`]?.currentValue?.length < 0 ||
-			!this.inputValue
-		) {
+		if (changes.options?.currentValue.length < 0 || !this.inputValue) {
 			this.isAutocompleteOpen = false;
 		}
 	}
@@ -55,14 +52,14 @@ export class SearchStringComponent implements OnInit, OnChanges, OnDestroy {
 	}
 	onInputChange(): void {
 		this.isAutocompleteOpen = true;
-		this.valueForFilter.emit(this.inputValue);
+		this.searchStringChange.emit(this.inputValue);
 	}
 	onAutocomleteItemClick(value: string): void {
 		this.isAutocompleteOpen = false;
 		this.inputValue = value;
-		this.valueForFilter.emit(value);
+		this.searchStringChange.emit(value);
 	}
-	trackByFn(index: number, item: Service): string {
-		return item.title;
+	trackByFn(index: number, item: Service): number {
+		return item.id;
 	}
 }

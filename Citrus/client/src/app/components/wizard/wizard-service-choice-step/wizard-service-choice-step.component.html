@@ -1,7 +1,7 @@
 <div class="service__choice__select__field">
 	<app-search-string
 		[options]="services"
-		(valueForFilter)="searchChange($event)">
+		(searchStringChange)="searchChange($event)">
 	</app-search-string>
 	<div class="card__container">
 		<app-service-list
