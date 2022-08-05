@@ -24,9 +24,9 @@ export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() client: Client = ClientInitValue;
 	@Output() stepDone: EventEmitter<ChoisenService> = new EventEmitter();
 	private subscription: Subscription = new Subscription();
+	public completeServicesList: Service[] = [];
 	public servicesList: Service[] = [];
 	public choisenService: number | null = null;
-	public completeServicesList: Service[] = [];
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
 		this.subscription.add(

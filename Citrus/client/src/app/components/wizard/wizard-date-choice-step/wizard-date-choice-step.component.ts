@@ -11,7 +11,7 @@ import { Client } from '@interfaces/client';
 import { Order } from '@interfaces/order';
 import { Master } from '@models/master-data';
 import { HttpService } from '@services/http.service';
-import { filter, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',
@@ -33,34 +33,31 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 		if (this.client.serviceId !== null) {
 			this.subscription.add(
 				this.http
-					?.getDates(this.client.serviceId, this.today, this.today)
-					.pipe(
-						filter(data => {
-							return data.length > 0;
-						}),
-					)
-					?.subscribe(data => {
+					.getDates(this.client.serviceId, this.today, this.today)
+					.subscribe(data => {
+						data.length > 0
+							? (this.choisenDate = data[0])
+							: (this.choisenDate = null);
 						this.calendarDates = data;
-						this.choisenDate = data[0];
 						this.cdr.markForCheck();
 					}),
 			);
 			this.subscription.add(
 				this.http
-					?.getMasters(this.client.serviceId, this.client.masterId)
-					?.subscribe(data => {
+					.getMasters(this.client.serviceId, this.client.masterId)
+					.subscribe(data => {
 						this.masters = data;
 						this.cdr.markForCheck();
 					}),
 			);
 			// this.subscription.add(
 			// 	this.http
-			// 		?.getOrders(
+			// 		.getOrders(
 			// 			this.client.serviceId,
 			// 			this.choisenDate,
 			// 			this.client.masterId,
 			// 		)
-			// 		?.subscribe(data => {
+			// 		.subscribe(data => {
 			// 			this.orderCards = data;
 			// 			this.cdr.markForCheck();
 			// 		}),
@@ -68,7 +65,7 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 		}
 	}
 	ngOnDestroy(): void {
-		this.subscription?.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 	onDateChoisen(date: Date): void {
 		date;
