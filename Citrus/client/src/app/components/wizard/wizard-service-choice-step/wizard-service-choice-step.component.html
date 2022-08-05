@@ -1,7 +1,7 @@
 <div class="service__choice__select__field">
 	<app-autocomplete
 		[options]="completeServicesList"
-		(selectedOption)="autocompleteSelected($event)">
+		(optionselected)="autocompleteSelected($event)">
 	</app-autocomplete>
 	<div class="card__container">
 		<app-service-list

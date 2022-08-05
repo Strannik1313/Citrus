@@ -24,7 +24,7 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	private subscription: Subscription = new Subscription();
 	private today: Date = new Date();
 	public choisenDate: Date | null = null;
-	public calendarDates: Array<Date> = [];
+	public calendarActiveDates: Array<Date> = [];
 	public masters: Array<Master> = [];
 	public orderCards: Array<Order> = [];
 	public choisenMaster: number | null = null;
@@ -38,7 +38,7 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 						data.length > 0
 							? (this.choisenDate = data[0])
 							: (this.choisenDate = null);
-						this.calendarDates = data;
+						this.calendarActiveDates = data;
 						this.cdr.markForCheck();
 					}),
 			);

@@ -12,7 +12,7 @@
 		<ul
 			appClickHandler
 			[isOpen]="isAutocompleteOpen"
-			(autocompleteToogle)="onToogle($event)"
+			(autocompleteToogle)="onDocClick($event)"
 			class="autocomplete">
 			<div
 				*ngFor="let option of optionsList; trackBy: trackByFn; let i = index"

@@ -7,7 +7,11 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { Service } from '@interfaces/service';
+
+export interface AutocompleteOptionType {
+	title: string;
+	id: number;
+}
 
 @Component({
 	selector: 'app-autocomplete',
@@ -16,11 +20,13 @@ import { Service } from '@interfaces/service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AutocompleteComponent implements OnChanges {
-	@Input() options: Array<Service> = [];
-	@Output() selectedOption: EventEmitter<Service | null> = new EventEmitter();
+	@Input() options: Array<AutocompleteOptionType> = [];
+	/* eslint-disable @typescript-eslint/no-explicit-any */
+	@Output() optionselected: EventEmitter<any> = new EventEmitter();
+	/* eslint-enable @typescript-eslint/no-explicit-any */
 	public inputValue: string = '';
 	public isAutocompleteOpen: boolean = false;
-	public optionsList: Service[] = [];
+	public optionsList: AutocompleteOptionType[] = [];
 
 	ngOnChanges(changes: SimpleChanges): void {
 		this.optionsList = changes.options?.currentValue;
@@ -29,22 +35,22 @@ export class AutocompleteComponent implements OnChanges {
 		this.isAutocompleteOpen = true;
 		if (this.inputValue.length === 0) {
 			this.optionsList = this.options;
-			this.selectedOption.emit(null);
+			this.optionselected.emit(null);
 		} else {
 			this.optionsList = this.options.filter(option => {
 				return option.title.includes(this.inputValue);
 			});
 		}
 	}
-	onAutocomleteItemClick(value: Service): void {
+	onAutocomleteItemClick(value: AutocompleteOptionType): void {
 		this.isAutocompleteOpen = false;
 		this.inputValue = value.title;
-		this.selectedOption.emit(value);
+		this.optionselected.emit(value);
 	}
-	onToogle(value: boolean): void {
+	onDocClick(value: boolean): void {
 		this.isAutocompleteOpen = value;
 	}
-	trackByFn(index: number, item: Service): number {
+	trackByFn(index: number, item: AutocompleteOptionType): number {
 		return item.id;
 	}
 }
