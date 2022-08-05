@@ -10,9 +10,10 @@
 		[cdkConnectedOverlayOrigin]="trigger"
 		[cdkConnectedOverlayOpen]="isAutocompleteOpen">
 		<ul
-			class="autocomplete"
-			(mouseenter)="isMouseOverAutocomplete = true"
-			(mouseleave)="isMouseOverAutocomplete = false">
+			appClickHandler
+			[isOpen]="isAutocompleteOpen"
+			(autocompleteToogle)="onToogle($event)"
+			class="autocomplete">
 			<div
 				*ngFor="let option of optionsList; trackBy: trackByFn; let i = index"
 				class="autocomplete__item"

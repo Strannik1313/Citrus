@@ -6,6 +6,8 @@ let dayOfYear = require('dayjs/plugin/dayOfYear');
 dayjs.extend(dayOfYear);
 var isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
 dayjs.extend(isSameOrAfter);
+var isBetween = require('dayjs/plugin/isBetween');
+dayjs.extend(isBetween);
 
 module.exports.calendar = async (req, res) => {
 	const mastersIdArray = [];
@@ -39,7 +41,12 @@ module.exports.calendar = async (req, res) => {
 					return a - b;
 				});
 				dateArray.forEach(date => {
-					if (dayjs(date).isSameOrAfter(req.body.date)) {
+					if (
+						dayjs(date).isBetween(
+							req.body.dateRangeStart,
+							dayjs(req.body.dateRangeEnd),
+						)
+					) {
 						dayArray.push(date);
 					}
 				});

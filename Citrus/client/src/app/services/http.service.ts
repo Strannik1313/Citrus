@@ -1,9 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { UserModel } from '@models/user-model';
-import { StorageService } from '@services/storage.service';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Service } from '@interfaces/service';
 import { Master } from '@models/master-data';
 import { Order } from '@interfaces/order';
@@ -12,24 +9,25 @@ import { Order } from '@interfaces/order';
 	providedIn: 'root',
 })
 export class HttpService {
-	private token: string = '';
-	private userModel: UserModel = UserModel.Unauth;
-	constructor(
-		private http: HttpClient,
-		private storage: StorageService,
-		private router: Router,
-	) {}
+	constructor(private http: HttpClient) {}
 
 	getDates(
 		serviceId: number,
 		dateRangeStart: Date,
 		dateRangeEnd: Date,
 	): Observable<Array<Date>> {
-		return this.http.post<Array<Date>>('/api/calendar', {
-			serviceId,
-			dateRangeStart,
-			dateRangeEnd,
-		});
+		return this.http
+			.post<Array<string>>('/api/calendar', {
+				serviceId,
+				dateRangeStart,
+				dateRangeEnd,
+			})
+			.pipe(
+				map(value => {
+					let stringToDate = value.map(item => new Date(item));
+					return stringToDate;
+				}),
+			);
 	}
 
 	getMasters(
