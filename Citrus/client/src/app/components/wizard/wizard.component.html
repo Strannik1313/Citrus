@@ -1,5 +1,7 @@
 <div class="wizard__container">
-	<app-stepper [currentStep]="currentStep"></app-stepper>
+	<app-stepper
+		[currentStep]="currentStep"
+		[stepsQuantity]="stepsQuantity"></app-stepper>
 	<div class="button__container">
 		<button mat-button color="primary" (click)="onBtnClick(false)">{{
 			backBtnLabels

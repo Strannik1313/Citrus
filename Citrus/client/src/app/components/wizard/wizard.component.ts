@@ -18,6 +18,7 @@ const wizardStepper = {
 	confirmPage: 3,
 	done: 4,
 };
+const stepsQuantity = [1, 2, 3];
 
 @Component({
 	selector: 'app-wizard',
@@ -27,6 +28,7 @@ const wizardStepper = {
 })
 export class WizardComponent implements OnInit, OnDestroy {
 	private subscrition: Subscription = new Subscription();
+	public stepsQuantity: Array<number> = stepsQuantity;
 	public currentStep: number = wizardStepper.serviceChoice;
 	public nextBtnLabel: string = btnLabels.next;
 	public backBtnLabels: string = btnLabels.back;
