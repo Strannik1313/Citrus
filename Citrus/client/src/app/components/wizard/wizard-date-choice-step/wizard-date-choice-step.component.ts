@@ -6,7 +6,7 @@ import {
 	Input,
 	OnDestroy,
 } from '@angular/core';
-import { ClientInitValue } from '@constants/client-init-value';
+import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { Client } from '@interfaces/client';
 import { Order } from '@interfaces/order';
 import { Master } from '@models/master-data';
@@ -20,7 +20,7 @@ import { Subscription } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
-	@Input() client: Client = ClientInitValue;
+	@Input() client: Client = CLIENT_INIT_VALUE;
 	private subscription: Subscription = new Subscription();
 	private today: Date = new Date();
 	public choisenDate: Date | null = null;

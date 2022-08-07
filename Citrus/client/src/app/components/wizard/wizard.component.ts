@@ -7,18 +7,18 @@ import {
 import { Router } from '@angular/router';
 import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
-import { navigateRoutes } from '@constants/navigate-routes';
-import { btnLabels } from '@constants/btn-labels';
+import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
+import { BTN_LABELS } from '@constants/btn-labels';
 import { ChoisenService, Client } from '@interfaces/client';
-import { ClientInitValue } from '@constants/client-init-value';
+import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 
-const wizardStepper = {
+const WIZARD_STEPPER = {
 	serviceChoice: 1,
 	dateChoice: 2,
 	confirmPage: 3,
 	done: 4,
 };
-const stepsQuantity = [1, 2, 3];
+const STEPS_QUATITY = [1, 2, 3];
 
 @Component({
 	selector: 'app-wizard',
@@ -28,13 +28,13 @@ const stepsQuantity = [1, 2, 3];
 })
 export class WizardComponent implements OnInit, OnDestroy {
 	private subscrition: Subscription = new Subscription();
-	public stepsQuantity: Array<number> = stepsQuantity;
-	public currentStep: number = wizardStepper.serviceChoice;
-	public nextBtnLabel: string = btnLabels.next;
-	public backBtnLabels: string = btnLabels.back;
+	public stepsQuantity: Array<number> = STEPS_QUATITY;
+	public wizardStepper = WIZARD_STEPPER;
+	public currentStep: number = this.wizardStepper.serviceChoice;
+	public nextBtnLabel: string = BTN_LABELS.next;
+	public backBtnLabels: string = BTN_LABELS.back;
 	public isStepDone: boolean = false;
-	public client: Client = ClientInitValue;
-	public wizardStepper = wizardStepper;
+	public client: Client = CLIENT_INIT_VALUE;
 
 	constructor(private router: Router, private storage: StorageService) {}
 
@@ -67,16 +67,16 @@ export class WizardComponent implements OnInit, OnDestroy {
 				break;
 			case this.wizardStepper.dateChoice:
 				this.storage.setClient(this.client);
-				this.nextBtnLabel = btnLabels.next;
+				this.nextBtnLabel = BTN_LABELS.next;
 				break;
 			case this.wizardStepper.confirmPage:
-				this.nextBtnLabel = btnLabels.confirm;
+				this.nextBtnLabel = BTN_LABELS.confirm;
 				break;
 			case this.wizardStepper.done:
-				this.router.navigate([navigateRoutes.home]);
+				this.router.navigate([NAVIGATE_ROUTES.home]);
 				break;
 			default:
-				this.router.navigate([navigateRoutes.home]);
+				this.router.navigate([NAVIGATE_ROUTES.home]);
 				break;
 		}
 	}

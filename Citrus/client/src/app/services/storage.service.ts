@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ClientInitValue } from '@constants/client-init-value';
+import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { Client } from '@interfaces/client';
 import { AccessMap } from '@models/access-map';
 import { AuthorizedClientData } from '@models/authorized-client-data';
@@ -33,7 +33,7 @@ export class StorageService {
 	private accessMap: BehaviorSubject<AccessMap> =
 		new BehaviorSubject<AccessMap>(new AccessMap());
 	private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(
-		ClientInitValue,
+		CLIENT_INIT_VALUE,
 	);
 	private authorizedUserData: BehaviorSubject<AuthorizedClientData> =
 		new BehaviorSubject<AuthorizedClientData>(new AuthorizedClientData());
@@ -95,7 +95,7 @@ export class StorageService {
 		this.client.next(value);
 	}
 	resetClient(): void {
-		this.client.next(ClientInitValue);
+		this.client.next(CLIENT_INIT_VALUE);
 	}
 	setAuthorizedUserData(data: AuthorizedClientData): void {
 		this.authorizedUserData.next({

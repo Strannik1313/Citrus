@@ -1,28 +1,28 @@
-import { navigateRoutes } from '@constants/navigate-routes';
+import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
 import { UserModel } from '@models/user-model';
 import { ButtonConf } from '@shared/app-button-group/app-button-group.component';
 
 const AuthBtnConf: Array<ButtonConf> = [
 	{
 		label: 'Личный кабинет',
-		url: navigateRoutes.account,
+		url: NAVIGATE_ROUTES.account,
 		class: 'btn__auth__left',
 	},
 	{
 		label: 'Выйти',
-		url: navigateRoutes.logout,
+		url: NAVIGATE_ROUTES.logout,
 		class: 'btn__auth__right',
 	},
 ];
 const UnauthBtnConf: Array<ButtonConf> = [
 	{
 		label: 'Войти',
-		url: navigateRoutes.login,
+		url: NAVIGATE_ROUTES.login,
 		class: 'btn__auth__right',
 	},
 	{
 		label: 'Регистрация',
-		url: navigateRoutes.register,
+		url: NAVIGATE_ROUTES.register,
 		class: 'btn__auth__left',
 	},
 ];

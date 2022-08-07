@@ -1,4 +1,4 @@
-export const navigateRoutes = {
+export const NAVIGATE_ROUTES = {
 	home: '/',
 	account: '/account',
 	logout: '/logout',

@@ -8,7 +8,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { ClientInitValue } from '@constants/client-init-value';
+import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { ChoisenService, Client } from '@interfaces/client';
 import { Service } from '@interfaces/service';
 import { HttpService } from '@services/http.service';
@@ -21,7 +21,7 @@ import { Subscription } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
-	@Input() client: Client = ClientInitValue;
+	@Input() client: Client = CLIENT_INIT_VALUE;
 	@Output() stepDone: EventEmitter<ChoisenService> = new EventEmitter();
 	private subscription: Subscription = new Subscription();
 	public completeServicesList: Service[] = [];

@@ -1,4 +1,4 @@
-export const ClientInitValue = {
+export const CLIENT_INIT_VALUE = {
 	masterId: null,
 	masterName: '',
 	serviceName: '',
