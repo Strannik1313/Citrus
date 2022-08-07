@@ -43,7 +43,6 @@ export class AutocompleteComponent implements OnChanges {
 		}
 	}
 	onAutocomleteItemClick(value: AutocompleteOptionType): void {
-		this.isAutocompleteOpen = false;
 		this.inputValue = value.title;
 		this.optionselected.emit(value);
 	}

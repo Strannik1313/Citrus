@@ -1,4 +1,3 @@
-import { ViewportScroller } from '@angular/common';
 import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
@@ -6,10 +5,7 @@ import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
 })
 export class AutoscrollDirective implements AfterViewInit {
 	@Input() selectedElement: number | null = null;
-	constructor(
-		private element: ElementRef,
-		private scroller: ViewportScroller,
-	) {}
+	constructor(private element: ElementRef) {}
 	ngAfterViewInit(): void {
 		if (this.selectedElement?.toString() === this.element.nativeElement.id) {
 			this.element.nativeElement?.scrollIntoView({
