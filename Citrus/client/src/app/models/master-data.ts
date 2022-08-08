@@ -1,4 +1,4 @@
 export interface Master {
 	name: string;
-	id: number;
+	id: number | null;
 }

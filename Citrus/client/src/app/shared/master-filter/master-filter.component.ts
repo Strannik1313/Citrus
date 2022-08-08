@@ -15,9 +15,9 @@ import { Master } from '@models/master-data';
 })
 export class MasterFilterComponent {
 	@Input() masters: Array<Master> = [];
-	@Output() filterChange: EventEmitter<number> = new EventEmitter();
-	onFilterClick(id: number): void {
-		this.filterChange.emit(Number(id));
+	@Output() filterChange: EventEmitter<number | null> = new EventEmitter();
+	onFilterClick(id: number | null): void {
+		this.filterChange.emit(id);
 	}
 	trackByFn(index: number, item: Master): string {
 		return item?.name;

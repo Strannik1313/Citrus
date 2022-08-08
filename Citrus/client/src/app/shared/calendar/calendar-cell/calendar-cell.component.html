@@ -1,4 +1,6 @@
 <div class="container">
-	<div class="day">{{ date | date: 'EEEEE' }}</div>
-	<div class="cell">{{ date | date: 'dd.MM' }}</div>
+	<div class="day">{{ day.date.toDate() | date: 'EEEEE' }}</div>
+	<div appDisableDate [disable]="day.disabled" class="cell">{{
+		day.date.toDate() | date: 'dd.MM'
+	}}</div>
 </div>

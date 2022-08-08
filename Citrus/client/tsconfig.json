@@ -17,6 +17,8 @@
 			"@directives/*": ["./src/app/directives/*"],
 			"@environments/*": ["./src/environments/*"]
 		},
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
 		"outDir": "./dist/out-tsc",
 		"forceConsistentCasingInFileNames": true,
 		"strict": true,

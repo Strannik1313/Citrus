@@ -4,8 +4,8 @@
 </app-master-filter>
 <app-calendar
 	[calendarActiveDates]="calendarActiveDates"
-	[choisenDate]="choisenDate"
-	(dateChoisen)="onDateChoisen($event)">
+	(dateChoisen)="onDateChoisen($event)"
+	(dateRangeChoisen)="onDateRangeChoisen($event)">
 </app-calendar>
-<!-- <app-order-card [orderCards]="orderCards" [choisenMaster]="choisenMaster">
-</app-order-card> -->
+<app-order-card [orderCards]="orderCards" [choisenMaster]="choisenMasterId">
+</app-order-card>

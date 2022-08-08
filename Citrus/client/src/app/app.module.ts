@@ -3,7 +3,6 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { AppComponent } from 'src/app/app.component';
@@ -42,7 +41,6 @@ registerLocaleData(localeRu);
 	],
 	providers: [
 		httpInterceptorProviders,
-		{ provide: MAT_DATE_LOCALE, useValue: 'ru-RU' },
 		{ provide: LOCALE_ID, useValue: 'ru' },
 		{ provide: SPINNER_TIME, useValue: SPINNER_DURATION },
 	],

@@ -22,7 +22,7 @@ export interface AutocompleteOptionType {
 export class AutocompleteComponent implements OnChanges {
 	@Input() options: Array<AutocompleteOptionType> = [];
 	/* eslint-disable @typescript-eslint/no-explicit-any */
-	@Output() optionselected: EventEmitter<any> = new EventEmitter();
+	@Output() optionSelected: EventEmitter<any> = new EventEmitter();
 	/* eslint-enable @typescript-eslint/no-explicit-any */
 	public inputValue: string = '';
 	public isAutocompleteOpen: boolean = false;
@@ -35,7 +35,7 @@ export class AutocompleteComponent implements OnChanges {
 		this.isAutocompleteOpen = true;
 		if (this.inputValue.length === 0) {
 			this.optionsList = this.options;
-			this.optionselected.emit(null);
+			this.optionSelected.emit(null);
 		} else {
 			this.optionsList = this.options.filter(option => {
 				return option.title.includes(this.inputValue);
@@ -44,7 +44,7 @@ export class AutocompleteComponent implements OnChanges {
 	}
 	onAutocomleteItemClick(value: AutocompleteOptionType): void {
 		this.inputValue = value.title;
-		this.optionselected.emit(value);
+		this.optionSelected.emit(value);
 	}
 	onDocClick(value: boolean): void {
 		this.isAutocompleteOpen = value;

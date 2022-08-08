@@ -10,7 +10,10 @@ module.exports.masters = async (req, res) => {
 		.then(collection => {
 			try {
 				collection.forEach(master => {
-					mastersArray.push({ name: master.data().name, id: master.data().id });
+					mastersArray.push({
+						name: master.data().name,
+						id: master.data().masterId,
+					});
 				});
 				res.status(200).json(mastersArray);
 			} catch (error) {

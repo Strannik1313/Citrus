@@ -1,8 +1,10 @@
 <div class="container">
+	<button (click)="onBtnClick(false)">Prev</button>
 	<app-calendar-cell
 		*ngFor="let day of week; let i = index"
-		[date]="day"
+		[day]="day"
 		class="cell"
-		[ngClass]="{ active: choisenDate === day }"
-		(click)="onDateClick(day)"></app-calendar-cell>
+		(click)="onDateClick(day.date)">
+	</app-calendar-cell>
+	<button (click)="onBtnClick(true)">Next</button>
 </div>

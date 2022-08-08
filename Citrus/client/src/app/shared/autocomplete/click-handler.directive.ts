@@ -16,9 +16,8 @@ export class ClickHandlerDirective implements OnInit, OnDestroy {
 	@Output() autocompleteToogle: EventEmitter<boolean> = new EventEmitter();
 	private subscription: Subscription = new Subscription();
 	ngOnInit(): void {
-		const mouseEvent$ = fromEvent<MouseEvent>(document, 'click');
 		this.subscription.add(
-			mouseEvent$.subscribe(data => {
+			fromEvent<MouseEvent>(document, 'click').subscribe(data => {
 				this.autocompleteToogle.emit(false);
 			}),
 		);
