@@ -34,18 +34,15 @@ module.exports.calendar = async (req, res) => {
 			try {
 				collection.forEach(masterTimes => {
 					for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
-						dateAndIdArray.push({
-							date: masterTimes.data().freeTimes[i].toDate(),
-							masterId: [masterTimes.data().masterId],
-						});
+						dateAndIdArray.push(masterTimes.data().freeTimes[i].toDate());
 					}
 				});
 				dateAndIdArray.sort((a, b) => {
-					return a.date - b.date;
+					return a - b;
 				});
 				dateAndIdArray.forEach(el => {
 					if (
-						dayjs(el.date).isBetween(
+						dayjs(el).isBetween(
 							dayjs(req.body.dateRangeStart),
 							dayjs(req.body.dateRangeEnd),
 						)
@@ -53,18 +50,11 @@ module.exports.calendar = async (req, res) => {
 						dayArray.push(el);
 					}
 				});
-				const filteredDatesArray = [];
-				dayArray.forEach((value, index, array) => {
+				const filteredDatesArray = dayArray.filter((value, index, array) => {
 					if (index !== 0) {
-						if (value.date.getDate() === array[index - 1].date.getDate()) {
-							filteredDatesArray[index - 1].masterId = [
-								...filteredDatesArray[index - 1].masterId,
-								...value.masterId,
-							];
-						}
-					} else {
-						filteredDatesArray.push(value);
+						return value.getDate() !== array[index - 1].getDate();
 					}
+					return true;
 				});
 				// TODO сделать формирование массива с датой и массивом мастером, кто в эти даты свободен
 				res.status(200).json(filteredDatesArray);
