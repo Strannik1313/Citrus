@@ -1,10 +1,15 @@
 <div class="container">
 	<button (click)="onBtnClick(false)">Prev</button>
-	<app-calendar-cell
-		*ngFor="let day of week; let i = index"
-		[day]="day"
-		class="cell"
-		(click)="onDateClick(day.date)">
-	</app-calendar-cell>
+	<div class="cell__container">
+		<app-calendar-cell
+			*ngFor="let day of week; let i = index"
+			[day]="day.date"
+			class="cell"
+			(click)="onDateClick(day.date, day.disabled)"
+			appAddClass
+			[hoverClass]="'hover'"
+			[disabled]="day.disabled">
+		</app-calendar-cell>
+	</div>
 	<button (click)="onBtnClick(true)">Next</button>
 </div>

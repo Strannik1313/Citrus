@@ -1,6 +1,4 @@
-import { Dayjs } from 'dayjs';
-
 export interface CalendarDates {
-	date: Dayjs;
+	date: Date;
 	disabled: boolean;
 }

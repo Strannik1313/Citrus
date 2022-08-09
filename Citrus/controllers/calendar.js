@@ -34,29 +34,54 @@ module.exports.calendar = async (req, res) => {
 			try {
 				collection.forEach(masterTimes => {
 					for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
-						dateAndIdArray.push(masterTimes.data().freeTimes[i].toDate());
+						dateAndIdArray.push({
+							masterId: masterTimes.data().masterId,
+							date: masterTimes.data().freeTimes[i].toDate(),
+						});
 					}
 				});
 				dateAndIdArray.sort((a, b) => {
-					return a - b;
+					return a.date - b.date;
 				});
-				dateAndIdArray.forEach(el => {
+				dateAndIdArray.forEach(value => {
 					if (
-						dayjs(el).isBetween(
+						dayjs(value.date).isBetween(
 							dayjs(req.body.dateRangeStart),
 							dayjs(req.body.dateRangeEnd),
 						)
 					) {
-						dayArray.push(el);
+						dayArray.push(value);
 					}
 				});
-				const filteredDatesArray = dayArray.filter((value, index, array) => {
+				let masters = [];
+				const dates = [];
+				dayArray.forEach((value, index, array) => {
 					if (index !== 0) {
-						return value.getDate() !== array[index - 1].getDate();
+						if (value.date.getDate() === array[index - 1].date.getDate()) {
+							masters.push(value.masterId);
+						} else {
+							dates.push({
+								date: array[index - 1].date,
+								mastersId: [...masters],
+							});
+							masters = [value.masterId];
+						}
+					} else {
+						masters.push(value.masterId);
 					}
-					return true;
+					if (index === array.length - 1) {
+						dates.push({
+							date: value.date,
+							mastersId: [...masters],
+						});
+					}
 				});
-				// TODO сделать формирование массива с датой и массивом мастером, кто в эти даты свободен
+				const filteredDatesArray = dates.map(value => {
+					return {
+						date: value.date,
+						mastersId: Array.from(new Set(value.mastersId)),
+					};
+				});
 				res.status(200).json(filteredDatesArray);
 			} catch (error) {
 				errorHandler(res, error);

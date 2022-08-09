@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MasterFilterComponent } from '@shared/master-filter/master-filter.component';
+import { MonthFilterComponent } from './month-filter.component';
 import { OverlayModule } from '@angular/cdk/overlay';
 
 @NgModule({
-	declarations: [MasterFilterComponent],
+	declarations: [MonthFilterComponent],
 	imports: [CommonModule, OverlayModule],
-	exports: [MasterFilterComponent],
+	exports: [MonthFilterComponent],
 })
-export class MasterFilterModule {}
+export class MonthFilterModule {}

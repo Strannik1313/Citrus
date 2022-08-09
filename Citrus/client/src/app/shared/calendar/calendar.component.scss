@@ -1,5 +1,8 @@
 .container {
 	display: flex;
+}
+.cell__container {
+	display: flex;
 	flex-direction: row;
 	align-items: center;
 	:first-child {
@@ -14,8 +17,11 @@
 		border: 3px solid black;
 		background: rgb(221, 221, 221);
 	}
+	.hover {
+		cursor: pointer;
+		background: rgb(221, 221, 221);
+	}
 }
-
-.container :hover {
-	background-color: rgb(221, 221, 221);
+.disable {
+	color: grey;
 }

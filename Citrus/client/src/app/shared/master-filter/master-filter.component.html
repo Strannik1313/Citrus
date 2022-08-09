@@ -1,6 +1,25 @@
-<div (click)="onFilterClick(null)">все мастера</div>
-<div
-	*ngFor="let master of masters; let i = index; trackBy: trackByFn"
-	(click)="onFilterClick(master.id)"
-	>{{ master.name }}</div
+<button
+	(click)="isOpen = !isOpen"
+	cdkOverlayOrigin
+	#trigger="cdkOverlayOrigin"
+	>{{ btnLabel }}</button
 >
+<ng-template
+	cdkConnectedOverlay
+	[cdkConnectedOverlayOrigin]="trigger"
+	[cdkConnectedOverlayOpen]="isOpen">
+	<ul class="overlay__list">
+		<div class="list__item">
+			<li class="list__item" (click)="onFilterClick(null, 'все мастера')"
+				>все мастера</li
+			>
+		</div>
+		<div
+			class="list__item"
+			*ngFor="let master of masters; let i = index; trackBy: trackByFn"
+			><li (click)="onFilterClick(master.id, master.name)">{{
+				master.name
+			}}</li>
+		</div>
+	</ul>
+</ng-template>

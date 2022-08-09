@@ -4,6 +4,7 @@ import { map, Observable } from 'rxjs';
 import { Service } from '@interfaces/service';
 import { Master } from '@models/master-data';
 import { Order } from '@interfaces/order';
+import { CalendarDatesAndId } from '@models/calendar-dates-and-id';
 
 @Injectable({
 	providedIn: 'root',
@@ -15,16 +16,24 @@ export class HttpService {
 		serviceId: number,
 		dateRangeStart: Date,
 		dateRangeEnd: Date,
-	): Observable<Array<Date>> {
+	): Observable<Array<CalendarDatesAndId>> {
 		return this.http
-			.post<Array<string>>('/api/calendar', {
-				serviceId,
-				dateRangeStart,
-				dateRangeEnd,
-			})
+			.post<Array<{ date: string; mastersId: Array<number> }>>(
+				'/api/calendar',
+				{
+					serviceId,
+					dateRangeStart,
+					dateRangeEnd,
+				},
+			)
 			.pipe(
 				map(value => {
-					let stringToDate = value.map(item => new Date(item));
+					let stringToDate = value.map(item => {
+						return {
+							date: new Date(item.date),
+							mastersId: item.mastersId,
+						};
+					});
 					return stringToDate;
 				}),
 			);

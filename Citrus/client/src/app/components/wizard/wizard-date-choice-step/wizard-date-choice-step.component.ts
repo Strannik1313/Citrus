@@ -9,6 +9,7 @@ import {
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { Client } from '@interfaces/client';
 import { Order } from '@interfaces/order';
+import { CalendarDatesAndId } from '@models/calendar-dates-and-id';
 import { Master } from '@models/master-data';
 import { HttpService } from '@services/http.service';
 import { Subscription } from 'rxjs';
@@ -22,10 +23,12 @@ import { Subscription } from 'rxjs';
 export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() client: Client = CLIENT_INIT_VALUE;
 	private subscription: Subscription = new Subscription();
+	private calendarDatesAndId: Array<CalendarDatesAndId> = [];
 	public calendarActiveDates: Array<Date> = [];
 	public masters: Array<Master> = [];
 	public orderCards: Array<Order> = [];
 	public choisenMasterId: number | null = null;
+	public choisenMonth: number = 0;
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
 		if (this.client.serviceId !== null) {
@@ -55,12 +58,14 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 		}
 	}
 	onDateRangeChoisen(range: { startDay: Date; endDay: Date }): void {
+		this.choisenMonth = range.startDay.getMonth();
 		if (this.client.serviceId !== null) {
 			this.subscription.add(
 				this.http
 					.getDates(this.client.serviceId, range.startDay, range.endDay)
 					.subscribe(data => {
-						this.calendarActiveDates = data;
+						this.calendarDatesAndId = data;
+						this.setActiveDates(this.calendarDatesAndId);
 						this.cdr.markForCheck();
 					}),
 			);
@@ -68,6 +73,21 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	}
 	onMasterFilterChange(id: number | null): void {
 		this.choisenMasterId = id;
+		this.setActiveDates(this.calendarDatesAndId);
 		this.cdr.markForCheck();
+	}
+	onMonthFilterChange(month: number): void {
+		this.choisenMonth = month;
+	}
+	setActiveDates(calendarDatesAndId: Array<CalendarDatesAndId>): void {
+		this.calendarActiveDates = (
+			!!this.choisenMasterId
+				? calendarDatesAndId.filter(value => {
+						return value.mastersId.includes(<number>this.choisenMasterId);
+				  })
+				: calendarDatesAndId
+		).map(value => {
+			return value.date;
+		});
 	}
 }

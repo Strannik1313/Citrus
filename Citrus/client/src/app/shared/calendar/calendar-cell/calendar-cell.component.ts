@@ -1,6 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
-import { CalendarDates } from '@models/calendar-dates';
-import dayjs from 'dayjs';
 
 @Component({
 	selector: 'app-calendar-cell',
@@ -9,5 +7,5 @@ import dayjs from 'dayjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarCellComponent {
-	@Input() day: CalendarDates = { date: dayjs(new Date()), disabled: false };
+	@Input() day: Date = new Date();
 }

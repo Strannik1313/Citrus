@@ -2,6 +2,9 @@
 	[masters]="masters"
 	(filterChange)="onMasterFilterChange($event)">
 </app-master-filter>
+<app-month-filter
+	[choisenMonth]="choisenMonth"
+	(monthChoisen)="onMonthFilterChange($event)"></app-month-filter>
 <app-calendar
 	[calendarActiveDates]="calendarActiveDates"
 	(dateChoisen)="onDateChoisen($event)"

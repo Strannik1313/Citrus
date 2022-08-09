@@ -16,8 +16,12 @@ import { Master } from '@models/master-data';
 export class MasterFilterComponent {
 	@Input() masters: Array<Master> = [];
 	@Output() filterChange: EventEmitter<number | null> = new EventEmitter();
-	onFilterClick(id: number | null): void {
+	public isOpen: boolean = false;
+	public btnLabel: string = 'выберите мастера';
+	onFilterClick(id: number | null, label: string): void {
 		this.filterChange.emit(id);
+		this.isOpen = false;
+		this.btnLabel = label;
 	}
 	trackByFn(index: number, item: Master): string {
 		return item?.name;
