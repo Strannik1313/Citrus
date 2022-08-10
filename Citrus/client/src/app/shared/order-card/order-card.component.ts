@@ -9,7 +9,7 @@ import { Order } from '@interfaces/order';
 })
 export class OrderCardComponent {
 	@Input() orderCards: Array<Order> = [];
-	@Input() choisenMaster: number | null = null;
+	@Input() selectedMaster: number | null = null;
 	trackByFn(index: number, item: Order | string): number {
 		return index;
 	}

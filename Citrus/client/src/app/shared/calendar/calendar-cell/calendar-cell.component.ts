@@ -7,5 +7,5 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarCellComponent {
-	@Input() day: Date = new Date();
+	@Input() day: string = '';
 }

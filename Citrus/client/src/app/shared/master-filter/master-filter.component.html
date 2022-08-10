@@ -14,9 +14,7 @@
 				>все мастера</li
 			>
 		</div>
-		<div
-			class="list__item"
-			*ngFor="let master of masters; let i = index; trackBy: trackByFn"
+		<div class="list__item" *ngFor="let master of masters; trackBy: trackByFn"
 			><li (click)="onFilterClick(master.id, master.name)">{{
 				master.name
 			}}</li>

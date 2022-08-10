@@ -2,14 +2,14 @@
 	<div
 		*ngIf="
 			card.freetimes.length > 0 &&
-			(choisenMaster === card.masterId || choisenMaster === null)
+			(selectedMaster === card.masterId || selectedMaster === null)
 		">
 		{{ card.masterName }}
 		<div *ngFor="let time of card.freetimes; trackBy: trackByFn">
 			<p>{{ time | date: 'HH:mm' }}</p>
 		</div>
 	</div>
-	<div *ngIf="choisenMaster === card.masterId && card.freetimes.length === 0">
+	<div *ngIf="selectedMaster === card.masterId && card.freetimes.length === 0">
 		<p>В выбранный день у данного мастера нет свободной записи.</p>
 		<p>Выберите другой день или другого мастера.</p>
 	</div>

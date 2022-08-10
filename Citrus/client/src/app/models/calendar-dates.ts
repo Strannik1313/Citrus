@@ -1,4 +1,4 @@
 export interface CalendarDates {
-	date: Date;
-	disabled: boolean;
+	date: string;
+	masterIds: Array<number>;
 }

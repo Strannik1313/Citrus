@@ -15,11 +15,11 @@ import { Master } from '@models/master-data';
 })
 export class MasterFilterComponent {
 	@Input() masters: Array<Master> = [];
-	@Output() filterChange: EventEmitter<number | null> = new EventEmitter();
+	@Output() onFilterChange: EventEmitter<number | null> = new EventEmitter();
 	public isOpen: boolean = false;
 	public btnLabel: string = 'выберите мастера';
 	onFilterClick(id: number | null, label: string): void {
-		this.filterChange.emit(id);
+		this.onFilterChange.emit(id);
 		this.isOpen = false;
 		this.btnLabel = label;
 	}

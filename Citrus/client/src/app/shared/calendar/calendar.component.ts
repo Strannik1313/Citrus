@@ -8,16 +8,9 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
-import { CalendarDates } from '@models/calendar-dates';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/ru';
-import weekday from 'dayjs/plugin/weekday';
-import dayOfYear from 'dayjs/plugin/dayOfYear';
 dayjs.locale('ru');
-dayjs.extend(weekday);
-dayjs.extend(dayOfYear);
-
-let daysNumbers = [0, 1, 2, 3, 4, 5, 6];
 
 @Component({
 	selector: 'app-calendar',
@@ -26,67 +19,75 @@ let daysNumbers = [0, 1, 2, 3, 4, 5, 6];
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent implements OnInit, OnChanges {
-	@Input() calendarActiveDates: Array<Date> = [];
-	@Output() dateChoisen: EventEmitter<Date> = new EventEmitter();
-	@Output() dateRangeChoisen: EventEmitter<{ startDay: Date; endDay: Date }> =
+	@Input() activeDates: Array<string> = [];
+	@Input() selectedMonth: Dayjs | null = null;
+	@Output() onDaySelected: EventEmitter<string> = new EventEmitter();
+	@Output() onWeekChange: EventEmitter<{ startDay: string; endDay: string }> =
 		new EventEmitter();
-	private startDay: Date = new Date();
-	private endDay: Date = new Date();
-	private today: Date = new Date(
-		new Date().getFullYear(),
-		new Date().getMonth(),
-		new Date().getDate(),
-	);
-	public week: Array<CalendarDates> = [];
-	public selectedDate: Date | null = null;
+	private today: Dayjs = dayjs().startOf('day');
+	public isPrevDisabled: boolean = false;
+	public isNextDisabled: boolean = false;
+	public week: Array<string> = [];
+	public selectedDate: string | null = null;
 	ngOnInit(): void {
-		this.startDay = dayjs(this.today)
-			.subtract(dayjs(this.today).weekday(), 'day')
-			.toDate();
-		this.endDay = dayjs(this.today).add(6, 'day').toDate();
-		this.week = this.getWeek(this.startDay);
-		this.dateRangeChoisen.emit({
-			startDay: this.startDay,
-			endDay: this.endDay,
+		this.isPrevDisabled = true;
+		this.week = this.createWeek(dayjs().startOf('week'));
+		this.onWeekChange.emit({
+			startDay: this.week[0],
+			endDay: this.week[6],
 		});
 	}
 	ngOnChanges(changes: SimpleChanges): void {
-		this.week = this.week.map(day => {
-			return {
-				...day,
-				disabled:
-					true &&
-					!changes.calendarActiveDates?.currentValue.find((value: Date) => {
-						return dayjs(value).dayOfYear() === dayjs(day.date).dayOfYear();
-					}),
-			};
-		});
-	}
-	getWeek(startDay: Date): Array<CalendarDates> {
-		return daysNumbers.map(value => {
-			return {
-				date: dayjs(startDay).add(value, 'day').toDate(),
-				disabled: false,
-			};
-		});
-	}
-	onBtnClick(value: boolean): void {
-		value
-			? (this.week = this.getWeek(dayjs(this.startDay).add(7, 'day').toDate()))
-			: (this.week = this.getWeek(
-					dayjs(this.startDay).subtract(7, 'day').toDate(),
-			  ));
-		this.startDay = this.week[0].date;
-		this.dateRangeChoisen.emit({
-			startDay: this.startDay,
-			endDay: dayjs(this.startDay).add(6, 'day').toDate(),
-		});
-		this.selectedDate = null;
-	}
-	onDateClick(day: Date, disabled: boolean): void {
-		if (!disabled) {
-			this.selectedDate = day;
-			this.dateChoisen.emit(day);
+		for (const prop in changes) {
+			switch (prop) {
+				case 'selectedMonth':
+					if (changes.selectedMonth.currentValue !== null) {
+						const curr = changes.selectedMonth.currentValue;
+						const firstChng = changes.selectedMonth.firstChange;
+						if (!curr.isSame(this.week[0], 'week') && !firstChng) {
+							this.week = this.createWeek(curr.startOf('week'));
+							this.onWeekChange.emit({
+								startDay: this.week[0],
+								endDay: this.week[6],
+							});
+						}
+						this.isPrevDisabled = true;
+					} else {
+						this.isPrevDisabled = false;
+						this.isNextDisabled = false;
+					}
+					break;
+				default:
+					break;
+			}
 		}
+	}
+	private createWeek(startDay: Dayjs): Array<string> {
+		const week = [];
+		for (let i = 0; i <= 6; i++) {
+			week.push(startDay.add(i, 'day').toString());
+		}
+		return week;
+	}
+	setWeek(inc: number): void {
+		this.selectedDate = null;
+		this.week = this.createWeek(dayjs(this.week[0]).add(inc, 'week'));
+		this.isPrevDisabled = this.today.isSame(this.week[0], 'week')
+			? true
+			: false;
+		this.isNextDisabled = this.selectedMonth?.isSame(this.week[6], 'month')
+			? false
+			: true;
+		this.onWeekChange.emit({
+			startDay: this.week[0],
+			endDay: dayjs(this.week[0]).add(6, 'day').toString(),
+		});
+	}
+	onDateClick(day: string): void {
+		this.selectedDate = day;
+		this.onDaySelected.emit(day);
+	}
+	trackByFn(index: number, item: string): string {
+		return item;
 	}
 }

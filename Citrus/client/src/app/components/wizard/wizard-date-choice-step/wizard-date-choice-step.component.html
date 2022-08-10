@@ -1,14 +1,28 @@
-<app-master-filter
-	[masters]="masters"
-	(filterChange)="onMasterFilterChange($event)">
-</app-master-filter>
-<app-month-filter
-	[choisenMonth]="choisenMonth"
-	(monthChoisen)="onMonthFilterChange($event)"></app-month-filter>
-<app-calendar
-	[calendarActiveDates]="calendarActiveDates"
-	(dateChoisen)="onDateChoisen($event)"
-	(dateRangeChoisen)="onDateRangeChoisen($event)">
-</app-calendar>
-<app-order-card [orderCards]="orderCards" [choisenMaster]="choisenMasterId">
-</app-order-card>
+<div class="container">
+	<div class="filters">
+		<div class="masters__filter">
+			<app-master-filter
+				[masters]="masters"
+				(onFilterChange)="onMasterFilterChange($event)">
+			</app-master-filter>
+		</div>
+		<div class="months__filter">
+			<app-month-filter (onMonthSelected)="onMonthFilterChange($event)">
+			</app-month-filter>
+		</div>
+	</div>
+	<div class="calendar">
+		<app-calendar
+			[selectedMonth]="currentMonth"
+			[activeDates]="calendarActiveDates"
+			(onDaySelected)="onDaySelected($event)"
+			(onWeekChange)="onWeekChange($event)">
+		</app-calendar>
+	</div>
+	<div class="timesheets">
+		<app-order-card
+			[orderCards]="orderCards"
+			[selectedMaster]="selectedMasterId">
+		</app-order-card>
+	</div>
+</div>

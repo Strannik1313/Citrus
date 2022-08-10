@@ -2,16 +2,17 @@
 	(click)="isOpen = !isOpen"
 	cdkOverlayOrigin
 	#trigger="cdkOverlayOrigin"
-	>{{ btnLabel | date: 'LLLL' }}</button
+	>{{ btnLabel }}</button
 >
 <ng-template
 	cdkConnectedOverlay
 	[cdkConnectedOverlayOrigin]="trigger"
 	[cdkConnectedOverlayOpen]="isOpen">
 	<ul class="overlay__list">
-		<div
-			class="list__item"
-			*ngFor="let month of months; let i = index; trackBy: trackByFn"
+		<div class="list__item"
+			><li (click)="onFilterClick(null)">месяц не выбран</li>
+		</div>
+		<div class="list__item" *ngFor="let month of months; trackBy: trackByFn"
 			><li (click)="onFilterClick(month)">{{ month | date: 'LLLL' }}</li>
 		</div>
 	</ul>

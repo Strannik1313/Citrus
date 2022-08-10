@@ -62,7 +62,7 @@ module.exports.calendar = async (req, res) => {
 						} else {
 							dates.push({
 								date: array[index - 1].date,
-								mastersId: [...masters],
+								masterIds: [...masters],
 							});
 							masters = [value.masterId];
 						}
@@ -72,14 +72,14 @@ module.exports.calendar = async (req, res) => {
 					if (index === array.length - 1) {
 						dates.push({
 							date: value.date,
-							mastersId: [...masters],
+							masterIds: [...masters],
 						});
 					}
 				});
 				const filteredDatesArray = dates.map(value => {
 					return {
 						date: value.date,
-						mastersId: Array.from(new Set(value.mastersId)),
+						masterIds: Array.from(new Set(value.masterIds)),
 					};
 				});
 				res.status(200).json(filteredDatesArray);

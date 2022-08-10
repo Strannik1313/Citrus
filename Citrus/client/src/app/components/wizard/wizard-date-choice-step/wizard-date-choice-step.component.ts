@@ -9,9 +9,10 @@ import {
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { Client } from '@interfaces/client';
 import { Order } from '@interfaces/order';
-import { CalendarDatesAndId } from '@models/calendar-dates-and-id';
+import { CalendarDates } from '@models/calendar-dates';
 import { Master } from '@models/master-data';
 import { HttpService } from '@services/http.service';
+import { Dayjs } from 'dayjs';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,71 +24,78 @@ import { Subscription } from 'rxjs';
 export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() client: Client = CLIENT_INIT_VALUE;
 	private subscription: Subscription = new Subscription();
-	private calendarDatesAndId: Array<CalendarDatesAndId> = [];
-	public calendarActiveDates: Array<Date> = [];
+	private calendarDates: Array<CalendarDates> = [];
+	public calendarActiveDates: Array<string> = [];
 	public masters: Array<Master> = [];
 	public orderCards: Array<Order> = [];
-	public choisenMasterId: number | null = null;
-	public choisenMonth: number = 0;
+	public selectedMasterId: number | null = null;
+	public currentMonth: Dayjs | null = null;
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
-		if (this.client.serviceId !== null) {
-			this.subscription.add(
-				this.http
-					.getMasters(this.client.serviceId, this.choisenMasterId)
-					.subscribe(data => {
-						this.masters = data;
-						this.cdr.markForCheck();
-					}),
-			);
-		}
+		this.subscription.add(
+			this.http
+				.getMasters(this.client.serviceId!, this.selectedMasterId)
+				.subscribe(data => {
+					this.masters = data;
+					this.cdr.markForCheck();
+				}),
+		);
 	}
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
 	}
-	onDateChoisen(date: Date): void {
-		if (this.client.serviceId !== null) {
-			this.subscription.add(
-				this.http
-					.getOrders(this.client.serviceId, date, this.choisenMasterId)
-					.subscribe(data => {
-						this.orderCards = data;
-						this.cdr.markForCheck();
-					}),
-			);
-		}
+	onDaySelected(date: string): void {
+		this.subscription.add(
+			this.http
+				.getOrders(this.client.serviceId!, date, this.selectedMasterId)
+				.subscribe(data => {
+					this.orderCards = data;
+					this.cdr.markForCheck();
+				}),
+		);
 	}
-	onDateRangeChoisen(range: { startDay: Date; endDay: Date }): void {
-		this.choisenMonth = range.startDay.getMonth();
-		if (this.client.serviceId !== null) {
-			this.subscription.add(
-				this.http
-					.getDates(this.client.serviceId, range.startDay, range.endDay)
-					.subscribe(data => {
-						this.calendarDatesAndId = data;
-						this.setActiveDates(this.calendarDatesAndId);
-						this.cdr.markForCheck();
-					}),
-			);
-		}
+	onWeekChange(range: { startDay: string; endDay: string }): void {
+		this.orderCards = [];
+		this.subscription.add(
+			this.http
+				.getDates(this.client.serviceId!, range.startDay, range.endDay)
+				.subscribe(data => {
+					this.calendarDates = data;
+					this.createActiveDates(this.calendarDates);
+					this.cdr.markForCheck();
+				}),
+		);
 	}
 	onMasterFilterChange(id: number | null): void {
-		this.choisenMasterId = id;
-		this.setActiveDates(this.calendarDatesAndId);
+		this.selectedMasterId = id;
+		this.createActiveDates(this.calendarDates);
 		this.cdr.markForCheck();
 	}
-	onMonthFilterChange(month: number): void {
-		this.choisenMonth = month;
+	onMonthFilterChange(month: Dayjs | null): void {
+		this.currentMonth = month;
 	}
-	setActiveDates(calendarDatesAndId: Array<CalendarDatesAndId>): void {
-		this.calendarActiveDates = (
-			!!this.choisenMasterId
-				? calendarDatesAndId.filter(value => {
-						return value.mastersId.includes(<number>this.choisenMasterId);
-				  })
-				: calendarDatesAndId
-		).map(value => {
-			return value.date;
-		});
+	private createActiveDates(dates: Array<CalendarDates>): void {
+		if (this.selectedMasterId !== null) {
+			this.calendarActiveDates = dates
+				.filter(value => {
+					return value.masterIds.includes(this.selectedMasterId!);
+				})
+				.map(value => {
+					return value.date;
+				});
+		} else {
+			this.calendarActiveDates = dates.map(value => {
+				return value.date;
+			});
+		}
+		// this.calendarActiveDates = (
+		// 	!!this.selectedMasterId
+		// 		? dates.filter(value => {
+		// 				return value.masterIds.includes(this.selectedMasterId!);
+		// 		  })
+		// 		: dates
+		// ).map(value => {
+		// 	return value.date;
+		// });
 	}
 }
