@@ -20,9 +20,10 @@
 		</app-calendar>
 	</div>
 	<div class="timesheets">
-		<app-order-card
-			[orderCards]="orderCards"
+		<app-timesheet
+			[timesheets]="timesheets"
+			[interval]="extraTimeInterval"
 			[selectedMaster]="selectedMasterId">
-		</app-order-card>
+		</app-timesheet>
 	</div>
 </div>

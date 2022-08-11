@@ -89,8 +89,8 @@ module.exports.calendar = async (req, res) => {
 		});
 };
 
-module.exports.orders = async (req, res) => {
-	let orders = [];
+module.exports.timesheets = async (req, res) => {
+	let timesheets = [];
 	const mastersIdArray = [];
 	const mastersCollection = db.collection('masters');
 	const servicesCollection = db.collection('services');
@@ -101,7 +101,7 @@ module.exports.orders = async (req, res) => {
 				const masterId = master.data().masterId;
 				if (req.body.masterId === null || req.body.masterId === masterId) {
 					mastersIdArray.push(masterId);
-					orders.push({
+					timesheets.push({
 						masterId,
 						masterName: master.data().name,
 						cost: master.data().price[
@@ -121,7 +121,7 @@ module.exports.orders = async (req, res) => {
 		.then(collection => {
 			try {
 				collection.forEach(service => {
-					orders = orders.map(order => {
+					timesheets = timesheets.map(order => {
 						return {
 							...order,
 							duration: service.data().duration,
@@ -143,7 +143,7 @@ module.exports.orders = async (req, res) => {
 							dayjs(req.body.date).dayOfYear() ===
 							dayjs(masterTimes.data().freeTimes[i].toDate()).dayOfYear()
 						) {
-							orders = orders.map(order => {
+							timesheets = timesheets.map(order => {
 								if (order.masterId === masterTimes.data().masterId) {
 									return {
 										...order,
@@ -158,7 +158,7 @@ module.exports.orders = async (req, res) => {
 						}
 					}
 				});
-				orders = orders.map(order => {
+				timesheets = timesheets.map(order => {
 					if (order.freetimes.length > 0) {
 						return {
 							...order,
@@ -169,7 +169,7 @@ module.exports.orders = async (req, res) => {
 					}
 					return order;
 				});
-				res.status(200).json(orders);
+				res.status(200).json(timesheets);
 			} catch (error) {
 				errorHandler(res, error);
 			}

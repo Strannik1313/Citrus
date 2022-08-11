@@ -7,10 +7,11 @@ import {
 	OnDestroy,
 } from '@angular/core';
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
+import { MAX_SERVICE_DURATION } from '@constants/max-service-duration';
 import { Client } from '@interfaces/client';
-import { Order } from '@interfaces/order';
 import { CalendarDates } from '@models/calendar-dates';
 import { Master } from '@models/master-data';
+import { Timesheet } from '@models/timesheet';
 import { HttpService } from '@services/http.service';
 import { Dayjs } from 'dayjs';
 import { Subscription } from 'rxjs';
@@ -27,7 +28,8 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	private calendarDates: Array<CalendarDates> = [];
 	public calendarActiveDates: Array<string> = [];
 	public masters: Array<Master> = [];
-	public orderCards: Array<Order> = [];
+	public timesheets: Array<Timesheet> = [];
+	public extraTimeInterval: Array<string> = [];
 	public selectedMasterId: number | null = null;
 	public currentMonth: Dayjs | null = null;
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
@@ -47,15 +49,26 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	onDaySelected(date: string): void {
 		this.subscription.add(
 			this.http
-				.getOrders(this.client.serviceId!, date, this.selectedMasterId)
+				.getTimesheets(this.client.serviceId!, date, this.selectedMasterId)
 				.subscribe(data => {
-					this.orderCards = data;
+					this.timesheets = data;
+					if (data.length > 0) {
+						for (
+							let i = 0;
+							i <= MAX_SERVICE_DURATION - this.timesheets[0].duration;
+							i = i + 10
+						) {
+							this.extraTimeInterval.push(
+								i.toString().length === 1 ? i.toString() + '0' : i.toString(),
+							);
+						}
+					}
 					this.cdr.markForCheck();
 				}),
 		);
 	}
 	onWeekChange(range: { startDay: string; endDay: string }): void {
-		this.orderCards = [];
+		this.timesheets = [];
 		this.subscription.add(
 			this.http
 				.getDates(this.client.serviceId!, range.startDay, range.endDay)

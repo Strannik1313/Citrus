@@ -3,8 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Service } from '@interfaces/service';
 import { Master } from '@models/master-data';
-import { Order } from '@interfaces/order';
 import { CalendarDates } from '@models/calendar-dates';
+import { Timesheet } from '@models/timesheet';
 
 @Injectable({
 	providedIn: 'root',
@@ -34,12 +34,12 @@ export class HttpService {
 		});
 	}
 
-	getOrders(
+	getTimesheets(
 		serviceId: number,
 		date: string | null,
 		masterId: number | null,
-	): Observable<Array<Order>> {
-		return this.http.post<Array<Order>>('/api/calendar/orders', {
+	): Observable<Array<Timesheet>> {
+		return this.http.post<Array<Timesheet>>('/api/calendar/timesheets', {
 			serviceId,
 			date,
 			masterId,

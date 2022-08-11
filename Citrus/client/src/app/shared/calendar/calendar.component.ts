@@ -64,6 +64,9 @@ export class CalendarComponent implements OnInit, OnChanges {
 	}
 	private createWeek(startDay: Dayjs): Array<string> {
 		const week = [];
+		if (startDay.isBefore(this.today, 'day')) {
+			startDay = this.today.startOf('week');
+		}
 		for (let i = 0; i <= 6; i++) {
 			week.push(startDay.add(i, 'day').toString());
 		}
@@ -72,12 +75,24 @@ export class CalendarComponent implements OnInit, OnChanges {
 	setWeek(inc: number): void {
 		this.selectedDate = null;
 		this.week = this.createWeek(dayjs(this.week[0]).add(inc, 'week'));
-		this.isPrevDisabled = this.today.isSame(this.week[0], 'week')
+		this.isPrevDisabled = dayjs(this.week[0]).isBefore(this.today, 'day')
 			? true
 			: false;
-		this.isNextDisabled = this.selectedMonth?.isSame(this.week[6], 'month')
-			? false
-			: true;
+		if (this.selectedMonth !== null) {
+			this.isNextDisabled = dayjs(this.week[6]).isAfter(
+				this.selectedMonth,
+				'month',
+			)
+				? true
+				: false;
+			this.isPrevDisabled = dayjs(this.week[0]).isBefore(
+				this.selectedMonth,
+				'month',
+			)
+				? true
+				: false;
+		}
+
 		this.onWeekChange.emit({
 			startDay: this.week[0],
 			endDay: dayjs(this.week[0]).add(6, 'day').toString(),

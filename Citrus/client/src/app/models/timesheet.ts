@@ -1,4 +1,4 @@
-export interface Order {
+export interface Timesheet {
 	masterId: number;
 	masterName: string;
 	cost: number;

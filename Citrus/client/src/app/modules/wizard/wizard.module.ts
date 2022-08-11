@@ -18,7 +18,7 @@ import { WizardDateChoiceStepComponent } from '@components/wizard/wizard-date-ch
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
 import { AddActiveClassDirective } from '@directives/add-active-class.directive';
 import { AutocompleteModule } from '@shared/autocomplete/autocomplete.module';
-import { OrderCardModule } from '@shared/order-card/order-card.module';
+import { TimesheetModule } from '@shared/timesheet/timesheet.module';
 import { MonthFilterModule } from '@shared/month-filter/month-filter.module';
 
 @NgModule({
@@ -42,7 +42,7 @@ import { MonthFilterModule } from '@shared/month-filter/month-filter.module';
 		StepperModule,
 		CalendarModule,
 		AutocompleteModule,
-		OrderCardModule,
+		TimesheetModule,
 		MasterFilterModule,
 		MonthFilterModule,
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
