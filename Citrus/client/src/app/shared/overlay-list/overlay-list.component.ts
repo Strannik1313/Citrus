@@ -1,8 +1,4 @@
-import {
-	CdkDragDrop,
-	CdkDragSortEvent,
-	moveItemInArray,
-} from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragEnter, CdkDragExit } from '@angular/cdk/drag-drop';
 import {
 	CdkConnectedOverlay,
 	CdkOverlayOrigin,
@@ -16,7 +12,6 @@ import {
 	Output,
 	EventEmitter,
 	ChangeDetectorRef,
-	OnInit,
 } from '@angular/core';
 
 @Component({
@@ -26,10 +21,12 @@ import {
 	styleUrls: ['./overlay-list.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class OverlayListComponent implements OnInit {
+export class OverlayListComponent {
 	content: Array<string> = [];
 	isActive = false;
-	listItems: Array<string> = [];
+	prev: CdkDrag<string> | undefined;
+	next: CdkDrag<string> | undefined;
+	private count: number = 1;
 	@ViewChild('overlay', { static: false }) overlay!: CdkConnectedOverlay;
 	@ViewChild('tooltip', { static: false }) tooltip!: ElementRef;
 	@Output() mouseleave = new EventEmitter();
@@ -45,12 +42,6 @@ export class OverlayListComponent implements OnInit {
 	];
 	visible = false;
 	constructor(public cdr: ChangeDetectorRef) {}
-
-	ngOnInit(): void {
-		this.listItems[0] = this.content[3];
-		this.listItems[1] = this.content[0];
-		this.listItems[2] = this.content[1];
-	}
 
 	setOverlayOrigin(origin: CdkOverlayOrigin): void {
 		this.origin = origin.elementRef.nativeElement;
@@ -71,12 +62,21 @@ export class OverlayListComponent implements OnInit {
 		this.content = content;
 	}
 
-	drop(event: CdkDragDrop<string[]>): void {
-		moveItemInArray(this.content, event.previousIndex, event.currentIndex);
+	enter(event: CdkDragEnter): void {
+		this.next = event.container.data;
+		// console.log(this.next);
+		// this.content = this.content.map(item => {
+		// 	let index = this.count % this.content.length;
+		// 	this.count++;
+		// 	return this.content[index];
+		// });
 	}
-	sort(event: CdkDragSortEvent<string[]>): void {
-		this.listItems[0] = this.content[2];
-		this.listItems[1] = this.content[3];
-		this.listItems[2] = this.content[0];
+	exit(event: CdkDragExit): void {
+		this.prev = event.item;
+		// this.content = this.content.map(item => {
+		// 	let index = this.count % this.content.length;
+		// 	this.count++;
+		// 	return this.content[index];
+		// });
 	}
 }

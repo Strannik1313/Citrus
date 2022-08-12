@@ -3,20 +3,50 @@
 	cdkConnectedOverlay
 	[cdkConnectedOverlayOrigin]="origin"
 	[cdkConnectedOverlayOpen]="visible"
-	[cdkConnectedOverlayPositions]="positions"
-	[cdkConnectedOverlayPush]="true">
+	[cdkConnectedOverlayPositions]="positions">
 	<div #tooltip class="tooltip__container">
 		<div class="tooltip-body">
-			<ul
-				cdkDropList
-				class="overlay"
-				(cdkDropListSorted)="sort($event)"
-				(cdkDropListDropped)="drop($event)">
-				<li
-					*ngFor="let extraTime of listItems"
+			<ul cdkDropListGroup class="overlay">
+				<!-- <li
+					*ngFor="let extraTime of listItems; let i = index "
 					cdkDragBoundary=".tooltip-body"
 					cdkDrag
+					cdkDropList
+					(cdkDropListConnectedTo)=""
+					(cdkDropListEntered)="enter($event)"
 					>{{ extraTime }}</li
+				> -->
+				<div
+					cdkDropList
+					[cdkDropListData]="content[0]"
+					(cdkDropListEntered)="enter($event)"
+					(cdkDropListExited)="exit($event)"
+					cdkDropListenteringDisabled
+					><li cdkDrag cdkDragBoundary=".overlay">{{ content[0] }}</li></div
+				>
+				<div
+					cdkDropList
+					[cdkDropListData]="content[1]"
+					(cdkDropListEntered)="enter($event)"
+					(cdkDropListExited)="exit($event)"
+					cdkDropListenteringDisabled
+					><li cdkDrag cdkDragBoundary=".overlay">{{ content[1] }}</li></div
+				>
+				<div
+					cdkDropList
+					[cdkDropListData]="content[2]"
+					(cdkDropListEntered)="enter($event)"
+					(cdkDropListExited)="exit($event)"
+					cdkDropListenteringDisabled
+					><li cdkDrag cdkDragBoundary=".overlay">{{ content[2] }}</li></div
+				>
+				<div
+					cdkDropList
+					[cdkDropListData]="content[3]"
+					(cdkDropListEntered)="enter($event)"
+					(cdkDropListExited)="exit($event)"
+					cdkDropListenteringDisabled
+					><li cdkDrag cdkDragBoundary=".overlay">{{ content[3] }}</li></div
 				>
 			</ul>
 		</div>
