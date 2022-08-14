@@ -8,7 +8,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthFormData } from '@models/auth-form-data';
+import { AuthForm } from '@models/auth-form';
 
 @Component({
 	selector: 'app-auth-form',
@@ -20,7 +20,7 @@ export class AuthFormComponent implements OnChanges {
 	public submitForm: FormGroup;
 	public hide = true;
 	@Input() disabledForm: boolean = false;
-	@Output() onSafeFormValue: EventEmitter<AuthFormData> = new EventEmitter();
+	@Output() onSafeFormValue: EventEmitter<AuthForm> = new EventEmitter();
 
 	constructor() {
 		this.submitForm = new FormGroup({

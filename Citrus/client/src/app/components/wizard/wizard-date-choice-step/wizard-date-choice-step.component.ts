@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { MAX_SERVICE_DURATION } from '@constants/max-service-duration';
-import { Client } from '@interfaces/client';
+import { Client } from '@models/client';
 import { CalendarDates } from '@models/calendar-dates';
-import { Master } from '@models/master-data';
+import { Master } from '@models/master';
 import { Timesheet } from '@models/timesheet';
 import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';

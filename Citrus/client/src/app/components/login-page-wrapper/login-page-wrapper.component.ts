@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthFormData } from '@models/auth-form-data';
+import { AuthForm } from '@models/auth-form';
 import { AuthHttpService } from '@services/auth-http.service';
 import { Subscription } from 'rxjs';
 
@@ -23,7 +23,7 @@ export class LoginPageWrapperComponent implements OnDestroy {
 		return (this.disabledForm = value);
 	}
 
-	onSafeFormValue(e: AuthFormData): void {
+	onSafeFormValue(e: AuthForm): void {
 		this.disableForm(true);
 		this.subscriptions.push(
 			this.authHttp.login(e)?.subscribe({

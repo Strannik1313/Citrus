@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DialogWindowData } from '@interfaces/dialog-window-data';
+import { DialogWindow } from '@models/dialog-window';
 import { DialogType } from '@shared/dialog-window/dialog-window.component';
 import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
@@ -14,7 +14,7 @@ import { AuthHttpService } from '@services/auth-http.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
 	private subscription: Subscription = new Subscription();
-	public dialogTextData: DialogWindowData = {
+	public dialogTextData: DialogWindow = {
 		windowHeaderText: '',
 		windowText: '',
 	};

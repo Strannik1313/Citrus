@@ -1,4 +1,4 @@
-export interface DialogWindowData {
+export interface DialogWindow {
 	windowHeaderText: string;
 	windowText: string;
 	buttonLabel?: string;

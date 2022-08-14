@@ -1,4 +1,4 @@
-export class OrderData {
+export class Order {
 	master: string = '';
 	masterId: number = 0;
 	service: string = '';

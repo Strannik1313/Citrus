@@ -1,4 +1,4 @@
-export interface SubmitData {
+export interface SubmitForm {
 	clientName: string;
 	clientLastname: string;
 	phoneNumber: string;

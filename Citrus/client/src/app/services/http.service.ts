@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Service } from '@interfaces/service';
-import { Master } from '@models/master-data';
+import { Service } from '@models/service';
+import { Master } from '@models/master';
 import { CalendarDates } from '@models/calendar-dates';
 import { Timesheet } from '@models/timesheet';
 

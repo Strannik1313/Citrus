@@ -9,8 +9,8 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { ChoisenService, Client } from '@interfaces/client';
-import { Service } from '@interfaces/service';
+import { ChoisenService, Client } from '@models/client';
+import { Service } from '@models/service';
 import { HttpService } from '@services/http.service';
 import { Subscription } from 'rxjs';
 

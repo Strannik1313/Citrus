@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { Client } from '@interfaces/client';
+import { Client } from '@models/client';
 import { AccessMap } from '@models/access-map';
-import { AuthorizedClientData } from '@models/authorized-client-data';
+import { AuthorizedClient } from '@models/authorized-client';
 import { UserModel } from '@models/user-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -35,8 +35,8 @@ export class StorageService {
 	private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(
 		CLIENT_INIT_VALUE,
 	);
-	private authorizedUserData: BehaviorSubject<AuthorizedClientData> =
-		new BehaviorSubject<AuthorizedClientData>(new AuthorizedClientData());
+	private authorizedUserData: BehaviorSubject<AuthorizedClient> =
+		new BehaviorSubject<AuthorizedClient>(new AuthorizedClient());
 	private _tempArray: Array<string> = ['/'];
 
 	isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
@@ -53,7 +53,7 @@ export class StorageService {
 		this.isBackButtonDisabled.asObservable();
 	accessMap$: Observable<AccessMap> = this.accessMap.asObservable();
 	client$: Observable<Client> = this.client.asObservable();
-	authorizedUserData$: Observable<AuthorizedClientData> =
+	authorizedUserData$: Observable<AuthorizedClient> =
 		this.authorizedUserData.asObservable();
 
 	setAccessMap(url: string): void {
@@ -97,7 +97,7 @@ export class StorageService {
 	resetClient(): void {
 		this.client.next(CLIENT_INIT_VALUE);
 	}
-	setAuthorizedUserData(data: AuthorizedClientData): void {
+	setAuthorizedUserData(data: AuthorizedClient): void {
 		this.authorizedUserData.next({
 			...data,
 		});

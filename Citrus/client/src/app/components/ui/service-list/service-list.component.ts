@@ -5,7 +5,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { Service } from '@interfaces/service';
+import { Service } from '@models/service';
 
 @Component({
 	selector: 'app-service-list',

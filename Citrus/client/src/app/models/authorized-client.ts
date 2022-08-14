@@ -1,4 +1,4 @@
-export class AuthorizedClientData {
+export class AuthorizedClient {
 	email: string = '';
 	id: number = 0;
 	name: string = '';

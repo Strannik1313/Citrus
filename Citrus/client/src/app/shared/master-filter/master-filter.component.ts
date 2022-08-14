@@ -5,7 +5,7 @@ import {
 	Output,
 	EventEmitter,
 } from '@angular/core';
-import { Master } from '@models/master-data';
+import { Master } from '@models/master';
 
 @Component({
 	selector: 'app-master-filter',

@@ -9,7 +9,7 @@ import { StorageService } from '@services/storage.service';
 import { Subscription } from 'rxjs';
 import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
 import { BTN_LABELS } from '@constants/btn-labels';
-import { ChoisenService, Client } from '@interfaces/client';
+import { ChoisenService, Client } from '@models/client';
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 
 const WIZARD_STEPPER = {

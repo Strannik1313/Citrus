@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthFormData } from '@models/auth-form-data';
+import { AuthForm } from '@models/auth-form';
 import { UserModel } from '@models/user-model';
 import { catchError, Observable, of, tap } from 'rxjs';
 import { StorageService } from './storage.service';
@@ -18,7 +18,7 @@ export class AuthHttpService {
 		private router: Router,
 	) {}
 
-	login(formValue: AuthFormData): Observable<{ token: string; payload?: any }> {
+	login(formValue: AuthForm): Observable<{ token: string; payload?: any }> {
 		return this.http
 			?.post<{ token: string; payload: any }>('/api/auth/login', formValue)
 			.pipe(
@@ -41,7 +41,7 @@ export class AuthHttpService {
 			);
 	}
 
-	register(formValue: AuthFormData): Observable<{ message: string }> {
+	register(formValue: AuthForm): Observable<{ message: string }> {
 		return this.http?.post<{ message: string }>(
 			'/api/auth/register',
 			formValue,

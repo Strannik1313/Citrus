@@ -6,7 +6,7 @@ import {
 	ChangeDetectionStrategy,
 	Input,
 } from '@angular/core';
-import { DialogWindowData } from '@interfaces/dialog-window-data';
+import { DialogWindow } from '@models/dialog-window';
 
 export enum DialogType {
 	Error = 'error',
@@ -22,7 +22,7 @@ export enum DialogType {
 })
 export class DialogWindowComponent implements OnInit {
 	@Input() type: string = '';
-	@Input() textData: DialogWindowData = {
+	@Input() textData: DialogWindow = {
 		windowHeaderText: '',
 		windowText: '',
 		buttonLabel: '',
