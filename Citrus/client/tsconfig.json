@@ -6,7 +6,7 @@
 		"paths": {
 			"@components/*": ["./src/app/components/*"],
 			"@injectionTokens/*": ["./src/app/InjectionToken/*"],
-			"@interfaces/*": ["./src/app/interfaces/*"],
+			"@intercepters/*": ["./src/app/intercepters/*"],
 			"@models/*": ["./src/app/models/*"],
 			"@modules/*": ["./src/app/modules/*"],
 			"@pipes/*": ["./src/app/pipes/*"],
