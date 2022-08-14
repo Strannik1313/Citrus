@@ -1,5 +1,5 @@
 <div class="container">
-	<button [disabled]="isPrevDisabled" (click)="setWeek(-1)">Prev</button>
+	<button [disabled]="disabledBtn.prev" (click)="setPrevWeek()">Prev</button>
 	<div class="cell__container">
 		<app-calendar-cell
 			*ngFor="let day of week; trackBy: trackByFn"
@@ -11,5 +11,5 @@
 			(onDateClick)="onDateClick($event)">
 		</app-calendar-cell>
 	</div>
-	<button [disabled]="isNextDisabled" (click)="setWeek(1)">Next</button>
+	<button [disabled]="disabledBtn.next" (click)="setNextWeek()">Next</button>
 </div>

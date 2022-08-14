@@ -13,7 +13,8 @@ import { CalendarDates } from '@models/calendar-dates';
 import { Master } from '@models/master-data';
 import { Timesheet } from '@models/timesheet';
 import { HttpService } from '@services/http.service';
-import { Dayjs } from 'dayjs';
+import { StorageService } from '@services/storage.service';
+import dayjs,{ Dayjs } from 'dayjs';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -32,8 +33,10 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	public extraTimeInterval: Array<string> = [];
 	public selectedMasterId: number | null = null;
 	public currentMonth: Dayjs | null = null;
-	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
+	public disabledBtn: {prev: boolean, next: boolean} = {prev: false, next: false};
+	constructor(public http: HttpService, private cdr: ChangeDetectorRef, private storage: StorageService) {}
 	ngOnInit(): void {
+		this. disabledBtn = {prev: true, next: false};
 		this.subscription.add(
 			this.http
 				.getMasters(this.client.serviceId!, this.selectedMasterId)
@@ -47,6 +50,7 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 		this.subscription.unsubscribe();
 	}
 	onDaySelected(date: string): void {
+		this.client.dateOrder = date;
 		this.subscription.add(
 			this.http
 				.getTimesheets(this.client.serviceId!, date, this.selectedMasterId)
@@ -67,8 +71,15 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 				}),
 		);
 	}
-	onWeekChange(range: { startDay: string; endDay: string }): void {
+	onWeekChange(range: { startDay: string; endDay: string, today: string }): void {
 		this.timesheets = [];
+		this.disabledBtn = {
+			prev: false,
+			next: false,
+			...(dayjs(range.startDay).isBefore(range.today, 'day') && { prev: true }),
+			...(dayjs(range.startDay).isBefore(this.currentMonth,'month') && { prev: true }),
+			...(dayjs(range.endDay).isAfter(this.currentMonth,	'month') && { next: true })
+		}
 		this.subscription.add(
 			this.http
 				.getDates(this.client.serviceId!, range.startDay, range.endDay)
@@ -86,6 +97,11 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	}
 	onMonthFilterChange(month: Dayjs | null): void {
 		this.currentMonth = month;
+		this.disabledBtn = {
+			...this.disabledBtn,
+			...(month !== null && { prev: true }),
+			...(month === null && { prev: false, next: false }),
+		}
 	}
 	private createActiveDates(dates: Array<CalendarDates>): void {
 		if (this.selectedMasterId !== null) {

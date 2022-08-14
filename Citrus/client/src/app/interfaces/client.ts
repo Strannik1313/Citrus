@@ -18,7 +18,7 @@ export interface Client {
 	masterId: number | null;
 	serviceName: string;
 	serviceId: number | null;
-	dateOrder: Date | null;
+	dateOrder: string | null;
 	name: string;
 	surname: string;
 	phoneNumber: string;

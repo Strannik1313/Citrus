@@ -21,44 +21,31 @@ dayjs.locale('ru');
 export class CalendarComponent implements OnInit, OnChanges {
 	@Input() activeDates: Array<string> = [];
 	@Input() selectedMonth: Dayjs | null = null;
+	@Input() disabledBtn: {prev: boolean, next: false} = {prev: false, next: false};
 	@Output() onDaySelected: EventEmitter<string> = new EventEmitter();
-	@Output() onWeekChange: EventEmitter<{ startDay: string; endDay: string }> =
+	@Output() onWeekChange: EventEmitter<{ startDay: string; endDay: string, today: string }> =
 		new EventEmitter();
 	private today: Dayjs = dayjs().startOf('day');
-	public isPrevDisabled: boolean = false;
-	public isNextDisabled: boolean = false;
 	public week: Array<string> = [];
 	public selectedDate: string | null = null;
 	ngOnInit(): void {
-		this.isPrevDisabled = true;
 		this.week = this.createWeek(dayjs().startOf('week'));
 		this.onWeekChange.emit({
 			startDay: this.week[0],
 			endDay: this.week[6],
+			today: this.today,
 		});
 	}
 	ngOnChanges(changes: SimpleChanges): void {
-		for (const prop in changes) {
-			switch (prop) {
-				case 'selectedMonth':
-					if (changes.selectedMonth.currentValue !== null) {
-						const curr = changes.selectedMonth.currentValue;
-						const firstChng = changes.selectedMonth.firstChange;
-						if (!curr.isSame(this.week[0], 'week') && !firstChng) {
-							this.week = this.createWeek(curr.startOf('week'));
-							this.onWeekChange.emit({
-								startDay: this.week[0],
-								endDay: this.week[6],
-							});
-						}
-						this.isPrevDisabled = true;
-					} else {
-						this.isPrevDisabled = false;
-						this.isNextDisabled = false;
-					}
-					break;
-				default:
-					break;
+		if (!!changes.selectedMonth?.currentValue) {
+			const curr = changes.selectedMonth.currentValue;
+			if (!curr.isSame(this.week[0], 'week')) {
+				this.week = this.createWeek(curr.startOf('week'));
+				this.onWeekChange.emit({
+					startDay: this.week[0],
+					endDay: this.week[6],
+					today: this.today,
+				});
 			}
 		}
 	}
@@ -72,30 +59,22 @@ export class CalendarComponent implements OnInit, OnChanges {
 		}
 		return week;
 	}
-	setWeek(inc: number): void {
+	setPrevWeek(): void {
 		this.selectedDate = null;
-		this.week = this.createWeek(dayjs(this.week[0]).add(inc, 'week'));
-		this.isPrevDisabled = dayjs(this.week[0]).isBefore(this.today, 'day')
-			? true
-			: false;
-		if (this.selectedMonth !== null) {
-			this.isNextDisabled = dayjs(this.week[6]).isAfter(
-				this.selectedMonth,
-				'month',
-			)
-				? true
-				: false;
-			this.isPrevDisabled = dayjs(this.week[0]).isBefore(
-				this.selectedMonth,
-				'month',
-			)
-				? true
-				: false;
-		}
-
+		this.week = this.createWeek(dayjs(this.week[0]).add(1, 'week'));
 		this.onWeekChange.emit({
 			startDay: this.week[0],
 			endDay: dayjs(this.week[0]).add(6, 'day').toString(),
+			today: this.today,
+		});
+	}
+	setNextWeek(): void {
+		this.selectedDate = null;
+		this.week = this.createWeek(dayjs(this.week[0]).subtract(1, 'week'));
+		this.onWeekChange.emit({
+			startDay: this.week[0],
+			endDay: dayjs(this.week[0]).add(6, 'day').toString(),
+			today: this.today,
 		});
 	}
 	onDateClick(day: string): void {

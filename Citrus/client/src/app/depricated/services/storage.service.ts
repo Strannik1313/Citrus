@@ -12,6 +12,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class StorageService {
 	private isDialogWindowOpen: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
+	private isInitiallize: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 	private currentUserModel: BehaviorSubject<UserModel> =
 		new BehaviorSubject<UserModel>(UserModel.Unauth);
 	private isButtonDisabled: BehaviorSubject<boolean> =
@@ -39,6 +41,7 @@ export class StorageService {
 
 	isDialogWindowOpen$: Observable<boolean> =
 		this.isDialogWindowOpen.asObservable();
+	isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
 	currentUserModel$: Observable<UserModel> =
 		this.currentUserModel.asObservable();
 	buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable();
@@ -122,5 +125,8 @@ export class StorageService {
 		} else {
 			this.currentUserModel.next(UserModel.Unauth);
 		}
+	}
+	setInitializeStatus(status: boolean): void {
+		this.isInitiallize.next(status);
 	}
 }
