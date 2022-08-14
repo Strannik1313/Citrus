@@ -21,13 +21,19 @@ dayjs.locale('ru');
 export class CalendarComponent implements OnInit, OnChanges {
 	@Input() activeDates: Array<string> = [];
 	@Input() selectedMonth: Dayjs | null = null;
-	@Input() disabledBtn: {prev: boolean, next: false} = {prev: false, next: false};
-	@Output() onDaySelected: EventEmitter<string> = new EventEmitter();
-	@Output() onWeekChange: EventEmitter<{ startDay: string; endDay: string, today: string }> =
-		new EventEmitter();
+	@Input() disabledBtn: { prev: boolean; next: boolean } = {
+		prev: false,
+		next: false,
+	};
+	@Output() onDaySelected: EventEmitter<Dayjs> = new EventEmitter();
+	@Output() onWeekChange: EventEmitter<{
+		startDay: Dayjs;
+		endDay: Dayjs;
+		today: Dayjs;
+	}> = new EventEmitter();
 	private today: Dayjs = dayjs().startOf('day');
-	public week: Array<string> = [];
-	public selectedDate: string | null = null;
+	public week: Array<Dayjs> = [];
+	public selectedDate: Dayjs | null = null;
 	ngOnInit(): void {
 		this.week = this.createWeek(dayjs().startOf('week'));
 		this.onWeekChange.emit({
@@ -49,39 +55,39 @@ export class CalendarComponent implements OnInit, OnChanges {
 			}
 		}
 	}
-	private createWeek(startDay: Dayjs): Array<string> {
+	private createWeek(startDay: Dayjs): Array<Dayjs> {
 		const week = [];
 		if (startDay.isBefore(this.today, 'day')) {
 			startDay = this.today.startOf('week');
 		}
 		for (let i = 0; i <= 6; i++) {
-			week.push(startDay.add(i, 'day').toString());
+			week.push(startDay.add(i, 'day'));
 		}
 		return week;
 	}
 	setPrevWeek(): void {
 		this.selectedDate = null;
-		this.week = this.createWeek(dayjs(this.week[0]).add(1, 'week'));
+		this.week = this.createWeek(this.week[0].subtract(1, 'week'));
 		this.onWeekChange.emit({
 			startDay: this.week[0],
-			endDay: dayjs(this.week[0]).add(6, 'day').toString(),
+			endDay: this.week[0].add(6, 'day'),
 			today: this.today,
 		});
 	}
 	setNextWeek(): void {
 		this.selectedDate = null;
-		this.week = this.createWeek(dayjs(this.week[0]).subtract(1, 'week'));
+		this.week = this.createWeek(this.week[0].add(1, 'week'));
 		this.onWeekChange.emit({
 			startDay: this.week[0],
-			endDay: dayjs(this.week[0]).add(6, 'day').toString(),
+			endDay: this.week[0].add(6, 'day'),
 			today: this.today,
 		});
 	}
-	onDateClick(day: string): void {
+	onDateClick(day: Dayjs): void {
 		this.selectedDate = day;
 		this.onDaySelected.emit(day);
 	}
-	trackByFn(index: number, item: string): string {
+	trackByFn(index: number, item: Dayjs): Dayjs {
 		return item;
 	}
 }

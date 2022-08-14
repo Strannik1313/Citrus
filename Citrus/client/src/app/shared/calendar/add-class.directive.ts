@@ -10,16 +10,16 @@ import {
 	EventEmitter,
 	Output,
 } from '@angular/core';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { filter, fromEvent } from 'rxjs';
 
 @Directive({
 	selector: '[appAddClass]',
 })
 export class AddClassDirective implements OnInit, OnChanges {
-	@Input() day: string = '';
+	@Input() day: Dayjs = dayjs();
 	@Input() activeDates: Array<string> = [];
-	@Output() onDateClick: EventEmitter<string> = new EventEmitter();
+	@Output() onDateClick: EventEmitter<Dayjs> = new EventEmitter();
 	private disabled: boolean = true;
 	constructor(public element: ElementRef, private renderer: Renderer2) {}
 	ngOnInit(): void {
@@ -35,7 +35,7 @@ export class AddClassDirective implements OnInit, OnChanges {
 	}
 	ngOnChanges(changes: SimpleChanges): void {
 		this.disabled = !changes.activeDates?.currentValue.find((value: string) => {
-			return dayjs(value).isSame(dayjs(this.day), 'day');
+			return dayjs(value).isSame(this.day, 'day');
 		});
 		this.disabled
 			? this.renderer.addClass(this.element.nativeElement, 'disable')

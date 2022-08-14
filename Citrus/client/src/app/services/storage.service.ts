@@ -10,6 +10,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class StorageService {
+	private isInitiallize: BehaviorSubject<boolean> =
+		new BehaviorSubject<boolean>(false);
 	private isDialogWindowOpen: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private currentUserModel: BehaviorSubject<UserModel> =
@@ -37,6 +39,7 @@ export class StorageService {
 		new BehaviorSubject<AuthorizedClientData>(new AuthorizedClientData());
 	private _tempArray: Array<string> = ['/'];
 
+	isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
 	isDialogWindowOpen$: Observable<boolean> =
 		this.isDialogWindowOpen.asObservable();
 	currentUserModel$: Observable<UserModel> =
@@ -122,5 +125,8 @@ export class StorageService {
 		} else {
 			this.currentUserModel.next(UserModel.Unauth);
 		}
+	}
+	setInitializeStatus(status: boolean): void {
+		this.isInitiallize.next(status);
 	}
 }
