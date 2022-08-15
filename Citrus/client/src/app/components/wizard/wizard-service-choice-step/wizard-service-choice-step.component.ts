@@ -22,7 +22,7 @@ import { Subscription } from 'rxjs';
 })
 export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() client: Client = CLIENT_INIT_VALUE;
-	@Output() stepDone: EventEmitter<ChoisenService> = new EventEmitter();
+	@Output() stepDoneChange: EventEmitter<ChoisenService> = new EventEmitter();
 	private subscription: Subscription = new Subscription();
 	public completeServicesList: Service[] = [];
 	public servicesList: Service[] = [];
@@ -55,7 +55,7 @@ export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	onStepDone(service: Service | undefined): void {
 		if (service) {
 			this.choisenService = service.id;
-			this.stepDone.emit({
+			this.stepDoneChange.emit({
 				serviceId: service.id,
 				serviceName: service.title,
 			});

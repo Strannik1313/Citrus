@@ -25,6 +25,12 @@ export class NavigateAccess implements CanActivate, OnDestroy {
 		next: ActivatedRouteSnapshot,
 		state: RouterStateSnapshot,
 	): Observable<boolean> | boolean {
+		// const newAccessMap: Record<string, boolean> = {
+		//   '/login': false,
+		//
+		// }
+
+		// return newAccessMap?[state.url] ? true : this.route.navigate(['/']), false;
 		switch (state.url) {
 			case '/login': {
 				if (!this.accessMap.loginPage) {

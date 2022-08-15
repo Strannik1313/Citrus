@@ -1,4 +1,4 @@
-export const NAVIGATE_ROUTES = {
+export const NAVIGATE_ROUTES: Record<string, string> = {
 	home: '/',
 	account: '/account',
 	logout: '/logout',
