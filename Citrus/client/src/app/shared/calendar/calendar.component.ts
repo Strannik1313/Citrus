@@ -8,6 +8,8 @@ import {
 	OnChanges,
 	SimpleChanges,
 } from '@angular/core';
+import { BtnStatus, CALENDAR_BTN_INIT_VALUE } from '@models/buttons-status';
+import { CalendarWeekChange } from '@models/calendar-week-change';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/ru';
 dayjs.locale('ru');
@@ -21,16 +23,10 @@ dayjs.locale('ru');
 export class CalendarComponent implements OnInit, OnChanges {
 	@Input() activeDates: Array<string> = [];
 	@Input() selectedMonth: Dayjs | null = null;
-	@Input() disabledBtn: { prev: boolean; next: boolean } = {
-		prev: false,
-		next: false,
-	};
+	@Input() disabledBtn: BtnStatus = CALENDAR_BTN_INIT_VALUE;
 	@Output() onDaySelected: EventEmitter<Dayjs> = new EventEmitter();
-	@Output() onWeekChange: EventEmitter<{
-		startDay: Dayjs;
-		endDay: Dayjs;
-		today: Dayjs;
-	}> = new EventEmitter();
+	@Output() onWeekChange: EventEmitter<CalendarWeekChange> = new EventEmitter();
+	private today: Dayjs = dayjs().startOf('day');
 	public week: Array<Dayjs> = [];
 	public selectedDate: Dayjs | null = null;
 	private today: Dayjs = dayjs().startOf('day');

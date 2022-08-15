@@ -16,11 +16,8 @@ import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
 import { Dayjs } from 'dayjs';
 import { Subscription } from 'rxjs';
-
-const DISABLED_BTN_INIT = {
-	prev: false,
-	next: false,
-};
+import { BtnStatus, CALENDAR_BTN_INIT_VALUE } from '@models/buttons-status';
+import { CalendarWeekChange } from '@models/calendar-week-change';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',
@@ -36,10 +33,7 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	public extraTimeInterval: Array<string> = [];
 	public selectedMasterId: number | null = null;
 	public currentMonth: Dayjs | null = null;
-	public disabledBtn: { prev: boolean; next: boolean } = {
-		prev: false,
-		next: false,
-	};
+	public disabledBtn: BtnStatus = CALENDAR_BTN_INIT_VALUE;
 	private subscription: Subscription = new Subscription();
 	private calendarDates: Array<CalendarDates> = [];
 	constructor(
@@ -84,10 +78,10 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 				}),
 		);
 	}
-	onWeekChange(range: { startDay: Dayjs; endDay: Dayjs; today: Dayjs }): void {
+	onWeekChange(range: CalendarWeekChange): void {
 		this.timesheets = [];
 		this.disabledBtn = {
-			...DISABLED_BTN_INIT,
+			...CALENDAR_BTN_INIT_VALUE,
 			...(range.startDay.isBefore(range.today, 'day') && { prev: true }),
 			...(range.startDay.isBefore(this.currentMonth, 'month') && {
 				prev: true,
@@ -116,7 +110,7 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	onMonthFilterChange(month: Dayjs | null): void {
 		this.currentMonth = month;
 		this.disabledBtn = {
-			...DISABLED_BTN_INIT,
+			...CALENDAR_BTN_INIT_VALUE,
 			...(month !== null && { prev: true }),
 		};
 	}
