@@ -1,58 +1,70 @@
-import { DialogWindowData } from './interfaces/dialog-window-data';
-import { ServerErrorHandleService } from './services/server-error-handle.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { HttpService } from './services/http.service';
-import { StorageService } from './services/storage.service';
-import { DialogType } from './shared/dialog-window/dialog-window.component';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { DialogWindow } from '@models/dialog-window';
+import { DialogType } from '@shared/dialog-window/dialog-window.component';
+import { HttpService } from '@services/http.service';
+import { StorageService } from '@services/storage.service';
+import { ServerErrorHandleService } from '@services/server-error-handle.service';
+import { AuthHttpService } from '@services/auth-http.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'citrus';
-  private subscription: Subscription[] = [];
-  public dialogTextData: DialogWindowData = {
-    windowHeaderText: '',
-    windowText: ''
-  };
-  public isActive: boolean = false;
-  public dialogType: DialogType = DialogType.Error;
-  constructor(
-    private http: HttpService,
-    public storage: StorageService,
-    private serverErrorHandle: ServerErrorHandleService
-  ) {
-    this.subscription.push(this.storage.isDialogWindowOpen$.subscribe(data => {
-      this.isActive = data;
-      if (this.isActive) {
-        this.dialogTextData = {
-          windowHeaderText: this.serverErrorHandle?.getErrorInstance().status.toString(),
-          windowText: this.serverErrorHandle?.getErrorInstance().statusText
-        }
-      }
-    }))
-   };
-
-  ngOnInit(): void {
-    const potentialToken = localStorage.getItem('authToken');
-    if (potentialToken !== null) {
-      this.http.setToken(potentialToken);
-      this.subscription.push(this.http.me().subscribe(data => {
-        if (data) {
-          this.storage.setAuthorizedUserData(data);
-        };
-      }
-    ));
-    };
-  };
-
-  ngOnDestroy(): void {
-    this.subscription.forEach(sub => sub.unsubscribe())
-  };
-  onButtonClick(e: boolean) {
-    this.storage.setIsDialogWindowOpen(false);
-  }
+	public dialogTextData: DialogWindow = {
+		windowHeaderText: '',
+		windowText: '',
+	};
+	isLoading$: Observable<boolean> = this.storage.isInitiallize$;
+	isModalOpen$: Observable<boolean> = this.storage.isDialogWindowOpen$;
+	public dialogType: DialogType = DialogType.Error;
+	private subscription: Subscription = new Subscription();
+	constructor(
+		private http: HttpService,
+		private authHttp: AuthHttpService,
+		public storage: StorageService,
+		private serverErrorHandle: ServerErrorHandleService,
+		private cdr: ChangeDetectorRef,
+	) {}
+	ngOnInit(): void {
+		this.subscription.add(
+			this.storage.isDialogWindowOpen$.subscribe(data => {
+				if (data) {
+					const error: HttpErrorResponse =
+						this.serverErrorHandle?.getErrorInstance();
+					this.dialogTextData = {
+						windowHeaderText: error?.status.toString() ?? 'default',
+						windowText: error?.statusText ?? 'default',
+					};
+				}
+			}),
+		);
+		const potentialToken = localStorage.getItem('authToken');
+		if (potentialToken !== null) {
+			this.authHttp.setToken(potentialToken);
+			this.subscription.add(
+				this.authHttp.me().subscribe(data => {
+					if (data) {
+						this.storage.setAuthorizedUserData(data);
+					}
+				}),
+			);
+		}
+	}
+	onButtonClick(e: boolean) {
+		this.storage.setIsDialogWindowOpen(false);
+	}
+	ngOnDestroy(): void {
+		this.subscription.unsubscribe();
+	}
 }

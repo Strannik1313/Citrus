@@ -1,0 +1,12 @@
+<div class="service__choice__select__field">
+	<app-autocomplete
+		[options]="completeServicesList"
+		(optionSelected)="autocompleteSelected($event)">
+	</app-autocomplete>
+	<div class="card__container">
+		<app-service-list
+			[services]="servicesList"
+			[choisenService]="choisenService"
+			(serviceClick)="onStepDone($event)"></app-service-list>
+	</div>
+</div>

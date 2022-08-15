@@ -1,0 +1,31 @@
+<div class="wizard__container">
+	<app-stepper
+		[currentStep]="currentStep"
+		[stepsQuantity]="stepsQuantity"></app-stepper>
+	<div class="button__container">
+		<button mat-button color="primary" (click)="onBtnClick(false)">{{
+			backBtnLabels
+		}}</button>
+		<button
+			mat-button
+			color="primary"
+			(click)="onBtnClick(true)"
+			[disabled]="!isStepDone"
+			>{{ nextBtnLabel }}</button
+		>
+	</div>
+	<div [ngSwitch]="currentStep">
+		<ng-template ngSwitchCase="{{ wizardStepper.serviceChoice }}">
+			<app-wizard-service-choice-step
+				[client]="client"
+				(stepDone)="firstStepDone($event)"></app-wizard-service-choice-step>
+		</ng-template>
+		<ng-template ngSwitchCase="{{ wizardStepper.dateChoice }}">
+			<app-wizard-date-choice-step
+				[client]="client"></app-wizard-date-choice-step>
+		</ng-template>
+		<ng-template ngSwitchCase="{{ wizardStepper.confirmPage }}">
+			<app-wizard-confirm-step></app-wizard-confirm-step>
+		</ng-template>
+	</div>
+</div>

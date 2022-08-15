@@ -1,0 +1,30 @@
+<div class="container">
+	<div class="filters">
+		<div class="masters__filter">
+			<app-master-filter
+				[masters]="masters"
+				(onFilterChange)="onMasterFilterChange($event)">
+			</app-master-filter>
+		</div>
+		<div class="months__filter">
+			<app-month-filter (onMonthSelected)="onMonthFilterChange($event)">
+			</app-month-filter>
+		</div>
+	</div>
+	<div class="calendar">
+		<app-calendar
+			[disabledBtn]="disabledBtn"
+			[selectedMonth]="currentMonth"
+			[activeDates]="calendarActiveDates"
+			(onDaySelected)="onDaySelected($event)"
+			(onWeekChange)="onWeekChange($event)">
+		</app-calendar>
+	</div>
+	<div class="timesheets">
+		<app-timesheet
+			[timesheets]="timesheets"
+			[interval]="extraTimeInterval"
+			[selectedMaster]="selectedMasterId">
+		</app-timesheet>
+	</div>
+</div>

@@ -1,0 +1,25 @@
+<div class="container">
+	<input
+		class="filter__input"
+		(keyup)="onInputChange()"
+		[(ngModel)]="inputValue"
+		cdkOverlayOrigin
+		#trigger="cdkOverlayOrigin" />
+	<ng-template
+		cdkConnectedOverlay
+		[cdkConnectedOverlayOrigin]="trigger"
+		[cdkConnectedOverlayOpen]="isAutocompleteOpen">
+		<ul
+			appClickHandler
+			[isOpen]="isAutocompleteOpen"
+			(autocompleteToogle)="onDocClick($event)"
+			class="autocomplete">
+			<div
+				*ngFor="let option of optionsList; trackBy: trackByFn; let i = index"
+				class="autocomplete__item"
+				(click)="onAutocomleteItemClick(option)"
+				><li>{{ option.title }}</li></div
+			>
+		</ul>
+	</ng-template>
+</div>

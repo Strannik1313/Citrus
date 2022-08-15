@@ -1,22 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AppButtonComponent } from './app-button/app-button.component';
 import { MatButtonModule } from '@angular/material/button';
-import { AppButtonWrapperComponent } from './app-button-wrapper.component';
-
-
+import { AppButtonComponent } from '@shared/app-button-wrapper/app-button/app-button.component';
+import { AppButtonWrapperComponent } from '@shared/app-button-wrapper/app-button-wrapper.component';
 
 @NgModule({
-  declarations: [
-    AppButtonComponent,
-    AppButtonWrapperComponent
-  ],
-  imports: [
-    CommonModule,
-    MatButtonModule
-  ],
-  exports: [
-    AppButtonWrapperComponent
-  ]
+	declarations: [AppButtonComponent, AppButtonWrapperComponent],
+	imports: [CommonModule, MatButtonModule],
+	exports: [AppButtonWrapperComponent],
 })
-export class AppButtonModule { }
+export class AppButtonModule {}

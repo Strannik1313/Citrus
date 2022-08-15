@@ -1,25 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { LoginPageWrapperComponent } from '../../components/wrappers/login-page-wrapper/login-page-wrapper.component';
-import { AuthFormModule } from '../../shared/auth-form/auth-form.module';
-
-
-
+import { LoginPageWrapperComponent } from '@components/login-page-wrapper/login-page-wrapper.component';
+import { AuthFormModule } from '@shared/auth-form/auth-form.module';
 
 @NgModule({
-  declarations: [
-    LoginPageWrapperComponent,
-  ],
-  imports: [
-    CommonModule,
-    AuthFormModule,
-    RouterModule.forChild([
-      {path: '', component: LoginPageWrapperComponent}
-    ])
-  ],
-  exports: [
-    RouterModule
-  ]
+	declarations: [LoginPageWrapperComponent],
+	imports: [
+		CommonModule,
+		AuthFormModule,
+		RouterModule.forChild([{ path: '', component: LoginPageWrapperComponent }]),
+	],
+	exports: [RouterModule],
 })
-export class LoginPageModule { }
+export class LoginPageModule {}

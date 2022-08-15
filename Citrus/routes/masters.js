@@ -1,8 +1,7 @@
-const express = require('express')
-const controller = require('../controllers/masters')
-const router = express.Router()
-const passport = require('passport')
+const express = require('express');
+const controller = require('../controllers/masters');
+const router = express.Router();
 
-router.get('/masters', controller.masters)
+router.post('/masters', controller.masters);
 
-module.exports = router
+module.exports = router;

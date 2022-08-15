@@ -1,0 +1,16 @@
+<!-- <div class="container" appOverlayList [content]="interval">
+	{{ time | date: 'HH:mm' }}
+</div> -->
+<div class="container" (click)="onTimeClick()">
+	<button (click)="onNextTimeClick($event)" *ngIf="buttonOpen">{{
+		label
+	}}</button>
+	<div>
+		{{ content[content.length - 1] }}
+	</div>
+	{{ time | date: 'HH:mm' }}
+	<div>
+		{{ content[1] }}
+	</div>
+	<button (click)="onPrevTimeClick($event)" *ngIf="buttonOpen">></button>
+</div>

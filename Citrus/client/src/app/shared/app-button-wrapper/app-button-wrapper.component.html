@@ -1,6 +1,4 @@
-<app-custom-button 
-    [label]="label" 
-    [url]="url" 
-    [isDisabled]="status.setButtonSubject(this.url) | async"
-    (goToNextPage)="routeWithUrl.goToNextPage($event)"
-></app-custom-button>
+<app-custom-button
+	[label]="label"
+	[url]="url"
+	(goToNextPage)="navigateService.goToNextPage($event)"></app-custom-button>

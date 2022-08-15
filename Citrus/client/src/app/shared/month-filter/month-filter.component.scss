@@ -1,0 +1,22 @@
+.overlay__list {
+	width: 150px;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+	background: #fff;
+	text-align: center;
+	padding: 5px;
+	margin: 0;
+	cursor: pointer;
+}
+
+.overlay__list > .list__item {
+	list-style-type: none;
+	border-bottom: solid 1px #8b8b8b;
+	padding: 8px 0;
+}
+.list__item :hover {
+	background: #dddddd;
+}
+.overlay__list :last-child {
+	border-bottom: none;
+}

@@ -1,0 +1,5 @@
+<div class="btn__group__container">
+    <ng-container *ngFor="let button of buttonConf; trackBy: trackByFn">
+        <app-button-wrapper class="{{button.buttonPosition}}" [label]="button.label" [url]="button.url"></app-button-wrapper>
+    </ng-container>
+</div>

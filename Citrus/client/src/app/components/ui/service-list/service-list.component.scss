@@ -1,0 +1,11 @@
+.card__item {
+	margin: 5px;
+	background-color: rgb(238, 238, 238);
+}
+.card__item:hover {
+	background-color: rgb(221, 221, 221);
+}
+.active {
+	border: 3px solid black;
+	background: rgb(221, 221, 221);
+}

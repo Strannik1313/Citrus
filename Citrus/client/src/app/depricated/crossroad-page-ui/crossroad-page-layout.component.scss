@@ -1,0 +1,41 @@
+// .crossroad_content {
+//     width: 100vw;
+//     display: grid;
+//     grid-template-areas:
+//         "spec_ph serv_ph"
+//         "spec_btn serv_btn";
+//     grid-template-rows: 10fr 1fr;
+//     grid-template-columns: 1fr 1fr;
+//     gap: 3em;
+//     align-items: center;
+//     .crossroad__service_img {
+//         grid-area: serv_ph;
+//         justify-self: center;
+
+//         img {
+//             max-width: 30em;
+//             border-radius: 10px;
+//         }
+//     }
+
+//     .crossroad__spec_img {
+//         grid-area: spec_ph;
+
+//         img {
+//             max-width: 30em;
+//             border-radius: 10px;
+//         }
+//     }
+
+//     .crossroad__spec__btn {
+//         grid-area: spec_btn;
+//         align-self: center;
+//         justify-self: center;
+//     }
+
+//     .crossroad__service_btn {
+//         grid-area: serv_btn;
+//         justify-self: center;
+//         align-self: start;
+//     }
+// }

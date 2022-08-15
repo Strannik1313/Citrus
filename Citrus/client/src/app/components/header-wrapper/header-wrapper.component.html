@@ -1,0 +1,11 @@
+<div class="container">
+	<div class="home">
+		<button mat-icon-button color="primary" [routerLink]="homeLink">
+			<mat-icon>home</mat-icon>
+		</button>
+	</div>
+	<div class="btn-group">
+		<!-- <app-button-group [buttonConf]="buttonConf"></app-button-group> -->
+		<app-button-group [buttonConf]="(buttonConf$ | async) ?? default"></app-button-group>
+	</div>
+</div>

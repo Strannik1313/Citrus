@@ -1,37 +1,51 @@
+@import url(https://fonts.googleapis.com/css?family=Comfortaa:300,regular,700);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,regular,500);
 .content__container {
-    max-height: 90%;
-    display: grid;
-    grid-template-areas: 
-        "img text"
-        "btn btn";
-    grid-template-rows: 8fr 1fr;
-    grid-template-columns: 1fr 1fr;
+	width: 100vw;
+	display: grid;
+	grid-template-areas:
+		'head img'
+		'text img'
+		'btn img';
+	grid-template-rows: 1fr 0.4fr 0.5fr;
+	grid-template-columns: 2fr 2fr;
+	gap: 1vw;
+	align-items: start;
 }
 
 .content__img {
-    grid-area: img;
-    padding-left: 5vw;
-    justify-self: center;
-    img {
-        max-width: 95%;
-        border-radius: 10px;
-    }
+	grid-area: img;
+	justify-self: center;
+	padding-right: 5vw;
+	img {
+		max-width: 500px;
+		border-radius: 10px;
+	}
+}
+.content__header__text {
+	grid-area: head;
+	padding-left: 5vw;
+	justify-self: center;
+	align-self: end;
+	font-family: Comfortaa;
+	font-size: 32px;
+	font-weight: 700;
+	line-height: 1.325;
 }
 
 .content__text {
-    grid-area: text;
-    border: 3px solid #f4f6fc;
-    border-radius: 10px;
-    max-width: 80%;
-    align-self: center;
-  justify-self: center;
-    text-align:center;
-    font-size:1.5em;
-    line-height:1.5;
+	grid-area: text;
+	justify-self: center;
+	text-align: left;
+	padding-left: 20px;
+	font-size: 1.5em;
+	line-height: 1.625;
+	font-weight: 300;
+	font-family: Roboto;
 }
 
 .content__custom__button {
-    grid-area: btn;
-    justify-self: center;
-    align-self: center;
+	grid-area: btn;
+	justify-self: center;
+	align-self: start;
 }
