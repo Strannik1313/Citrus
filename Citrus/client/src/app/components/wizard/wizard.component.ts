@@ -18,6 +18,13 @@ const WIZARD_STEPPER = {
 	confirmPage: 3,
 	done: 4,
 };
+
+enum WizardStepperEnum {
+	SERVICE_CHOICE = 1,
+	DATE_CHOICE = 2,
+	CONFIRM_PAGE = 3,
+	DONE = 4,
+}
 const STEPS_QUATITY = [1, 2, 3];
 
 @Component({
@@ -30,7 +37,8 @@ export class WizardComponent implements OnInit, OnDestroy {
 	private subscrition: Subscription = new Subscription();
 	public stepsQuantity: Array<number> = STEPS_QUATITY;
 	public wizardStepper = WIZARD_STEPPER;
-	public currentStep: number = this.wizardStepper.serviceChoice;
+	public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
+	public currentStep: WizardStepperEnum = WizardStepperEnum.SERVICE_CHOICE;
 	public nextBtnLabel: string = BTN_LABELS.next;
 	public backBtnLabels: string = BTN_LABELS.back;
 	public isStepDone: boolean = false;
@@ -39,7 +47,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	constructor(private router: Router, private storage: StorageService) {}
 
 	ngOnInit(): void {
-		this.client;
+		// this.client;
 		this.subscrition.add(
 			this.storage.client$.subscribe(data => {
 				this.client = { ...data };
@@ -55,15 +63,16 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.client = { ...this.client, ...value };
 		this.isStepDone = true;
 	}
-	onBtnClick(action: boolean): void {
-		if (action) {
+	onBtnClick(isNextStep: boolean): void {
+		if (isNextStep) {
 			this.currentStep += 1;
 		} else {
 			this.currentStep -= 1;
 		}
+
 		this.isStepDone = false;
 		switch (this.currentStep) {
-			case this.wizardStepper.serviceChoice:
+			case WizardStepperEnum.SERVICE_CHOICE:
 				break;
 			case this.wizardStepper.dateChoice:
 				this.storage.setClient(this.client);
