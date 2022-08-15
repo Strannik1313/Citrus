@@ -23,10 +23,10 @@ import { Subscription } from 'rxjs';
 export class WizardServiceChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() client: Client = CLIENT_INIT_VALUE;
 	@Output() stepDone: EventEmitter<ChoisenService> = new EventEmitter();
-	private subscription: Subscription = new Subscription();
 	public completeServicesList: Service[] = [];
 	public servicesList: Service[] = [];
 	public choisenService: number | null = null;
+	private subscription: Subscription = new Subscription();
 	constructor(private http: HttpService, private cdr: ChangeDetectorRef) {}
 	ngOnInit(): void {
 		this.subscription.add(

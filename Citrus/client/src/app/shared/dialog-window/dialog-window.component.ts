@@ -21,7 +21,7 @@ export enum DialogType {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogWindowComponent implements OnInit {
-	@Input() type: string = '';
+	@Input() type = '';
 	@Input() textData: DialogWindow = {
 		windowHeaderText: '',
 		windowText: '',
@@ -29,7 +29,6 @@ export class DialogWindowComponent implements OnInit {
 		customMessage: '',
 	};
 	@Output() destroyWindow: EventEmitter<boolean> = new EventEmitter();
-
 	ngOnInit(): void {
 		switch (this.type) {
 			case DialogType.Error:
@@ -86,7 +85,6 @@ export class DialogWindowComponent implements OnInit {
 				break;
 		}
 	}
-
 	onCloseButtonClick(): void {
 		this.destroyWindow.emit(true);
 	}

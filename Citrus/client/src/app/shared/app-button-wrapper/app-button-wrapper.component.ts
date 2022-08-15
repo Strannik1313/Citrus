@@ -9,9 +9,8 @@ import { StorageService } from '@services/storage.service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppButtonWrapperComponent {
-	@Input() label: string = '';
-	@Input() url: string = '';
-
+	@Input() label = '';
+	@Input() url = '';
 	constructor(
 		public storage: StorageService,
 		public navigateService: NavigateService,

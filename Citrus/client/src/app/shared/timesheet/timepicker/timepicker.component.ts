@@ -15,12 +15,12 @@ import dayjs from 'dayjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimepickerComponent {
-	@Input() time: string = '';
+	@Input() time = '';
 	@Input() interval: Array<string> = [];
 	@Output() onBtnClick: EventEmitter<boolean> = new EventEmitter();
-	public buttonOpen: boolean = false;
-	public label: string = '<';
-	public isOpen: boolean = false;
+	public buttonOpen = false;
+	public label = '<';
+	public isOpen = false;
 	public content: Array<string> = [];
 	constructor(private cdr: ChangeDetectorRef) {}
 	onTimeClick(): void {

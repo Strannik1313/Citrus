@@ -19,9 +19,8 @@ import { AuthForm } from '@models/auth-form';
 export class AuthFormComponent implements OnChanges {
 	public submitForm: FormGroup;
 	public hide = true;
-	@Input() disabledForm: boolean = false;
+	@Input() disabledForm = false;
 	@Output() onSafeFormValue: EventEmitter<AuthForm> = new EventEmitter();
-
 	constructor() {
 		this.submitForm = new FormGroup({
 			email: new FormControl('', [
@@ -36,7 +35,6 @@ export class AuthFormComponent implements OnChanges {
 			]),
 		});
 	}
-
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['disabledForm'].currentValue) {
 			this.submitForm.disable();
@@ -44,12 +42,10 @@ export class AuthFormComponent implements OnChanges {
 			this.submitForm.enable();
 		}
 	}
-
 	onSubmit() {
 		this.submitForm.disable();
 		this.onSafeFormValue.emit(this.submitForm.value);
 	}
-
 	getErrorMessage(inputName: string) {
 		switch (inputName) {
 			case 'email': {

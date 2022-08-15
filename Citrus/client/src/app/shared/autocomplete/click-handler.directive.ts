@@ -12,7 +12,7 @@ import { fromEvent, Subscription } from 'rxjs';
 	selector: '[appClickHandler]',
 })
 export class ClickHandlerDirective implements OnInit, OnDestroy {
-	@Input() isOpen: boolean = false;
+	@Input() isOpen = false;
 	@Output() autocompleteToogle: EventEmitter<boolean> = new EventEmitter();
 	private subscription: Subscription = new Subscription();
 	ngOnInit(): void {

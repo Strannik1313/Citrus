@@ -1,9 +1,10 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ButtonPositionEnum } from '@models/header-button-conf';
 
 export interface ButtonConf {
 	label: string;
 	url: string;
-	class: string;
+	buttonPosition?: ButtonPositionEnum;
 }
 
 @Component({

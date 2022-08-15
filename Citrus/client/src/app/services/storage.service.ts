@@ -15,7 +15,7 @@ export class StorageService {
 	private isDialogWindowOpen: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private currentUserModel: BehaviorSubject<UserModel> =
-		new BehaviorSubject<UserModel>(UserModel.Unauth);
+		new BehaviorSubject<UserModel>(UserModel.UNAUTH);
 	private isButtonDisabled: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private haveAccountData: BehaviorSubject<boolean> =
@@ -119,11 +119,11 @@ export class StorageService {
 	}
 	setCurrentUserModel(userFlags: { isAdmin: boolean; isAuth: boolean }): void {
 		if (userFlags.isAdmin) {
-			this.currentUserModel.next(UserModel.Admin);
+			this.currentUserModel.next(UserModel.ADMIN);
 		} else if (userFlags.isAuth) {
-			this.currentUserModel.next(UserModel.Auth);
+			this.currentUserModel.next(UserModel.AUTH);
 		} else {
-			this.currentUserModel.next(UserModel.Unauth);
+			this.currentUserModel.next(UserModel.UNAUTH);
 		}
 	}
 	setInitializeStatus(status: boolean): void {

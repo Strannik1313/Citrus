@@ -6,7 +6,7 @@
 		[textData]="dialogTextData"
 		[type]="dialogType">
 	</app-dialog-window> -->
-	<app-spinner *ngIf="isSpinnerActive"></app-spinner>
+	<app-spinner *ngIf="isLoading$ | async"></app-spinner>
 	<div class="content">
 		<router-outlet></router-outlet>
 	</div>

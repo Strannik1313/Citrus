@@ -8,10 +8,9 @@ import { Component, Input } from '@angular/core';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppButtonComponent {
-	@Input() label: string = '';
-	@Input() url: string = '';
+	@Input() label = '';
+	@Input() url = '';
 	@Output() goToNextPage = new EventEmitter();
-
 	onButtonClick(url: string): void {
 		this.goToNextPage.emit(url);
 	}

@@ -1,5 +1,5 @@
 <p>Войдите в аккаунт</p>
 <app-auth-form
     (onSafeFormValue)="onSafeFormValue($event)"
-    [disabledForm]="disableForm(disabledForm)"
+    [disabledForm]="this.disabledForm"
 ></app-auth-form>

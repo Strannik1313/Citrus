@@ -20,7 +20,7 @@ export class AddClassDirective implements OnInit, OnChanges {
 	@Input() day: Dayjs = dayjs();
 	@Input() activeDates: Array<string> = [];
 	@Output() onDateClick: EventEmitter<Dayjs> = new EventEmitter();
-	private disabled: boolean = true;
+	private disabled = true;
 	constructor(public element: ElementRef, private renderer: Renderer2) {}
 	ngOnInit(): void {
 		fromEvent(this.element.nativeElement, 'click')

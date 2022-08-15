@@ -31,9 +31,9 @@ export class CalendarComponent implements OnInit, OnChanges {
 		endDay: Dayjs;
 		today: Dayjs;
 	}> = new EventEmitter();
-	private today: Dayjs = dayjs().startOf('day');
 	public week: Array<Dayjs> = [];
 	public selectedDate: Dayjs | null = null;
+	private today: Dayjs = dayjs().startOf('day');
 	ngOnInit(): void {
 		this.week = this.createWeek(dayjs().startOf('week'));
 		this.onWeekChange.emit({

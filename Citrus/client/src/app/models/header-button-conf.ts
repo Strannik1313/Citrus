@@ -2,44 +2,38 @@ import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
 import { UserModel } from '@models/user-model';
 import { ButtonConf } from '@shared/app-button-group/app-button-group.component';
 
+export enum ButtonPositionEnum {
+	LEFT = 'left',
+	RIGHT = 'right',
+}
+
 const AuthBtnConf: Array<ButtonConf> = [
 	{
 		label: 'Личный кабинет',
 		url: NAVIGATE_ROUTES.account,
-		class: 'btn__auth__left',
+		buttonPosition: ButtonPositionEnum.LEFT,
 	},
 	{
 		label: 'Выйти',
 		url: NAVIGATE_ROUTES.logout,
-		class: 'btn__auth__right',
+		buttonPosition: ButtonPositionEnum.RIGHT,
 	},
 ];
 const UnauthBtnConf: Array<ButtonConf> = [
 	{
 		label: 'Войти',
 		url: NAVIGATE_ROUTES.login,
-		class: 'btn__auth__right',
+		buttonPosition: ButtonPositionEnum.RIGHT,
 	},
 	{
 		label: 'Регистрация',
 		url: NAVIGATE_ROUTES.register,
-		class: 'btn__auth__left',
+		buttonPosition: ButtonPositionEnum.LEFT,
 	},
 ];
 
-export const btnConfMap = {
-	btnConf: {
-		auth: AuthBtnConf,
-		unauth: UnauthBtnConf,
-	},
-	getBtnConfByUser(value: UserModel): Array<ButtonConf> {
-		switch (value) {
-			case UserModel.Auth:
-				return this.btnConf.auth;
-			case UserModel.Unauth:
-				return this.btnConf.unauth;
-			default:
-				return this.btnConf.unauth;
-		}
-	},
+export const btnConfMap: Record<UserModel, Array<ButtonConf>> = {
+	[UserModel.AUTH]: AuthBtnConf,
+	[UserModel.UNAUTH]: UnauthBtnConf,
+	[UserModel.ADMIN]: UnauthBtnConf,
 };

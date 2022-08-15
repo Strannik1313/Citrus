@@ -24,10 +24,9 @@ export class AutocompleteComponent implements OnChanges {
 	/* eslint-disable @typescript-eslint/no-explicit-any */
 	@Output() optionSelected: EventEmitter<any> = new EventEmitter();
 	/* eslint-enable @typescript-eslint/no-explicit-any */
-	public inputValue: string = '';
-	public isAutocompleteOpen: boolean = false;
+	public inputValue = '';
+	public isAutocompleteOpen = false;
 	public optionsList: AutocompleteOptionType[] = [];
-
 	ngOnChanges(changes: SimpleChanges): void {
 		this.optionsList = changes.options?.currentValue;
 	}

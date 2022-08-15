@@ -11,7 +11,7 @@ import { StorageService } from './storage.service';
 })
 export class AuthHttpService {
 	private token: string = '';
-	private userModel: UserModel = UserModel.Unauth;
+	private userModel: UserModel = UserModel.UNAUTH;
 	constructor(
 		private http: HttpClient,
 		private storage: StorageService,
@@ -30,7 +30,7 @@ export class AuthHttpService {
 						isAdmin: payload?.admin,
 						isAuth: true,
 					});
-					if (this.userModel === UserModel.Admin) {
+					if (this.userModel === UserModel.ADMIN) {
 						this.storage?.setIsAdmin(true);
 					} else {
 						this.storage?.setIsAdmin(false);

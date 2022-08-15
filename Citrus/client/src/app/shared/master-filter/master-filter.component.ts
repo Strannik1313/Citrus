@@ -16,8 +16,8 @@ import { Master } from '@models/master';
 export class MasterFilterComponent {
 	@Input() masters: Array<Master> = [];
 	@Output() onFilterChange: EventEmitter<number | null> = new EventEmitter();
-	public isOpen: boolean = false;
-	public btnLabel: string = 'выберите мастера';
+	public isOpen = false;
+	public btnLabel = 'выберите мастера';
 	onFilterClick(id: number | null, label: string): void {
 		this.onFilterChange.emit(id);
 		this.isOpen = false;

@@ -1,26 +1,34 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import {
+	ChangeDetectionStrategy,
+	ChangeDetectorRef,
+	Component,
+	OnDestroy,
+	OnInit,
+} from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 import { DialogWindow } from '@models/dialog-window';
 import { DialogType } from '@shared/dialog-window/dialog-window.component';
 import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
 import { ServerErrorHandleService } from '@services/server-error-handle.service';
 import { AuthHttpService } from '@services/auth-http.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
 	selector: 'app-root',
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss'],
+	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
-	private subscription: Subscription = new Subscription();
 	public dialogTextData: DialogWindow = {
 		windowHeaderText: '',
 		windowText: '',
 	};
-	public isDialogActive: boolean = false;
-	public isSpinnerActive: boolean = false;
+	isLoading$: Observable<boolean> = this.storage.isInitiallize$;
+	isModalOpen$: Observable<boolean> = this.storage.isDialogWindowOpen$;
 	public dialogType: DialogType = DialogType.Error;
+	private subscription: Subscription = new Subscription();
 	constructor(
 		private http: HttpService,
 		private authHttp: AuthHttpService,
@@ -28,24 +36,17 @@ export class AppComponent implements OnInit, OnDestroy {
 		private serverErrorHandle: ServerErrorHandleService,
 		private cdr: ChangeDetectorRef,
 	) {}
-
 	ngOnInit(): void {
 		this.subscription.add(
 			this.storage.isDialogWindowOpen$.subscribe(data => {
-				this.isDialogActive = data;
-				if (this.isDialogActive) {
-					const error = this.serverErrorHandle?.getErrorInstance();
+				if (data) {
+					const error: HttpErrorResponse =
+						this.serverErrorHandle?.getErrorInstance();
 					this.dialogTextData = {
-						windowHeaderText: error.status.toString(),
-						windowText: error.statusText,
+						windowHeaderText: error?.status.toString() ?? 'default',
+						windowText: error?.statusText ?? 'default',
 					};
 				}
-			}),
-		);
-		this.subscription.add(
-			this.storage.isInitiallize$.subscribe(data => {
-				this.isSpinnerActive = data;
-				this.cdr.detectChanges();
 			}),
 		);
 		const potentialToken = localStorage.getItem('authToken');
@@ -60,11 +61,10 @@ export class AppComponent implements OnInit, OnDestroy {
 			);
 		}
 	}
-
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
-	}
 	onButtonClick(e: boolean) {
 		this.storage.setIsDialogWindowOpen(false);
+	}
+	ngOnDestroy(): void {
+		this.subscription.unsubscribe();
 	}
 }

@@ -30,8 +30,6 @@ const DISABLED_BTN_INIT = {
 })
 export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 	@Input() client: Client = CLIENT_INIT_VALUE;
-	private subscription: Subscription = new Subscription();
-	private calendarDates: Array<CalendarDates> = [];
 	public calendarActiveDates: Array<string> = [];
 	public masters: Array<Master> = [];
 	public timesheets: Array<Timesheet> = [];
@@ -42,6 +40,8 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 		prev: false,
 		next: false,
 	};
+	private subscription: Subscription = new Subscription();
+	private calendarDates: Array<CalendarDates> = [];
 	constructor(
 		public http: HttpService,
 		private cdr: ChangeDetectorRef,
@@ -57,9 +57,6 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 					this.cdr.markForCheck();
 				}),
 		);
-	}
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
 	}
 	onDaySelected(date: Dayjs): void {
 		this.client.dateOrder = date.toString();
@@ -146,5 +143,8 @@ export class WizardDateChoiceStepComponent implements OnInit, OnDestroy {
 		// ).map(value => {
 		// 	return value.date;
 		// });
+	}
+	ngOnDestroy(): void {
+		this.subscription.unsubscribe();
 	}
 }

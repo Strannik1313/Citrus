@@ -1,5 +1,5 @@
 export enum UserModel {
-	Admin = 'admin',
-	Auth = 'auth',
-	Unauth = 'unauth',
+	ADMIN = 'admin',
+	AUTH = 'auth',
+	UNAUTH = 'unauth',
 }
