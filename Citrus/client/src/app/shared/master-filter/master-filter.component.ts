@@ -14,7 +14,7 @@ import { Master } from '@models/master';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MasterFilterComponent {
-	@Input() masters: Array<Master> = [];
+	@Input() masters: Array<Master> | null = [];
 	@Output() onFilterChange: EventEmitter<number | null> = new EventEmitter();
 	public isOpen = false;
 	public btnLabel = 'выберите мастера';

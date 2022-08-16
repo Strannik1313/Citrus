@@ -8,11 +8,11 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { DialogWindow } from '@models/dialog-window';
 import { DialogType } from '@shared/dialog-window/dialog-window.component';
-import { HttpService } from '@services/http.service';
 import { StorageService } from '@services/storage.service';
 import { ServerErrorHandleService } from '@services/server-error-handle.service';
 import { AuthHttpService } from '@services/auth-http.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ApiService } from '@services/api.service';
 
 @Component({
 	selector: 'app-root',
@@ -30,7 +30,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	public dialogType: DialogType = DialogType.Error;
 	private subscription: Subscription = new Subscription();
 	constructor(
-		private http: HttpService,
+		private apiService: ApiService,
 		private authHttp: AuthHttpService,
 		public storage: StorageService,
 		private serverErrorHandle: ServerErrorHandleService,

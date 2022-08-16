@@ -1,31 +1,54 @@
-<div class="wizard__container">
-	<app-stepper
-		[currentStep]="currentStep"
-		[stepsQuantity]="stepsQuantity"></app-stepper>
-	<div class="button__container">
-		<button mat-button color="primary" (click)="onBtnClick(false)">{{
-			backBtnLabels
-		}}</button>
-		<button
-			mat-button
-			color="primary"
-			(click)="onBtnClick(true)"
-			[disabled]="!isStepDone"
-			>{{ nextBtnLabel }}</button
-		>
-	</div>
-	<div [ngSwitch]="currentStep">
-		<ng-template ngSwitchCase="{{ wizardStepper.serviceChoice }}">
+<ng-container
+	*ngIf="{
+		services: services$ | async,
+		masters: masters$ | async,
+		dates: dates$ | async,
+		btnConf: calendarBtnConf$ | async,
+		client: client$ | async,
+		timesheets: timesheets$ | async,
+		timeInterval: timeInterval$ | async
+	} as data">
+	<div class="wizard__container">
+		<app-stepper
+			[currentStep]="currentStep"
+			[stepsQuantity]="stepsQuantity"></app-stepper>
+		<div class="button__container">
+			<button (click)="onBtnClick(false)" mat-button color="primary">{{
+				backBtnLabels
+			}}</button>
+			<button
+				mat-button
+				color="primary"
+				(click)="onBtnClick(true)"
+				[disabled]="!isStepDone"
+				>{{ nextBtnLabel }}
+			</button>
+		</div>
+		<div [ngSwitch]="currentStep">
 			<app-wizard-service-choice-step
-				[client]="client"
-				(stepDone)="firstStepDone($event)"></app-wizard-service-choice-step>
-		</ng-template>
-		<ng-template ngSwitchCase="{{ wizardStepper.dateChoice }}">
+				*ngSwitchCase="WizardStepperEnum.SERVICE_CHOICE"
+				(serviceChange)="firstStepDone($event)"
+				[services]="data.services"
+				[client]="data.client">
+			</app-wizard-service-choice-step>
 			<app-wizard-date-choice-step
-				[client]="client"></app-wizard-date-choice-step>
-		</ng-template>
-		<ng-template ngSwitchCase="{{ wizardStepper.confirmPage }}">
-			<app-wizard-confirm-step></app-wizard-confirm-step>
-		</ng-template>
+				*ngSwitchCase="WizardStepperEnum.DATE_CHOICE"
+				(onWeekChange)="onWeekChange($event)"
+				(onMasterChange)="onMasterChange($event)"
+				(onDayChange)="onDayChange($event)"
+				(onMonthChange)="onMonthChange($event)"
+				[months]="months"
+				[timesheets]="data.timesheets"
+				[timeInterval]="data.timeInterval"
+				[btnConf]="data.btnConf"
+				[masters]="data.masters"
+				[dates]="data.dates"
+				[client]="data.client">
+			</app-wizard-date-choice-step>
+			<app-wizard-confirm-step
+				*ngSwitchCase="
+					WizardStepperEnum.CONFIRM_PAGE
+				"></app-wizard-confirm-step>
+		</div>
 	</div>
-</div>
+</ng-container>

@@ -14,7 +14,7 @@ import { Service } from '@models/service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServiceListComponent {
-	@Input() services: Array<Service> = [];
+	@Input() services: Array<Service> | null = [];
 	@Input() choisenService: number | null = null;
 	@Output() serviceClick: EventEmitter<Service> = new EventEmitter();
 	onServiceClick(service: Service | undefined): void {

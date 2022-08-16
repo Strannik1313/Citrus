@@ -16,7 +16,7 @@ import dayjs from 'dayjs';
 })
 export class TimepickerComponent {
 	@Input() time = '';
-	@Input() interval: Array<string> = [];
+	@Input() interval: Array<string> | null = [];
 	@Output() onBtnClick: EventEmitter<boolean> = new EventEmitter();
 	public buttonOpen = false;
 	public label = '<';
@@ -25,7 +25,9 @@ export class TimepickerComponent {
 	constructor(private cdr: ChangeDetectorRef) {}
 	onTimeClick(): void {
 		this.buttonOpen = !this.buttonOpen;
-		this.content = this.interval;
+		if (this.interval !== null) {
+			this.content = this.interval;
+		}
 	}
 	onNextTimeClick(event: Event): void {
 		this.content = this.content.map((item, index, array) => {

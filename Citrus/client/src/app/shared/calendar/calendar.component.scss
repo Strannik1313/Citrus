@@ -12,6 +12,14 @@
 		border-bottom: 1px black solid;
 		border-top: 1px black solid;
 		border-right: 1px black solid;
+		.date {
+			padding: 10px;
+		}
+		.day {
+			text-align: center;
+			color: grey;
+			opacity: 0.5;
+		}
 	}
 	.active {
 		border: 3px solid black;

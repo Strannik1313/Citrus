@@ -8,8 +8,8 @@ import { Timesheet } from '@models/timesheet';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TimesheetComponent {
-	@Input() timesheets: Array<Timesheet> = [];
-	@Input() interval: Array<string> = [];
+	@Input() timesheets: Array<Timesheet> | null = [];
+	@Input() timeInterval: Array<string> | null = [];
 	@Input() selectedMaster: number | null = null;
 	trackByFn(index: number, item: Timesheet | string): number {
 		return index;

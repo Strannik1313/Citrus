@@ -1,4 +1,4 @@
-import { Observable, of, Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import {
 	ChangeDetectionStrategy,
 	Component,
@@ -18,17 +18,21 @@ import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderWrapperComponent implements OnInit, OnDestroy {
-	public buttonConf$: Observable<Array<ButtonConf>> | undefined;
 	public default: ButtonConf[] = btnConfMap.auth;
 	public userModel: UserModel = UserModel.UNAUTH;
 	public homeLink: string = NAVIGATE_ROUTES.home;
+	private buttonConf: BehaviorSubject<ButtonConf[]> = new BehaviorSubject<
+		ButtonConf[]
+	>([]);
 	private subscription: Subscription = new Subscription();
 	constructor(private storage: StorageService) {}
+
+	buttonConf$ = this.buttonConf.asObservable();
 	ngOnInit(): void {
 		this.subscription.add(
 			this.storage.currentUserModel$.subscribe(data => {
 				this.userModel = data;
-				this.buttonConf$ = of(btnConfMap[data]);
+				this.buttonConf.next(btnConfMap[data]);
 			}),
 		);
 	}

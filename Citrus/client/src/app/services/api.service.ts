@@ -9,23 +9,23 @@ import { Timesheet } from '@models/timesheet';
 @Injectable({
 	providedIn: 'root',
 })
-export class HttpService {
+export class ApiService {
 	constructor(private http: HttpClient) {}
 
 	getDates(
 		serviceId: number,
 		dateRangeStart: string,
-		dateRangeEnd: string,
+		masterId: number | null,
 	): Observable<Array<CalendarDates>> {
 		return this.http.post<Array<CalendarDates>>('/api/calendar', {
 			serviceId,
 			dateRangeStart,
-			dateRangeEnd,
+			masterId,
 		});
 	}
 
 	getMasters(
-		serviceId: number,
+		serviceId: number | null,
 		masterId: number | null,
 	): Observable<Array<Master>> {
 		return this.http?.post<Array<Master>>('/api/masters', {

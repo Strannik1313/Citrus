@@ -11,21 +11,21 @@ import { Subscription } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RegisterPageWrapperComponent implements OnDestroy {
-	private disabledForm = false;
+	public disabledForm = false;
 	private subscription: Subscription[] = [];
 	constructor(private router: Router, private authHttp: AuthHttpService) {}
 	disableForm(value: boolean): boolean {
 		return (this.disabledForm = value);
 	}
-	onSafeFormValue(e: AuthForm): void {
-		this.disableForm(true);
+	onSafeFormValue(formValue: AuthForm): void {
+		this.disabledForm = true;
 		this.subscription.push(
-			this.authHttp.register(e).subscribe({
+			this.authHttp.register(formValue).subscribe({
 				next: () => {
 					this.router.navigate(['/login']);
 				},
 				error: error => {
-					this.disableForm(false);
+					this.disabledForm = false;
 				},
 			}),
 		);

@@ -4,11 +4,10 @@ import {
 	Output,
 	EventEmitter,
 	Input,
-	OnInit,
 } from '@angular/core';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 
-const BTNLABELDEF = 'месяц не выбран';
+const BTN_LABEL_DEF = 'месяц не выбран';
 
 @Component({
 	selector: 'app-month-filter',
@@ -16,33 +15,21 @@ const BTNLABELDEF = 'месяц не выбран';
 	styleUrls: ['./month-filter.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MonthFilterComponent implements OnInit {
-	@Input() selectedMonth: Dayjs = dayjs().startOf('month');
-	@Output() onMonthSelected: EventEmitter<Dayjs | null> = new EventEmitter();
+export class MonthFilterComponent {
+	@Input() months: Array<string> = [];
+	@Output() onMonthSelected: EventEmitter<string | null> = new EventEmitter();
 	public isOpen: boolean = false;
-	public btnLabel: string = BTNLABELDEF;
-	public months: Array<string> = [];
-	ngOnInit(): void {
-		this.months = this.createMonths(dayjs().startOf('month'));
-	}
+	public btnLabel: string = BTN_LABEL_DEF;
 	onFilterClick(month: string | null): void {
 		this.isOpen = false;
 		if (month !== null) {
 			this.btnLabel = dayjs(month).format('MMMM');
-			this.onMonthSelected.emit(dayjs(month));
 		} else {
-			this.btnLabel = BTNLABELDEF;
-			this.onMonthSelected.emit(null);
+			this.btnLabel = BTN_LABEL_DEF;
 		}
+		this.onMonthSelected.emit(month);
 	}
 	trackByFn(index: number, item: string): string {
 		return item;
-	}
-	createMonths(startMonth: Dayjs): Array<string> {
-		const month = [];
-		for (let i = 0; i < 6; i++) {
-			month.push(startMonth.add(i, 'month').toString());
-		}
-		return month;
 	}
 }

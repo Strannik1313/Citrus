@@ -1,18 +1,24 @@
 const db = require('../config/db');
 const errorHandler = require('../utils/errorHandler');
 const dayjs = require('dayjs');
-dayjs().format();
-let dayOfYear = require('dayjs/plugin/dayOfYear');
-dayjs.extend(dayOfYear);
-var isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
-dayjs.extend(isSameOrAfter);
+require('dayjs/locale/ru');
+dayjs.locale('ru');
 var isBetween = require('dayjs/plugin/isBetween');
 dayjs.extend(isBetween);
 
 module.exports.calendar = async (req, res) => {
 	const mastersIdArray = [];
-	const dateAndIdArray = [];
-	const dayArray = [];
+	let week = [];
+	let startDay = dayjs(req.body.dateRangeStart).startOf('week');
+	if (startDay.isBefore(dayjs().startOf('day'))) {
+		startDay = dayjs().startOf('week');
+	}
+	for (let i = 0; i <= 6; i++) {
+		week.push({
+			date: startDay.add(i, 'day').toDate(),
+			mastersId: [],
+		});
+	}
 	const mastersCollection = db.collection('masters');
 	const datesCollection = db.collection('calendar');
 	await mastersCollection
@@ -33,56 +39,35 @@ module.exports.calendar = async (req, res) => {
 		.then(collection => {
 			try {
 				collection.forEach(masterTimes => {
-					for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
-						dateAndIdArray.push({
-							masterId: masterTimes.data().masterId,
-							date: masterTimes.data().freeTimes[i].toDate(),
-						});
-					}
-				});
-				dateAndIdArray.sort((a, b) => {
-					return a.date - b.date;
-				});
-				dateAndIdArray.forEach(value => {
 					if (
-						dayjs(value.date).isBetween(
-							dayjs(req.body.dateRangeStart),
-							dayjs(req.body.dateRangeEnd),
-						)
+						req.body.masterId === masterTimes.data().masterId ||
+						req.body.masterId === null
 					) {
-						dayArray.push(value);
-					}
-				});
-				let masters = [];
-				const dates = [];
-				dayArray.forEach((value, index, array) => {
-					if (index !== 0) {
-						if (value.date.getDate() === array[index - 1].date.getDate()) {
-							masters.push(value.masterId);
-						} else {
-							dates.push({
-								date: array[index - 1].date,
-								masterIds: [...masters],
+						for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
+							week = week.map(day => {
+								if (
+									dayjs(day.date).isSame(
+										masterTimes.data().freeTimes[i].toDate(),
+										'day',
+									)
+								) {
+									return {
+										...day,
+										mastersId: [...day.mastersId, masterTimes.data().masterId],
+									};
+								}
+								return day;
 							});
-							masters = [value.masterId];
 						}
-					} else {
-						masters.push(value.masterId);
-					}
-					if (index === array.length - 1) {
-						dates.push({
-							date: value.date,
-							masterIds: [...masters],
-						});
 					}
 				});
-				const filteredDatesArray = dates.map(value => {
+				week = week.map(day => {
 					return {
-						date: value.date,
-						masterIds: Array.from(new Set(value.masterIds)),
+						date: day.date,
+						mastersId: Array.from(new Set(day.mastersId)),
 					};
 				});
-				res.status(200).json(filteredDatesArray);
+				res.status(200).json(week);
 			} catch (error) {
 				errorHandler(res, error);
 			}
@@ -140,8 +125,10 @@ module.exports.timesheets = async (req, res) => {
 				collection.forEach(masterTimes => {
 					for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
 						if (
-							dayjs(req.body.date).dayOfYear() ===
-							dayjs(masterTimes.data().freeTimes[i].toDate()).dayOfYear()
+							dayjs(req.body.date).isSame(
+								masterTimes.data().freeTimes[i].toDate(),
+								'day',
+							)
 						) {
 							timesheets = timesheets.map(order => {
 								if (order.masterId === masterTimes.data().masterId) {
@@ -158,16 +145,16 @@ module.exports.timesheets = async (req, res) => {
 						}
 					}
 				});
+				timesheets = timesheets.filter(order => {
+					return order.freetimes.length > 0;
+				});
 				timesheets = timesheets.map(order => {
-					if (order.freetimes.length > 0) {
-						return {
-							...order,
-							freetimes: order.freetimes.sort((a, b) => {
-								return a - b;
-							}),
-						};
-					}
-					return order;
+					return {
+						...order,
+						freetimes: order.freetimes.sort((a, b) => {
+							return a - b;
+						}),
+					};
 				});
 				res.status(200).json(timesheets);
 			} catch (error) {

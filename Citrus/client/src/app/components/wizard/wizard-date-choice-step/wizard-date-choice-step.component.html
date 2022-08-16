@@ -7,24 +7,23 @@
 			</app-master-filter>
 		</div>
 		<div class="months__filter">
-			<app-month-filter (onMonthSelected)="onMonthFilterChange($event)">
+			<app-month-filter
+				[months]="months"
+				(onMonthSelected)="onMonthFilterChange($event)">
 			</app-month-filter>
 		</div>
 	</div>
 	<div class="calendar">
 		<app-calendar
-			[disabledBtn]="disabledBtn"
-			[selectedMonth]="currentMonth"
-			[activeDates]="calendarActiveDates"
-			(onDaySelected)="onDaySelected($event)"
-			(onWeekChange)="onWeekChange($event)">
+			[btnConf]="btnConf"
+			[dates]="dates"
+			(onDayChange)="onDaySelected($event)"
+			(onWeekChange)="weekChange($event)">
 		</app-calendar>
 	</div>
 	<div class="timesheets">
 		<app-timesheet
 			[timesheets]="timesheets"
-			[interval]="extraTimeInterval"
-			[selectedMaster]="selectedMasterId">
-		</app-timesheet>
+			[timeInterval]="timeInterval"></app-timesheet>
 	</div>
 </div>

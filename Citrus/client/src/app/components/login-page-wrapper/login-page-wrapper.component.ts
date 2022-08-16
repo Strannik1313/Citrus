@@ -11,16 +11,16 @@ import { finalize, Subscription } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginPageWrapperComponent implements OnDestroy {
-	private subscriptions: Subscription[] = [];
 	public disabledForm = false;
+	private subscriptions: Subscription[] = [];
 	constructor(private router: Router, private authHttp: AuthHttpService) {}
 
-	onSafeFormValue(e: AuthForm): void {
+	onSafeFormValue(formValue: AuthForm): void {
 		this.disabledForm = true;
 		this.subscriptions.push(
 			this.authHttp
-				.login(e)
-				?.pipe(
+				.login(formValue)
+				.pipe(
 					finalize(() => {
 						this.disabledForm = false;
 					}),
