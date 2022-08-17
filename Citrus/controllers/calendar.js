@@ -76,6 +76,7 @@ module.exports.calendar = async (req, res) => {
 
 module.exports.timesheets = async (req, res) => {
 	let timesheets = [];
+	let extraTimeInterval = [];
 	const mastersIdArray = [];
 	const mastersCollection = db.collection('masters');
 	const servicesCollection = db.collection('services');
@@ -106,6 +107,9 @@ module.exports.timesheets = async (req, res) => {
 		.then(collection => {
 			try {
 				collection.forEach(service => {
+					for (let i = 0; i <= 120 - service.data().duration; i = i + 10) {
+						extraTimeInterval.push(i.toString());
+					}
 					timesheets = timesheets.map(order => {
 						return {
 							...order,
@@ -153,6 +157,16 @@ module.exports.timesheets = async (req, res) => {
 						...order,
 						freetimes: order.freetimes.sort((a, b) => {
 							return a - b;
+						}),
+					};
+				});
+				timesheets = timesheets.map(order => {
+					return {
+						...order,
+						freetimes: order.freetimes.map(time => {
+							return extraTimeInterval.map(interval => {
+								return dayjs(time).minute(interval).toString();
+							});
 						}),
 					};
 				});

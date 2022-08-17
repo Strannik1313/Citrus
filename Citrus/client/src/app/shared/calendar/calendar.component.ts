@@ -16,6 +16,7 @@ import { CalendarDates } from '@models/calendar-dates';
 })
 export class CalendarComponent {
 	@Input() dates: Array<CalendarDates> | null = [];
+	@Input() preselectedDate: string | null | undefined = null;
 	@Input() btnConf: BtnStatus | null = null;
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
 	@Output() onWeekChange: EventEmitter<{

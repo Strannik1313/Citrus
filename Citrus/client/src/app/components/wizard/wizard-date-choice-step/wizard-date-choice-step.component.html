@@ -17,13 +17,16 @@
 		<app-calendar
 			[btnConf]="btnConf"
 			[dates]="dates"
+			[preselectedDate]="client?.dateOrder"
 			(onDayChange)="onDaySelected($event)"
 			(onWeekChange)="weekChange($event)">
 		</app-calendar>
 	</div>
 	<div class="timesheets">
 		<app-timesheet
+			(onTimeChange)="timeChange($event)"
 			[timesheets]="timesheets"
-			[timeInterval]="timeInterval"></app-timesheet>
+			[timeInterval]="timeInterval">
+		</app-timesheet>
 	</div>
 </div>

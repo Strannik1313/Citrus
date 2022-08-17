@@ -6,7 +6,8 @@
 		btnConf: calendarBtnConf$ | async,
 		client: client$ | async,
 		timesheets: timesheets$ | async,
-		timeInterval: timeInterval$ | async
+		timeInterval: timeInterval$ | async,
+		isValid: isClientValid$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
@@ -20,7 +21,7 @@
 				mat-button
 				color="primary"
 				(click)="onBtnClick(true)"
-				[disabled]="!isStepDone"
+				[disabled]="!data.isValid"
 				>{{ nextBtnLabel }}
 			</button>
 		</div>
@@ -37,6 +38,7 @@
 				(onMasterChange)="onMasterChange($event)"
 				(onDayChange)="onDayChange($event)"
 				(onMonthChange)="onMonthChange($event)"
+				(onTimeChange)="onTimeChange($event)"
 				[months]="months"
 				[timesheets]="data.timesheets"
 				[timeInterval]="data.timeInterval"
@@ -46,9 +48,11 @@
 				[client]="data.client">
 			</app-wizard-date-choice-step>
 			<app-wizard-confirm-step
-				*ngSwitchCase="
-					WizardStepperEnum.CONFIRM_PAGE
-				"></app-wizard-confirm-step>
+				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"
+				[client]="data.client"
+				(onFormChange)="onFormChange($event)"
+				(onFormValid)="onFormValid($event)">
+			</app-wizard-confirm-step>
 		</div>
 	</div>
 </ng-container>

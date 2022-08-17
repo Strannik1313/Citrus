@@ -5,7 +5,7 @@ export interface ChoisenService {
 export interface ChoisenDate {
 	masterName: string;
 	masterId: number | null;
-	dateOrder: Date | null;
+	dateOrder: string | null;
 }
 export interface ClientConfirmStep {
 	name: string;

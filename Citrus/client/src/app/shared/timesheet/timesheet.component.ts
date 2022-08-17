@@ -1,4 +1,11 @@
-import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
+import {
+	Component,
+	ChangeDetectionStrategy,
+	Input,
+	Output,
+	EventEmitter,
+} from '@angular/core';
+import { ChoisenDate } from '@models/client';
 import { Timesheet } from '@models/timesheet';
 
 @Component({
@@ -10,8 +17,11 @@ import { Timesheet } from '@models/timesheet';
 export class TimesheetComponent {
 	@Input() timesheets: Array<Timesheet> | null = [];
 	@Input() timeInterval: Array<string> | null = [];
-	@Input() selectedMaster: number | null = null;
-	trackByFn(index: number, item: Timesheet | string): number {
+	@Output() onTimeChange: EventEmitter<ChoisenDate> = new EventEmitter();
+	timeChange(dateOrder: string, masterId: number, masterName: string): void {
+		this.onTimeChange.emit({ masterName, masterId, dateOrder });
+	}
+	trackByFn(index: number, item: Array<string> | Timesheet): number {
 		return index;
 	}
 }

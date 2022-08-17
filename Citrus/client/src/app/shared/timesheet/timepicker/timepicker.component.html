@@ -1,16 +1,43 @@
-<!-- <div class="container" appOverlayList [content]="interval">
-	{{ time | date: 'HH:mm' }}
-</div> -->
-<div class="container" (click)="onTimeClick()">
-	<button (click)="onNextTimeClick($event)" *ngIf="buttonOpen">{{
-		label
-	}}</button>
-	<div>
-		{{ content[content.length - 1] }}
+<div class="container">
+	<svg
+		(click)="onNextTimeClick()"
+		*ngIf="buttonOpen"
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		class="feather feather-loader">
+		<line x1="3" y1="23" x2="12" y2="19"></line>
+		<line x1="21" y1="23" x2="12" y2="19"></line>
+	</svg>
+	<div class="time__option" *ngIf="buttonOpen">
+		{{ content[content.length - 1] | date: 'mm' }}
 	</div>
-	{{ time | date: 'HH:mm' }}
-	<div>
-		{{ content[1] }}
+	<div (click)="onTimeClick(content[0])">
+		{{ content[0] | date: 'HH:mm' }}
 	</div>
-	<button (click)="onPrevTimeClick($event)" *ngIf="buttonOpen">></button>
+	<div class="time__option" *ngIf="buttonOpen">
+		{{ content[1] | date: 'mm' }}
+	</div>
+	<svg
+		(click)="onPrevTimeClick()"
+		*ngIf="buttonOpen"
+		xmlns="http://www.w3.org/2000/svg"
+		width="16"
+		height="16"
+		viewBox="0 0 24 24"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		class="feather feather-loader">
+		<line x1="21" y1="1" x2="12" y2="5"></line>
+		<line x1="3" y1="1" x2="12" y2="5"></line>
+	</svg>
 </div>

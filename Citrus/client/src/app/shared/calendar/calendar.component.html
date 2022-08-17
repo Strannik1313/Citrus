@@ -2,17 +2,21 @@
 	<button [disabled]="btnConf?.prev" (click)="onChangeWeekClick(-1)"
 		>Prev</button
 	>
-	<div class="cell__container">
-		<div
-			*ngFor="let date of dates; trackBy: trackByFn"
-			class="cell"
-			appAddClass
-			[day]="date"
-			(onDateClick)="onDateClick($event)">
-			<p class="day">{{ date.date | date: 'EEEEE' }}</p>
-			<p class="date">{{ date.date | date: 'dd.MM' }}</p>
-		</div>
-	</div>
+	<table class="cell__container">
+		<tr>
+			<td
+				*ngFor="let date of dates; let i = index; trackBy: trackByFn"
+				class="cell"
+				id="{{ date.date }}"
+				appAddClass
+				[selectedDay]="preselectedDate"
+				[day]="date"
+				(onDateClick)="onDateClick($event)">
+				<p class="day">{{ date.date | date: 'EEEEE' }}</p>
+				<p class="date">{{ date.date | date: 'dd.MM' }}</p>
+			</td>
+		</tr>
+	</table>
 	<button [disabled]="btnConf?.next" (click)="onChangeWeekClick(1)"
 		>Next</button
 	>

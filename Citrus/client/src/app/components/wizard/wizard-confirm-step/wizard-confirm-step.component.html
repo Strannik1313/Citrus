@@ -1,1 +1,33 @@
-<p>wizard-third-step works!</p>
+<mat-card>
+	<form [formGroup]="confirmForm" (ngSubmit)="onSubmit()">
+		<p>Имя мастера:</p>
+		<p>{{ client?.masterName }}</p>
+		<p>Выбранная услуга:</p>
+		<p>{{ client?.serviceName }}</p>
+		<p>Время начала:</p>
+		<p>{{ client?.dateOrder | date: 'HH:mm' }}</p>
+		<p>Дата:</p>
+		<p>{{ client?.dateOrder | date: 'dd.MM' }}</p>
+		<mat-form-field appearance="outline">
+			<mat-label>Фамилия</mat-label>
+			<input matInput formControlName="clientSurname" required />
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label>Имя</mat-label>
+			<input matInput formControlName="clientName" required />
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label>Телефон</mat-label>
+			<input matInput formControlName="phoneNumber" required />
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label>Email</mat-label>
+			<textarea matInput formControlName="email"></textarea>
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label>Комментарии</mat-label>
+			<textarea matInput formControlName="comments"></textarea>
+		</mat-form-field>
+		<p>Оставьте свой email и мы отправим данные о Вашей записи</p>
+	</form>
+</mat-card>

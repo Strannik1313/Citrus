@@ -1,6 +1,12 @@
-import { MAX_SERVICE_DURATION } from '@constants/max-service-duration';
+import { WizardStepperEnum } from '@components/wizard/wizard.component';
+import {
+	CLIENT_INIT_CONFIRM,
+	CLIENT_INIT_DATE,
+	CLIENT_INIT_SERVICE,
+	CLIENT_INIT_VALUE,
+} from '@constants/client-init-value';
 import { BtnStatus, CALENDAR_BTN_INIT_VALUE } from '@models/buttons-status';
-import { Timesheet } from '@models/timesheet';
+import { Client } from '@models/client';
 import dayjs from 'dayjs';
 
 export class WizardHelper {
@@ -14,26 +20,52 @@ export class WizardHelper {
 			}),
 		};
 	}
-	static getExtraTimeInterval(timesheets: Array<Timesheet>): Array<string> {
-		const extraTimeInterval = [];
-		if (timesheets.length > 0) {
-			for (
-				let i = 0;
-				i <= MAX_SERVICE_DURATION - timesheets[0].duration;
-				i = i + 10
-			) {
-				extraTimeInterval.push(
-					i.toString().length === 1 ? i.toString() + '0' : i.toString(),
-				);
-			}
-		}
-		return extraTimeInterval;
-	}
 	static getMonth(): Array<string> {
 		const month = [];
 		for (let i = 0; i < 6; i++) {
 			month.push(dayjs().startOf('month').add(i, 'month').toString());
 		}
 		return month;
+	}
+	static isClientValid(client: Client, step: WizardStepperEnum): boolean {
+		switch (step) {
+			case WizardStepperEnum.SERVICE_CHOICE:
+				return client.serviceId !== null && !!client.serviceName;
+			case WizardStepperEnum.DATE_CHOICE:
+				return (
+					!!client.masterId !== null &&
+					!!client.masterName &&
+					!!client.dateOrder
+				);
+			case WizardStepperEnum.CONFIRM_PAGE:
+				break;
+			default:
+				break;
+		}
+		return false;
+	}
+	static getClientInitValue(client: Client, step: WizardStepperEnum): Client {
+		switch (step) {
+			case WizardStepperEnum.SERVICE_CHOICE:
+				return {
+					...client,
+					...CLIENT_INIT_SERVICE,
+				};
+			case WizardStepperEnum.DATE_CHOICE:
+				return {
+					...client,
+					...CLIENT_INIT_DATE,
+				};
+			case WizardStepperEnum.CONFIRM_PAGE:
+				return {
+					...client,
+					...CLIENT_INIT_CONFIRM,
+				};
+			default:
+				break;
+		}
+		return {
+			...CLIENT_INIT_VALUE,
+		};
 	}
 }

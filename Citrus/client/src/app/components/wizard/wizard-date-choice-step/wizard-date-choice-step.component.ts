@@ -6,7 +6,7 @@ import {
 	EventEmitter,
 } from '@angular/core';
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { Client } from '@models/client';
+import { ChoisenDate, Client } from '@models/client';
 import { CalendarDates } from '@models/calendar-dates';
 import { Master } from '@models/master';
 import { Timesheet } from '@models/timesheet';
@@ -33,6 +33,7 @@ export class WizardDateChoiceStepComponent {
 	@Output() onMasterChange: EventEmitter<number | null> = new EventEmitter();
 	@Output() onDayChange: EventEmitter<string | null> = new EventEmitter();
 	@Output() onMonthChange: EventEmitter<string | null> = new EventEmitter();
+	@Output() onTimeChange: EventEmitter<ChoisenDate> = new EventEmitter();
 	onDaySelected(date: string): void {
 		this.onDayChange.emit(date);
 	}
@@ -44,5 +45,8 @@ export class WizardDateChoiceStepComponent {
 	}
 	onMonthFilterChange(month: string | null): void {
 		this.onMonthChange.emit(month);
+	}
+	timeChange(choisenDate: ChoisenDate): void {
+		this.onTimeChange.emit(choisenDate);
 	}
 }

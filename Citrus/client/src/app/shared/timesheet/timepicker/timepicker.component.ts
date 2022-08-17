@@ -4,9 +4,10 @@ import {
 	Input,
 	Output,
 	EventEmitter,
+	OnChanges,
+	SimpleChanges,
 	ChangeDetectorRef,
 } from '@angular/core';
-import dayjs from 'dayjs';
 
 @Component({
 	selector: 'app-timepicker',
@@ -14,22 +15,21 @@ import dayjs from 'dayjs';
 	styleUrls: ['./timepicker.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimepickerComponent {
-	@Input() time = '';
+export class TimepickerComponent implements OnChanges {
+	@Input() time: Array<string> = [];
 	@Input() interval: Array<string> | null = [];
-	@Output() onBtnClick: EventEmitter<boolean> = new EventEmitter();
+	@Output() onTimeChange: EventEmitter<string> = new EventEmitter();
 	public buttonOpen = false;
-	public label = '<';
-	public isOpen = false;
 	public content: Array<string> = [];
 	constructor(private cdr: ChangeDetectorRef) {}
-	onTimeClick(): void {
-		this.buttonOpen = !this.buttonOpen;
-		if (this.interval !== null) {
-			this.content = this.interval;
-		}
+	ngOnChanges(changes: SimpleChanges): void {
+		this.content = changes.time?.currentValue ?? [];
 	}
-	onNextTimeClick(event: Event): void {
+	onTimeClick(time: string): void {
+		this.buttonOpen = !this.buttonOpen;
+		this.onTimeChange.emit(time);
+	}
+	onNextTimeClick(): void {
 		this.content = this.content.map((item, index, array) => {
 			let count = index;
 			count++;
@@ -38,11 +38,10 @@ export class TimepickerComponent {
 			}
 			return this.content[count];
 		});
-		this.time = dayjs(this.time).minute(Number(this.content[0])).toString();
 		this.cdr.markForCheck();
-		event.stopPropagation();
+		this.onTimeChange.emit(this.content[0]);
 	}
-	onPrevTimeClick(event: Event): void {
+	onPrevTimeClick(): void {
 		this.content = this.content.map((item, index, array) => {
 			let count = index;
 			count--;
@@ -51,8 +50,7 @@ export class TimepickerComponent {
 			}
 			return this.content[count];
 		});
-		this.time = dayjs(this.time).minute(Number(this.content[0])).toString();
 		this.cdr.markForCheck();
-		event.stopPropagation();
+		this.onTimeChange.emit(this.content[0]);
 	}
 }

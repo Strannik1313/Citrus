@@ -3,5 +3,5 @@ export interface Timesheet {
 	masterName: string;
 	cost: number;
 	duration: number;
-	freetimes: Array<string>;
+	freetimes: Array<string[]>;
 }
