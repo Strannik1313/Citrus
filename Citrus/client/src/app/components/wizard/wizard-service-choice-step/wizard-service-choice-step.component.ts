@@ -25,26 +25,8 @@ export class WizardServiceChoiceStepComponent implements OnChanges {
 	public servicesList: Service[] | null = [];
 	public choisenService: number | null = null;
 	ngOnChanges(changes: SimpleChanges): void {
-		for (let propName in changes) {
-			let chng = changes[propName].currentValue;
-			switch (propName) {
-				case 'client':
-					this.choisenService = chng.serviceId;
-					if (chng.serviceId !== null) {
-						this.serviceChange.emit({
-							serviceId: chng.serviceId,
-							serviceName: chng.serviceName,
-						});
-					}
-					break;
-				case 'services':
-					this.servicesList = changes.services?.currentValue;
-					break;
-
-				default:
-					break;
-			}
-		}
+		this.servicesList = changes.services?.currentValue ?? this.servicesList;
+		this.choisenService = changes.client?.currentValue.serviceId;
 	}
 	autocompleteSelected(value: Service | null): void {
 		value

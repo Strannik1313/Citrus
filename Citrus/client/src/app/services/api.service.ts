@@ -5,6 +5,7 @@ import { Service } from '@models/service';
 import { Master } from '@models/master';
 import { CalendarDates } from '@models/calendar-dates';
 import { Timesheet } from '@models/timesheet';
+import { Client } from '@models/client';
 
 @Injectable({
 	providedIn: 'root',
@@ -28,7 +29,7 @@ export class ApiService {
 		serviceId: number | null,
 		masterId: number | null,
 	): Observable<Array<Master>> {
-		return this.http?.post<Array<Master>>('/api/masters', {
+		return this.http.post<Array<Master>>('/api/masters', {
 			serviceId,
 			masterId,
 		});
@@ -47,6 +48,9 @@ export class ApiService {
 	}
 
 	getServices(): Observable<Array<Service>> {
-		return this.http?.get<Array<Service>>('/api/services');
+		return this.http.get<Array<Service>>('/api/services');
+	}
+	makeOrder(formValue: Client): Observable<{ message: boolean }> {
+		return this.http.patch<{ message: boolean }>('/api/order', formValue);
 	}
 }

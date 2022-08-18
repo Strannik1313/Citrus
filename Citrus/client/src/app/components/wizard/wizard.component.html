@@ -7,12 +7,14 @@
 		client: client$ | async,
 		timesheets: timesheets$ | async,
 		timeInterval: timeInterval$ | async,
-		isValid: isClientValid$ | async
+		isValid: isClientValid$ | async,
+		stepsQuantity: stepsQuantity$ | async,
+		updatedPhone: updatedPhone$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
 			[currentStep]="currentStep"
-			[stepsQuantity]="stepsQuantity"></app-stepper>
+			[stepsQuantity]="data.stepsQuantity"></app-stepper>
 		<div class="button__container">
 			<button (click)="onBtnClick(false)" mat-button color="primary">{{
 				backBtnLabels
@@ -28,7 +30,7 @@
 		<div [ngSwitch]="currentStep">
 			<app-wizard-service-choice-step
 				*ngSwitchCase="WizardStepperEnum.SERVICE_CHOICE"
-				(serviceChange)="firstStepDone($event)"
+				(serviceChange)="onServiceChange($event)"
 				[services]="data.services"
 				[client]="data.client">
 			</app-wizard-service-choice-step>
@@ -50,8 +52,9 @@
 			<app-wizard-confirm-step
 				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"
 				[client]="data.client"
+				[updatedPhone]="data.updatedPhone"
 				(onFormChange)="onFormChange($event)"
-				(onFormValid)="onFormValid($event)">
+				(onFormStatusChange)="onFormStatusChange($event)">
 			</app-wizard-confirm-step>
 		</div>
 	</div>

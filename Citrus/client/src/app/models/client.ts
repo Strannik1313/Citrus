@@ -11,6 +11,7 @@ export interface ClientConfirmStep {
 	name: string;
 	surname: string;
 	phoneNumber: string;
+	email?: string;
 	comments?: string;
 }
 export interface Client {
@@ -23,4 +24,5 @@ export interface Client {
 	surname: string;
 	phoneNumber: string;
 	comments?: string;
+	email?: string;
 }

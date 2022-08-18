@@ -2,24 +2,24 @@
 	<div class="filters">
 		<div class="masters__filter">
 			<app-master-filter
-				[masters]="masters"
-				(onFilterChange)="onMasterFilterChange($event)">
+				(onFilterChange)="onMasterFilterChange($event)"
+				[masters]="masters">
 			</app-master-filter>
 		</div>
 		<div class="months__filter">
 			<app-month-filter
-				[months]="months"
-				(onMonthSelected)="onMonthFilterChange($event)">
+				(onMonthSelected)="onMonthFilterChange($event)"
+				[months]="months">
 			</app-month-filter>
 		</div>
 	</div>
 	<div class="calendar">
 		<app-calendar
+			(onDayChange)="onDaySelected($event)"
+			(onWeekChange)="weekChange($event)"
 			[btnConf]="btnConf"
 			[dates]="dates"
-			[preselectedDate]="client?.dateOrder"
-			(onDayChange)="onDaySelected($event)"
-			(onWeekChange)="weekChange($event)">
+			[preselectedDate]="client?.dateOrder">
 		</app-calendar>
 	</div>
 	<div class="timesheets">

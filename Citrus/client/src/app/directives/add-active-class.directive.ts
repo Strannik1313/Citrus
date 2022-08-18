@@ -11,7 +11,7 @@ import {
 	selector: '[appAddActiveClass]',
 })
 export class AddActiveClassDirective implements OnChanges {
-	@Input() selectedElement: number | null = null;
+	@Input() selectedElement: number | string | null = null;
 	constructor(private element: ElementRef, private renderer: Renderer2) {}
 	ngOnChanges(changes: SimpleChanges): void {
 		if (this.selectedElement?.toString() === this.element.nativeElement.id) {

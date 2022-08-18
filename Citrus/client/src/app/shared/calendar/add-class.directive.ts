@@ -48,7 +48,10 @@ export class AddClassDirective
 			: this.renderer.removeClass(this.element.nativeElement, 'disable');
 	}
 	ngAfterViewInit(): void {
-		if (dayjs(this.selectedDay).isSame(this.element.nativeElement.id, 'day')) {
+		if (
+			dayjs(this.selectedDay).isSame(this.element.nativeElement.id, 'day') &&
+			!this.disabled
+		) {
 			this.renderer.addClass(this.element.nativeElement, 'active');
 		} else if (this.element.nativeElement.classList.contains('active')) {
 			this.renderer.removeClass(this.element.nativeElement, 'active');

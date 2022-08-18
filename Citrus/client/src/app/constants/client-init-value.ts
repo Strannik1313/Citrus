@@ -13,6 +13,7 @@ export const CLIENT_INIT_CONFIRM = {
 	surname: '',
 	phoneNumber: '',
 	comments: '',
+	email: '',
 };
 export const CLIENT_INIT_VALUE = {
 	masterId: null,
@@ -24,4 +25,5 @@ export const CLIENT_INIT_VALUE = {
 	phoneNumber: '',
 	dateOrder: null,
 	comments: '',
+	email: '',
 };

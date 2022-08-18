@@ -5,7 +5,7 @@ import {
 	Input,
 	ViewContainerRef,
 } from '@angular/core';
-import { OverlayListComponent } from '@shared/overlay-list/overlay-list.component';
+import { OverlayListComponent } from 'src/app/depricated/overlay-list/overlay-list.component';
 import { filter, fromEvent, Subscription } from 'rxjs';
 
 @Directive({

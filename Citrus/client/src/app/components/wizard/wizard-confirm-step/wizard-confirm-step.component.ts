@@ -5,6 +5,8 @@ import {
 	Output,
 	EventEmitter,
 	OnInit,
+	OnChanges,
+	SimpleChanges,
 } from '@angular/core';
 import {
 	FormControl,
@@ -13,10 +15,9 @@ import {
 	Validators,
 } from '@angular/forms';
 import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { Client } from '@models/client';
-import { ConfirmForm } from '@models/confirm-form';
+import { Client, ClientConfirmStep } from '@models/client';
 import { StorageService } from '@services/storage.service';
-import { filter, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'app-wizard-confirm-step',
@@ -24,18 +25,19 @@ import { filter, Observable } from 'rxjs';
 	styleUrls: ['./wizard-confirm-step.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardConfirmStepComponent implements OnInit {
+export class WizardConfirmStepComponent implements OnInit, OnChanges {
 	@Input() client: Client | null = CLIENT_INIT_VALUE;
-	@Output() onFormChange: EventEmitter<Observable<ConfirmForm>> =
+	@Input() updatedPhone: string | null = '';
+	@Output() onFormChange: EventEmitter<Observable<ClientConfirmStep>> =
 		new EventEmitter();
-	@Output() onFormValid: EventEmitter<Observable<FormControlStatus>> =
+	@Output() onFormStatusChange: EventEmitter<Observable<FormControlStatus>> =
 		new EventEmitter();
 	confirmForm = new FormGroup({
-		clientSurname: new FormControl('', [
+		surname: new FormControl('', [
 			Validators.required,
 			Validators.pattern('[А-ЯЁ][а-яё]{1,}'),
 		]),
-		clientName: new FormControl('', [
+		name: new FormControl('', [
 			Validators.required,
 			Validators.pattern('[А-ЯЁ][а-яё]{1,}'),
 		]),
@@ -55,23 +57,16 @@ export class WizardConfirmStepComponent implements OnInit {
 	constructor(private storage: StorageService) {}
 	ngOnInit(): void {
 		this.onFormChange.emit(this.confirmForm.valueChanges);
-		this.confirmForm.valueChanges
-			.pipe(
-				filter(formvalue => {
-					// console.log(formvalue['phoneNumber'].includes('+375('))
-					return (
-						this.confirmForm.valid && formvalue['phoneNumber'].includes('+375(')
-					);
-				}),
-			)
-			.subscribe(data => {
-				// console.log(data)
-			});
+		this.onFormStatusChange.emit(this.confirmForm.statusChanges);
 	}
-	onInputFocus(): void {
-		this.confirmForm.patchValue({ phoneNumber: '+375(' });
-	}
-	onSubmit() {
-		//TODO
+	ngOnChanges(changes: SimpleChanges): void {
+		if (!!changes.updatedPhone) {
+			this.confirmForm.patchValue(
+				{
+					phoneNumber: changes.updatedPhone.currentValue ?? '',
+				},
+				{ emitEvent: false },
+			);
+		}
 	}
 }

@@ -1,5 +1,5 @@
 <mat-card>
-	<form [formGroup]="confirmForm" (ngSubmit)="onSubmit()">
+	<form [formGroup]="confirmForm">
 		<p>Имя мастера:</p>
 		<p>{{ client?.masterName }}</p>
 		<p>Выбранная услуга:</p>
@@ -10,24 +10,50 @@
 		<p>{{ client?.dateOrder | date: 'dd.MM' }}</p>
 		<mat-form-field appearance="outline">
 			<mat-label>Фамилия</mat-label>
-			<input matInput formControlName="clientSurname" required />
+			<input
+				placeholder="Иванова"
+				matInput
+				formControlName="surname"
+				required />
+			<mat-error *ngIf="confirmForm.controls['surname'].errors?.['required']"
+				>Поле обязательно</mat-error
+			>
+			<mat-error *ngIf="confirmForm.controls['surname'].errors?.['pattern']"
+				>Некорректная запись</mat-error
+			>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
 			<mat-label>Имя</mat-label>
-			<input matInput formControlName="clientName" required />
+			<input placeholder="Инна" matInput formControlName="name" required />
+			<mat-error *ngIf="confirmForm.controls['name'].errors?.['required']"
+				>Поле обязательно</mat-error
+			>
+			<mat-error *ngIf="confirmForm.controls['name'].errors?.['pattern']"
+				>Некорректная запись</mat-error
+			>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
 			<mat-label>Телефон</mat-label>
-			<input (focus)="onInputFocus()" matInput formControlName="phoneNumber" required />
+			<input
+				placeholder="+375(29)888-88-88"
+				matInput
+				formControlName="phoneNumber"
+				required />
+			<mat-error *ngIf="confirmForm.controls['phoneNumber'].errors?.['pattern']"
+				>Некорректный номер</mat-error
+			>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
 			<mat-label>Email</mat-label>
-			<textarea matInput formControlName="email"></textarea>
+			<input placeholder="example@gmail.com" matInput formControlName="email" />
+			<mat-error *ngIf="confirmForm.controls['email'].errors?.['pattern']"
+				>Некорректный email</mat-error
+			>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
 			<mat-label>Комментарии</mat-label>
 			<textarea matInput formControlName="comments"></textarea>
 		</mat-form-field>
-		<p>Оставьте свой email и мы отправим данные о Вашей записи</p>
+		<p>Оставьте свой email и мы отправим туда данные о Вашей записи</p>
 	</form>
 </mat-card>

@@ -21,7 +21,6 @@ export class NavigateService {
 				this.storage.setAccessMap('/');
 				this.route.navigate(['/']);
 				this.storage.setIsDialogWindowOpen(false);
-				this.storage.resetClient();
 				break;
 			}
 			case '/logout': {
