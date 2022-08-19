@@ -56,6 +56,7 @@ export class WizardComponent implements OnDestroy {
 		CLIENT_INIT_VALUE,
 	);
 	public selectedDay: string | null = null;
+	public openedTimepicker: string | null = null;
 	private isClientValid: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private calendarBtnConf: BehaviorSubject<BtnStatus> =
@@ -232,6 +233,7 @@ export class WizardComponent implements OnDestroy {
 		}
 	}
 	onTimeChange(choisenDate: ChoisenDate): void {
+		this.openedTimepicker = choisenDate.dateOrder;
 		this.client.next({
 			...this.client.value,
 			...choisenDate,
@@ -259,10 +261,7 @@ export class WizardComponent implements OnDestroy {
 			case WizardStepperEnum.DATE_CHOICE:
 				this.timesheets$ = of([]);
 				this.nextBtnLabel = BTN_LABELS.next;
-				this.masters$ = this.apiService.getMasters(
-					this.client.value.serviceId,
-					this.client.value.masterId,
-				);
+				this.masters$ = this.apiService.getMasters(this.client.value.serviceId);
 				this.months = WizardHelper.getMonth();
 				if (this.client.value.serviceId !== null) {
 					this.startWeekDay = dayjs().startOf('week').toString();
@@ -290,7 +289,7 @@ export class WizardComponent implements OnDestroy {
 					this.timesheets$ = this.apiService.getTimesheets(
 						this.client.value.serviceId,
 						this.selectedDay,
-						this.client.value.masterId,
+						null,
 					);
 				}
 				break;

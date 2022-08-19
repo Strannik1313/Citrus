@@ -26,6 +26,7 @@ export class WizardDateChoiceStepComponent {
 	@Input() btnConf: BtnStatus | null = null;
 	@Input() timesheets: Array<Timesheet> | null = null;
 	@Input() selectedDay: string | null = null;
+	@Input() openedTimepicker: string | null = null;
 	@Output() onWeekChange: EventEmitter<{
 		startDay: string;
 		increase: number;

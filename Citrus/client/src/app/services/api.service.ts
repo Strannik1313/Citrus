@@ -25,13 +25,9 @@ export class ApiService {
 		});
 	}
 
-	getMasters(
-		serviceId: number | null,
-		masterId: number | null,
-	): Observable<Array<Master>> {
+	getMasters(serviceId: number | null): Observable<Array<Master>> {
 		return this.http.post<Array<Master>>('/api/masters', {
 			serviceId,
-			masterId,
 		});
 	}
 

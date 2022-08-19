@@ -16,6 +16,7 @@ import { Timesheet } from '@models/timesheet';
 })
 export class TimesheetComponent {
 	@Input() timesheets: Array<Timesheet> | null = [];
+	@Input() openedTimepicker: string | null = null;
 	@Output() onTimeChange: EventEmitter<ChoisenDate> = new EventEmitter();
 	timeChange(dateOrder: string, masterId: number, masterName: string): void {
 		this.onTimeChange.emit({ masterName, masterId, dateOrder });

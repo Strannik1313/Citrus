@@ -17,15 +17,16 @@ import {
 })
 export class TimepickerComponent implements OnChanges {
 	@Input() time: Array<string> = [];
+	@Input() openedTime: string | null = null;
 	@Output() onTimeChange: EventEmitter<string> = new EventEmitter();
-	public buttonOpen = false;
 	public content: Array<string> = [];
 	constructor(private cdr: ChangeDetectorRef) {}
 	ngOnChanges(changes: SimpleChanges): void {
-		this.content = changes.time?.currentValue ?? [];
+		if (changes.time?.currentValue) {
+			this.content = changes.time?.currentValue;
+		}
 	}
 	onTimeClick(time: string): void {
-		this.buttonOpen = !this.buttonOpen;
 		this.onTimeChange.emit(time);
 	}
 	onNextTimeClick(): void {

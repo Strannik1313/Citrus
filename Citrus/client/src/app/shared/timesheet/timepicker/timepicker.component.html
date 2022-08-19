@@ -1,7 +1,7 @@
-<div class="container">
+<div class="container" [class.active]="openedTime === content[0]">
 	<svg
 		(click)="onNextTimeClick()"
-		*ngIf="buttonOpen"
+		*ngIf="openedTime === content[0]"
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
 		height="16"
@@ -15,18 +15,18 @@
 		<line x1="3" y1="23" x2="12" y2="19"></line>
 		<line x1="21" y1="23" x2="12" y2="19"></line>
 	</svg>
-	<div class="time__option" *ngIf="buttonOpen">
+	<div class="time__option" *ngIf="openedTime === content[0]">
 		{{ content[content.length - 1] | date: 'mm' }}
 	</div>
 	<div (click)="onTimeClick(content[0])">
 		{{ content[0] | date: 'HH:mm' }}
 	</div>
-	<div class="time__option" *ngIf="buttonOpen">
+	<div class="time__option" *ngIf="openedTime === content[0]">
 		{{ content[1] | date: 'mm' }}
 	</div>
 	<svg
 		(click)="onPrevTimeClick()"
-		*ngIf="buttonOpen"
+		*ngIf="openedTime === content[0]"
 		xmlns="http://www.w3.org/2000/svg"
 		width="16"
 		height="16"
