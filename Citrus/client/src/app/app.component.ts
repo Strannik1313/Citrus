@@ -1,6 +1,5 @@
 import {
 	ChangeDetectionStrategy,
-	ChangeDetectorRef,
 	Component,
 	OnDestroy,
 	OnInit,
@@ -12,7 +11,6 @@ import { StorageService } from '@services/storage.service';
 import { ServerErrorHandleService } from '@services/server-error-handle.service';
 import { AuthHttpService } from '@services/auth-http.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ApiService } from '@services/api.service';
 
 @Component({
 	selector: 'app-root',
@@ -30,11 +28,9 @@ export class AppComponent implements OnInit, OnDestroy {
 	public dialogType: DialogType = DialogType.Error;
 	private subscription: Subscription = new Subscription();
 	constructor(
-		private apiService: ApiService,
 		private authHttp: AuthHttpService,
 		public storage: StorageService,
 		private serverErrorHandle: ServerErrorHandleService,
-		private cdr: ChangeDetectorRef,
 	) {}
 	ngOnInit(): void {
 		this.subscription.add(
