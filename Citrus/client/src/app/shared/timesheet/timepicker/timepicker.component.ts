@@ -17,7 +17,6 @@ import {
 })
 export class TimepickerComponent implements OnChanges {
 	@Input() time: Array<string> = [];
-	@Input() interval: Array<string> | null = [];
 	@Output() onTimeChange: EventEmitter<string> = new EventEmitter();
 	public buttonOpen = false;
 	public content: Array<string> = [];

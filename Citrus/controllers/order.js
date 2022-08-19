@@ -16,13 +16,13 @@ module.exports.order = async (req, res) => {
 			try {
 				collection.forEach(timesheet => {
 					if (
-						timesheet.data().freeTimes.find(time => {
+						timesheet.data().freeTimes.filter(time => {
 							if (dayjs(time.toDate()).isSame(req.body.dateOrder, 'hour')) {
 								return true;
 							}
 							dateArray.push(time.toDate());
 							return false;
-						})
+						}).length !== null
 					) {
 						dateExist = true;
 						dateDocId = timesheet.id;

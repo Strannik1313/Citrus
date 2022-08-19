@@ -6,7 +6,6 @@
 		btnConf: calendarBtnConf$ | async,
 		client: client$ | async,
 		timesheets: timesheets$ | async,
-		timeInterval: timeInterval$ | async,
 		isValid: isClientValid$ | async,
 		stepsQuantity: stepsQuantity$ | async,
 		updatedPhone: updatedPhone$ | async
@@ -43,11 +42,11 @@
 				(onTimeChange)="onTimeChange($event)"
 				[months]="months"
 				[timesheets]="data.timesheets"
-				[timeInterval]="data.timeInterval"
 				[btnConf]="data.btnConf"
 				[masters]="data.masters"
 				[dates]="data.dates"
-				[client]="data.client">
+				[client]="data.client"
+				[selectedDay]="selectedDay">
 			</app-wizard-date-choice-step>
 			<app-wizard-confirm-step
 				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"

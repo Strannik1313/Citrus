@@ -19,14 +19,13 @@
 			(onWeekChange)="weekChange($event)"
 			[btnConf]="btnConf"
 			[dates]="dates"
-			[preselectedDate]="client?.dateOrder">
+			[preselectedDate]="client?.dateOrder ?? selectedDay">
 		</app-calendar>
 	</div>
 	<div class="timesheets">
 		<app-timesheet
 			(onTimeChange)="timeChange($event)"
-			[timesheets]="timesheets"
-			[timeInterval]="timeInterval">
+			[timesheets]="timesheets">
 		</app-timesheet>
 	</div>
 </div>

@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subscription, tap } from 'rxjs';
 import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
 import { BTN_LABELS } from '@constants/btn-labels';
 import {
@@ -39,7 +39,7 @@ export enum WizardStepperEnum {
 	styleUrls: ['./wizard.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardComponent {
+export class WizardComponent implements OnDestroy {
 	public months: Array<string> = [];
 	public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
 	public currentStep: WizardStepperEnum = WizardStepperEnum.SERVICE_CHOICE;
@@ -55,56 +55,55 @@ export class WizardComponent {
 	private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(
 		CLIENT_INIT_VALUE,
 	);
+	public selectedDay: string | null = null;
 	private isClientValid: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private calendarBtnConf: BehaviorSubject<BtnStatus> =
 		new BehaviorSubject<BtnStatus>(CALENDAR_BTN_INIT_VALUE);
-	private timeInterval: BehaviorSubject<Array<string>> = new BehaviorSubject<
-		Array<string>
-	>([]);
 	private updatedPhone: BehaviorSubject<string> = new BehaviorSubject<string>(
 		'',
 	);
 	private startWeekDay: string = '';
-	private selectedDay: string | null = null;
 	private selectedMonth: string | null = null;
 	private confirmFormValue: ClientConfirmStep = CLIENT_INIT_CONFIRM;
+	private subscription: Subscription = new Subscription();
 	calendarBtnConf$ = this.calendarBtnConf.asObservable();
 	isClientValid$ = this.isClientValid.asObservable();
 	client$ = this.client.asObservable();
-	timeInterval$ = this.timeInterval.asObservable();
 	stepsQuantity$ = this.stepsQuantity.asObservable();
 	updatedPhone$ = this.updatedPhone.asObservable();
 	constructor(private router: Router, private apiService: ApiService) {
 		this.services$ = apiService.getServices();
 	}
 	onFormChange(observable: Observable<ClientConfirmStep>): void {
-		observable.subscribe(formValue => {
-			this.updatedPhone.next(
-				WizardHelper.updatePhoneNumber(formValue.phoneNumber),
-			);
-			this.confirmFormValue = formValue;
-			//TODO unsubscribe
-		});
+		this.subscription.add(
+			observable.subscribe(formValue => {
+				this.updatedPhone.next(
+					WizardHelper.updatePhoneNumber(formValue.phoneNumber),
+				);
+				this.confirmFormValue = formValue;
+			}),
+		);
 	}
 	onFormStatusChange(observable: Observable<FormControlStatus>): void {
-		observable.subscribe(data => {
-			if (data === 'VALID') {
-				this.client.next({
-					...this.client.value,
-					...this.confirmFormValue,
-				});
-			} else {
-				this.client.next({
-					...this.client.value,
-					...CLIENT_INIT_CONFIRM,
-				});
-			}
-			this.isClientValid.next(
-				WizardHelper.isClientValid(this.client.value, this.currentStep),
-			);
-			//TODO unsubscribe
-		});
+		this.subscription.add(
+			observable.subscribe(status => {
+				if (status === 'VALID') {
+					this.client.next({
+						...this.client.value,
+						...this.confirmFormValue,
+					});
+				} else {
+					this.client.next({
+						...this.client.value,
+						...CLIENT_INIT_CONFIRM,
+					});
+				}
+				this.isClientValid.next(
+					WizardHelper.isClientValid(this.client.value, this.currentStep),
+				);
+			}),
+		);
 	}
 	onServiceChange(value: ChoisenService): void {
 		this.client.next({ ...this.client.value, ...value });
@@ -178,6 +177,15 @@ export class WizardComponent {
 	}
 	onDayChange(date: string | null): void {
 		this.selectedDay = date;
+		this.client.next({
+			...this.client.value,
+			masterId: null,
+			masterName: '',
+			dateOrder: null,
+		});
+		this.isClientValid.next(
+			WizardHelper.isClientValid(this.client.value, this.currentStep),
+		);
 		if (this.client.value.serviceId !== null) {
 			this.timesheets$ = this.apiService.getTimesheets(
 				this.client.value.serviceId,
@@ -189,8 +197,17 @@ export class WizardComponent {
 	onMonthChange(month: string | null): void {
 		this.selectedMonth = month;
 		this.selectedDay = null;
-		this.startWeekDay = dayjs(month).startOf('week').toString();
+		this.startWeekDay = dayjs(month ?? this.startWeekDay)
+			.startOf('week')
+			.toString();
 		this.timesheets$ = of([]);
+		this.client.next({
+			...this.client.value,
+			dateOrder: null,
+		});
+		this.isClientValid.next(
+			WizardHelper.isClientValid(this.client.value, this.currentStep),
+		);
 		if (this.client.value.serviceId !== null && month !== null) {
 			this.dates$ = this.apiService
 				.getDates(
@@ -237,6 +254,7 @@ export class WizardComponent {
 		);
 		switch (this.currentStep) {
 			case WizardStepperEnum.SERVICE_CHOICE:
+				this.selectedDay = null;
 				break;
 			case WizardStepperEnum.DATE_CHOICE:
 				this.timesheets$ = of([]);
@@ -289,5 +307,8 @@ export class WizardComponent {
 				this.router.navigate([NAVIGATE_ROUTES.home]);
 				break;
 		}
+	}
+	ngOnDestroy(): void {
+		this.subscription.unsubscribe();
 	}
 }

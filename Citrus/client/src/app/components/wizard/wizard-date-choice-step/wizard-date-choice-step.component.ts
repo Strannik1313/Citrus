@@ -25,7 +25,7 @@ export class WizardDateChoiceStepComponent {
 	@Input() dates: Array<CalendarDates> | null = [];
 	@Input() btnConf: BtnStatus | null = null;
 	@Input() timesheets: Array<Timesheet> | null = null;
-	@Input() timeInterval: Array<string> | null = null;
+	@Input() selectedDay: string | null = null;
 	@Output() onWeekChange: EventEmitter<{
 		startDay: string;
 		increase: number;

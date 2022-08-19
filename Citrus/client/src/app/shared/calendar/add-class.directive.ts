@@ -23,7 +23,7 @@ export class AddClassDirective
 	implements OnInit, OnChanges, AfterViewInit, OnDestroy
 {
 	@Input() day: CalendarDates | undefined;
-	@Input() selectedDay: string | null | undefined;
+	@Input() selectedDay: string | null = null;
 	@Output() onDateClick: EventEmitter<CalendarDates> = new EventEmitter();
 	private disabled = true;
 	private subscription: Subscription = new Subscription();
@@ -42,10 +42,17 @@ export class AddClassDirective
 		);
 	}
 	ngOnChanges(changes: SimpleChanges): void {
-		this.disabled = changes.day?.currentValue.mastersId.length === 0;
-		this.disabled
-			? this.renderer.addClass(this.element.nativeElement, 'disable')
-			: this.renderer.removeClass(this.element.nativeElement, 'disable');
+		if (changes.day?.currentValue) {
+			this.disabled = changes.day?.currentValue.mastersId.length === 0;
+			this.disabled
+				? this.renderer.addClass(this.element.nativeElement, 'disable')
+				: this.renderer.removeClass(this.element.nativeElement, 'disable');
+		}
+		if (
+			!dayjs(changes.selectedDay?.currentValue).isSame(this.day?.date, 'day')
+		) {
+			this.renderer.removeClass(this.element.nativeElement, 'active');
+		}
 	}
 	ngAfterViewInit(): void {
 		if (
