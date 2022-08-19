@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AccessMap } from '@models/access-map';
 import { AuthorizedClient } from '@models/authorized-client';
+import { DialogWindow, DIALOG_WINDOW_INIT } from '@models/dialog-window';
 import { UserModel } from '@models/user-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -10,6 +11,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class StorageService {
 	private isInitiallize: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
+	private dialogTextData: BehaviorSubject<DialogWindow> =
+		new BehaviorSubject<DialogWindow>(DIALOG_WINDOW_INIT);
 	private isDialogWindowOpen: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
 	private currentUserModel: BehaviorSubject<UserModel> =
@@ -35,6 +38,8 @@ export class StorageService {
 	private _tempArray: Array<string> = ['/'];
 
 	isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
+	dialogTextData$: Observable<DialogWindow> =
+		this.dialogTextData.asObservable();
 	isDialogWindowOpen$: Observable<boolean> =
 		this.isDialogWindowOpen.asObservable();
 	currentUserModel$: Observable<UserModel> =
@@ -115,5 +120,9 @@ export class StorageService {
 	}
 	setInitializeStatus(status: boolean): void {
 		this.isInitiallize.next(status);
+	}
+	openNewDialogWindow(conf: DialogWindow): void {
+		this.isDialogWindowOpen.next(true);
+		this.dialogTextData.next(conf);
 	}
 }

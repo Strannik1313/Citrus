@@ -11,7 +11,8 @@ export class ServerErrorHandleService {
 
 	setErrorInstance(error: HttpErrorResponse): void {
 		this.errorInstance = error;
-		this.storage?.setIsDialogWindowOpen(true);
+		this.storage.setIsDialogWindowOpen(true);
+		this.storage.openNewDialogWindow(error.error);
 	}
 	getErrorInstance(): HttpErrorResponse {
 		return this.errorInstance;

@@ -2,7 +2,7 @@ const dayjs = require('dayjs');
 const db = require('../config/db');
 const errorHandler = require('../utils/errorHandler');
 
-module.exports.order = async (req, res) => {
+module.exports.order = async (req, res, next) => {
 	let idOrder = 0;
 	let dateExist = false;
 	let dateDocId = '';
@@ -17,30 +17,39 @@ module.exports.order = async (req, res) => {
 				collection.forEach(timesheet => {
 					if (
 						timesheet.data().freeTimes.filter(time => {
-							if (dayjs(time.toDate()).isSame(req.body.dateOrder, 'hour')) {
+							if (
+								dayjs(time.toDate()).isSame(req.body.dateOrder, 'day') &&
+								dayjs(time.toDate()).isSame(req.body.dateOrder, 'hour')
+							) {
 								return true;
 							}
 							dateArray.push(time.toDate());
 							return false;
-						}).length !== null
+						}).length !== 0
 					) {
 						dateExist = true;
 						dateDocId = timesheet.id;
 					} else {
 						dateExist = false;
-						res.status(404).json({ message: 'Not found' });
-						return;
+						res.status(404).json({
+							windowHeaderText: 'Ошибка',
+							windowText: 'Данное время уже занято',
+							buttonLabel: 'Ok',
+							customMessage: 'Попробуйте заново',
+							type: 'error',
+						});
+						throw new Error();
 					}
 				});
 			} catch (error) {
-				errorHandler(res, error);
+				errorHandler(error, req, res, next);
 			}
 			try {
 				calendarCollection.doc(dateDocId).update({
 					freeTimes: dateArray,
 				});
 			} catch (error) {
-				errorHandler(res, error);
+				errorHandler(error, req, res, next);
 			}
 		});
 	if (dateExist) {
@@ -66,9 +75,21 @@ module.exports.order = async (req, res) => {
 					isDoneByAdmin: false,
 				});
 
-				res.status(200).json({ message: true });
+				res.status(200).json({
+					windowHeaderText: 'Ваша запись успешно оформлена',
+					windowText: '',
+					buttonLabel: 'Ok',
+					customMessage: `Вы записаны к мастеру ${req.body.masterName}, ${dayjs(
+						req.body.dateOrder,
+					)
+						.format('DD MMMM')
+						.toString()} в ${dayjs(req.body.dateOrder)
+						.format('HH:mm')
+						.toString()}, на процедуру ${req.body.serviceName}`,
+					type: 'confirm',
+				});
 			} catch (error) {
-				errorHandler(res, error);
+				errorHandler(error, req, res, next);
 			}
 		});
 	}

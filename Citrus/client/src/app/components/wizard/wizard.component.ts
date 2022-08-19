@@ -1,6 +1,13 @@
 import { ChangeDetectionStrategy, Component, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, Subscription, tap } from 'rxjs';
+import {
+	BehaviorSubject,
+	finalize,
+	Observable,
+	of,
+	Subscription,
+	tap,
+} from 'rxjs';
 import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
 import { BTN_LABELS } from '@constants/btn-labels';
 import {
@@ -22,6 +29,7 @@ import { Timesheet } from '@models/timesheet';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
+import { StorageService } from '@services/storage.service';
 dayjs.locale('ru');
 
 const STEPS_QUATITY = [1, 2, 3];
@@ -42,7 +50,6 @@ export enum WizardStepperEnum {
 export class WizardComponent implements OnDestroy {
 	public months: Array<string> = [];
 	public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
-	public currentStep: WizardStepperEnum = WizardStepperEnum.SERVICE_CHOICE;
 	public nextBtnLabel: string = BTN_LABELS.next;
 	public backBtnLabels: string = BTN_LABELS.back;
 	public services$;
@@ -59,6 +66,8 @@ export class WizardComponent implements OnDestroy {
 	public openedTimepicker: string | null = null;
 	private isClientValid: BehaviorSubject<boolean> =
 		new BehaviorSubject<boolean>(false);
+	private currentStep: BehaviorSubject<WizardStepperEnum> =
+		new BehaviorSubject<WizardStepperEnum>(WizardStepperEnum.SERVICE_CHOICE);
 	private calendarBtnConf: BehaviorSubject<BtnStatus> =
 		new BehaviorSubject<BtnStatus>(CALENDAR_BTN_INIT_VALUE);
 	private updatedPhone: BehaviorSubject<string> = new BehaviorSubject<string>(
@@ -69,11 +78,16 @@ export class WizardComponent implements OnDestroy {
 	private confirmFormValue: ClientConfirmStep = CLIENT_INIT_CONFIRM;
 	private subscription: Subscription = new Subscription();
 	calendarBtnConf$ = this.calendarBtnConf.asObservable();
+	currentStep$ = this.currentStep.asObservable();
 	isClientValid$ = this.isClientValid.asObservable();
 	client$ = this.client.asObservable();
 	stepsQuantity$ = this.stepsQuantity.asObservable();
 	updatedPhone$ = this.updatedPhone.asObservable();
-	constructor(private router: Router, private apiService: ApiService) {
+	constructor(
+		private router: Router,
+		private apiService: ApiService,
+		private storage: StorageService,
+	) {
 		this.services$ = apiService.getServices();
 	}
 	onFormChange(observable: Observable<ClientConfirmStep>): void {
@@ -101,7 +115,7 @@ export class WizardComponent implements OnDestroy {
 					});
 				}
 				this.isClientValid.next(
-					WizardHelper.isClientValid(this.client.value, this.currentStep),
+					WizardHelper.isClientValid(this.client.value, this.currentStep.value),
 				);
 			}),
 		);
@@ -109,7 +123,7 @@ export class WizardComponent implements OnDestroy {
 	onServiceChange(value: ChoisenService): void {
 		this.client.next({ ...this.client.value, ...value });
 		this.isClientValid.next(
-			WizardHelper.isClientValid(this.client.value, this.currentStep),
+			WizardHelper.isClientValid(this.client.value, this.currentStep.value),
 		);
 	}
 	onWeekChange(event: { startDay: string; increase: number }): void {
@@ -120,7 +134,7 @@ export class WizardComponent implements OnDestroy {
 			dateOrder: null,
 		});
 		this.isClientValid.next(
-			WizardHelper.isClientValid(this.client.value, this.currentStep),
+			WizardHelper.isClientValid(this.client.value, this.currentStep.value),
 		);
 		this.startWeekDay = dayjs(event.startDay)
 			.add(event.increase, 'week')
@@ -185,7 +199,7 @@ export class WizardComponent implements OnDestroy {
 			dateOrder: null,
 		});
 		this.isClientValid.next(
-			WizardHelper.isClientValid(this.client.value, this.currentStep),
+			WizardHelper.isClientValid(this.client.value, this.currentStep.value),
 		);
 		if (this.client.value.serviceId !== null) {
 			this.timesheets$ = this.apiService.getTimesheets(
@@ -207,7 +221,7 @@ export class WizardComponent implements OnDestroy {
 			dateOrder: null,
 		});
 		this.isClientValid.next(
-			WizardHelper.isClientValid(this.client.value, this.currentStep),
+			WizardHelper.isClientValid(this.client.value, this.currentStep.value),
 		);
 		if (this.client.value.serviceId !== null && month !== null) {
 			this.dates$ = this.apiService
@@ -239,22 +253,25 @@ export class WizardComponent implements OnDestroy {
 			...choisenDate,
 		});
 		this.isClientValid.next(
-			WizardHelper.isClientValid(this.client.value, this.currentStep),
+			WizardHelper.isClientValid(this.client.value, this.currentStep.value),
 		);
 	}
 	onBtnClick(isNextStep: boolean): void {
 		if (isNextStep) {
-			this.currentStep += 1;
+			this.currentStep.next(this.currentStep.value + 1);
 		} else {
 			this.client.next(
-				WizardHelper.getClientInitValue(this.client.value, this.currentStep),
+				WizardHelper.getClientInitValue(
+					this.client.value,
+					this.currentStep.value,
+				),
 			);
-			this.currentStep -= 1;
+			this.currentStep.next(this.currentStep.value - 1);
 		}
 		this.isClientValid.next(
-			WizardHelper.isClientValid(this.client.value, this.currentStep),
+			WizardHelper.isClientValid(this.client.value, this.currentStep.value),
 		);
-		switch (this.currentStep) {
+		switch (this.currentStep.value) {
 			case WizardStepperEnum.SERVICE_CHOICE:
 				this.selectedDay = null;
 				break;
@@ -297,10 +314,17 @@ export class WizardComponent implements OnDestroy {
 				this.nextBtnLabel = BTN_LABELS.confirm;
 				break;
 			case WizardStepperEnum.DONE:
-				this.apiService.makeOrder(this.client.value).subscribe(data => {
-					// console.log(data);
-				});
-				// this.router.navigate([NAVIGATE_ROUTES.home]);
+				this.apiService
+					.makeOrder(this.client.value)
+					.pipe(
+						finalize(() => {
+							this.currentStep.next(WizardStepperEnum.DATE_CHOICE);
+						}),
+					)
+					.subscribe(data => {
+						this.router.navigate([NAVIGATE_ROUTES.home]);
+						this.storage.openNewDialogWindow(data);
+					});
 				break;
 			default:
 				this.router.navigate([NAVIGATE_ROUTES.home]);

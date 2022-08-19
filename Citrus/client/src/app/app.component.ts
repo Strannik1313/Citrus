@@ -5,8 +5,11 @@ import {
 	OnInit,
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { DialogWindow } from '@models/dialog-window';
-import { DialogType } from '@shared/dialog-window/dialog-window.component';
+import {
+	DialogType,
+	DialogWindow,
+	DIALOG_WINDOW_INIT,
+} from '@models/dialog-window';
 import { StorageService } from '@services/storage.service';
 import { ServerErrorHandleService } from '@services/server-error-handle.service';
 import { AuthHttpService } from '@services/auth-http.service';
@@ -19,13 +22,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent implements OnInit, OnDestroy {
-	public dialogTextData: DialogWindow = {
-		windowHeaderText: '',
-		windowText: '',
-	};
+	public dialogTextData: DialogWindow = DIALOG_WINDOW_INIT;
 	isLoading$: Observable<boolean> = this.storage.isInitiallize$;
 	isModalOpen$: Observable<boolean> = this.storage.isDialogWindowOpen$;
-	public dialogType: DialogType = DialogType.Error;
 	private subscription: Subscription = new Subscription();
 	constructor(
 		private authHttp: AuthHttpService,
@@ -37,12 +36,18 @@ export class AppComponent implements OnInit, OnDestroy {
 			this.storage.isDialogWindowOpen$.subscribe(data => {
 				if (data) {
 					const error: HttpErrorResponse =
-						this.serverErrorHandle?.getErrorInstance();
+						this.serverErrorHandle.getErrorInstance();
 					this.dialogTextData = {
 						windowHeaderText: error?.status.toString() ?? 'default',
 						windowText: error?.statusText ?? 'default',
+						type: DialogType.Error,
 					};
 				}
+			}),
+		);
+		this.subscription.add(
+			this.storage.dialogTextData$.subscribe(data => {
+				this.dialogTextData = data;
 			}),
 		);
 		const potentialToken = localStorage.getItem('authToken');

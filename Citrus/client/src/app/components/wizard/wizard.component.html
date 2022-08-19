@@ -8,11 +8,12 @@
 		timesheets: timesheets$ | async,
 		isValid: isClientValid$ | async,
 		stepsQuantity: stepsQuantity$ | async,
-		updatedPhone: updatedPhone$ | async
+		updatedPhone: updatedPhone$ | async,
+		currentStep: currentStep$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
-			[currentStep]="currentStep"
+			[currentStep]="data.currentStep ?? WizardStepperEnum.SERVICE_CHOICE"
 			[stepsQuantity]="data.stepsQuantity"></app-stepper>
 		<div class="button__container">
 			<button (click)="onBtnClick(false)" mat-button color="primary">{{
@@ -26,7 +27,7 @@
 				>{{ nextBtnLabel }}
 			</button>
 		</div>
-		<div [ngSwitch]="currentStep">
+		<div [ngSwitch]="data.currentStep ?? WizardStepperEnum.SERVICE_CHOICE">
 			<app-wizard-service-choice-step
 				*ngSwitchCase="WizardStepperEnum.SERVICE_CHOICE"
 				(serviceChange)="onServiceChange($event)"

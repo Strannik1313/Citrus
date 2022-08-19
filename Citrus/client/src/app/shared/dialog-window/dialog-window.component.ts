@@ -6,13 +6,11 @@ import {
 	ChangeDetectionStrategy,
 	Input,
 } from '@angular/core';
-import { DialogWindow } from '@models/dialog-window';
-
-export enum DialogType {
-	Error = 'error',
-	Warning = 'warning',
-	Confirm = 'confirm',
-}
+import {
+	DialogType,
+	DialogWindow,
+	DIALOG_WINDOW_INIT,
+} from '@models/dialog-window';
 
 @Component({
 	selector: 'app-dialog-window',
@@ -21,20 +19,14 @@ export enum DialogType {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DialogWindowComponent implements OnInit {
-	@Input() type = '';
-	@Input() textData: DialogWindow = {
-		windowHeaderText: '',
-		windowText: '',
-		buttonLabel: '',
-		customMessage: '',
-	};
+	@Input() textData: DialogWindow = DIALOG_WINDOW_INIT;
 	@Output() destroyWindow: EventEmitter<boolean> = new EventEmitter();
 	ngOnInit(): void {
-		switch (this.type) {
+		switch (this.textData.type) {
 			case DialogType.Error:
 				this.textData = {
 					...this.textData,
-					windowHeaderText: `Ошибка ${this.textData.windowHeaderText}`,
+					windowHeaderText: this.textData.windowHeaderText ?? 'Ошибка',
 					windowText: this.textData.windowText,
 					buttonLabel: this.textData.buttonLabel
 						? this.textData.buttonLabel
@@ -50,12 +42,8 @@ export class DialogWindowComponent implements OnInit {
 					...this.textData,
 					windowHeaderText: this.textData.windowHeaderText,
 					windowText: this.textData.windowText,
-					buttonLabel: this.textData.buttonLabel
-						? this.textData.buttonLabel
-						: 'Ok',
-					customMessage: this.textData.customMessage
-						? this.textData.customMessage
-						: 'Что-то пошло не так',
+					buttonLabel: this.textData.buttonLabel ?? 'Ok',
+					customMessage: this.textData.customMessage ?? 'Что-то пошло не так',
 					imgClass: 'warning__window',
 				};
 				break;
@@ -64,12 +52,10 @@ export class DialogWindowComponent implements OnInit {
 					...this.textData,
 					windowHeaderText: this.textData.windowHeaderText,
 					windowText: this.textData.windowText,
-					buttonLabel: this.textData.buttonLabel
-						? this.textData.buttonLabel
-						: 'Ok',
-					customMessage: this.textData.customMessage
-						? this.textData.customMessage
-						: 'Вы уверены, что хотите это сделать?',
+					buttonLabel: this.textData.buttonLabel ?? 'Ok',
+					customMessage:
+						this.textData.customMessage ??
+						'Вы уверены, что хотите это сделать?',
 					imgClass: 'confirm__window',
 				};
 				break;

@@ -6,6 +6,7 @@ import { Master } from '@models/master';
 import { CalendarDates } from '@models/calendar-dates';
 import { Timesheet } from '@models/timesheet';
 import { Client } from '@models/client';
+import { DialogWindow } from '@models/dialog-window';
 
 @Injectable({
 	providedIn: 'root',
@@ -46,7 +47,7 @@ export class ApiService {
 	getServices(): Observable<Array<Service>> {
 		return this.http.get<Array<Service>>('/api/services');
 	}
-	makeOrder(formValue: Client): Observable<{ message: boolean }> {
-		return this.http.patch<{ message: boolean }>('/api/order', formValue);
+	makeOrder(formValue: Client): Observable<DialogWindow> {
+		return this.http.patch<DialogWindow>('/api/order', formValue);
 	}
 }

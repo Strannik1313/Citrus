@@ -3,8 +3,7 @@
 	<app-dialog-window
 		*ngIf="isModalOpen$ | async"
 		(destroyWindow)="onButtonClick($event)"
-		[textData]="dialogTextData"
-		[type]="dialogType">
+		[textData]="dialogTextData">
 	</app-dialog-window>
 	<app-spinner *ngIf="isLoading$ | async"></app-spinner>
 	<div class="content">
