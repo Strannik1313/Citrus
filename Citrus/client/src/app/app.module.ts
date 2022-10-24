@@ -19,6 +19,7 @@ import {
 	SPINNER_DURATION,
 	SPINNER_TIME,
 } from 'src/app/InjectionsToken/InjectionToken';
+import { EffectsModule } from '@ngrx/effects';
 registerLocaleData(localeRu);
 
 @NgModule({
@@ -38,6 +39,7 @@ registerLocaleData(localeRu);
 		MatButtonModule,
 		DialogWindowModule,
 		SpinnerModule,
+		EffectsModule.forRoot([]),
 	],
 	providers: [
 		httpInterceptorProviders,
