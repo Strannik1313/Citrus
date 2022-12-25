@@ -1,7 +1,7 @@
-const express = require('express');
-const controller = require('../controllers/services');
+import express from 'express';
+import ServicesController from '../controllers/services.js';
 const router = express.Router();
 
-router.get('/services', controller.services);
+router.post('/services', ServicesController.services);
 
-module.exports = router;
+export { router as ServicesRoutes };

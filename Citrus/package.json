@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "fullstack app with angular and express",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index",
     "server": "nodemon index"
@@ -37,10 +38,14 @@
     "passport-jwt": "4.0.0"
   },
   "devDependencies": {
-    "eslint": "8.21.0",
+    "@types/node": "^18.11.17",
+    "@typescript-eslint/eslint-plugin": "^5.47.0",
+    "@typescript-eslint/parser": "^5.47.0",
+    "eslint": "^8.21.0",
     "eslint-config-prettier": "8.5.0",
     "eslint-plugin-prettier": "4.2.1",
     "nodemon": "2.0.15",
-    "prettier": "2.7.1"
+    "prettier": "2.7.1",
+    "typescript": "^4.9.4"
   }
 }

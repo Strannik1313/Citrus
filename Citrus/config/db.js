@@ -13,7 +13,6 @@
 // const db = getFirestore(app)
 // module.exports = db
 
-
 // const admin = require("firebase-admin");
 
 // const serviceAccount = require("./service-account.json");
@@ -24,13 +23,15 @@
 
 // module.exports = admin
 
-const { initializeApp, cert } = require('firebase-admin/app');
-const { getFirestore } = require('firebase-admin/firestore');
+import { cert, initializeApp } from 'firebase-admin/app';
+import { getFirestore } from 'firebase-admin/firestore';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
 const serviceAccount = require('./service-account.json');
 
 initializeApp({
-  credential: cert(serviceAccount)
+	credential: cert(serviceAccount),
 });
 
 const db = getFirestore();
-module.exports = db
+export default db;

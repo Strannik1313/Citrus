@@ -15,7 +15,7 @@ import { Service } from '@models/service';
 })
 export class ServiceListComponent {
 	@Input() services: Array<Service> | null = [];
-	@Input() choisenService: number | null = null;
+	@Input() selectedService: Service | null = null;
 	@Output() serviceClick: EventEmitter<Service> = new EventEmitter();
 	onServiceClick(service: Service | undefined): void {
 		this.serviceClick.emit(service);

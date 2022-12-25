@@ -1,15 +1,16 @@
-const express = require('express');
-const cors = require('cors');
-const morgan = require('morgan');
-const passport = require('passport');
-const bodyParser = require('body-parser');
-const AuthRoutes = require('./routes/auth');
-const CalendarRoutes = require('./routes/calendar');
-const AdminRoutes = require('./routes/admin');
-const PersonalRoutes = require('./routes/personal');
-const OrderRoutes = require('./routes/order');
-const MastersRoutes = require('./routes/masters');
-const ServicesRoutes = require('./routes/services');
+import express from 'express';
+import cors from 'cors';
+import morgan from 'morgan';
+import passport from 'passport';
+import bodyParser from 'body-parser';
+import { MastersRoutes } from './routes/masters.js';
+import { AuthRoutes } from './routes/auth.js';
+import { AdminRoutes } from './routes/admin.js';
+import { PersonalRoutes } from './routes/personal.js';
+import { OrderRoutes } from './routes/order.js';
+import { ServicesRoutes } from './routes/services.js';
+import { CalendarRoutes } from './routes/calendar.js';
+import { middleware } from './middleware/passport.js';
 
 const app = express();
 
@@ -26,6 +27,6 @@ app.use('/api', MastersRoutes);
 app.use('/api', ServicesRoutes);
 app.use(passport.initialize());
 
-require('./middleware/passport')(passport);
+middleware(passport);
 
-module.exports = app;
+export default app;

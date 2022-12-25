@@ -1,27 +1,27 @@
-const dotenv = require('dotenv')
-const assert = require('assert')
+import dotenv from 'dotenv';
+import assert from 'assert';
 
-dotenv.config()
+dotenv.config();
 
 const {
-    PORT,
-    HOST,
-    HOST_URL,
-    API_KEY,
-    AUTH_DOMAIN,
-    PROJECT_ID,
-    STORAGE_BUCKET,
-    MESSAGING_SENDER_ID,
-    APP_ID,
-    JWT
-} = process.env
+	PORT,
+	HOST,
+	HOST_URL,
+	API_KEY,
+	AUTH_DOMAIN,
+	PROJECT_ID,
+	STORAGE_BUCKET,
+	MESSAGING_SENDER_ID,
+	APP_ID,
+	JWT,
+} = process.env;
 
-assert(PORT, 'PORT is required')
-assert(HOST, 'HOST is required')
-
-module.exports = {
-    port: PORT,
-    host: HOST,
-    url: HOST_URL,
-    jwt: JWT
-}
+assert(PORT, 'PORT is required');
+assert(HOST, 'HOST is required');
+const config = {
+	port: PORT,
+	host: HOST,
+	url: HOST_URL,
+	jwt: JWT,
+};
+export default config;

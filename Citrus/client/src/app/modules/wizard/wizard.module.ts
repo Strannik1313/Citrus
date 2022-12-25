@@ -19,7 +19,11 @@ import { AutocompleteModule } from '@shared/autocomplete/autocomplete.module';
 import { TimesheetModule } from '@shared/timesheet/timesheet.module';
 import { MonthFilterModule } from '@shared/month-filter/month-filter.module';
 import { DirectivesModule } from '@directives/directives.module';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { WizardFeature } from '@components/wizard/state-management/wizard.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { WizardEffects } from '@components/wizard/state-management/wizard.effects';
 
 @NgModule({
 	declarations: [
@@ -46,6 +50,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 		DirectivesModule,
 		ReactiveFormsModule,
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
+		StoreModule.forFeature(WizardFeature.name, WizardFeature.reducer),
+		EffectsModule.forFeature([WizardEffects]),
+		FormsModule,
 	],
 })
 export class WizardModule {}

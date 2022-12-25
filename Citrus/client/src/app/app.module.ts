@@ -19,6 +19,10 @@ import {
 	SPINNER_DURATION,
 	SPINNER_TIME,
 } from 'src/app/InjectionsToken/InjectionToken';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 registerLocaleData(localeRu);
 
 @NgModule({
@@ -38,6 +42,12 @@ registerLocaleData(localeRu);
 		MatButtonModule,
 		DialogWindowModule,
 		SpinnerModule,
+		StoreModule.forRoot({}),
+		EffectsModule.forRoot([]),
+		StoreDevtoolsModule.instrument({
+			maxAge: 25,
+			logOnly: environment.production,
+		}),
 	],
 	providers: [
 		httpInterceptorProviders,

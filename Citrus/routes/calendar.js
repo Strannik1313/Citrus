@@ -1,8 +1,8 @@
-const express = require('express');
-const controller = require('../controllers/calendar');
+import express from 'express';
+import CalendarController from '../controllers/calendar.js';
 const router = express.Router();
 
-router.post('/calendar', controller.calendar);
-router.post('/calendar/timesheets', controller.timesheets);
+router.post('/calendar', CalendarController.calendar);
+router.post('/calendar/timesheets', CalendarController.timesheets);
 
-module.exports = router;
+export { router as CalendarRoutes };

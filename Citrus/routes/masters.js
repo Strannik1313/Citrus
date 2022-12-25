@@ -1,7 +1,7 @@
-const express = require('express');
-const controller = require('../controllers/masters');
+import express from 'express';
+import MastersController from '../controllers/masters.js';
 const router = express.Router();
 
-router.post('/masters', controller.masters);
+router.post('/masters', MastersController.masters);
 
-module.exports = router;
+export { router as MastersRoutes };

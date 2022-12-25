@@ -4,7 +4,7 @@ import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
 	selector: '[appAutoscroll]',
 })
 export class AutoscrollDirective implements AfterViewInit {
-	@Input() selectedElement: number | null = null;
+	@Input() selectedElement: number | null | undefined = null;
 	constructor(private element: ElementRef) {}
 	ngAfterViewInit(): void {
 		if (this.selectedElement?.toString() === this.element.nativeElement.id) {

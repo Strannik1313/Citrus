@@ -1,20 +1,27 @@
-const db = require('../config/db');
-const errorHandler = require('../utils/errorHandler');
+import db from '../config/db.js';
+import errorHandler from '../utils/errorHandler.js';
 
-module.exports.services = async (req, res) => {
-	const servicesArray = db.collection('services');
-	await servicesArray.get().then(collection => {
-		try {
-			const array = [];
-			collection.docs.forEach(d => {
-				array.push({
-					...d.data(),
-					title: d.id,
+class ServicesController {
+	async services(req, res) {
+		let filter = req.body.filter;
+		console.log(filter);
+		const servicesArray = db.collection('services');
+		await servicesArray.get().then(collection => {
+			try {
+				const array = [];
+				collection.docs.forEach(d => {
+					if (d.data().description.includes(filter) || !filter) {
+						array.push({
+							...d.data(),
+							title: d.id,
+						});
+					}
 				});
-			});
-			res.status(200).json(array);
-		} catch (error) {
-			errorHandler(res, error);
-		}
-	});
-};
+				res.status(200).json(array);
+			} catch (error) {
+				errorHandler(res, error);
+			}
+		});
+	}
+}
+export default new ServicesController();

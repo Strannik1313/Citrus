@@ -1,4 +1,4 @@
-export interface ChoisenService {
+export interface SelectedService {
 	serviceName: string;
 	serviceId: number | null;
 }

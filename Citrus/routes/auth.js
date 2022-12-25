@@ -1,10 +1,14 @@
-const express = require('express')
-const controller = require('../controllers/auth')
-const router = express.Router()
-const passport = require('passport')
+import express from 'express';
+import passport from 'passport';
+import AuthController from '../controllers/auth.js';
+const router = express.Router();
 
-router.post('/login', controller.login)
-router.post('/register', controller.register)
-router.get('/me', passport.authenticate('jwt', {session: false}), controller.me)
+router.post('/login', AuthController.login);
+router.post('/register', AuthController.register);
+router.get(
+	'/me',
+	passport.authenticate('jwt', { session: false }),
+	AuthController.me,
+);
 
-module.exports = router
+export { router as AuthRoutes };

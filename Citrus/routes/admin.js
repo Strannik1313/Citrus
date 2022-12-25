@@ -1,13 +1,37 @@
-const express = require('express')
-const controller = require('../controllers/admin')
-const router = express.Router()
-const passport = require('passport')
+import express from 'express';
+import passport from 'passport';
+import AdminController from '../controllers/admin.js';
+const router = express.Router();
 
-router.get('/services', passport.authenticate('jwt', {session: false}), controller.services)
-router.get('/orders', passport.authenticate('jwt', {session: false}), controller.orders)
-router.delete('/orders', passport.authenticate('jwt', {session: false}), controller.updateOrder)
-router.patch('/orders', passport.authenticate('jwt', {session: false}), controller.completeOrder)
-router.post('/master', passport.authenticate('jwt', {session: false}), controller.master)
-router.post('/service', passport.authenticate('jwt', {session: false}), controller.service)
+router.get(
+	'/services',
+	passport.authenticate('jwt', { session: false }),
+	AdminController.services,
+);
+router.get(
+	'/orders',
+	passport.authenticate('jwt', { session: false }),
+	AdminController.orders,
+);
+router.delete(
+	'/orders',
+	passport.authenticate('jwt', { session: false }),
+	AdminController.updateOrder,
+);
+router.patch(
+	'/orders',
+	passport.authenticate('jwt', { session: false }),
+	AdminController.completeOrder,
+);
+router.post(
+	'/master',
+	passport.authenticate('jwt', { session: false }),
+	AdminController.master,
+);
+router.post(
+	'/service',
+	passport.authenticate('jwt', { session: false }),
+	AdminController.service,
+);
 
-module.exports = router
+export { router as AdminRoutes };
