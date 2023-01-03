@@ -1,20 +1,23 @@
-import { ExtractJwt, Strategy as JwtStrategy } from 'passport-jwt';
-import errorHandler from '../utils/errorHandler.js';
-import db from '../config/db.js';
-import config from '../config/config.js';
+import db from '../config/db';
+import config from '../config/config';
+import errorHandler from '../utils/errorHandler';
+import passport from 'passport';
+import { QuerySnapshot } from '@google-cloud/firestore';
+import { ExtractJwt } from 'passport-jwt';
+import { Strategy as JwtStrategy } from 'passport-jwt';
 
 const opts = {
 	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
 	secretOrKey: config.jwt,
 };
-export const middleware = passport => {
+export const middleware = (passport: passport.Authenticator) => {
 	passport.use(
 		new JwtStrategy(opts, async (payload, done) => {
 			try {
 				await db
 					.collection('authorizedClients')
 					.get()
-					.then(collection => {
+					.then((collection: QuerySnapshot) => {
 						const candidate = collection.docs.find(d => {
 							return d.data().email === payload.email;
 						});
@@ -25,7 +28,7 @@ export const middleware = passport => {
 						}
 					});
 			} catch (error) {
-				errorHandler(res, error);
+				errorHandler(null, error);
 			}
 		}),
 	);

@@ -1,13 +1,10 @@
 import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.js';
+import errorHandler from '../utils/errorHandler.ts';
 import dayjs from 'dayjs';
-// import * as isBetween from 'dayjs/plugin/isBetween';
-// import 'dayjs/locale/ru';
-// dayjs.locale('ru');
-// dayjs.extend(isBetween);
-// import 'dayjs/locale/ru';
-// dayjs.locale('ru');
-// dayjs.extend(isBetween);
+import * as isBetween from 'dayjs/plugin/isBetween';
+import 'dayjs/locale/ru';
+dayjs.locale('ru');
+dayjs.extend(isBetween);
 
 class CalendarController {
 	async calendar(req, res) {

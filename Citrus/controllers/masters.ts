@@ -1,5 +1,5 @@
 import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.js';
+import errorHandler from '../utils/errorHandler.ts';
 
 class MastersController {
 	async masters(req, res) {

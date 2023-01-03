@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs';
 import db from '../config/db.js';
 import jwt from 'jsonwebtoken';
 import config from '../config/config.js';
-import errorHandler from '../utils/errorHandler.js';
+import errorHandler from '../utils/errorHandler.ts';
 
 class AuthController {
 	async login(req, res) {
