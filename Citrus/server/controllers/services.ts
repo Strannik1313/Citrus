@@ -1,5 +1,5 @@
-import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.js';
+import { db } from '../config/db.js';
+import { errorHandler } from '../utils/errorHandler.js';
 import { Request, Response } from 'express';
 import { Service } from '../interfaces/Service.js';
 import { firestore } from 'firebase-admin';

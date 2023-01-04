@@ -1,27 +1,29 @@
-import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.ts';
+import { db } from '../config/db.js';
+import { errorHandler } from '../utils/errorHandler.js';
+import { Request, Response } from 'express';
+import { DocumentData } from '@google-cloud/firestore';
 
 class AdminController {
-	async services(req, res) {
+	async services(req: Request, res: Response) {
 		const servicesArray = db.collection('procedureDuration');
 		await servicesArray.get().then(collection => {
 			try {
-				const array = [];
+				const array: Array<string> = [];
 				collection.docs.forEach(d => {
 					array.push(d.id);
 				});
 				res.status(200).json(array);
-			} catch (error) {
+			} catch (error: unknown) {
 				errorHandler(res, error);
 			}
 		});
 	}
 
-	async updateOrder(req, res) {
+	async updateOrder(req: Request, res: Response) {
 		const ordersArray = db.collection('orders');
 		await ordersArray.get().then(collection => {
 			try {
-				ordersArray.doc(req.headers.orderid).delete();
+				ordersArray.doc(req.headers.orderid as string).delete();
 				res.status(200).json({
 					statusCode: 0,
 					message: 'Данные успешно удалены',
@@ -32,7 +34,7 @@ class AdminController {
 		});
 	}
 
-	async completeOrder(req, res) {
+	async completeOrder(req: Request, res: Response) {
 		const ordersArray = db.collection('orders');
 		await ordersArray.get().then(collection => {
 			try {
@@ -48,15 +50,15 @@ class AdminController {
 			}
 		});
 	}
-	async orders(req, res) {
+	async orders(req: Request, res: Response) {
 		const ordersArray = db.collection('orders');
 		const startItem = Number(req.headers.startitem);
 		const pageSize = Number(req.headers.pagesize);
 		await ordersArray.get().then(collection => {
 			try {
 				let array = [];
-				let tempArray = [];
-				let newCollection = [];
+				let tempArray;
+				let newCollection: Array<DocumentData> = [];
 				collection.forEach(coll => {
 					if (!coll.data().isDoneByAdmin) {
 						newCollection.push({
@@ -66,7 +68,7 @@ class AdminController {
 					}
 				});
 				for (let i = 1; i <= newCollection.length; i++) {
-					if (i >= req.headers.startitem && i < startItem + pageSize) {
+					if (i >= startItem && i < startItem + pageSize) {
 						tempArray = newCollection[i - 1];
 						tempArray = {
 							...tempArray,
@@ -82,7 +84,7 @@ class AdminController {
 			}
 		});
 	}
-	async service(req, res) {
+	async service(req: Request, res: Response) {
 		const servicesArray = db.collection('procedureDuration');
 		await servicesArray.get().then(collection => {
 			try {
@@ -98,7 +100,7 @@ class AdminController {
 			}
 		});
 	}
-	async master(req, res) {
+	async master(req: Request, res: Response) {
 		const mastersArray = db.collection('masters');
 		await mastersArray.get().then(collection => {
 			try {

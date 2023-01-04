@@ -25,13 +25,15 @@
 
 import { cert, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
-const serviceAccount = require('./service-account.json');
+// import { createRequire } from 'module';
+import serviceAccount from '../config/service-account.json' assert { type: 'json' };
+// const require = createRequire(import.meta.url);
+// const serviceAccount = require('./service-account.json');
 
 initializeApp({
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
 	credential: cert(serviceAccount),
 });
 
-const db = getFirestore();
-export default db;
+export const db = getFirestore();

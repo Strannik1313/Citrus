@@ -1,6 +1,6 @@
-import db from '../config/db';
-import config from '../config/config';
-import errorHandler from '../utils/errorHandler';
+import { db } from '../config/db.js';
+import { config } from '../config/config.js';
+import { errorHandler } from '../utils/errorHandler.js';
 import passport from 'passport';
 import { QuerySnapshot } from '@google-cloud/firestore';
 import { ExtractJwt } from 'passport-jwt';

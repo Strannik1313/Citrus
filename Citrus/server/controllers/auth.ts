@@ -1,11 +1,12 @@
 import bcrypt from 'bcryptjs';
-import db from '../config/db.js';
+import { db } from '../config/db.js';
 import jwt from 'jsonwebtoken';
-import config from '../config/config.js';
-import errorHandler from '../utils/errorHandler.ts';
+import { config } from '../config/config.js';
+import { errorHandler } from '../utils/errorHandler.js';
+import { Request, Response } from 'express';
 
 class AuthController {
-	async login(req, res) {
+	async login(req: Request, res: Response) {
 		await db
 			.collection('authorizedClients')
 			.get()
@@ -20,9 +21,13 @@ class AuthController {
 						candidateData.password,
 					);
 					if (passwordResult) {
-						const token = jwt.sign({ email: candidateData.email }, config.jwt, {
-							expiresIn: 3600,
-						});
+						const token = jwt.sign(
+							{ email: candidateData.email },
+							config.jwt!,
+							{
+								expiresIn: 3600,
+							},
+						);
 						res.status(200).json({
 							token: `Bearer ${token}`,
 							payload: candidateData,
@@ -39,7 +44,7 @@ class AuthController {
 				}
 			});
 	}
-	async register(req, res) {
+	async register(req: Request, res: Response) {
 		await db
 			.collection('authorizedClients')
 			.get()
@@ -72,10 +77,10 @@ class AuthController {
 				}
 			});
 	}
-	async me(req, res) {
+	async me(req: Request, res: Response) {
 		const client = db
 			.collection('authorizedClients')
-			.doc(req.user.id.toString());
+			.doc((<{ id: number }>req.user)?.id.toString());
 		await client.get().then(data => {
 			try {
 				res.status(200).json({

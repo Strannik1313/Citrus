@@ -1,13 +1,15 @@
 import dayjs from 'dayjs';
-import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.ts';
+import { db } from '../config/db.js';
+import { errorHandler } from '../utils/errorHandler.js';
+import { Request, Response } from 'express';
+import { DocumentData } from '@google-cloud/firestore';
 
 class OrderController {
-	async order(req, res) {
+	async order(req: Request, res: Response) {
 		let idOrder = 0;
 		let dateExist = false;
 		let dateDocId = '';
-		const dateArray = [];
+		const dateArray: Array<Date> = [];
 		const ordersArray = db.collection('orders');
 		const calendarCollection = db.collection('calendar');
 		await calendarCollection
@@ -17,7 +19,7 @@ class OrderController {
 				try {
 					collection.forEach(timesheet => {
 						if (
-							timesheet.data().freeTimes.filter(time => {
+							timesheet.data().freeTimes.filter((time: DocumentData) => {
 								if (dayjs(time.toDate()).isSame(req.body.dateOrder, 'hour')) {
 									return true;
 								}

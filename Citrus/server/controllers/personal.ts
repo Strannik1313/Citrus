@@ -1,11 +1,13 @@
-import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.ts';
+import { db } from '../config/db.js';
+import { errorHandler } from '../utils/errorHandler.js';
+import { Request, Response } from 'express';
+import { DocumentData } from '@google-cloud/firestore';
 
 class PersonalController {
-	async personal(req, res) {
+	async personal(req: Request, res: Response) {
 		const client = db
 			.collection('authorizedClients')
-			.doc(req.user.id.toString());
+			.doc((<{ id: number }>req.user).id.toString());
 		await client.get().then(() => {
 			try {
 				client.update({
@@ -21,20 +23,21 @@ class PersonalController {
 			}
 		});
 	}
-	async getPersonalOrders(req, res) {
+	async getPersonalOrders(req: Request, res: Response) {
 		const ordersArray = db.collection('orders');
 		const startItem = Number(req.headers.startitem);
 		const pageSize = Number(req.headers.pagesize);
 		await ordersArray.get().then(collection => {
 			try {
 				let array = [];
-				let tempArray = [];
-				let newCollection = [];
+				let tempArray;
+				let newCollection: Array<DocumentData> = [];
 				collection.forEach(coll => {
 					if (
-						coll.data().clientName === req.user.name &&
-						coll.data().clientSurname === req.user.surname &&
-						coll.data().clientName === req.user.name
+						coll.data().clientName === (<{ name: number }>req.user).name &&
+						coll.data().clientSurname ===
+							(<{ surname: number }>req.user).surname &&
+						coll.data().clientName === (<{ name: number }>req.user).name
 					) {
 						newCollection.push({
 							...coll.data(),
@@ -43,7 +46,7 @@ class PersonalController {
 					}
 				});
 				for (let i = 1; i <= newCollection.length; i++) {
-					if (i >= req.headers.startitem && i < startItem + pageSize) {
+					if (i >= startItem && i < startItem + pageSize) {
 						tempArray = newCollection[i - 1];
 						tempArray = {
 							...tempArray,
