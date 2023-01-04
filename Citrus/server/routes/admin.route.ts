@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import AdminController from '../controllers/admin.js';
+import AdminController from '../controllers/admin.controller.js';
 const router = express.Router();
 
 router.get(

@@ -3,7 +3,7 @@
 		"es2021": true,
 		"node": true
 	},
-	"extends": ["plugin:@typescript-eslint/recommended", "prettier"],
+	"extends": ["plugin:@typescript-eslint/recommended", "plugin:prettier/recommended","prettier"],
 	"parserOptions": {
 		"ecmaVersion": "2020",
     "sourceType": "module"
@@ -20,7 +20,6 @@
 		"**/*.ico"
 	],
 	"rules": {
-		"prettier/prettier": "error",
 		"prefer-const": "off",
 		"object-property-newline": [
 			"error",

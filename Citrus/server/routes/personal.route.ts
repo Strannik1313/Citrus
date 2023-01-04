@@ -1,6 +1,6 @@
 import express from 'express';
 import passport from 'passport';
-import PersonalController from '../controllers/personal.js';
+import PersonalController from '../controllers/personal.controller.js';
 const router = express.Router();
 
 router.post(

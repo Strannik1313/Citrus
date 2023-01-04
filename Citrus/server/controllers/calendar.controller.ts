@@ -3,78 +3,26 @@ import { errorHandler } from '../utils/errorHandler.js';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru.js';
 import { Request, Response } from 'express';
+import { CalendarService } from '../services/calendar.service.js';
+import { ProcessStatus } from '../enums/ProcessStatus.js';
 dayjs.locale('ru');
 
 class CalendarController {
 	async calendar(req: Request, res: Response) {
-		const mastersIdArray: Array<number> = [];
-		let week: Array<{ date: Date; mastersId: Array<number> }> = [];
-		let startDay = dayjs().startOf('week');
-		if (startDay.isBefore(dayjs().startOf('day'))) {
-			startDay = dayjs().startOf('week');
+		const getCalendarResult = await new CalendarService().getCalendar(
+			req.body.serviceId,
+			req.body.masterId,
+		);
+		switch (getCalendarResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).json(getCalendarResult.data);
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(getCalendarResult);
+				break;
+			}
 		}
-		for (let i = 0; i <= 6; i++) {
-			week.push({
-				date: startDay.add(i, 'day').toDate(),
-				mastersId: [],
-			});
-		}
-		const mastersCollection = db.collection('masters');
-		const datesCollection = db.collection('calendar');
-		await mastersCollection
-			.where('serviceId', 'array-contains', req.body.serviceId)
-			.get()
-			.then(collection => {
-				try {
-					collection.forEach(master => {
-						mastersIdArray.push(master.data().masterId);
-					});
-				} catch (error) {
-					errorHandler(res, error);
-				}
-			});
-		await datesCollection
-			.where('masterId', 'in', mastersIdArray)
-			.get()
-			.then(collection => {
-				try {
-					collection.forEach(masterTimes => {
-						if (
-							req.body.masterId === masterTimes.data().masterId ||
-							req.body.masterId === null
-						) {
-							for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
-								week = week.map(day => {
-									if (
-										dayjs(day.date).isSame(
-											masterTimes.data().freeTimes[i].toDate(),
-											'day',
-										)
-									) {
-										return {
-											...day,
-											mastersId: [
-												...day.mastersId,
-												masterTimes.data().masterId,
-											],
-										};
-									}
-									return day;
-								});
-							}
-						}
-					});
-					week = week.map(day => {
-						return {
-							date: day.date,
-							mastersId: Array.from(new Set(day.mastersId)),
-						};
-					});
-					res.status(200).json(week);
-				} catch (error) {
-					errorHandler(res, error);
-				}
-			});
 	}
 
 	async timesheets(req: Request, res: Response) {
