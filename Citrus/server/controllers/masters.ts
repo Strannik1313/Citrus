@@ -1,9 +1,10 @@
-import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.js';
+import { db } from '../config/db.js';
+import { errorHandler } from '../utils/errorHandler.js';
+import { Request, Response } from 'express';
 
 class MastersController {
-	async masters(req, res) {
-		const mastersArray = [];
+	async masters(req: Request, res: Response) {
+		const mastersArray: Array<{ name: string; id: number }> = [];
 		const mastersCollection = db.collection('masters');
 		if (req.body.serviceId !== null) {
 			await mastersCollection

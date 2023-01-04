@@ -12,7 +12,6 @@ npm-debug.log
 yarn-error.log
 /client/node_modules
 # IDEs and editors
-client/.angular
 .idea/
 .project
 .classpath
@@ -30,7 +29,7 @@ client/.angular
 .history/*
 
 # Miscellaneous
-/config/serviceAccount.json
+/server/config/service-account.json
 client/.angular/cache
 .sass-cache/
 /connect.lock
@@ -42,3 +41,6 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+/server/dist/
+/server/node_modules/
+/client/.angular/*

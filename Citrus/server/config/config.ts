@@ -24,4 +24,4 @@ const config = {
 	url: HOST_URL,
 	jwt: JWT,
 };
-export default config;
+export { config };

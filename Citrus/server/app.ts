@@ -1,16 +1,16 @@
 import express from 'express';
-import cors from 'cors';
-import morgan from 'morgan';
-import passport from 'passport';
 import bodyParser from 'body-parser';
 import { MastersRoutes } from './routes/masters.js';
 import { AuthRoutes } from './routes/auth.js';
 import { AdminRoutes } from './routes/admin.js';
 import { PersonalRoutes } from './routes/personal.js';
 import { OrderRoutes } from './routes/order.js';
-import { ServicesRoutes } from './routes/services.js';
 import { CalendarRoutes } from './routes/calendar.js';
-import { middleware } from './middleware/passport.js';
+import { middleware } from './middleware/passport-middleware.js';
+import { router as ServiceRoutes } from './routes/services.js';
+import passport from 'passport';
+import morgan from 'morgan';
+import cors from 'cors';
 
 const app = express();
 
@@ -24,7 +24,7 @@ app.use('/api', PersonalRoutes);
 app.use('/api', OrderRoutes);
 app.use('/api', CalendarRoutes);
 app.use('/api', MastersRoutes);
-app.use('/api', ServicesRoutes);
+app.use('/api', ServiceRoutes);
 app.use(passport.initialize());
 
 middleware(passport);

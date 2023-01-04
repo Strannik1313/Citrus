@@ -1,18 +1,14 @@
-import db from '../config/db.js';
-import errorHandler from '../utils/errorHandler.js';
+import { db } from '../config/db.js';
+import { errorHandler } from '../utils/errorHandler.js';
 import dayjs from 'dayjs';
-// import * as isBetween from 'dayjs/plugin/isBetween';
-// import 'dayjs/locale/ru';
-// dayjs.locale('ru');
-// dayjs.extend(isBetween);
-// import 'dayjs/locale/ru';
-// dayjs.locale('ru');
-// dayjs.extend(isBetween);
+import 'dayjs/locale/ru.js';
+import { Request, Response } from 'express';
+dayjs.locale('ru');
 
 class CalendarController {
-	async calendar(req, res) {
-		const mastersIdArray = [];
-		let week = [];
+	async calendar(req: Request, res: Response) {
+		const mastersIdArray: Array<number> = [];
+		let week: Array<{ date: Date; mastersId: Array<number> }> = [];
 		let startDay = dayjs().startOf('week');
 		if (startDay.isBefore(dayjs().startOf('day'))) {
 			startDay = dayjs().startOf('week');
@@ -81,10 +77,15 @@ class CalendarController {
 			});
 	}
 
-	async timesheets(req, res) {
-		let timesheets = [];
-		let extraTimeInterval = [];
-		const mastersIdArray = [];
+	async timesheets(req: Request, res: Response) {
+		let timesheets: Array<{
+			masterId: number;
+			masterName: string;
+			cost: number;
+			freetimes: Array<number>;
+		}> = [];
+		let extraTimeInterval: Array<string> = [];
+		const mastersIdArray: Array<number> = [];
 		const mastersCollection = db.collection('masters');
 		const servicesCollection = db.collection('services');
 		const datesCollection = db.collection('calendar');
@@ -167,12 +168,14 @@ class CalendarController {
 							}),
 						};
 					});
+					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+					// @ts-ignore
 					timesheets = timesheets.map(order => {
 						return {
 							...order,
 							freetimes: order.freetimes.map(time => {
 								return extraTimeInterval.map(interval => {
-									return dayjs(time).minute(interval).toString();
+									return dayjs(time).minute(Number(interval)).toString();
 								});
 							}),
 						};
