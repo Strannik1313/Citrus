@@ -21,6 +21,6 @@ export class ServiceListComponent {
 		this.serviceClick.emit(service);
 	}
 	trackByFn(index: number, item: Service): number {
-		return item?.id;
+		return item.id;
 	}
 }
