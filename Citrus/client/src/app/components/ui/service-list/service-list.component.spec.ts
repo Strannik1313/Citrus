@@ -2,12 +2,14 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
-import { CUSTOM_ELEMENTS_SCHEMA, DebugElement } from '@angular/core';
-import { MockFirstLetterUppercasePipe } from '../../../tests/mockPipes/mockFirstLetterUppercasePipe';
+import { DebugElement } from '@angular/core';
 import { first } from 'rxjs';
 import { Service } from '@models/service';
 import { MockService } from '../../../tests/mockData/mockService';
-import { MockDirective } from '../../../tests/mockData/mockDirective';
+import { AddActiveClassDirective } from '@directives/add-active-class.directive';
+import { AutoscrollDirective } from '@directives/autoscroll.directive';
+import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
+import Spy = jasmine.Spy;
 
 describe('Dialog window component', () => {
 	let fixture: ComponentFixture<ServiceListComponent>;
@@ -19,16 +21,10 @@ describe('Dialog window component', () => {
 			imports: [RouterTestingModule],
 			declarations: [
 				ServiceListComponent,
-				MockFirstLetterUppercasePipe,
-				MockDirective({
-					selector: '[appAddActiveClass]',
-					inputs: ['selectedElement'],
-				}),
-				MockDirective({
-					selector: '[appAutoscroll]',
-				}),
+				AddActiveClassDirective,
+				AutoscrollDirective,
+				FirstLetterUppercasePipe,
 			],
-			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 		}).compileComponents();
 	});
 
@@ -48,13 +44,20 @@ describe('Dialog window component', () => {
 	});
 
 	describe('onServiceClick', () => {
+		let serviceClickSpy: Spy;
+
+		beforeEach(() => {
+			serviceClickSpy = spyOn(component.serviceClick, 'emit');
+		});
+
 		it('should call serviceClick when clicked on mat-card', () => {
-			spyOn(component.serviceClick, 'emit').and.callThrough();
-			spyOn(component, 'onServiceClick').and.callThrough();
 			component.onServiceClick({ ...MockService });
-			expect(component.onServiceClick).toHaveBeenCalledOnceWith({
-				...MockService,
-			});
+			expect(serviceClickSpy).toHaveBeenCalledOnceWith({ ...MockService });
+		});
+
+		it('should not call serviceClick when value is undefined', () => {
+			component.onServiceClick(undefined);
+			expect(serviceClickSpy).not.toHaveBeenCalled();
 		});
 	});
 
@@ -68,9 +71,7 @@ describe('Dialog window component', () => {
 				...MockService,
 			});
 		});
-	});
 
-	describe('trackByFn', () => {
 		it('trackByFn should return id when mat-cards rendering', () => {
 			spyOn(component, 'trackByFn').and.callThrough();
 			let expected = component.trackByFn(0, { ...MockService });
