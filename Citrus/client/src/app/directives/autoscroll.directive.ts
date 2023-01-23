@@ -8,7 +8,7 @@ export class AutoscrollDirective implements AfterViewInit {
 	constructor(private element: ElementRef) {}
 	ngAfterViewInit(): void {
 		if (this.selectedElement?.toString() === this.element.nativeElement.id) {
-			this.element.nativeElement?.scrollIntoView({
+			this.element.nativeElement.scrollIntoView({
 				block: 'nearest',
 				behavior: 'smooth',
 			});
