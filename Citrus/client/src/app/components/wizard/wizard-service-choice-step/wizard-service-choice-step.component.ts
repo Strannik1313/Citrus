@@ -1,12 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Input,
-	Output,
-} from '@angular/core';
-import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { Client } from '@models/client';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Service } from '@models/service';
 
 @Component({
@@ -16,7 +8,6 @@ import { Service } from '@models/service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardServiceChoiceStepComponent {
-	@Input() client: Client | null = CLIENT_INIT_VALUE;
 	@Input() services: Array<Service> | null = [];
 	@Input() selectedService: Service | null = null;
 	@Output() serviceChange: EventEmitter<Service> = new EventEmitter();
