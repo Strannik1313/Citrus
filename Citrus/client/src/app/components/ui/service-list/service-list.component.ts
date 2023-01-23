@@ -17,10 +17,16 @@ export class ServiceListComponent {
 	@Input() services: Array<Service> | null = [];
 	@Input() selectedService: Service | null = null;
 	@Output() serviceClick: EventEmitter<Service> = new EventEmitter();
+
 	onServiceClick(service: Service | undefined): void {
+		if (!service) {
+			return;
+		}
+
 		this.serviceClick.emit(service);
 	}
+
 	trackByFn(index: number, item: Service): number {
-		return item?.id;
+		return item.id;
 	}
 }
