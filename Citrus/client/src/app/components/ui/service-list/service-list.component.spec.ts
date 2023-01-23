@@ -82,6 +82,9 @@ describe('Dialog window component', () => {
 	describe('serviceClick', () => {
 		it('serviceClick should raise event when mat-card click ', () => {
 			let expected: Service = { ...MockService };
+			component.services = [{ ...MockService }];
+			fixture.detectChanges();
+			matCard = fixture.debugElement.query(By.css('.card__item'));
 			component.serviceClick
 				.pipe(first())
 				.subscribe((value: Service) => (expected = value));
