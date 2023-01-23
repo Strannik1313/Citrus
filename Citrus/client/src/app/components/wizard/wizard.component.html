@@ -35,8 +35,7 @@
 				(serviceChange)="onServiceChange($event)"
         (inputChange)="onServiceStepInputChange($event)"
 				[services]="data.services"
-        [selectedService]="data.selectedService"
-				[client]="data.client">
+        [selectedService]="data.selectedService">
 			</app-wizard-service-choice-step>
 			<app-wizard-date-choice-step
 				*ngSwitchCase="WizardStepperEnum.DATE_CHOICE"

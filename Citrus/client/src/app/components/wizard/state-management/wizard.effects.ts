@@ -41,9 +41,7 @@ export class WizardEffects {
 			map((action: any) => action.payload),
 			debounceTime(300),
 			switchMap((payload: string | null) =>
-				this.servicesService
-					.getServices(payload)
-					.pipe(map(response => setServices({ payload: response }))),
+				this.servicesService.getServices(payload).pipe(map(response => setServices({ payload: response }))),
 			),
 		);
 	});
@@ -86,9 +84,9 @@ export class WizardEffects {
 			}),
 			switchMap(([, step, service, master]) => {
 				switch (step) {
-					// case WizardStepperEnum.SERVICE_CHOICE: {
-					// 	return getServices({ payload: null });
-					// }
+					case WizardStepperEnum.SERVICE_CHOICE: {
+						return [getServices({ payload: null })];
+					}
 					case WizardStepperEnum.DATE_CHOICE: {
 						return [
 							getMasters({
@@ -100,6 +98,7 @@ export class WizardEffects {
 									serviceId: service?.id ?? null,
 								},
 							}),
+							setFwdBtnDisabled({ payload: true }),
 						];
 					}
 					default:
@@ -122,9 +121,7 @@ export class WizardEffects {
 	setSelectedService$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.SetSelectedServiceAction),
-			concatLatestFrom(() =>
-				this.store.select(WizardFeature.selectSelectedService),
-			),
+			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
 			map(([, service]) => {
 				if (!!service) {
 					return setFwdBtnDisabled({ payload: false });
@@ -138,9 +135,7 @@ export class WizardEffects {
 	getMasters$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.GetMastersAction),
-			concatLatestFrom(() =>
-				this.store.select(WizardFeature.selectSelectedService),
-			),
+			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
 			map(([, service]) => {
 				return {
 					serviceId: service?.id ?? null,
@@ -148,9 +143,7 @@ export class WizardEffects {
 				};
 			}),
 			switchMap(masterResponse =>
-				this.mastersService
-					.getMasters(masterResponse)
-					.pipe(map(masters => setMasters({ payload: masters }))),
+				this.mastersService.getMasters(masterResponse).pipe(map(masters => setMasters({ payload: masters }))),
 			),
 		);
 	});
@@ -160,9 +153,7 @@ export class WizardEffects {
 			ofType(WizardActions.GetDatesAction),
 			map((action: any) => action.payload),
 			mergeMap(datesDto =>
-				this.calendarService
-					.getDates(datesDto)
-					.pipe(map(calendarDates => setDates({ payload: calendarDates }))),
+				this.calendarService.getDates(datesDto).pipe(map(calendarDates => setDates({ payload: calendarDates }))),
 			),
 		);
 	});
