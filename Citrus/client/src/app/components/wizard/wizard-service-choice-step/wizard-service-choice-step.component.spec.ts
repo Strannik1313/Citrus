@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WizardServiceChoiceStepComponent } from '@components/wizard/wizard-service-choice-step/wizard-service-choice-step.component';
-import { MockService } from '../../../tests/mockData/mockService';
-import { createMouseEvent } from '../../../tests/mockData/mockInputEvent';
+import { MockService } from '@tests/mockData/mockService';
+import { createMouseEvent } from '@tests/mockData/mockInputEvent';
 import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
 import { MatCard } from '@angular/material/card';
 import { AddActiveClassDirective } from '@directives/add-active-class.directive';

@@ -15,23 +15,16 @@ import { DialogWindowModule } from '@shared/dialog-window/dialog-window.module';
 import { SpinnerModule } from '@shared/spinner/spinner.module';
 import { httpInterceptorProviders } from '@intercepters/http-intercepter-providers';
 import { MatIconModule } from '@angular/material/icon';
-import {
-	SPINNER_DURATION,
-	SPINNER_TIME,
-} from 'src/app/InjectionsToken/InjectionToken';
+import { SPINNER_DURATION, SPINNER_TIME } from 'src/app/InjectionsToken/InjectionToken';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { environment } from '../environments/environment';
+import { environment } from '@environments/environment';
+
 registerLocaleData(localeRu);
 
 @NgModule({
-	declarations: [
-		AppComponent,
-		MainPageLayoutComponent,
-		HeaderWrapperComponent,
-		MainPageLayoutWrapperComponent,
-	],
+	declarations: [AppComponent, MainPageLayoutComponent, HeaderWrapperComponent, MainPageLayoutWrapperComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,

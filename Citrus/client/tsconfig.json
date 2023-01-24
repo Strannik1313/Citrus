@@ -14,7 +14,9 @@
 			"@shared/*": ["./src/app/shared/*"],
 			"@constants/*": ["./src/app/constants/*"],
 			"@directives/*": ["./src/app/directives/*"],
-			"@environments/*": ["./src/environments/*"]
+			"@environments/*": ["./src/environments/*"],
+			"@api/*": ["./src/app/api/*"],
+			"@tests/*": ["./src/app/tests/*"],
 		},
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,
