@@ -11,18 +11,20 @@ import {
 	setFwdBtnDisabled,
 	setMasters,
 	setServices,
+	TypedActionWithPayload,
 	WizardActions,
 } from '@components/wizard/state-management/wizard.actions';
-import { debounceTime, map, mergeMap, switchMap } from 'rxjs';
+import { debounce, interval, map, mergeMap, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { WizardFeature } from '@components/wizard/state-management/wizard.reducer';
 import { WizardMaxStep } from '@components/wizard/constants/WizardMaxStep';
-import { ServicesService } from '../../../api/ServicesService';
+import { ServicesService } from '@api/ServicesService';
 import { NAVIGATE_ROUTES } from '@constants/navigate-routes';
 import { Router } from '@angular/router';
-import { MastersService } from '../../../api/MastersService';
+import { MastersService } from '@api/MastersService';
 import { WizardStepperEnum } from '@components/wizard/wizard.component';
-import { CalendarService } from '../../../api/CalendarService';
+import { CalendarService } from '@api/CalendarService';
+import { DatesDto } from '@models/DatesDto';
 
 @Injectable()
 export class WizardEffects {
@@ -38,8 +40,8 @@ export class WizardEffects {
 	getServices$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.GetServicesAction),
-			map((action: any) => action.payload),
-			debounceTime(300),
+			map((action: TypedActionWithPayload<string | null>) => action.payload),
+			debounce((payload: string | null) => interval(payload ? 300 : 0)),
 			switchMap((payload: string | null) =>
 				this.servicesService.getServices(payload).pipe(map(response => setServices({ payload: response }))),
 			),
@@ -151,7 +153,7 @@ export class WizardEffects {
 	getDates$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.GetDatesAction),
-			map((action: any) => action.payload),
+			map((action: TypedActionWithPayload<DatesDto>) => action.payload),
 			mergeMap(datesDto =>
 				this.calendarService.getDates(datesDto).pipe(map(calendarDates => setDates({ payload: calendarDates }))),
 			),

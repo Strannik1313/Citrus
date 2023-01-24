@@ -5,7 +5,7 @@ import { ServiceListComponent } from '@components/ui/service-list/service-list.c
 import { DebugElement } from '@angular/core';
 import { first } from 'rxjs';
 import { Service } from '@models/service';
-import { MockService } from '../../../tests/mockData/mockService';
+import { MockService } from '@tests/mockData/mockService';
 import { AddActiveClassDirective } from '@directives/add-active-class.directive';
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
@@ -19,12 +19,7 @@ describe('Dialog window component', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			imports: [RouterTestingModule],
-			declarations: [
-				ServiceListComponent,
-				AddActiveClassDirective,
-				AutoscrollDirective,
-				FirstLetterUppercasePipe,
-			],
+			declarations: [ServiceListComponent, AddActiveClassDirective, AutoscrollDirective, FirstLetterUppercasePipe],
 		}).compileComponents();
 	});
 
@@ -85,9 +80,7 @@ describe('Dialog window component', () => {
 			component.services = [{ ...MockService }];
 			fixture.detectChanges();
 			matCard = fixture.debugElement.query(By.css('.card__item'));
-			component.serviceClick
-				.pipe(first())
-				.subscribe((value: Service) => (expected = value));
+			component.serviceClick.pipe(first()).subscribe((value: Service) => (expected = value));
 			matCard.triggerEventHandler('click', { ...MockService });
 			expect(expected).toEqual({ ...MockService });
 		});
