@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
-import { WeekDto } from '../dto/WeekDto';
-import { CalendarDto } from '../dto/CalendarDto';
+import { WeekDto } from '@dto/WeekDto';
+import { CalendarDto } from '@dto/CalendarDto';
 
 export class DatesHelper {
   static getWeek(): WeekDto[] {

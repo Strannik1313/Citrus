@@ -29,7 +29,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/server/config/service-account.json
+/server/config/service-account.ts
 client/.angular/cache
 .sass-cache/
 /connect.lock

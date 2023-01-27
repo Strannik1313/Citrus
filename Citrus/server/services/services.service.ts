@@ -1,8 +1,8 @@
-import { db } from '../config/db.js';
-import { Service } from '../interfaces/Service';
+import { db } from '@config/db';
+import { Service } from '@interfaces/Service';
 import { Firestore, QueryDocumentSnapshot } from '@google-cloud/firestore';
-import { ProcessStatus } from '../enums/ProcessStatus.js';
-import { ServiceReturnType } from '../interfaces/ServiceReturnType';
+import { ProcessStatus } from '@enums/ProcessStatus';
+import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 
 class ServicesServiceClass {
   async getServices(filter?: string): Promise<ServiceReturnType<Service[]>> {
