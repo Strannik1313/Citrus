@@ -1,10 +1,10 @@
-import { db } from '../config/db.js';
-import { errorHandler } from '../utils/errorHandler.js';
+import { db } from '@config/db';
+import { errorHandler } from '@utils/errorHandler';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru.js';
 import { Request, Response } from 'express';
-import { CalendarService } from '../services/calendar.service.js';
-import { ProcessStatus } from '../enums/ProcessStatus.js';
+import { CalendarService } from '@services/calendar.service';
+import { ProcessStatus } from '@enums/ProcessStatus';
 
 dayjs.locale('ru');
 

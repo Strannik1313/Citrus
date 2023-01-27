@@ -1,5 +1,6 @@
 import express from 'express';
-import MastersController from '../controllers/masters.controller.js';
+import MastersController from '@controllers/masters.controller';
+
 const router = express.Router();
 
 router.post('/masters', MastersController.masters);

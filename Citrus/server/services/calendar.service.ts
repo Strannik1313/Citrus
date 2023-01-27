@@ -1,11 +1,11 @@
-import { ServiceReturnType } from '../interfaces/ServiceReturnType';
-import { db } from '../config/db.js';
-import { MastersService } from './masters.service.js';
-import { ProcessStatus } from '../enums/ProcessStatus.js';
-import { WeekDto } from '../dto/WeekDto.js';
-import { DatesHelper } from '../helpers/DatesHelper.js';
+import { ServiceReturnType } from '@interfaces/ServiceReturnType';
+import { db } from '@config/db';
+import { MastersService } from './masters.service';
+import { ProcessStatus } from '@enums/ProcessStatus';
+import { WeekDto } from '@dto/WeekDto';
+import { DatesHelper } from '@helpers/DatesHelper';
 import { QueryDocumentSnapshot } from '@google-cloud/firestore';
-import { CalendarDto } from '../dto/CalendarDto';
+import { CalendarDto } from '@dto/CalendarDto';
 
 class CalendarServiceClass {
   async getCalendar(serviceId: number, masterId: number | undefined): Promise<ServiceReturnType<WeekDto[]>> {

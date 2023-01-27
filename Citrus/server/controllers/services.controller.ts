@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { Service } from '../interfaces/Service';
-import { ServicesService } from '../services/services.service.js';
-import { ProcessStatus } from '../enums/ProcessStatus.js';
-import { ServiceReturnType } from '../interfaces/ServiceReturnType';
+import { Service } from '@interfaces/Service';
+import { ServicesService } from '@services/services.service';
+import { ProcessStatus } from '@enums/ProcessStatus';
+import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 
 class ServicesController {
   async services(req: Request, res: Response) {

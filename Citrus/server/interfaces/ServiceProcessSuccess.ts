@@ -1,7 +1,7 @@
-import { ProcessStatus } from '../enums/ProcessStatus.js';
+import { ProcessStatus } from '@enums/ProcessStatus';
 
 export interface ServiceProcessSuccess<T> {
-	message?: string;
-	data: T;
-	status: ProcessStatus.SUCCESS;
+  message?: string;
+  data: T;
+  status: ProcessStatus.SUCCESS;
 }
