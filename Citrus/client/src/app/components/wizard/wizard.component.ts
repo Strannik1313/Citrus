@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, of, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { BTN_LABELS } from '@constants/btn-labels';
 import { ChoisenDate, Client, ClientConfirmStep } from '@models/client';
 import { CLIENT_INIT_CONFIRM, CLIENT_INIT_VALUE } from '@constants/client-init-value';
@@ -46,7 +46,6 @@ export class WizardComponent implements OnInit, OnDestroy {
   public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
   public nextBtnLabel: string = BTN_LABELS.next;
   public backBtnLabels: string = BTN_LABELS.back;
-  public timesheets$: Observable<Schedule[]> | undefined;
   public stepsQuantity: BehaviorSubject<Array<number>> = new BehaviorSubject(STEPS_QUATITY);
   private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(CLIENT_INIT_VALUE);
   public selectedDay: string | null = null;
@@ -68,6 +67,7 @@ export class WizardComponent implements OnInit, OnDestroy {
   selectedService$: Observable<Service | null> = new Observable<Service>();
   masters$: Observable<Master[] | null> = new Observable<Master[]>();
   dates$: Observable<CalendarDates[] | null> = new Observable<CalendarDates[]>();
+  schedules$: Observable<Schedule[] | null> = new Observable<Schedule[]>();
 
   constructor(private router: Router, private apiService: ApiService, private store: Store) {}
 
@@ -79,6 +79,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.selectedService$ = this.store.select(WizardFeature.selectSelectedService);
     this.masters$ = this.store.select(WizardFeature.selectMasters);
     this.dates$ = this.store.select(WizardFeature.selectDates);
+    this.schedules$ = this.store.select(WizardFeature.selectSchedules);
   }
 
   onFormChange(observable: Observable<ClientConfirmStep>): void {
@@ -121,7 +122,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 
   onWeekChange(event: { startDay: string; increase: number }): void {
     this.selectedDay = null;
-    this.timesheets$ = of([]);
+    // this.timesheets$ = of([]);
     this.client.next({
       ...this.client.value,
       dateOrder: null,
@@ -160,13 +161,13 @@ export class WizardComponent implements OnInit, OnDestroy {
           }),
         );
     }
-    if (!!this.selectedDay && this.client.value.serviceId !== null) {
-      this.timesheets$ = this.apiService.getTimesheets(
-        this.client.value.serviceId,
-        this.selectedDay,
-        this.client.value.masterId,
-      );
-    }
+    // if (!!this.selectedDay && this.client.value.serviceId !== null) {
+    //   this.timesheets$ = this.apiService.getTimesheets(
+    //     this.client.value.serviceId,
+    //     this.selectedDay,
+    //     this.client.value.masterId,
+    //   );
+    // }
   }
 
   onDayChange(date: string): void {
@@ -179,7 +180,7 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.startWeekDay = dayjs(month ?? this.startWeekDay)
       .startOf('week')
       .toString();
-    this.timesheets$ = of([]);
+    // this.timesheets$ = of([]);
     this.client.next({
       ...this.client.value,
       dateOrder: null,

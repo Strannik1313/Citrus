@@ -5,7 +5,7 @@
 		dates: dates$ | async,
 		btnConf: calendarBtnConf$ | async,
 		client: client$ | async,
-		timesheets: timesheets$ | async,
+		schedules$: schedules$ | async,
 		isValid: isClientValid$ | async,
 		stepsQuantity: stepsQuantity$ | async,
 		updatedPhone: updatedPhone$ | async,
@@ -45,7 +45,7 @@
 				(onMonthChange)="onMonthChange($event)"
 				(onTimeChange)="onTimeChange($event)"
 				[months]="months"
-				[timesheets]="data.timesheets"
+				[timesheets]="data.schedules$"
 				[btnConf]="data.btnConf"
 				[masters]="data.masters"
 				[dates]="data.dates"

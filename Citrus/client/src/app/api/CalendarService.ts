@@ -20,7 +20,7 @@ export class CalendarService {
   }
 
   getSchedule(body: ScheduleDto): Observable<Array<Schedule>> {
-    return this.http.post<Array<Schedule>>('/api/calendar/timesheets', {
+    return this.http.post<Array<Schedule>>('/api/calendar/schedule', {
       serviceId: body.serviceId,
       date: body.date,
     });

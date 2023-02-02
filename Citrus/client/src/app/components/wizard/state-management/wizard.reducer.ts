@@ -121,4 +121,5 @@ export const {
   selectSelectedMaster,
   selectDates,
   selectSelectedDay,
+  selectSchedules,
 } = WizardFeature;
