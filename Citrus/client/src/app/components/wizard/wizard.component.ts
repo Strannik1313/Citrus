@@ -9,7 +9,7 @@ import { Master } from '@models/master';
 import { CalendarDates } from '@models/calendar-dates';
 import { WizardHelper } from '@components/wizard/wizard-helper';
 import { BtnStatus, CALENDAR_BTN_INIT_VALUE } from '@models/buttons-status';
-import { Timesheet } from '@models/timesheet';
+import { Schedule } from '@models/schedule';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
@@ -19,6 +19,7 @@ import {
   decrementWizardStep,
   getServices,
   incrementWizardStep,
+  setSelectedDay,
   setSelectedService,
 } from '@components/wizard/state-management/wizard.actions';
 import { Service } from '@models/service';
@@ -45,7 +46,7 @@ export class WizardComponent implements OnInit, OnDestroy {
   public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
   public nextBtnLabel: string = BTN_LABELS.next;
   public backBtnLabels: string = BTN_LABELS.back;
-  public timesheets$: Observable<Timesheet[]> | undefined;
+  public timesheets$: Observable<Schedule[]> | undefined;
   public stepsQuantity: BehaviorSubject<Array<number>> = new BehaviorSubject(STEPS_QUATITY);
   private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(CLIENT_INIT_VALUE);
   public selectedDay: string | null = null;
@@ -168,20 +169,8 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
   }
 
-  onDayChange(date: string | null): void {
-    this.selectedDay = date;
-    this.client.next({
-      ...this.client.value,
-      masterId: null,
-      masterName: '',
-      dateOrder: null,
-    });
-    // this.isClientValid.next(
-    // 	WizardHelper.isClientValid(this.client.value, this.currentStep),
-    // );
-    if (this.client.value.serviceId !== null) {
-      this.timesheets$ = this.apiService.getTimesheets(this.client.value.serviceId, date, this.client.value.masterId);
-    }
+  onDayChange(date: string): void {
+    this.store.dispatch(setSelectedDay({ payload: date }));
   }
 
   onMonthChange(month: string | null): void {

@@ -11,6 +11,7 @@ import {
   setDates,
   setFwdBtnDisabled,
   setMasters,
+  setSchedules,
   setServices,
   TypedActionWithPayload,
   WizardActions,
@@ -168,6 +169,19 @@ export class WizardEffects {
       mergeMap(datesDto =>
         this.calendarService.getDates(datesDto).pipe(map(calendarDates => setDates({ payload: calendarDates }))),
       ),
+    );
+  });
+
+  setSchedule$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(WizardActions.SetSelectedDayAction),
+      map((action: TypedActionWithPayload<string>) => action.payload),
+      concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
+      mergeMap(([day, service]) => {
+        return this.calendarService
+          .getSchedule({ date: day, serviceId: service!.id })
+          .pipe(map(schedules => setSchedules({ payload: schedules })));
+      }),
     );
   });
 }
