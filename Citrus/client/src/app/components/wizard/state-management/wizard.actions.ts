@@ -4,6 +4,8 @@ import { Master, MastersResponse } from '@models/master';
 import { DatesDto } from '@models/DatesDto';
 import { CalendarDates } from '@models/calendar-dates';
 import { TypedAction } from '@ngrx/store/src/models';
+import { ScheduleDto } from '@models/ScheduleDto';
+import { Schedule } from '@models/schedule';
 
 export interface TypedActionWithPayload<T> extends TypedAction<WizardActions> {
   payload: T;
@@ -25,6 +27,9 @@ export enum WizardActions {
   GetDatesAction = '[Wizard Page] GetDatesAction',
   SetDatesAction = '[Wizard Page] SetDatesAction',
   InitializeWizardServiceChoiceAction = '[Wizard Page] InitializeWizardServiceChoiceAction',
+  GetScheduleAction = '[Wizard Page] GetScheduleAction',
+  SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
+  SetScheduleAction = '[Wizard Page] SetScheduleAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -55,5 +60,8 @@ export const getDates = createAction(WizardActions.GetDatesAction, props<{ paylo
 export const initializeWizardServiceChoice = createAction(WizardActions.InitializeWizardServiceChoiceAction);
 
 export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDates[] }>());
+export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{ payload: ScheduleDto }>());
+export const setSelectedDay = createAction(WizardActions.SetSelectedDayAction, props<{ payload: string }>());
+export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: Schedule[] }>());
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

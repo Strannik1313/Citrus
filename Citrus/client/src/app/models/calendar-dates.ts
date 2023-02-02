@@ -1,4 +1,4 @@
 export interface CalendarDates {
-	date: string;
-	masterIds: Array<number>;
+  date: string;
+  masterIds: Array<number>;
 }
