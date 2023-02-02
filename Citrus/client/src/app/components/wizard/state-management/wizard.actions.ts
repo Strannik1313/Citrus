@@ -6,24 +6,25 @@ import { CalendarDates } from '@models/calendar-dates';
 import { TypedAction } from '@ngrx/store/src/models';
 
 export interface TypedActionWithPayload<T> extends TypedAction<WizardActions> {
-	payload: T;
+  payload: T;
 }
 
 export enum WizardActions {
-	IncrementWizardStepAction = '[Wizard Page] IncrementWizardStepAction',
-	DecrementWizardStepAction = '[Wizard Page] DecrementWizardStepAction',
-	ResetWizardStepAction = '[Wizard Page] ResetWizardStepAction',
-	ChangeWizardStepAction = '[Wizard Page] ChangeWizardStepAction',
-	GetServicesAction = '[Wizard Page] GetServicesAction',
-	SetServicesAction = '[Wizard Page] SetServicesAction',
-	SetFwdBtnDisabledAction = '[Wizard Page] SetFwdBtnDisabledAction',
-	CheckCurrentStepAction = '[Wizard Page] CheckCurrentStepAction',
-	SetSelectedServiceAction = '[Wizard Page] SetSelectedServiceAction',
-	ResetSelectedServiceAction = '[Wizard Page] ResetSelectedServiceAction',
-	GetMastersAction = '[Wizard Page] GetMastersAction',
-	SetMastersAction = '[Wizard Page] SetMastersAction',
-	GetDatesAction = '[Wizard Page] GetDatesAction',
-	SetDatesAction = '[Wizard Page] SetDatesAction',
+  IncrementWizardStepAction = '[Wizard Page] IncrementWizardStepAction',
+  DecrementWizardStepAction = '[Wizard Page] DecrementWizardStepAction',
+  ResetWizardStepAction = '[Wizard Page] ResetWizardStepAction',
+  ChangeWizardStepAction = '[Wizard Page] ChangeWizardStepAction',
+  GetServicesAction = '[Wizard Page] GetServicesAction',
+  SetServicesAction = '[Wizard Page] SetServicesAction',
+  SetFwdBtnDisabledAction = '[Wizard Page] SetFwdBtnDisabledAction',
+  CheckCurrentStepAction = '[Wizard Page] CheckCurrentStepAction',
+  SetSelectedServiceAction = '[Wizard Page] SetSelectedServiceAction',
+  ResetSelectedServiceAction = '[Wizard Page] ResetSelectedServiceAction',
+  GetMastersAction = '[Wizard Page] GetMastersAction',
+  SetMastersAction = '[Wizard Page] SetMastersAction',
+  GetDatesAction = '[Wizard Page] GetDatesAction',
+  SetDatesAction = '[Wizard Page] SetDatesAction',
+  InitializeWizardServiceChoiceAction = '[Wizard Page] InitializeWizardServiceChoiceAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -51,6 +52,7 @@ export const getMasters = createAction(WizardActions.GetMastersAction, props<{ p
 export const setMasters = createAction(WizardActions.SetMastersAction, props<{ payload: Master[] }>());
 
 export const getDates = createAction(WizardActions.GetDatesAction, props<{ payload: DatesDto }>());
+export const initializeWizardServiceChoice = createAction(WizardActions.InitializeWizardServiceChoiceAction);
 
 export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDates[] }>());
 
