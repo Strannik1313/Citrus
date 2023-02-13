@@ -1,0 +1,18 @@
+<div class="container__schedule">
+	<ng-container *ngFor="let schedule of schedules; trackBy: trackByFn">
+		<mat-card class="schedule">
+			<div *ngIf="schedule.freetimes.length > 0">
+				<p>{{ schedule.masterName }}</p>
+				<p>Цена: {{ schedule.cost }} рублей</p>
+				<p>Продолжительность: {{ schedule.duration }} минут</p>
+				<div class="time__container">
+					<div *ngFor="let time of schedule.freetimes; trackBy: trackByFn">
+						<app-timepicker
+							(onTimeChange)="timeChange($event, schedule)"
+							[time]="time">
+						</app-timepicker>
+					</div>
+				</div> </div
+		></mat-card>
+	</ng-container>
+</div>

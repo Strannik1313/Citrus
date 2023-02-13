@@ -1,13 +1,11 @@
-export class Order {
-	master: string = '';
-	masterId: number = 0;
-	service: string = '';
-	date: Date | null = null;
-	clientName: string = '';
-	clientSurname: string = '';
-	phoneNumber: string = '';
-	comments: string = '';
-	quantityOfOrders: number = 0;
-	orderId: number = 0;
-	isDoneByAdmin: boolean = false;
+import { Master } from '@models/master';
+import { Service } from '@models/service';
+import { Client } from '@models/client';
+
+export interface Order {
+  master: Master;
+  service: Service;
+  date: Date;
+  client: Client | null;
+  comments: string | null;
 }

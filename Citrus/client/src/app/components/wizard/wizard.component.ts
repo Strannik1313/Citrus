@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
 import { BTN_LABELS } from '@constants/btn-labels';
-import { ChoisenDate, Client, ClientConfirmStep } from '@models/client';
+import { Client, ClientConfirmStep } from '@models/client';
 import { CLIENT_INIT_CONFIRM, CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { ApiService } from '@services/api.service';
 import { Master } from '@models/master';
@@ -19,6 +19,7 @@ import {
   decrementWizardStep,
   getServices,
   incrementWizardStep,
+  setSelectedSchedule,
   setSelectedDay,
   setSelectedService,
 } from '@components/wizard/state-management/wizard.actions';
@@ -105,31 +106,20 @@ export class WizardComponent implements OnInit, OnDestroy {
             ...CLIENT_INIT_CONFIRM,
           });
         }
-        // this.isClientValid.next(
-        // 	WizardHelper.isClientValid(this.client.value, this.currentStep),
-        // );
       }),
     );
   }
 
   onServiceChange(value: Service): void {
     this.store.dispatch(setSelectedService({ payload: value }));
-    // this.client.next({ ...this.client.value, ...value });
-    // this.isClientValid.next(
-    // 	WizardHelper.isClientValid(this.client.value, this.currentStep),
-    // );
   }
 
   onWeekChange(event: { startDay: string; increase: number }): void {
     this.selectedDay = null;
-    // this.timesheets$ = of([]);
     this.client.next({
       ...this.client.value,
       dateOrder: null,
     });
-    // this.isClientValid.next(
-    // 	WizardHelper.isClientValid(this.client.value, this.currentStep),
-    // );
     this.startWeekDay = dayjs(event.startDay).add(event.increase, 'week').toString();
     if (this.client.value.serviceId !== null) {
       this.dates$ = this.apiService
@@ -161,13 +151,6 @@ export class WizardComponent implements OnInit, OnDestroy {
           }),
         );
     }
-    // if (!!this.selectedDay && this.client.value.serviceId !== null) {
-    //   this.timesheets$ = this.apiService.getTimesheets(
-    //     this.client.value.serviceId,
-    //     this.selectedDay,
-    //     this.client.value.masterId,
-    //   );
-    // }
   }
 
   onDayChange(date: string): void {
@@ -180,14 +163,10 @@ export class WizardComponent implements OnInit, OnDestroy {
     this.startWeekDay = dayjs(month ?? this.startWeekDay)
       .startOf('week')
       .toString();
-    // this.timesheets$ = of([]);
     this.client.next({
       ...this.client.value,
       dateOrder: null,
     });
-    // this.isClientValid.next(
-    // 	WizardHelper.isClientValid(this.client.value, this.currentStep),
-    // );
     if (this.client.value.serviceId !== null && month !== null) {
       this.dates$ = this.apiService
         .getDates(this.client.value.serviceId, dayjs(month).toString(), this.client.value.masterId)
@@ -201,83 +180,16 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
   }
 
-  onTimeChange(choisenDate: ChoisenDate): void {
-    this.client.next({
-      ...this.client.value,
-      ...choisenDate,
-    });
-    // this.isClientValid.next(
-    // 	WizardHelper.isClientValid(this.client.value, this.currentStep),
-    // );
+  onTimeChange(choisenDate: Schedule): void {
+    this.store.dispatch(setSelectedSchedule({ payload: choisenDate }));
   }
 
   onBtnClick(isNextStep: boolean): void {
     if (isNextStep) {
       this.store.dispatch(incrementWizardStep());
     } else {
-      // this.client.next(
-      // 	WizardHelper.getClientInitValue(this.client.value, this.currentStep),
-      // );
       this.store.dispatch(decrementWizardStep());
     }
-    // this.isClientValid.next(
-    // 	WizardHelper.isClientValid(this.client.value, this.currentStep),
-    // );
-    // switch (this.currentStep) {
-    // 	case WizardStepperEnum.SERVICE_CHOICE:
-    // 		this.selectedDay = null;
-    // 		break;
-    // 	case WizardStepperEnum.DATE_CHOICE:
-    // 		this.timesheets$ = of([]);
-    // 		this.nextBtnLabel = BTN_LABELS.next;
-    // 		this.masters$ = this.apiService.getMasters(
-    // 			this.client.value.serviceId,
-    // 			this.client.value.masterId,
-    // 		);
-    // 		this.months = WizardHelper.getMonth();
-    // 		if (this.client.value.serviceId !== null) {
-    // 			this.startWeekDay = dayjs().startOf('week').toString();
-    // 			this.dates$ = this.apiService
-    // 				.getDates(
-    // 					this.client.value.serviceId,
-    // 					this.client.value.dateOrder ?? dayjs().toString(),
-    // 					this.client.value.masterId,
-    // 				)
-    // 				.pipe(
-    // 					tap(dates => {
-    // 						this.calendarBtnConf.next(
-    // 							WizardHelper.getCalendarBtnConf(
-    // 								dates[0].date,
-    // 								this.selectedMonth,
-    // 							),
-    // 						);
-    // 					}),
-    // 				);
-    // 		}
-    // 		if (
-    // 			this.client.value.dateOrder !== null &&
-    // 			this.client.value.serviceId !== null
-    // 		) {
-    // 			this.timesheets$ = this.apiService.getTimesheets(
-    // 				this.client.value.serviceId,
-    // 				this.selectedDay,
-    // 				this.client.value.masterId,
-    // 			);
-    // 		}
-    // 		break;
-    // 	case WizardStepperEnum.CONFIRM_PAGE:
-    // 		this.nextBtnLabel = BTN_LABELS.confirm;
-    // 		break;
-    // 	case WizardStepperEnum.DONE:
-    // 		this.apiService.makeOrder(this.client.value).subscribe(data => {
-    // 			// console.log(data);
-    // 		});
-    // 		// this.router.navigate([NAVIGATE_ROUTES.home]);
-    // 		break;
-    // 	default:
-    // 		this.router.navigate([NAVIGATE_ROUTES.home]);
-    // 		break;
-    // }
   }
 
   ngOnDestroy(): void {
