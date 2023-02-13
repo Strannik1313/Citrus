@@ -4,4 +4,6 @@ export interface Schedule {
   cost: number;
   duration: number;
   freetimes: Array<string[]>;
+  orders: string[];
+  preOrder: string;
 }

@@ -16,7 +16,7 @@ import { WizardConfirmStepComponent } from '@components/wizard/wizard-confirm-st
 import { WizardServiceChoiceStepComponent } from '@components/wizard/wizard-service-choice-step/wizard-service-choice-step.component';
 import { WizardDateChoiceStepComponent } from '@components/wizard/wizard-date-choice-step/wizard-date-choice-step.component';
 import { AutocompleteModule } from '@shared/autocomplete/autocomplete.module';
-import { TimesheetModule } from '@shared/timesheet/timesheet.module';
+import { ScheduleModule } from '@shared/schedule/schedule.module';
 import { MonthFilterModule } from '@shared/month-filter/month-filter.module';
 import { DirectivesModule } from '@directives/directives.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -44,7 +44,7 @@ import { WizardEffects } from '@components/wizard/state-management/wizard.effect
     StepperModule,
     CalendarModule,
     AutocompleteModule,
-    TimesheetModule,
+    ScheduleModule,
     MasterFilterModule,
     MonthFilterModule,
     DirectivesModule,

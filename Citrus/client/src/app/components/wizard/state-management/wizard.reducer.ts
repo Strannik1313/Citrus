@@ -3,6 +3,7 @@ import {
   changeWizardStep,
   resetSelectedService,
   resetWizardStep,
+  setSelectedSchedule,
   setDates,
   setFwdBtnDisabled,
   setMasters,
@@ -28,6 +29,7 @@ export interface WizardReducer {
   dates: CalendarDates[] | null;
   selectedDay: string | null;
   schedules: Schedule[] | null;
+  selectedSchedule: Schedule | null;
 }
 
 export const wizardInitialState: WizardReducer = {
@@ -40,6 +42,7 @@ export const wizardInitialState: WizardReducer = {
   dates: null,
   selectedDay: null,
   schedules: null,
+  selectedSchedule: null,
 };
 
 export const WizardFeature = createFeature({
@@ -106,6 +109,12 @@ export const WizardFeature = createFeature({
         schedules: payload,
       };
     }),
+    on(setSelectedSchedule, (state, { payload }): WizardReducer => {
+      return {
+        ...state,
+        selectedSchedule: payload,
+      };
+    }),
   ),
 });
 
@@ -122,4 +131,5 @@ export const {
   selectDates,
   selectSelectedDay,
   selectSchedules,
+  selectSelectedSchedule,
 } = WizardFeature;
