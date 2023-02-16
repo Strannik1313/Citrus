@@ -24,7 +24,7 @@ export class WizardDateChoiceStepComponent {
     startDay: string;
     increase: number;
   }> = new EventEmitter();
-  @Output() onMasterChange: EventEmitter<number | null> = new EventEmitter();
+  @Output() onMasterChange: EventEmitter<Master | null> = new EventEmitter();
   @Output() onDayChange: EventEmitter<string> = new EventEmitter();
   @Output() onMonthChange: EventEmitter<string | null> = new EventEmitter();
   @Output() onTimeChange: EventEmitter<Schedule> = new EventEmitter();
@@ -37,8 +37,8 @@ export class WizardDateChoiceStepComponent {
     this.onWeekChange.emit(event);
   }
 
-  onMasterFilterChange(id: number | null): void {
-    this.onMasterChange.emit(id);
+  onMasterFilterChange(master: Master | null): void {
+    this.onMasterChange.emit(master);
   }
 
   onMonthFilterChange(month: string | null): void {

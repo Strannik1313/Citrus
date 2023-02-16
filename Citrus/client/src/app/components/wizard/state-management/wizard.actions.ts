@@ -31,6 +31,7 @@ export enum WizardActions {
   SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
   SetScheduleAction = '[Wizard Page] SetScheduleAction',
   SetSelectedTimeAction = '[Wizard Page] SetSelectedTimeAction',
+  SetSelectedMasterAction = '[Wizard Page] SetSelectedMasterAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -65,5 +66,9 @@ export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{
 export const setSelectedDay = createAction(WizardActions.SetSelectedDayAction, props<{ payload: string }>());
 export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: Schedule[] }>());
 export const setSelectedSchedule = createAction(WizardActions.SetSelectedTimeAction, props<{ payload: Schedule }>());
+export const setSelectedMaster = createAction(
+  WizardActions.SetSelectedMasterAction,
+  props<{ payload: Master | null }>(),
+);
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());
