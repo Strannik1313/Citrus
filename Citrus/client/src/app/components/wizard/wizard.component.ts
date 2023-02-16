@@ -22,6 +22,7 @@ import {
   setSelectedSchedule,
   setSelectedDay,
   setSelectedService,
+  setSelectedMaster,
 } from '@components/wizard/state-management/wizard.actions';
 import { Service } from '@models/service';
 
@@ -136,21 +137,8 @@ export class WizardComponent implements OnInit, OnDestroy {
     }
   }
 
-  onMasterChange(id: number | null) {
-    this.client.value.masterId = id;
-    this.client.next({
-      ...this.client.value,
-      masterId: id,
-    });
-    if (this.client.value.serviceId !== null) {
-      this.dates$ = this.apiService
-        .getDates(this.client.value.serviceId, dayjs(this.startWeekDay).toString(), this.client.value.masterId)
-        .pipe(
-          tap(dates => {
-            this.calendarBtnConf.next(WizardHelper.getCalendarBtnConf(dates[0].date, this.selectedMonth));
-          }),
-        );
-    }
+  onMasterChange(master: Master | null) {
+    this.store.dispatch(setSelectedMaster({ payload: master }));
   }
 
   onDayChange(date: string): void {

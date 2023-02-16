@@ -11,6 +11,7 @@ import {
   setSelectedDay,
   setSelectedService,
   setServices,
+  setSelectedMaster,
 } from '@components/wizard/state-management/wizard.actions';
 import { Service } from '@models/service';
 import { Master } from '@models/master';
@@ -113,6 +114,12 @@ export const WizardFeature = createFeature({
       return {
         ...state,
         selectedSchedule: payload,
+      };
+    }),
+    on(setSelectedMaster, (state, { payload }): WizardReducer => {
+      return {
+        ...state,
+        selectedMaster: payload,
       };
     }),
   ),

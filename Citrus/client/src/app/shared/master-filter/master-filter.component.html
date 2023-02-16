@@ -10,12 +10,12 @@
 	[cdkConnectedOverlayOpen]="isOpen">
 	<ul class="overlay__list">
 		<div class="list__item">
-			<li class="list__item" (click)="onFilterClick(null, 'все мастера')"
+			<li class="list__item" (click)="onFilterClick(null)"
 				>все мастера</li
 			>
 		</div>
 		<div class="list__item" *ngFor="let master of masters; trackBy: trackByFn"
-			><li (click)="onFilterClick(master.id, master.name)">{{
+			><li (click)="onFilterClick(master)">{{
 				master.name
 			}}</li>
 		</div>
