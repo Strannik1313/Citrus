@@ -42,6 +42,9 @@ describe('WizardServiceChoiceStepComponent', () => {
 	it('component should created', () => {
 		expect(component).toBeDefined();
 	});
+	it('123', () => {
+		expect(component);
+	});
 
 	describe('onServiceChange', () => {
 		let serviceClickSpy: Spy;

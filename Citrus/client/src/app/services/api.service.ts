@@ -8,39 +8,39 @@ import { Schedule } from '@models/schedule';
 import { Client } from '@models/client';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class ApiService {
-  constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
-  getDates(serviceId: number, dateRangeStart: string, masterId: number | null): Observable<Array<CalendarDates>> {
-    return this.http.post<Array<CalendarDates>>('/api/calendar', {
-      serviceId,
-      dateRangeStart,
-      masterId,
-    });
-  }
+	getDates(serviceId: number, dateRangeStart: string, masterId: number | null): Observable<Array<CalendarDates>> {
+		return this.http.post<Array<CalendarDates>>('/api/calendar', {
+			serviceId,
+			dateRangeStart,
+			masterId,
+		});
+	}
 
-  getMasters(serviceId: number | null, masterId: number | null): Observable<Array<Master>> {
-    return this.http.post<Array<Master>>('/api/masters', {
-      serviceId,
-      masterId,
-    });
-  }
+	getMasters(serviceId: number | null, masterId: number | null): Observable<Array<Master>> {
+		return this.http.post<Array<Master>>('/api/masters', {
+			serviceId,
+			masterId,
+		});
+	}
 
-  getTimesheets(serviceId: number, date: string | null, masterId: number | null): Observable<Array<Schedule>> {
-    return this.http.post<Array<Schedule>>('/api/calendar/timesheets', {
-      serviceId,
-      date,
-      masterId,
-    });
-  }
+	getTimesheets(serviceId: number, date: string | null, masterId: number | null): Observable<Array<Schedule>> {
+		return this.http.post<Array<Schedule>>('/api/calendar/timesheets', {
+			serviceId,
+			date,
+			masterId,
+		});
+	}
 
-  getServices(): Observable<Array<Service>> {
-    return this.http.get<Array<Service>>('/api/services');
-  }
+	getServices(): Observable<Array<Service>> {
+		return this.http.get<Array<Service>>('/api/services');
+	}
 
-  makeOrder(formValue: Client): Observable<{ message: boolean }> {
-    return this.http.patch<{ message: boolean }>('/api/order', formValue);
-  }
+	makeOrder(formValue: Client): Observable<{ message: boolean }> {
+		return this.http.patch<{ message: boolean }>('/api/order', formValue);
+	}
 }

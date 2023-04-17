@@ -21,20 +21,17 @@ export class AuthFormComponent implements OnChanges {
 	public hide = true;
 	@Input() disabledForm = false;
 	@Output() onSafeFormValue: EventEmitter<AuthForm> = new EventEmitter();
+
 	constructor() {
 		this.submitForm = new FormGroup({
 			email: new FormControl('', [
 				Validators.required,
-				Validators.pattern(
-					'[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}',
-				),
+				Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}'),
 			]),
-			password: new FormControl('', [
-				Validators.required,
-				Validators.minLength(5),
-			]),
+			password: new FormControl('', [Validators.required, Validators.minLength(5)]),
 		});
 	}
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['disabledForm'].currentValue) {
 			this.submitForm.disable();
@@ -42,27 +39,25 @@ export class AuthFormComponent implements OnChanges {
 			this.submitForm.enable();
 		}
 	}
+
 	onSubmit() {
 		this.submitForm.disable();
 		this.onSafeFormValue.emit(this.submitForm.value);
 	}
+
 	getErrorMessage(inputName: string) {
 		switch (inputName) {
 			case 'email': {
 				if (this.submitForm.controls['email'].hasError('required')) {
 					return 'Поле обязательно для заполнения';
 				}
-				return this.submitForm.controls['email'].hasError('pattern')
-					? 'Введите корректный email'
-					: '';
+				return this.submitForm.controls['email'].hasError('pattern') ? 'Введите корректный email' : '';
 			}
 			case 'password': {
 				if (this.submitForm.controls['password'].hasError('required')) {
 					return 'Поле обязательно для заполнения';
 				}
-				return this.submitForm.controls['password'].hasError('minlength')
-					? 'Минимальное количество символов - 5'
-					: '';
+				return this.submitForm.controls['password'].hasError('minlength') ? 'Минимальное количество символов - 5' : '';
 			}
 			default:
 				return 'Ошибка';

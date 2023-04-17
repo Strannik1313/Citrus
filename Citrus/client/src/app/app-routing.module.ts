@@ -11,24 +11,17 @@ const routes: Routes = [
 	},
 	{
 		path: 'deal',
-		loadChildren: () =>
-			import('@modules/wizard/wizard.module').then(m => m.WizardModule),
+		loadChildren: () => import('@modules/wizard/wizard.module').then(m => m.WizardModule),
 		canActivate: [NavigateAccess],
 	},
 	{
 		path: 'register',
-		loadChildren: () =>
-			import('@modules/register-page/register-page.module').then(
-				m => m.RegisterPageModule,
-			),
+		loadChildren: () => import('@modules/register-page/register-page.module').then(m => m.RegisterPageModule),
 		canActivate: [NavigateAccess],
 	},
 	{
 		path: 'login',
-		loadChildren: () =>
-			import('@modules/login-page/login-page.module').then(
-				m => m.LoginPageModule,
-			),
+		loadChildren: () => import('@modules/login-page/login-page.module').then(m => m.LoginPageModule),
 		canActivate: [NavigateAccess],
 	},
 	{
@@ -38,9 +31,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [
-		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
-	],
+	imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
 	exports: [RouterModule],
 })
 export class AppRoutingModule {}

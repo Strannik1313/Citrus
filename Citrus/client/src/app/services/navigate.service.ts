@@ -9,11 +9,7 @@ import { AuthHttpService } from './auth-http.service';
 export class NavigateService {
 	private currentUrl: Array<string> = [];
 
-	constructor(
-		private storage: StorageService,
-		private route: Router,
-		private authHttp: AuthHttpService,
-	) {}
+	constructor(private storage: StorageService, private route: Router, private authHttp: AuthHttpService) {}
 
 	goToNextPage(url: string): void {
 		switch (url) {

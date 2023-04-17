@@ -9,9 +9,7 @@ import { AuthFormModule } from '@shared/auth-form/auth-form.module';
 	imports: [
 		CommonModule,
 		AuthFormModule,
-		RouterModule.forChild([
-			{ path: '', component: RegisterPageWrapperComponent },
-		]),
+		RouterModule.forChild([{ path: '', component: RegisterPageWrapperComponent }]),
 	],
 	exports: [RouterModule],
 })

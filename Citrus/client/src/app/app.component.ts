@@ -1,10 +1,4 @@
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { DialogWindow } from '@models/dialog-window';
 import { DialogType } from '@shared/dialog-window/dialog-window.component';
@@ -29,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
 	isModalOpen$: Observable<boolean> = this.storage.isDialogWindowOpen$;
 	public dialogType: DialogType = DialogType.Error;
 	private subscription: Subscription = new Subscription();
+
 	constructor(
 		private apiService: ApiService,
 		private authHttp: AuthHttpService,
@@ -36,12 +31,12 @@ export class AppComponent implements OnInit, OnDestroy {
 		private serverErrorHandle: ServerErrorHandleService,
 		private cdr: ChangeDetectorRef,
 	) {}
+
 	ngOnInit(): void {
 		this.subscription.add(
 			this.storage.isDialogWindowOpen$.subscribe(data => {
 				if (data) {
-					const error: HttpErrorResponse =
-						this.serverErrorHandle?.getErrorInstance();
+					const error: HttpErrorResponse = this.serverErrorHandle?.getErrorInstance();
 					this.dialogTextData = {
 						windowHeaderText: error?.status.toString() ?? 'default',
 						windowText: error?.statusText ?? 'default',
@@ -61,9 +56,11 @@ export class AppComponent implements OnInit, OnDestroy {
 			);
 		}
 	}
+
 	onButtonClick(e: boolean) {
 		this.storage.setIsDialogWindowOpen(false);
 	}
+
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
 	}

@@ -9,14 +9,7 @@ import { AuthFormComponent } from '@shared/auth-form/auth-form.component';
 
 @NgModule({
 	declarations: [AuthFormComponent],
-	imports: [
-		CommonModule,
-		MatFormFieldModule,
-		MatButtonModule,
-		MatInputModule,
-		ReactiveFormsModule,
-		MatIconModule,
-	],
+	imports: [CommonModule, MatFormFieldModule, MatButtonModule, MatInputModule, ReactiveFormsModule, MatIconModule],
 	exports: [AuthFormComponent],
 })
 export class AuthFormModule {}

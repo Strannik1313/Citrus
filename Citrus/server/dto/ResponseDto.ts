@@ -1,4 +1,4 @@
 export interface ResponseDto {
-  message: string;
-  statusCode: number;
+	message: string;
+	statusCode: number;
 }

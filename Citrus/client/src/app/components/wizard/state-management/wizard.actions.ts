@@ -8,30 +8,30 @@ import { ScheduleDto } from '@models/ScheduleDto';
 import { Schedule } from '@models/schedule';
 
 export interface TypedActionWithPayload<T> extends TypedAction<WizardActions> {
-  payload: T;
+	payload: T;
 }
 
 export enum WizardActions {
-  IncrementWizardStepAction = '[Wizard Page] IncrementWizardStepAction',
-  DecrementWizardStepAction = '[Wizard Page] DecrementWizardStepAction',
-  ResetWizardStepAction = '[Wizard Page] ResetWizardStepAction',
-  ChangeWizardStepAction = '[Wizard Page] ChangeWizardStepAction',
-  GetServicesAction = '[Wizard Page] GetServicesAction',
-  SetServicesAction = '[Wizard Page] SetServicesAction',
-  SetFwdBtnDisabledAction = '[Wizard Page] SetFwdBtnDisabledAction',
-  CheckCurrentStepAction = '[Wizard Page] CheckCurrentStepAction',
-  SetSelectedServiceAction = '[Wizard Page] SetSelectedServiceAction',
-  ResetSelectedServiceAction = '[Wizard Page] ResetSelectedServiceAction',
-  GetMastersAction = '[Wizard Page] GetMastersAction',
-  SetMastersAction = '[Wizard Page] SetMastersAction',
-  GetDatesAction = '[Wizard Page] GetDatesAction',
-  SetDatesAction = '[Wizard Page] SetDatesAction',
-  InitializeWizardServiceChoiceAction = '[Wizard Page] InitializeWizardServiceChoiceAction',
-  GetScheduleAction = '[Wizard Page] GetScheduleAction',
-  SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
-  SetScheduleAction = '[Wizard Page] SetScheduleAction',
-  SetSelectedTimeAction = '[Wizard Page] SetSelectedTimeAction',
-  SetSelectedMasterAction = '[Wizard Page] SetSelectedMasterAction',
+	IncrementWizardStepAction = '[Wizard Page] IncrementWizardStepAction',
+	DecrementWizardStepAction = '[Wizard Page] DecrementWizardStepAction',
+	ResetWizardStepAction = '[Wizard Page] ResetWizardStepAction',
+	ChangeWizardStepAction = '[Wizard Page] ChangeWizardStepAction',
+	GetServicesAction = '[Wizard Page] GetServicesAction',
+	SetServicesAction = '[Wizard Page] SetServicesAction',
+	SetFwdBtnDisabledAction = '[Wizard Page] SetFwdBtnDisabledAction',
+	CheckCurrentStepAction = '[Wizard Page] CheckCurrentStepAction',
+	SetSelectedServiceAction = '[Wizard Page] SetSelectedServiceAction',
+	ResetSelectedServiceAction = '[Wizard Page] ResetSelectedServiceAction',
+	GetMastersAction = '[Wizard Page] GetMastersAction',
+	SetMastersAction = '[Wizard Page] SetMastersAction',
+	GetDatesAction = '[Wizard Page] GetDatesAction',
+	SetDatesAction = '[Wizard Page] SetDatesAction',
+	InitializeWizardServiceChoiceAction = '[Wizard Page] InitializeWizardServiceChoiceAction',
+	GetScheduleAction = '[Wizard Page] GetScheduleAction',
+	SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
+	SetScheduleAction = '[Wizard Page] SetScheduleAction',
+	SetSelectedTimeAction = '[Wizard Page] SetSelectedTimeAction',
+	SetSelectedMasterAction = '[Wizard Page] SetSelectedMasterAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -67,8 +67,8 @@ export const setSelectedDay = createAction(WizardActions.SetSelectedDayAction, p
 export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: Schedule[] }>());
 export const setSelectedSchedule = createAction(WizardActions.SetSelectedTimeAction, props<{ payload: Schedule }>());
 export const setSelectedMaster = createAction(
-  WizardActions.SetSelectedMasterAction,
-  props<{ payload: Master | null }>(),
+	WizardActions.SetSelectedMasterAction,
+	props<{ payload: Master | null }>(),
 );
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

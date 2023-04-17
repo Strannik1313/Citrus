@@ -7,33 +7,33 @@ import { ProcessStatus } from '@enums/ProcessStatus';
 dayjs.locale('ru');
 
 class CalendarController {
-  async calendar(req: Request, res: Response) {
-    const getCalendarResult = await CalendarService.getCalendar(req.body.serviceId, req.body.masterId);
-    switch (getCalendarResult.status) {
-      case ProcessStatus.SUCCESS: {
-        res.status(200).json(getCalendarResult.data);
-        break;
-      }
-      case ProcessStatus.ERROR: {
-        res.status(500).json(getCalendarResult);
-        break;
-      }
-    }
-  }
+	async calendar(req: Request, res: Response) {
+		const getCalendarResult = await CalendarService.getCalendar(req.body.serviceId, req.body.masterId);
+		switch (getCalendarResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).json(getCalendarResult.data);
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(getCalendarResult);
+				break;
+			}
+		}
+	}
 
-  async schedule(req: Request, res: Response) {
-    const getScheduleResult = await CalendarService.getSchedule(req.body.serviceId, req.body.date);
-    switch (getScheduleResult.status) {
-      case ProcessStatus.SUCCESS: {
-        res.status(200).json(getScheduleResult.data);
-        break;
-      }
-      case ProcessStatus.ERROR: {
-        res.status(500).json(getScheduleResult);
-        break;
-      }
-    }
-  }
+	async schedule(req: Request, res: Response) {
+		const getScheduleResult = await CalendarService.getSchedule(req.body.serviceId, req.body.date);
+		switch (getScheduleResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).json(getScheduleResult.data);
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(getScheduleResult);
+				break;
+			}
+		}
+	}
 }
 
 export default new CalendarController();

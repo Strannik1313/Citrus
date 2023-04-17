@@ -1,10 +1,4 @@
-import {
-	Component,
-	ChangeDetectionStrategy,
-	Output,
-	EventEmitter,
-	Input,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import dayjs from 'dayjs';
 
 const BTN_LABEL_DEF = 'месяц не выбран';
@@ -18,8 +12,9 @@ const BTN_LABEL_DEF = 'месяц не выбран';
 export class MonthFilterComponent {
 	@Input() months: Array<string> = [];
 	@Output() onMonthSelected: EventEmitter<string | null> = new EventEmitter();
-	public isOpen: boolean = false;
+	public isOpen = false;
 	public btnLabel: string = BTN_LABEL_DEF;
+
 	onFilterClick(month: string | null): void {
 		this.isOpen = false;
 		if (month !== null) {
@@ -29,6 +24,7 @@ export class MonthFilterComponent {
 		}
 		this.onMonthSelected.emit(month);
 	}
+
 	trackByFn(index: number, item: string): string {
 		return item;
 	}

@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "prepare": "cd ../../ && husky install",
-    "check": "npx eslint 'src/**'"
+		"lint": "eslint '**/*.ts' --ignore-pattern node_modules/ --fix"
   },
   "lint-staged": {
     "*.{js,ts}": [

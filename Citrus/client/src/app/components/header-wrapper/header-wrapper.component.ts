@@ -1,10 +1,5 @@
 import { BehaviorSubject, Subscription } from 'rxjs';
-import {
-	ChangeDetectionStrategy,
-	Component,
-	OnDestroy,
-	OnInit,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ButtonConf } from '@shared/app-button-group/app-button-group.component';
 import { StorageService } from '@services/storage.service';
 import { btnConfMap } from '@models/header-button-conf';
@@ -21,9 +16,7 @@ export class HeaderWrapperComponent implements OnInit, OnDestroy {
 	public default: ButtonConf[] = btnConfMap.auth;
 	public userModel: UserModel = UserModel.UNAUTH;
 	public homeLink: string = NAVIGATE_ROUTES.home;
-	private buttonConf: BehaviorSubject<ButtonConf[]> = new BehaviorSubject<
-		ButtonConf[]
-	>([]);
+	private buttonConf: BehaviorSubject<ButtonConf[]> = new BehaviorSubject<ButtonConf[]>([]);
 	private subscription: Subscription = new Subscription();
 	constructor(private storage: StorageService) {}
 

@@ -1,9 +1,5 @@
 import { CdkDrag, CdkDragEnter, CdkDragExit } from '@angular/cdk/drag-drop';
-import {
-	CdkConnectedOverlay,
-	CdkOverlayOrigin,
-	ConnectionPositionPair,
-} from '@angular/cdk/overlay';
+import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectionPositionPair } from '@angular/cdk/overlay';
 import {
 	Component,
 	ChangeDetectionStrategy,
@@ -26,7 +22,7 @@ export class OverlayListComponent {
 	isActive = false;
 	prev: CdkDrag<string> | undefined;
 	next: CdkDrag<string> | undefined;
-	private count: number = 1;
+	private count = 1;
 	@ViewChild('overlay', { static: false }) overlay!: CdkConnectedOverlay;
 	@ViewChild('tooltip', { static: false }) tooltip!: ElementRef;
 	@Output() mouseleave = new EventEmitter();
