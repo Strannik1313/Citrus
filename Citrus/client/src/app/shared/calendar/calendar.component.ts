@@ -1,10 +1,4 @@
-import {
-	Component,
-	ChangeDetectionStrategy,
-	Output,
-	EventEmitter,
-	Input,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { BtnStatus } from '@models/buttons-status';
 import { CalendarDates } from '@models/calendar-dates';
 
@@ -23,6 +17,7 @@ export class CalendarComponent {
 		startDay: string;
 		increase: number;
 	}> = new EventEmitter();
+
 	onChangeWeekClick(increase: number): void {
 		if (!!this.dates) {
 			this.onWeekChange.emit({
@@ -31,9 +26,11 @@ export class CalendarComponent {
 			});
 		}
 	}
+
 	onDateClick(day: CalendarDates): void {
 		this.onDayChange.emit(day.date);
 	}
+
 	trackByFn(index: number, item: CalendarDates): string {
 		return item.date;
 	}

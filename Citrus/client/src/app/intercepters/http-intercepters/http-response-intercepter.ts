@@ -1,10 +1,5 @@
 import { Observable, tap } from 'rxjs';
-import {
-	HttpInterceptor,
-	HttpHandler,
-	HttpEvent,
-	HttpRequest,
-} from '@angular/common/http';
+import { HttpInterceptor, HttpHandler, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ServerErrorHandleService } from '@services/server-error-handle.service';
 
@@ -13,10 +8,8 @@ import { ServerErrorHandleService } from '@services/server-error-handle.service'
 })
 export class HttpResponseIntercepter implements HttpInterceptor {
 	constructor(private serverErrorHandler: ServerErrorHandleService) {}
-	intercept(
-		req: HttpRequest<any>,
-		next: HttpHandler,
-	): Observable<HttpEvent<any>> {
+
+	intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 		return next.handle(req).pipe(
 			tap({
 				error: error => {

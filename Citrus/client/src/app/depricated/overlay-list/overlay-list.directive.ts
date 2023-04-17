@@ -1,10 +1,4 @@
-import {
-	ComponentRef,
-	Directive,
-	ElementRef,
-	Input,
-	ViewContainerRef,
-} from '@angular/core';
+import { ComponentRef, Directive, ElementRef, Input, ViewContainerRef } from '@angular/core';
 import { OverlayListComponent } from 'src/app/depricated/overlay-list/overlay-list.component';
 import { filter, fromEvent, Subscription } from 'rxjs';
 
@@ -19,20 +13,14 @@ export class OverlayListDirective {
 	componentRef: ComponentRef<OverlayListComponent> | undefined;
 	private subscription: Subscription = new Subscription();
 
-	constructor(
-		private elementRef: ElementRef,
-		private hostView: ViewContainerRef,
-	) {}
+	constructor(private elementRef: ElementRef, private hostView: ViewContainerRef) {}
 	ngAfterViewInit(): void {
 		this.subscription.add(
 			fromEvent<MouseEvent>(document, 'click')
 				.pipe(
 					filter(event => {
 						const clickTarget = event.target as HTMLElement;
-						return (
-							!!this.componentRef &&
-							clickTarget !== this.elementRef.nativeElement
-						);
+						return !!this.componentRef && clickTarget !== this.elementRef.nativeElement;
 					}),
 				)
 				.subscribe(event => {
@@ -41,17 +29,15 @@ export class OverlayListDirective {
 				}),
 		);
 		this.subscription.add(
-			fromEvent<MouseEvent>(this.elementRef.nativeElement, 'click').subscribe(
-				event => {
-					if (this.componentRef) {
-						this.component!.hide();
-						this.destroyTooltipRef();
-					} else {
-						this.createComponent();
-						this.component!.show();
-					}
-				},
-			),
+			fromEvent<MouseEvent>(this.elementRef.nativeElement, 'click').subscribe(event => {
+				if (this.componentRef) {
+					this.component!.hide();
+					this.destroyTooltipRef();
+				} else {
+					this.createComponent();
+					this.component!.show();
+				}
+			}),
 		);
 	}
 

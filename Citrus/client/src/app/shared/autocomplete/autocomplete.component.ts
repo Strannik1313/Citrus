@@ -27,9 +27,11 @@ export class AutocompleteComponent implements OnChanges {
 	public inputValue = '';
 	public isAutocompleteOpen = false;
 	public optionsList: AutocompleteOptionType[] = [];
+
 	ngOnChanges(changes: SimpleChanges): void {
 		this.optionsList = changes.options?.currentValue;
 	}
+
 	onInputChange(): void {
 		this.isAutocompleteOpen = true;
 		if (this.inputValue.length === 0) {
@@ -41,13 +43,16 @@ export class AutocompleteComponent implements OnChanges {
 			});
 		}
 	}
+
 	onAutocomleteItemClick(value: AutocompleteOptionType): void {
 		this.inputValue = value.title;
 		this.optionSelected.emit(value);
 	}
+
 	onDocClick(value: boolean): void {
 		this.isAutocompleteOpen = value;
 	}
+
 	trackByFn(index: number, item: AutocompleteOptionType): number {
 		return item.id;
 	}

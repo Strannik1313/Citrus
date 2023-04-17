@@ -1,10 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import {
-	ActivatedRouteSnapshot,
-	CanActivate,
-	Router,
-	RouterStateSnapshot,
-} from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { AccessMap } from '@models/access-map';
 import { StorageService } from '@services/storage.service';
 import { Observable, Subscription } from 'rxjs';
@@ -17,14 +12,10 @@ export class NavigateAccess implements CanActivate, OnDestroy {
 	private accessMap: AccessMap = new AccessMap();
 
 	constructor(private route: Router, private storage: StorageService) {
-		this.subscription = this.storage?.accessMap$?.subscribe(
-			data => (this.accessMap = data),
-		);
+		this.subscription = this.storage?.accessMap$?.subscribe(data => (this.accessMap = data));
 	}
-	canActivate(
-		next: ActivatedRouteSnapshot,
-		state: RouterStateSnapshot,
-	): Observable<boolean> | boolean {
+
+	canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
 		switch (state.url) {
 			case '/login': {
 				if (!this.accessMap.loginPage) {

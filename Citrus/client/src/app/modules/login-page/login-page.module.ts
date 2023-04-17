@@ -6,11 +6,7 @@ import { AuthFormModule } from '@shared/auth-form/auth-form.module';
 
 @NgModule({
 	declarations: [LoginPageWrapperComponent],
-	imports: [
-		CommonModule,
-		AuthFormModule,
-		RouterModule.forChild([{ path: '', component: LoginPageWrapperComponent }]),
-	],
+	imports: [CommonModule, AuthFormModule, RouterModule.forChild([{ path: '', component: LoginPageWrapperComponent }])],
 	exports: [RouterModule],
 })
 export class LoginPageModule {}

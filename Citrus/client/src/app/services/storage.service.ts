@@ -8,47 +8,32 @@ import { BehaviorSubject, Observable } from 'rxjs';
 	providedIn: 'root',
 })
 export class StorageService {
-	private isInitiallize: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(false);
-	private isDialogWindowOpen: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(false);
-	private currentUserModel: BehaviorSubject<UserModel> =
-		new BehaviorSubject<UserModel>(UserModel.UNAUTH);
-	private isButtonDisabled: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(false);
-	private haveAccountData: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(false);
-	private isTokenValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
+	private isInitiallize: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private isDialogWindowOpen: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private currentUserModel: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(UserModel.UNAUTH);
+	private isButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private haveAccountData: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private isTokenValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private authButtonActive: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+	private isBackButtonDisabled: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+	private accessMap: BehaviorSubject<AccessMap> = new BehaviorSubject<AccessMap>(new AccessMap());
+	private authorizedUserData: BehaviorSubject<AuthorizedClient> = new BehaviorSubject<AuthorizedClient>(
+		new AuthorizedClient(),
 	);
-	private isAdmin: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
-		false,
-	);
-	private authButtonActive: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(false);
-	private isBackButtonDisabled: BehaviorSubject<boolean> =
-		new BehaviorSubject<boolean>(true);
-	private accessMap: BehaviorSubject<AccessMap> =
-		new BehaviorSubject<AccessMap>(new AccessMap());
-	private authorizedUserData: BehaviorSubject<AuthorizedClient> =
-		new BehaviorSubject<AuthorizedClient>(new AuthorizedClient());
 	private _tempArray: Array<string> = ['/'];
 
 	isInitiallize$: Observable<boolean> = this.isInitiallize.asObservable();
-	isDialogWindowOpen$: Observable<boolean> =
-		this.isDialogWindowOpen.asObservable();
-	currentUserModel$: Observable<UserModel> =
-		this.currentUserModel.asObservable();
+	isDialogWindowOpen$: Observable<boolean> = this.isDialogWindowOpen.asObservable();
+	currentUserModel$: Observable<UserModel> = this.currentUserModel.asObservable();
 	buttonStatus$: Observable<boolean> = this.isButtonDisabled.asObservable();
 	haveAccountData$: Observable<boolean> = this.haveAccountData.asObservable();
 	isTokenValid$: Observable<boolean> = this.isTokenValid.asObservable();
 	isAdmin$: Observable<boolean> = this.isAdmin.asObservable();
 	authButtonActive$: Observable<boolean> = this.authButtonActive.asObservable();
-	backButtonDisabled$: Observable<boolean> =
-		this.isBackButtonDisabled.asObservable();
+	backButtonDisabled$: Observable<boolean> = this.isBackButtonDisabled.asObservable();
 	accessMap$: Observable<AccessMap> = this.accessMap.asObservable();
-	authorizedUserData$: Observable<AuthorizedClient> =
-		this.authorizedUserData.asObservable();
+	authorizedUserData$: Observable<AuthorizedClient> = this.authorizedUserData.asObservable();
 
 	setAccessMap(url: string): void {
 		switch (url) {

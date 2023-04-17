@@ -7,22 +7,22 @@ import { Schedule } from '@models/schedule';
 import { ScheduleDto } from '@models/ScheduleDto';
 
 @Injectable({
-  providedIn: 'root',
+	providedIn: 'root',
 })
 export class CalendarService {
-  constructor(private http: HttpClient) {}
+	constructor(private http: HttpClient) {}
 
-  getDates(params: DatesDto): Observable<Array<CalendarDates>> {
-    return this.http.post<Array<CalendarDates>>('/api/calendar', {
-      serviceId: params.serviceId,
-      masterId: params.masterId,
-    });
-  }
+	getDates(params: DatesDto): Observable<Array<CalendarDates>> {
+		return this.http.post<Array<CalendarDates>>('/api/calendar', {
+			serviceId: params.serviceId,
+			masterId: params.masterId,
+		});
+	}
 
-  getSchedule(body: ScheduleDto): Observable<Array<Schedule>> {
-    return this.http.post<Array<Schedule>>('/api/calendar/schedule', {
-      serviceId: body.serviceId,
-      date: body.date,
-    });
-  }
+	getSchedule(body: ScheduleDto): Observable<Array<Schedule>> {
+		return this.http.post<Array<Schedule>>('/api/calendar/schedule', {
+			serviceId: body.serviceId,
+			date: body.date,
+		});
+	}
 }

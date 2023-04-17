@@ -5,8 +5,8 @@ import { TimepickerComponent } from './timepicker/timepicker.component';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [ScheduleComponent, TimepickerComponent],
-  imports: [CommonModule, MatCardModule],
-  exports: [ScheduleComponent],
+	declarations: [ScheduleComponent, TimepickerComponent],
+	imports: [CommonModule, MatCardModule],
+	exports: [ScheduleComponent],
 })
 export class ScheduleModule {}

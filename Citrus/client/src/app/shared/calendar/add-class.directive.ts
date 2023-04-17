@@ -19,15 +19,15 @@ import { filter, fromEvent, Subscription } from 'rxjs';
 @Directive({
 	selector: '[appAddClass]',
 })
-export class AddClassDirective
-	implements OnInit, OnChanges, AfterViewInit, OnDestroy
-{
+export class AddClassDirective implements OnInit, OnChanges, AfterViewInit, OnDestroy {
 	@Input() day: CalendarDates | undefined;
 	@Input() selectedDay: string | null = null;
 	@Output() onDateClick: EventEmitter<CalendarDates> = new EventEmitter();
 	private disabled = true;
 	private subscription: Subscription = new Subscription();
+
 	constructor(public element: ElementRef, private renderer: Renderer2) {}
+
 	ngOnInit(): void {
 		this.subscription.add(
 			fromEvent<MouseEvent>(this.element.nativeElement, 'click')
@@ -41,6 +41,7 @@ export class AddClassDirective
 				}),
 		);
 	}
+
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.day?.currentValue) {
 			this.disabled = changes.day?.currentValue.mastersId.length === 0;
@@ -48,22 +49,19 @@ export class AddClassDirective
 				? this.renderer.addClass(this.element.nativeElement, 'disable')
 				: this.renderer.removeClass(this.element.nativeElement, 'disable');
 		}
-		if (
-			!dayjs(changes.selectedDay?.currentValue).isSame(this.day?.date, 'day')
-		) {
+		if (!dayjs(changes.selectedDay?.currentValue).isSame(this.day?.date, 'day')) {
 			this.renderer.removeClass(this.element.nativeElement, 'active');
 		}
 	}
+
 	ngAfterViewInit(): void {
-		if (
-			dayjs(this.selectedDay).isSame(this.element.nativeElement.id, 'day') &&
-			!this.disabled
-		) {
+		if (dayjs(this.selectedDay).isSame(this.element.nativeElement.id, 'day') && !this.disabled) {
 			this.renderer.addClass(this.element.nativeElement, 'active');
 		} else if (this.element.nativeElement.classList.contains('active')) {
 			this.renderer.removeClass(this.element.nativeElement, 'active');
 		}
 	}
+
 	@HostListener('mouseenter') onMouseEnter() {
 		if (!this.disabled) {
 			this.renderer.addClass(this.element.nativeElement, 'hover');
@@ -75,11 +73,13 @@ export class AddClassDirective
 			this.renderer.removeClass(this.element.nativeElement, 'hover');
 		}
 	}
+
 	@HostListener('click') onMouseClick() {
 		if (!this.disabled) {
 			this.renderer.addClass(this.element.nativeElement, 'active');
 		}
 	}
+
 	ngOnDestroy(): void {
 		this.subscription.unsubscribe();
 	}

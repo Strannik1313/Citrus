@@ -11,8 +11,6 @@ import { StorageService } from '@services/storage.service';
 export class AppButtonWrapperComponent {
 	@Input() label = '';
 	@Input() url = '';
-	constructor(
-		public storage: StorageService,
-		public navigateService: NavigateService,
-	) {}
+
+	constructor(public storage: StorageService, public navigateService: NavigateService) {}
 }

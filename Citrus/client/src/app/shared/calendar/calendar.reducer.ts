@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import { nextWeek } from './calendar.actions';
 
 export const initialState: Array<string> = [];
+
 function createWeek() {
 	const week = [];
 	for (let i = 0; i < 5; i++) {
@@ -10,6 +11,7 @@ function createWeek() {
 	}
 	return week;
 }
+
 export const calendarReducer = createReducer(
 	initialState,
 	on(nextWeek, state => {

@@ -10,42 +10,34 @@ import { StorageService } from './storage.service';
 	providedIn: 'root',
 })
 export class AuthHttpService {
-	private token: string = '';
+	private token = '';
 	private userModel: UserModel = UserModel.UNAUTH;
-	constructor(
-		private http: HttpClient,
-		private storage: StorageService,
-		private router: Router,
-	) {}
+
+	constructor(private http: HttpClient, private storage: StorageService, private router: Router) {}
 
 	login(formValue: AuthForm): Observable<{ token: string; payload?: any }> {
-		return this.http
-			?.post<{ token: string; payload: any }>('/api/auth/login', formValue)
-			.pipe(
-				tap(({ token, payload }) => {
-					localStorage.setItem('authToken', token);
-					this.setToken(token);
-					this.storage?.setIsTokenValid(true);
-					this.storage?.setCurrentUserModel({
-						isAdmin: payload?.admin,
-						isAuth: true,
-					});
-					if (this.userModel === UserModel.ADMIN) {
-						this.storage?.setIsAdmin(true);
-					} else {
-						this.storage?.setIsAdmin(false);
-						this.storage?.setAuthorizedUserData({ ...payload });
-						this.storage?.setHaveAccountFormData(true);
-					}
-				}),
-			);
+		return this.http?.post<{ token: string; payload: any }>('/api/auth/login', formValue).pipe(
+			tap(({ token, payload }) => {
+				localStorage.setItem('authToken', token);
+				this.setToken(token);
+				this.storage?.setIsTokenValid(true);
+				this.storage?.setCurrentUserModel({
+					isAdmin: payload?.admin,
+					isAuth: true,
+				});
+				if (this.userModel === UserModel.ADMIN) {
+					this.storage?.setIsAdmin(true);
+				} else {
+					this.storage?.setIsAdmin(false);
+					this.storage?.setAuthorizedUserData({ ...payload });
+					this.storage?.setHaveAccountFormData(true);
+				}
+			}),
+		);
 	}
 
 	register(formValue: AuthForm): Observable<{ message: string }> {
-		return this.http?.post<{ message: string }>(
-			'/api/auth/register',
-			formValue,
-		);
+		return this.http?.post<{ message: string }>('/api/auth/register', formValue);
 	}
 
 	me(): Observable<any> {

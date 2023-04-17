@@ -1,11 +1,4 @@
-import {
-	Component,
-	OnInit,
-	Output,
-	EventEmitter,
-	ChangeDetectionStrategy,
-	Input,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy, Input } from '@angular/core';
 import { DialogWindow } from '@models/dialog-window';
 
 export enum DialogType {
@@ -29,6 +22,7 @@ export class DialogWindowComponent implements OnInit {
 		customMessage: '',
 	};
 	@Output() destroyWindow: EventEmitter<boolean> = new EventEmitter();
+
 	ngOnInit(): void {
 		switch (this.type) {
 			case DialogType.Error:
@@ -36,9 +30,7 @@ export class DialogWindowComponent implements OnInit {
 					...this.textData,
 					windowHeaderText: `Ошибка ${this.textData.windowHeaderText}`,
 					windowText: this.textData.windowText,
-					buttonLabel: this.textData.buttonLabel
-						? this.textData.buttonLabel
-						: 'Понятно',
+					buttonLabel: this.textData.buttonLabel ? this.textData.buttonLabel : 'Понятно',
 					customMessage: this.textData.customMessage
 						? this.textData.customMessage
 						: 'Попробуйте перезагрузить страницу или зайдите позже',
@@ -50,12 +42,8 @@ export class DialogWindowComponent implements OnInit {
 					...this.textData,
 					windowHeaderText: this.textData.windowHeaderText,
 					windowText: this.textData.windowText,
-					buttonLabel: this.textData.buttonLabel
-						? this.textData.buttonLabel
-						: 'Ok',
-					customMessage: this.textData.customMessage
-						? this.textData.customMessage
-						: 'Что-то пошло не так',
+					buttonLabel: this.textData.buttonLabel ? this.textData.buttonLabel : 'Ok',
+					customMessage: this.textData.customMessage ? this.textData.customMessage : 'Что-то пошло не так',
 					imgClass: 'warning__window',
 				};
 				break;
@@ -64,9 +52,7 @@ export class DialogWindowComponent implements OnInit {
 					...this.textData,
 					windowHeaderText: this.textData.windowHeaderText,
 					windowText: this.textData.windowText,
-					buttonLabel: this.textData.buttonLabel
-						? this.textData.buttonLabel
-						: 'Ok',
+					buttonLabel: this.textData.buttonLabel ? this.textData.buttonLabel : 'Ok',
 					customMessage: this.textData.customMessage
 						? this.textData.customMessage
 						: 'Вы уверены, что хотите это сделать?',
@@ -85,6 +71,7 @@ export class DialogWindowComponent implements OnInit {
 				break;
 		}
 	}
+
 	onCloseButtonClick(): void {
 		this.destroyWindow.emit(true);
 	}

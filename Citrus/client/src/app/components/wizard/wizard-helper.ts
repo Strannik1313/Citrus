@@ -20,6 +20,7 @@ export class WizardHelper {
 			}),
 		};
 	}
+
 	static getMonth(): Array<string> {
 		const month = [];
 		for (let i = 0; i < 6; i++) {
@@ -27,25 +28,21 @@ export class WizardHelper {
 		}
 		return month;
 	}
+
 	static isClientValid(client: Client, step: WizardStepperEnum): boolean {
 		switch (step) {
 			case WizardStepperEnum.SERVICE_CHOICE:
 				return client.serviceId !== null && !!client.serviceName;
 			case WizardStepperEnum.DATE_CHOICE:
-				return (
-					!!client.masterId !== null &&
-					!!client.masterName &&
-					!!client.dateOrder
-				);
+				return !!client.masterId !== null && !!client.masterName && !!client.dateOrder;
 			case WizardStepperEnum.CONFIRM_PAGE:
-				return (
-					!!client.name !== null && !!client.surname && !!client.phoneNumber
-				);
+				return !!client.name !== null && !!client.surname && !!client.phoneNumber;
 			default:
 				break;
 		}
 		return false;
 	}
+
 	static getClientInitValue(client: Client, step: WizardStepperEnum): Client {
 		switch (step) {
 			case WizardStepperEnum.SERVICE_CHOICE:
@@ -70,6 +67,7 @@ export class WizardHelper {
 			...CLIENT_INIT_VALUE,
 		};
 	}
+
 	static updatePhoneNumber(phone: string): string {
 		const regex = /([0-9]{1,2})?([0-9]{1,3})?([0-9]{1,2})?([0-9]{1,2})?/;
 		let justNumbers;

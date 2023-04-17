@@ -1,4 +1,4 @@
 export interface WeekDto {
-  date: Date;
-  mastersId: Array<number>;
+	date: Date;
+	mastersId: Array<number>;
 }

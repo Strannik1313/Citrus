@@ -1,4 +1,4 @@
 export interface ScheduleDto {
-  serviceId: number;
-  date: string | null;
+	serviceId: number;
+	date: string | null;
 }
