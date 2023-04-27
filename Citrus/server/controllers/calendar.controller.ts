@@ -34,6 +34,20 @@ class CalendarController {
 			}
 		}
 	}
+
+	async months(req: Request, res: Response) {
+		const getMonthsResult = await CalendarService.getMonths(req.query.currentMonth as string);
+		switch (getMonthsResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).json(getMonthsResult.data);
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(getMonthsResult);
+				break;
+			}
+		}
+	}
 }
 
 export default new CalendarController();

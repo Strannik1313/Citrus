@@ -8,6 +8,8 @@ import { QueryDocumentSnapshot } from '@google-cloud/firestore';
 import { CalendarDto } from '@dto/CalendarDto';
 import { Schedule } from '@interfaces/Schedule';
 import dayjs from 'dayjs';
+import { MonthsDto } from '@dto/MonthsDto';
+dayjs().format();
 
 class CalendarServiceClass {
 	async getCalendar(serviceId: number, masterId: number | undefined): Promise<ServiceReturnType<WeekDto[]>> {
@@ -155,6 +157,24 @@ class CalendarServiceClass {
 			return {
 				status: ProcessStatus.ERROR,
 				message: 'Не удалось получить доступные сервисы',
+				cause: error as Error,
+			};
+		}
+	}
+
+	async getMonths(startMonth: string): Promise<ServiceReturnType<MonthsDto>> {
+		try {
+			let monthsDto: MonthsDto = {
+				months: DatesHelper.getHalfOfYears(Number(startMonth)),
+			};
+			return {
+				status: ProcessStatus.SUCCESS,
+				data: monthsDto,
+			};
+		} catch (error) {
+			return {
+				status: ProcessStatus.ERROR,
+				message: 'Не удалось сформировать коллекцию месяцев',
 				cause: error as Error,
 			};
 		}

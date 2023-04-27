@@ -33,4 +33,17 @@ export class DatesHelper {
 		}
 		return weekDto;
 	}
+
+	static getHalfOfYears(startMonth: number): string[] {
+		let months = [];
+		for (let i = 0; i < 7; i++) {
+			months.push(
+				dayjs()
+					.month(i + startMonth)
+					.startOf('month')
+					.toString(),
+			);
+		}
+		return months;
+	}
 }
