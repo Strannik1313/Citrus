@@ -1,10 +1,12 @@
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { CalendarDates } from '@models/calendar-dates';
-import { DatesDto } from '@models/DatesDto';
-import { Schedule } from '@models/schedule';
+import { CalendarDatesDto } from '@models/CalendarDatesDto';
+import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { ScheduleDto } from '@models/ScheduleDto';
+import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
+import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
+import { MonthsDto } from '@models/MonthsDto';
 
 @Injectable({
 	providedIn: 'root',
@@ -12,17 +14,23 @@ import { ScheduleDto } from '@models/ScheduleDto';
 export class CalendarService {
 	constructor(private http: HttpClient) {}
 
-	getDates(params: DatesDto): Observable<Array<CalendarDates>> {
-		return this.http.post<Array<CalendarDates>>('/api/calendar', {
+	getDates(params: CalenderDatesLoaderDto): Observable<Array<CalendarDatesDto>> {
+		return this.http.post<Array<CalendarDatesDto>>('/api/calendar', {
 			serviceId: params.serviceId,
 			masterId: params.masterId,
 		});
 	}
 
-	getSchedule(body: ScheduleDto): Observable<Array<Schedule>> {
-		return this.http.post<Array<Schedule>>('/api/calendar/schedule', {
+	getSchedule(body: ScheduleLoaderDto): Observable<Array<ScheduleDto>> {
+		return this.http.post<Array<ScheduleDto>>('/api/calendar/schedule', {
 			serviceId: body.serviceId,
 			date: body.date,
+		});
+	}
+
+	getMonths(body: MonthsLoaderDto): Observable<MonthsDto> {
+		return this.http.get<MonthsDto>('/api/calendar/months', {
+			params: new HttpParams().set('currentMonth', body.currentMonth),
 		});
 	}
 }

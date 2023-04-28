@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Service } from '@models/service';
+import { ServiceDto } from '@models/ServiceDto';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -8,8 +8,8 @@ import { Injectable } from '@angular/core';
 })
 export class ServicesService {
 	constructor(private http: HttpClient) {}
-	getServices(filter: string | null): Observable<Array<Service>> {
-		return this.http.post<Array<Service>>('/api/services', {
+	getServices(filter: string | null): Observable<Array<ServiceDto>> {
+		return this.http.post<Array<ServiceDto>>('/api/services', {
 			filter,
 		});
 	}

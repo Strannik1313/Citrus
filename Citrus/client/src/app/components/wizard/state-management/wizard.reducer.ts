@@ -12,25 +12,29 @@ import {
 	setSelectedService,
 	setServices,
 	setSelectedMaster,
+	setMonths,
+	setSelectedMonth,
 } from '@components/wizard/state-management/wizard.actions';
-import { Service } from '@models/service';
-import { Master } from '@models/master';
-import { CalendarDates } from '@models/calendar-dates';
-import { Schedule } from '@models/schedule';
+import { ServiceDto } from '@models/ServiceDto';
+import { MasterDto } from '@models/MasterDto';
+import { CalendarDatesDto } from '@models/CalendarDatesDto';
+import { ScheduleDto } from '@models/ScheduleDto';
 
 export const wizardFeatureKey = 'wizard';
 
 export interface WizardReducer {
 	step: number;
 	fwdBtnDisabled: boolean;
-	services: Service[];
-	selectedService: Service | null;
-	masters: Master[] | null;
-	selectedMaster: Master | null;
-	dates: CalendarDates[] | null;
+	services: ServiceDto[];
+	selectedService: ServiceDto | null;
+	masters: MasterDto[] | null;
+	selectedMaster: MasterDto | null;
+	dates: CalendarDatesDto[] | null;
 	selectedDay: string | null;
-	schedules: Schedule[] | null;
-	selectedSchedule: Schedule | null;
+	schedules: ScheduleDto[] | null;
+	selectedSchedule: ScheduleDto | null;
+	months: string[] | null;
+	selectedMonth: string | null;
 }
 
 export const wizardInitialState: WizardReducer = {
@@ -44,6 +48,8 @@ export const wizardInitialState: WizardReducer = {
 	selectedDay: null,
 	schedules: null,
 	selectedSchedule: null,
+	months: null,
+	selectedMonth: null,
 };
 
 export const WizardFeature = createFeature({
@@ -122,6 +128,18 @@ export const WizardFeature = createFeature({
 				selectedMaster: payload,
 			};
 		}),
+		on(setMonths, (state, { payload }): WizardReducer => {
+			return {
+				...state,
+				months: payload.months,
+			};
+		}),
+		on(setSelectedMonth, (state, { payload }): WizardReducer => {
+			return {
+				...state,
+				selectedMonth: payload,
+			};
+		}),
 	),
 });
 
@@ -139,4 +157,6 @@ export const {
 	selectSelectedDay,
 	selectSchedules,
 	selectSelectedSchedule,
+	selectMonths,
+	selectSelectedMonth,
 } = WizardFeature;

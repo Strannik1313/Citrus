@@ -4,6 +4,7 @@ import {
 	changeWizardStep,
 	getDates,
 	getMasters,
+	getMonths,
 	getServices,
 	initializeWizardServiceChoice,
 	resetSelectedService,
@@ -11,6 +12,7 @@ import {
 	setDates,
 	setFwdBtnDisabled,
 	setMasters,
+	setMonths,
 	setSchedules,
 	setServices,
 	TypedActionWithPayload,
@@ -26,7 +28,8 @@ import { Router } from '@angular/router';
 import { MastersService } from '@api/MastersService';
 import { WizardStepperEnum } from '@components/wizard/wizard.component';
 import { CalendarService } from '@api/CalendarService';
-import { DatesDto } from '@models/DatesDto';
+import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
+import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 
 @Injectable()
 export class WizardEffects {
@@ -102,6 +105,11 @@ export class WizardEffects {
 									serviceId: service?.id ?? null,
 								},
 							}),
+							getMonths({
+								payload: {
+									currentMonth: new Date().getMonth().toString(),
+								},
+							}),
 							setFwdBtnDisabled({ payload: true }),
 						];
 					}
@@ -165,7 +173,7 @@ export class WizardEffects {
 	getDates$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.GetDatesAction),
-			map((action: TypedActionWithPayload<DatesDto>) => action.payload),
+			map((action: TypedActionWithPayload<CalenderDatesLoaderDto>) => action.payload),
 			mergeMap(datesDto =>
 				this.calendarService.getDates(datesDto).pipe(map(calendarDates => setDates({ payload: calendarDates }))),
 			),
@@ -182,6 +190,16 @@ export class WizardEffects {
 					.getSchedule({ date: day, serviceId: service!.id })
 					.pipe(map(schedules => setSchedules({ payload: schedules })));
 			}),
+		);
+	});
+
+	getMonths$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.GetMonthsAction),
+			map((action: TypedActionWithPayload<MonthsLoaderDto>) => action.payload),
+			mergeMap(monthLoaderDto =>
+				this.calendarService.getMonths(monthLoaderDto).pipe(map(monthsDto => setMonths({ payload: monthsDto }))),
+			),
 		);
 	});
 }

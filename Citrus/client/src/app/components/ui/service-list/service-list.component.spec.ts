@@ -4,7 +4,7 @@ import { By } from '@angular/platform-browser';
 import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
 import { DebugElement } from '@angular/core';
 import { first } from 'rxjs';
-import { Service } from '@models/service';
+import { ServiceDto } from '@models/ServiceDto';
 import { MockService } from '@tests/mockData/mockService';
 import { AddActiveClassDirective } from '@directives/add-active-class.directive';
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
@@ -76,11 +76,11 @@ describe('Dialog window component', () => {
 
 	describe('serviceClick', () => {
 		it('serviceClick should raise event when mat-card click ', () => {
-			let expected: Service = { ...MockService };
+			let expected: ServiceDto = { ...MockService };
 			component.services = [{ ...MockService }];
 			fixture.detectChanges();
 			matCard = fixture.debugElement.query(By.css('.card__item'));
-			component.serviceClick.pipe(first()).subscribe((value: Service) => (expected = value));
+			component.serviceClick.pipe(first()).subscribe((value: ServiceDto) => (expected = value));
 			matCard.triggerEventHandler('click', { ...MockService });
 			expect(expected).toEqual({ ...MockService });
 		});

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Service } from '@models/service';
+import { ServiceDto } from '@models/ServiceDto';
 
 @Component({
 	selector: 'app-wizard-service-choice-step',
@@ -8,11 +8,11 @@ import { Service } from '@models/service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardServiceChoiceStepComponent {
-	@Input() services: Array<Service> | null = [];
-	@Input() selectedService: Service | null = null;
-	@Output() serviceChange: EventEmitter<Service> = new EventEmitter();
+	@Input() services: Array<ServiceDto> | null = [];
+	@Input() selectedService: ServiceDto | null = null;
+	@Output() serviceChange: EventEmitter<ServiceDto> = new EventEmitter();
 	@Output() inputChange: EventEmitter<string | null> = new EventEmitter();
-	onServiceChange(service: Service | undefined): void {
+	onServiceChange(service: ServiceDto | undefined): void {
 		if (service) {
 			this.serviceChange.emit(service);
 		}

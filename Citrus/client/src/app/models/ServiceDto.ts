@@ -1,6 +1,6 @@
 import { AutocompleteOptionType } from '@shared/autocomplete/autocomplete.component';
 
-export interface Service extends AutocompleteOptionType {
+export interface ServiceDto extends AutocompleteOptionType {
 	title: string;
 	description: string;
 	cost: number;

@@ -12,7 +12,7 @@ import {
 	AfterViewInit,
 	OnDestroy,
 } from '@angular/core';
-import { CalendarDates } from '@models/calendar-dates';
+import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import dayjs from 'dayjs';
 import { filter, fromEvent, Subscription } from 'rxjs';
 
@@ -20,9 +20,9 @@ import { filter, fromEvent, Subscription } from 'rxjs';
 	selector: '[appAddClass]',
 })
 export class AddClassDirective implements OnInit, OnChanges, AfterViewInit, OnDestroy {
-	@Input() day: CalendarDates | undefined;
+	@Input() day: CalendarDatesDto | undefined;
 	@Input() selectedDay: string | null = null;
-	@Output() onDateClick: EventEmitter<CalendarDates> = new EventEmitter();
+	@Output() onDateClick: EventEmitter<CalendarDatesDto> = new EventEmitter();
 	private disabled = true;
 	private subscription: Subscription = new Subscription();
 

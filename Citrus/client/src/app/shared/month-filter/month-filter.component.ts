@@ -10,7 +10,7 @@ const BTN_LABEL_DEF = 'месяц не выбран';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonthFilterComponent {
-	@Input() months: Array<string> = [];
+	@Input() months: Array<string> | null = [];
 	@Output() onMonthSelected: EventEmitter<string | null> = new EventEmitter();
 	public isOpen = false;
 	public btnLabel: string = BTN_LABEL_DEF;

@@ -1,6 +1,6 @@
-import { Service } from '@models/service';
+import { ServiceDto } from '@models/ServiceDto';
 
-export const MockService: Service = {
+export const MockService: ServiceDto = {
 	title: 'mockTitle',
 	description: 'mockDescription',
 	cost: 10,

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { Master } from '@models/master';
+import { MasterDto } from '@models/MasterDto';
 
 @Component({
 	selector: 'app-master-filter',
@@ -8,18 +8,18 @@ import { Master } from '@models/master';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MasterFilterComponent {
-	@Input() masters: Array<Master> | null = [];
-	@Output() onFilterChange: EventEmitter<Master | null> = new EventEmitter();
+	@Input() masters: Array<MasterDto> | null = [];
+	@Output() onFilterChange: EventEmitter<MasterDto | null> = new EventEmitter();
 	public isOpen = false;
 	public btnLabel = 'выберите мастера';
 
-	onFilterClick(master: Master | null): void {
+	onFilterClick(master: MasterDto | null): void {
 		this.onFilterChange.emit(master);
 		this.isOpen = false;
 		this.btnLabel = master?.name || 'все мастера';
 	}
 
-	trackByFn(index: number, item: Master): string {
+	trackByFn(index: number, item: MasterDto): string {
 		return item?.name;
 	}
 }

@@ -1,4 +1,9 @@
 export interface ScheduleDto {
-	serviceId: number;
-	date: string | null;
+	masterId: number;
+	masterName: string;
+	cost: number;
+	duration: number;
+	freetimes: Array<string[]>;
+	orders: string[];
+	preOrder: string;
 }

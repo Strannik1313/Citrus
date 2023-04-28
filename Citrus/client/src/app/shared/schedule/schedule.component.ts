@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { Schedule } from '@models/schedule';
+import { ScheduleDto } from '@models/ScheduleDto';
 
 @Component({
 	selector: 'app-schedule',
@@ -8,17 +8,17 @@ import { Schedule } from '@models/schedule';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ScheduleComponent {
-	@Input() schedules: Array<Schedule> | null = [];
-	@Output() onTimeChange: EventEmitter<Schedule> = new EventEmitter();
+	@Input() schedules: Array<ScheduleDto> | null = [];
+	@Output() onTimeChange: EventEmitter<ScheduleDto> = new EventEmitter();
 
-	timeChange(dateOrder: string, schedule: Schedule): void {
+	timeChange(dateOrder: string, schedule: ScheduleDto): void {
 		this.onTimeChange.emit({
 			...schedule,
 			preOrder: dateOrder,
 		});
 	}
 
-	trackByFn(index: number, item: Array<string> | Schedule): number {
+	trackByFn(index: number, item: Array<string> | ScheduleDto): number {
 		return index;
 	}
 }

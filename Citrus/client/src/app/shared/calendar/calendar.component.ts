@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { BtnStatus } from '@models/buttons-status';
-import { CalendarDates } from '@models/calendar-dates';
+import { CalendarDatesDto } from '@models/CalendarDatesDto';
 
 @Component({
 	selector: 'app-calendar',
@@ -9,7 +9,7 @@ import { CalendarDates } from '@models/calendar-dates';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CalendarComponent {
-	@Input() dates: Array<CalendarDates> | null = [];
+	@Input() dates: Array<CalendarDatesDto> | null = [];
 	@Input() preselectedDate: string | null = null;
 	@Input() btnConf: BtnStatus | null = null;
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
@@ -27,11 +27,11 @@ export class CalendarComponent {
 		}
 	}
 
-	onDateClick(day: CalendarDates): void {
+	onDateClick(day: CalendarDatesDto): void {
 		this.onDayChange.emit(day.date);
 	}
 
-	trackByFn(index: number, item: CalendarDates): string {
+	trackByFn(index: number, item: CalendarDatesDto): string {
 		return item.date;
 	}
 }

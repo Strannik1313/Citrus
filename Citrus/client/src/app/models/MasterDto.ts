@@ -1,9 +1,9 @@
-export interface Master {
+export interface MasterDto {
 	name: string;
 	id: number | null;
 }
 
-export interface MastersResponse {
+export interface MasterLoaderDto {
 	serviceId: number | null;
 	masterId: number | null;
 }
