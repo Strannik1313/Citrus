@@ -3,12 +3,9 @@ import { WeekDto } from '@dto/WeekDto';
 import { CalendarDto } from '@dto/CalendarDto';
 
 export class DatesHelper {
-	static getWeek(): WeekDto[] {
+	static getWeek(startOfWeek?: string): WeekDto[] {
 		let week: WeekDto[] = [];
-		let startDay = dayjs().startOf('week');
-		if (startDay.isBefore(dayjs().startOf('day'))) {
-			startDay = dayjs().startOf('week');
-		}
+		let startDay = dayjs(startOfWeek).startOf('week');
 		for (let i = 0; i <= 6; i++) {
 			week.push({
 				date: startDay.add(i, 'day').toDate(),
