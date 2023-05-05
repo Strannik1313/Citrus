@@ -1,11 +1,13 @@
 import { createAction, props } from '@ngrx/store';
-import { Service } from '@models/service';
-import { Master, MastersResponse } from '@models/master';
-import { DatesDto } from '@models/DatesDto';
-import { CalendarDates } from '@models/calendar-dates';
+import { ServiceDto } from '@models/ServiceDto';
+import { MasterDto, MasterLoaderDto } from '@models/MasterDto';
+import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
+import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { TypedAction } from '@ngrx/store/src/models';
+import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
 import { ScheduleDto } from '@models/ScheduleDto';
-import { Schedule } from '@models/schedule';
+import { MonthsDto } from '@models/MonthsDto';
+import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 
 export interface TypedActionWithPayload<T> extends TypedAction<WizardActions> {
 	payload: T;
@@ -32,6 +34,9 @@ export enum WizardActions {
 	SetScheduleAction = '[Wizard Page] SetScheduleAction',
 	SetSelectedTimeAction = '[Wizard Page] SetSelectedTimeAction',
 	SetSelectedMasterAction = '[Wizard Page] SetSelectedMasterAction',
+	GetMonthsAction = '[Wizard Page] GetMonthsAction',
+	SetMonthsAction = '[Wizard Page] SetMonthsAction',
+	SetSelectedMonthAction = '[Wizard Page] SetSelectedMonthAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -42,7 +47,7 @@ export const resetWizardStep = createAction(WizardActions.ResetWizardStepAction)
 
 export const changeWizardStep = createAction(WizardActions.ChangeWizardStepAction, props<{ payload: number }>());
 
-export const setServices = createAction(WizardActions.SetServicesAction, props<{ payload: Service[] }>());
+export const setServices = createAction(WizardActions.SetServicesAction, props<{ payload: ServiceDto[] }>());
 
 export const getServices = createAction(WizardActions.GetServicesAction, props<{ payload: string | null }>());
 
@@ -50,25 +55,31 @@ export const setFwdBtnDisabled = createAction(WizardActions.SetFwdBtnDisabledAct
 
 export const checkCurrentStep = createAction(WizardActions.CheckCurrentStepAction);
 
-export const setSelectedService = createAction(WizardActions.SetSelectedServiceAction, props<{ payload: Service }>());
+export const setSelectedService = createAction(
+	WizardActions.SetSelectedServiceAction,
+	props<{ payload: ServiceDto }>(),
+);
 
 export const resetSelectedService = createAction(WizardActions.ResetSelectedServiceAction);
 
-export const getMasters = createAction(WizardActions.GetMastersAction, props<{ payload: MastersResponse }>());
+export const getMasters = createAction(WizardActions.GetMastersAction, props<{ payload: MasterLoaderDto }>());
 
-export const setMasters = createAction(WizardActions.SetMastersAction, props<{ payload: Master[] }>());
+export const setMasters = createAction(WizardActions.SetMastersAction, props<{ payload: MasterDto[] }>());
 
-export const getDates = createAction(WizardActions.GetDatesAction, props<{ payload: DatesDto }>());
+export const getDates = createAction(WizardActions.GetDatesAction, props<{ payload: CalenderDatesLoaderDto }>());
 export const initializeWizardServiceChoice = createAction(WizardActions.InitializeWizardServiceChoiceAction);
 
-export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDates[] }>());
-export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{ payload: ScheduleDto }>());
+export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDatesDto[] }>());
+export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{ payload: ScheduleLoaderDto }>());
 export const setSelectedDay = createAction(WizardActions.SetSelectedDayAction, props<{ payload: string }>());
-export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: Schedule[] }>());
-export const setSelectedSchedule = createAction(WizardActions.SetSelectedTimeAction, props<{ payload: Schedule }>());
+export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: ScheduleDto[] }>());
+export const setSelectedSchedule = createAction(WizardActions.SetSelectedTimeAction, props<{ payload: ScheduleDto }>());
 export const setSelectedMaster = createAction(
 	WizardActions.SetSelectedMasterAction,
-	props<{ payload: Master | null }>(),
+	props<{ payload: MasterDto | null }>(),
 );
+export const getMonths = createAction(WizardActions.GetMonthsAction, props<{ payload: MonthsLoaderDto | null }>());
+export const setMonths = createAction(WizardActions.SetMonthsAction, props<{ payload: MonthsDto }>());
+export const setSelectedMonth = createAction(WizardActions.SetSelectedMonthAction, props<{ payload: string | null }>());
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { Service } from '@models/service';
+import { ServiceDto } from '@models/ServiceDto';
 
 @Component({
 	selector: 'app-service-list',
@@ -8,11 +8,11 @@ import { Service } from '@models/service';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ServiceListComponent {
-	@Input() services: Array<Service> | null = [];
-	@Input() selectedService: Service | null = null;
-	@Output() serviceClick: EventEmitter<Service> = new EventEmitter();
+	@Input() services: Array<ServiceDto> | null = [];
+	@Input() selectedService: ServiceDto | null = null;
+	@Output() serviceClick: EventEmitter<ServiceDto> = new EventEmitter();
 
-	onServiceClick(service: Service | undefined): void {
+	onServiceClick(service: ServiceDto | undefined): void {
 		if (!service) {
 			return;
 		}
@@ -20,7 +20,7 @@ export class ServiceListComponent {
 		this.serviceClick.emit(service);
 	}
 
-	trackByFn(index: number, item: Service): number {
+	trackByFn(index: number, item: ServiceDto): number {
 		return item.id;
 	}
 }

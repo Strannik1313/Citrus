@@ -1,10 +1,10 @@
-import { Master } from '@models/master';
-import { Service } from '@models/service';
+import { MasterDto } from '@models/MasterDto';
+import { ServiceDto } from '@models/ServiceDto';
 import { Client } from '@models/client';
 
 export interface Order {
-	master: Master;
-	service: Service;
+	master: MasterDto;
+	service: ServiceDto;
 	date: Date;
 	client: Client | null;
 	comments: string | null;

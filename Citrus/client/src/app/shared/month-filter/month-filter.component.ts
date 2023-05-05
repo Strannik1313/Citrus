@@ -1,7 +1,5 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
-import dayjs from 'dayjs';
-
-const BTN_LABEL_DEF = 'месяц не выбран';
+import { MatSelectChange } from '@angular/material/select';
 
 @Component({
 	selector: 'app-month-filter',
@@ -10,19 +8,12 @@ const BTN_LABEL_DEF = 'месяц не выбран';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MonthFilterComponent {
-	@Input() months: Array<string> = [];
+	@Input() months: Array<string> | null = [];
+	@Input() label = '';
 	@Output() onMonthSelected: EventEmitter<string | null> = new EventEmitter();
-	public isOpen = false;
-	public btnLabel: string = BTN_LABEL_DEF;
 
-	onFilterClick(month: string | null): void {
-		this.isOpen = false;
-		if (month !== null) {
-			this.btnLabel = dayjs(month).format('MMMM');
-		} else {
-			this.btnLabel = BTN_LABEL_DEF;
-		}
-		this.onMonthSelected.emit(month);
+	onFilterClick(item: MatSelectChange): void {
+		this.onMonthSelected.emit(item.value);
 	}
 
 	trackByFn(index: number, item: string): string {

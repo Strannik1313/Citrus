@@ -5,11 +5,11 @@ import { BTN_LABELS } from '@constants/btn-labels';
 import { Client, ClientConfirmStep } from '@models/client';
 import { CLIENT_INIT_CONFIRM, CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { ApiService } from '@services/api.service';
-import { Master } from '@models/master';
-import { CalendarDates } from '@models/calendar-dates';
+import { MasterDto } from '@models/MasterDto';
+import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { WizardHelper } from '@components/wizard/wizard-helper';
 import { BtnStatus, CALENDAR_BTN_INIT_VALUE } from '@models/buttons-status';
-import { Schedule } from '@models/schedule';
+import { ScheduleDto } from '@models/ScheduleDto';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
@@ -23,8 +23,9 @@ import {
 	setSelectedDay,
 	setSelectedService,
 	setSelectedMaster,
+	setSelectedMonth,
 } from '@components/wizard/state-management/wizard.actions';
-import { Service } from '@models/service';
+import { ServiceDto } from '@models/ServiceDto';
 
 dayjs.locale('ru');
 
@@ -44,7 +45,6 @@ export enum WizardStepperEnum {
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardComponent implements OnInit, OnDestroy {
-	public months: Array<string> = [];
 	public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
 	public nextBtnLabel: string = BTN_LABELS.next;
 	public backBtnLabels: string = BTN_LABELS.back;
@@ -64,12 +64,13 @@ export class WizardComponent implements OnInit, OnDestroy {
 	stepsQuantity$ = this.stepsQuantity.asObservable();
 	updatedPhone$ = this.updatedPhone.asObservable();
 	currentStep$: Observable<number> = new Observable<number>();
-	services$: Observable<Service[]> = new Observable<Service[]>();
+	services$: Observable<ServiceDto[]> = new Observable<ServiceDto[]>();
 	fwdBtnDisabled$: Observable<boolean> = new Observable<boolean>();
-	selectedService$: Observable<Service | null> = new Observable<Service>();
-	masters$: Observable<Master[] | null> = new Observable<Master[]>();
-	dates$: Observable<CalendarDates[] | null> = new Observable<CalendarDates[]>();
-	schedules$: Observable<Schedule[] | null> = new Observable<Schedule[]>();
+	selectedService$: Observable<ServiceDto | null> = new Observable<ServiceDto>();
+	masters$: Observable<MasterDto[] | null> = new Observable<MasterDto[]>();
+	dates$: Observable<CalendarDatesDto[] | null> = new Observable<CalendarDatesDto[]>();
+	schedules$: Observable<ScheduleDto[] | null> = new Observable<ScheduleDto[]>();
+	months$: Observable<string[] | null> = new Observable<string[]>();
 
 	constructor(private router: Router, private apiService: ApiService, private store: Store) {}
 
@@ -82,6 +83,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.masters$ = this.store.select(WizardFeature.selectMasters);
 		this.dates$ = this.store.select(WizardFeature.selectDates);
 		this.schedules$ = this.store.select(WizardFeature.selectSchedules);
+		this.months$ = this.store.select(WizardFeature.selectMonths);
 	}
 
 	onFormChange(observable: Observable<ClientConfirmStep>): void {
@@ -111,7 +113,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	onServiceChange(value: Service): void {
+	onServiceChange(value: ServiceDto): void {
 		this.store.dispatch(setSelectedService({ payload: value }));
 	}
 
@@ -137,7 +139,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	onMasterChange(master: Master | null) {
+	onMasterChange(master: MasterDto | null) {
 		this.store.dispatch(setSelectedMaster({ payload: master }));
 	}
 
@@ -146,29 +148,10 @@ export class WizardComponent implements OnInit, OnDestroy {
 	}
 
 	onMonthChange(month: string | null): void {
-		this.selectedMonth = month;
-		this.selectedDay = null;
-		this.startWeekDay = dayjs(month ?? this.startWeekDay)
-			.startOf('week')
-			.toString();
-		this.client.next({
-			...this.client.value,
-			dateOrder: null,
-		});
-		if (this.client.value.serviceId !== null && month !== null) {
-			this.dates$ = this.apiService
-				.getDates(this.client.value.serviceId, dayjs(month).toString(), this.client.value.masterId)
-				.pipe(
-					tap(dates => {
-						this.calendarBtnConf.next(WizardHelper.getCalendarBtnConf(dates[0].date, this.selectedMonth));
-					}),
-				);
-		} else {
-			this.calendarBtnConf.next(WizardHelper.getCalendarBtnConf(this.startWeekDay, month));
-		}
+		this.store.dispatch(setSelectedMonth({ payload: month }));
 	}
 
-	onTimeChange(choisenDate: Schedule): void {
+	onTimeChange(choisenDate: ScheduleDto): void {
 		this.store.dispatch(setSelectedSchedule({ payload: choisenDate }));
 	}
 
