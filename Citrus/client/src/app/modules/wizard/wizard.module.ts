@@ -24,6 +24,7 @@ import { StoreModule } from '@ngrx/store';
 import { WizardFeature } from '@components/wizard/state-management/wizard.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { WizardEffects } from '@components/wizard/state-management/wizard.effects';
+import { FilterDropdownModule } from '@shared/filter-dropdown/filter-dropdown.module';
 
 @NgModule({
 	declarations: [
@@ -53,6 +54,7 @@ import { WizardEffects } from '@components/wizard/state-management/wizard.effect
 		StoreModule.forFeature(WizardFeature.name, WizardFeature.reducer),
 		EffectsModule.forFeature([WizardEffects]),
 		FormsModule,
+		FilterDropdownModule,
 	],
 })
 export class WizardModule {}

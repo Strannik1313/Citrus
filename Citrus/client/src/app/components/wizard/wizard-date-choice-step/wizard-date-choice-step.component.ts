@@ -5,6 +5,7 @@ import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { MasterDto } from '@models/MasterDto';
 import { ScheduleDto } from '@models/ScheduleDto';
 import { BtnStatus } from '@models/buttons-status';
+import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',
@@ -37,12 +38,14 @@ export class WizardDateChoiceStepComponent {
 		this.onWeekChange.emit(event);
 	}
 
-	onMasterFilterChange(master: MasterDto | null): void {
-		this.onMasterChange.emit(master);
+	onMasterFilterChange(filterValue: FilterItem | string | number | null): void {
+		let selectedMaster = filterValue as MasterDto;
+		this.onMasterChange.emit(selectedMaster);
 	}
 
-	onMonthFilterChange(month: string | null): void {
-		this.onMonthChange.emit(month);
+	onMonthFilterChange(month: FilterItem | string | number | null): void {
+		let selectedMonth = month as string;
+		this.onMonthChange.emit(selectedMonth);
 	}
 
 	timeChange(choisenDate: ScheduleDto): void {

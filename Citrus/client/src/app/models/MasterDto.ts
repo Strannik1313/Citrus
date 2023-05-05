@@ -1,4 +1,6 @@
-export interface MasterDto {
+import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
+
+export interface MasterDto extends FilterItem {
 	name: string;
 	id: number | null;
 }
