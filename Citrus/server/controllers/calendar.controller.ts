@@ -8,7 +8,7 @@ dayjs.locale('ru');
 
 class CalendarController {
 	async calendar(req: Request, res: Response) {
-		const getCalendarResult = await CalendarService.getCalendar(req.body.serviceId, req.body.masterId);
+		const getCalendarResult = await CalendarService.getCalendar(req.body.serviceId, req.body.masterId, req.body.week);
 		switch (getCalendarResult.status) {
 			case ProcessStatus.SUCCESS: {
 				res.status(200).json(getCalendarResult.data);

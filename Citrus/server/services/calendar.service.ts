@@ -12,8 +12,12 @@ import { MonthsDto } from '@dto/MonthsDto';
 dayjs().format();
 
 class CalendarServiceClass {
-	async getCalendar(serviceId: number, masterId: number | undefined): Promise<ServiceReturnType<WeekDto[]>> {
-		let week: WeekDto[] = DatesHelper.getWeek();
+	async getCalendar(
+		serviceId: number,
+		masterId: number | undefined,
+		startOfWeek: string | undefined,
+	): Promise<ServiceReturnType<WeekDto[]>> {
+		let week: WeekDto[] = DatesHelper.getWeek(startOfWeek);
 		const getMastersResult = await MastersService.getMasters(serviceId);
 		switch (getMastersResult.status) {
 			case ProcessStatus.ERROR: {
