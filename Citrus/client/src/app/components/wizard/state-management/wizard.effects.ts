@@ -5,6 +5,7 @@ import {
 	getDates,
 	getMasters,
 	getMonths,
+	getNextWeek,
 	getServices,
 	initializeWizardServiceChoice,
 	resetSelectedService,
@@ -30,6 +31,7 @@ import { WizardStepperEnum } from '@components/wizard/wizard.component';
 import { CalendarService } from '@api/CalendarService';
 import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
+import { DatesHelper } from '../../../helpers/DatesHelper';
 
 @Injectable()
 export class WizardEffects {
@@ -200,6 +202,58 @@ export class WizardEffects {
 			mergeMap(monthLoaderDto =>
 				this.calendarService.getMonths(monthLoaderDto).pipe(map(monthsDto => setMonths({ payload: monthsDto }))),
 			),
+		);
+	});
+
+	getNextWeek$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.GetNextWeekAction),
+			concatLatestFrom(() => {
+				return [
+					this.store.select(WizardFeature.selectSelectedMaster),
+					this.store.select(WizardFeature.selectSelectedService),
+				];
+			}),
+			switchMap(([, selectedMater, selectedService]) => {
+				if (selectedService) {
+					return this.calendarService
+						.getDates({
+							serviceId: selectedService.id,
+							masterId: selectedMater?.id ?? null,
+							week: DatesHelper.getNextWeekNumber(),
+						})
+						.pipe(map(datesDto => setDates({ payload: datesDto })));
+				}
+				return this.calendarService
+					.getDates({ serviceId: 1, masterId: 1 })
+					.pipe(map(datesDto => setDates({ payload: datesDto })));
+			}),
+		);
+	});
+
+	getPrevWeek$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.GetPrevWeekAction),
+			concatLatestFrom(() => {
+				return [
+					this.store.select(WizardFeature.selectSelectedMaster),
+					this.store.select(WizardFeature.selectSelectedService),
+				];
+			}),
+			switchMap(([, selectedMater, selectedService]) => {
+				if (selectedService) {
+					return this.calendarService
+						.getDates({
+							serviceId: selectedService.id,
+							masterId: selectedMater?.id ?? null,
+							week: DatesHelper.getPrevWeekNumber(),
+						})
+						.pipe(map(datesDto => setDates({ payload: datesDto })));
+				}
+				return this.calendarService
+					.getDates({ serviceId: 1, masterId: 1 })
+					.pipe(map(datesDto => setDates({ payload: datesDto })));
+			}),
 		);
 	});
 }

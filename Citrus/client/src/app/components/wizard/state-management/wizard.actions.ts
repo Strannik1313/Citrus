@@ -37,6 +37,8 @@ export enum WizardActions {
 	GetMonthsAction = '[Wizard Page] GetMonthsAction',
 	SetMonthsAction = '[Wizard Page] SetMonthsAction',
 	SetSelectedMonthAction = '[Wizard Page] SetSelectedMonthAction',
+	GetNextWeekAction = '[Wizard Page] GetNextWeekAction',
+	GetPrevWeekAction = '[Wizard Page] GetPrevWeekAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -81,5 +83,7 @@ export const setSelectedMaster = createAction(
 export const getMonths = createAction(WizardActions.GetMonthsAction, props<{ payload: MonthsLoaderDto | null }>());
 export const setMonths = createAction(WizardActions.SetMonthsAction, props<{ payload: MonthsDto }>());
 export const setSelectedMonth = createAction(WizardActions.SetSelectedMonthAction, props<{ payload: string | null }>());
+export const getNextWeek = createAction(WizardActions.GetNextWeekAction);
+export const getPrevWeek = createAction(WizardActions.GetPrevWeekAction);
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

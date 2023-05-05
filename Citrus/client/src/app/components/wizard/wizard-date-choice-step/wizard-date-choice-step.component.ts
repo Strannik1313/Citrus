@@ -6,6 +6,7 @@ import { MasterDto } from '@models/MasterDto';
 import { ScheduleDto } from '@models/ScheduleDto';
 import { BtnStatus } from '@models/buttons-status';
 import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
+import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',
@@ -21,10 +22,7 @@ export class WizardDateChoiceStepComponent {
 	@Input() btnConf: BtnStatus | null = null;
 	@Input() schedules: Array<ScheduleDto> | null = null;
 	@Input() selectedDay: string | null = null;
-	@Output() onWeekChange: EventEmitter<{
-		startDay: string;
-		increase: number;
-	}> = new EventEmitter();
+	@Output() onWeekChange: EventEmitter<CalendarChangeWeekEnum> = new EventEmitter();
 	@Output() onMasterChange: EventEmitter<MasterDto | null> = new EventEmitter();
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
 	@Output() onMonthChange: EventEmitter<string | null> = new EventEmitter();
@@ -34,7 +32,7 @@ export class WizardDateChoiceStepComponent {
 		this.onDayChange.emit(date);
 	}
 
-	weekChange(event: { startDay: string; increase: number }): void {
+	weekChange(event: CalendarChangeWeekEnum): void {
 		this.onWeekChange.emit(event);
 	}
 

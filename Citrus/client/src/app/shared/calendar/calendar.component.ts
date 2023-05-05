@@ -1,6 +1,7 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
 import { BtnStatus } from '@models/buttons-status';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
+import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 
 @Component({
 	selector: 'app-calendar',
@@ -13,18 +14,14 @@ export class CalendarComponent {
 	@Input() preselectedDate: string | null = null;
 	@Input() btnConf: BtnStatus | null = null;
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
-	@Output() onWeekChange: EventEmitter<{
-		startDay: string;
-		increase: number;
-	}> = new EventEmitter();
+	@Output() onWeekChange: EventEmitter<CalendarChangeWeekEnum> = new EventEmitter();
 
-	onChangeWeekClick(increase: number): void {
-		if (!!this.dates) {
-			this.onWeekChange.emit({
-				startDay: this.dates[0].date,
-				increase,
-			});
-		}
+	onNextWeekClick(): void {
+		this.onWeekChange.emit(CalendarChangeWeekEnum.INCREASE);
+	}
+
+	onPrevWeekClick(): void {
+		this.onWeekChange.emit(CalendarChangeWeekEnum.DECREASE);
 	}
 
 	onDateClick(day: CalendarDatesDto): void {
