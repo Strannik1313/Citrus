@@ -212,15 +212,16 @@ export class WizardEffects {
 				return [
 					this.store.select(WizardFeature.selectSelectedMaster),
 					this.store.select(WizardFeature.selectSelectedService),
+					this.store.select(WizardFeature.selectDates),
 				];
 			}),
-			switchMap(([, selectedMater, selectedService]) => {
-				if (selectedService) {
+			switchMap(([, selectedMater, selectedService, calendarDates]) => {
+				if (selectedService && calendarDates) {
 					return this.calendarService
 						.getDates({
 							serviceId: selectedService.id,
 							masterId: selectedMater?.id ?? null,
-							week: DatesHelper.getNextWeekNumber(),
+							week: DatesHelper.getNextWeekNumber(calendarDates[0].date),
 						})
 						.pipe(map(datesDto => setDates({ payload: datesDto })));
 				}
@@ -238,15 +239,16 @@ export class WizardEffects {
 				return [
 					this.store.select(WizardFeature.selectSelectedMaster),
 					this.store.select(WizardFeature.selectSelectedService),
+					this.store.select(WizardFeature.selectDates),
 				];
 			}),
-			switchMap(([, selectedMater, selectedService]) => {
-				if (selectedService) {
+			switchMap(([, selectedMater, selectedService, calendarDates]) => {
+				if (selectedService && calendarDates) {
 					return this.calendarService
 						.getDates({
 							serviceId: selectedService.id,
 							masterId: selectedMater?.id ?? null,
-							week: DatesHelper.getPrevWeekNumber(),
+							week: DatesHelper.getPrevWeekNumber(calendarDates[0].date),
 						})
 						.pipe(map(datesDto => setDates({ payload: datesDto })));
 				}
