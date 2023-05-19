@@ -29,6 +29,7 @@ export enum WizardActions {
 	GetDatesAction = '[Wizard Page] GetDatesAction',
 	SetDatesAction = '[Wizard Page] SetDatesAction',
 	InitializeWizardServiceChoiceAction = '[Wizard Page] InitializeWizardServiceChoiceAction',
+	InitializeWizardDateChoiceAction = '[Wizard Page] InitializeWizardDateChoiceAction',
 	GetScheduleAction = '[Wizard Page] GetScheduleAction',
 	SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
 	SetScheduleAction = '[Wizard Page] SetScheduleAction',
@@ -68,6 +69,7 @@ export const setMasters = createAction(WizardActions.SetMastersAction, props<{ p
 
 export const getDates = createAction(WizardActions.GetDatesAction, props<{ payload: CalenderDatesLoaderDto }>());
 export const initializeWizardServiceChoice = createAction(WizardActions.InitializeWizardServiceChoiceAction);
+export const initializeWizardDateChoice = createAction(WizardActions.InitializeWizardDateChoiceAction);
 
 export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDatesDto[] }>());
 export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{ payload: ScheduleLoaderDto }>());
