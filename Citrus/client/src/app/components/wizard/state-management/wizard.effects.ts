@@ -5,6 +5,7 @@ import {
 	getDates,
 	getMasters,
 	getMonths,
+	getNextWeek,
 	getServices,
 	initializeWizardDateChoice,
 	initializeWizardServiceChoice,
@@ -99,7 +100,23 @@ export class WizardEffects {
 						return [initializeWizardServiceChoice()];
 					}
 					case WizardStepperEnum.DATE_CHOICE: {
-						return [initializeWizardDateChoice()];
+						return [
+							getMasters({
+								payload: { serviceId: service?.id ?? null, masterId: null },
+							}),
+							getDates({
+								payload: {
+									masterId: master?.id ?? null,
+									serviceId: service?.id ?? null,
+								},
+							}),
+							getMonths({
+								payload: {
+									currentMonth: new Date().getMonth().toString(),
+								},
+							}),
+							setFwdBtnDisabled({ payload: true }),
+						];
 					}
 					default:
 						return [getServices({ payload: null })];
@@ -178,6 +195,60 @@ export class WizardEffects {
 			mergeMap(monthLoaderDto =>
 				this.calendarService.getMonths(monthLoaderDto).pipe(map(monthsDto => setMonths({ payload: monthsDto }))),
 			),
+		);
+	});
+
+	getNextWeek$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.GetNextWeekAction),
+			concatLatestFrom(() => {
+				return [
+					this.store.select(WizardFeature.selectSelectedMaster),
+					this.store.select(WizardFeature.selectSelectedService),
+					this.store.select(WizardFeature.selectDates),
+				];
+			}),
+			switchMap(([, selectedMater, selectedService, calendarDates]) => {
+				if (selectedService && calendarDates) {
+					return this.calendarService
+						.getDates({
+							serviceId: selectedService.id,
+							masterId: selectedMater?.id ?? null,
+							week: DatesHelper.getNextWeekNumber(calendarDates[0].date),
+						})
+						.pipe(map(datesDto => setDates({ payload: datesDto })));
+				}
+				return this.calendarService
+					.getDates({ serviceId: 1, masterId: 1 })
+					.pipe(map(datesDto => setDates({ payload: datesDto })));
+			}),
+		);
+	});
+
+	getPrevWeek$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.GetPrevWeekAction),
+			concatLatestFrom(() => {
+				return [
+					this.store.select(WizardFeature.selectSelectedMaster),
+					this.store.select(WizardFeature.selectSelectedService),
+					this.store.select(WizardFeature.selectDates),
+				];
+			}),
+			switchMap(([, selectedMater, selectedService, calendarDates]) => {
+				if (selectedService && calendarDates) {
+					return this.calendarService
+						.getDates({
+							serviceId: selectedService.id,
+							masterId: selectedMater?.id ?? null,
+							week: DatesHelper.getPrevWeekNumber(calendarDates[0].date),
+						})
+						.pipe(map(datesDto => setDates({ payload: datesDto })));
+				}
+				return this.calendarService
+					.getDates({ serviceId: 1, masterId: 1 })
+					.pipe(map(datesDto => setDates({ payload: datesDto })));
+			}),
 		);
 	});
 

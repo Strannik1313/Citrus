@@ -18,6 +18,7 @@ export class CalendarService {
 		return this.http.post<Array<CalendarDatesDto>>('/api/calendar', {
 			serviceId: params.serviceId,
 			masterId: params.masterId,
+			week: params.week,
 		});
 	}
 

@@ -24,8 +24,11 @@ import {
 	setSelectedService,
 	setSelectedMaster,
 	setSelectedMonth,
+	getNextWeek,
+	getPrevWeek,
 } from '@components/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
+import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 
 dayjs.locale('ru');
 
@@ -119,26 +122,38 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.store.dispatch(setSelectedService({ payload: value }));
 	}
 
-	onWeekChange(event: { startDay: string; increase: number }): void {
-		this.selectedDay = null;
-		this.client.next({
-			...this.client.value,
-			dateOrder: null,
-		});
-		this.startWeekDay = dayjs(event.startDay).add(event.increase, 'week').toString();
-		if (this.client.value.serviceId !== null) {
-			this.dates$ = this.apiService
-				.getDates(
-					this.client.value.serviceId,
-					dayjs(event.startDay).add(event.increase, 'week').toString(),
-					this.client.value.masterId,
-				)
-				.pipe(
-					tap(dates => {
-						this.calendarBtnConf.next(WizardHelper.getCalendarBtnConf(dates[0].date, this.selectedMonth));
-					}),
-				);
+	onWeekChange(event: CalendarChangeWeekEnum): void {
+		switch (event) {
+			case CalendarChangeWeekEnum.DECREASE: {
+				this.store.dispatch(getPrevWeek());
+				break;
+			}
+			case CalendarChangeWeekEnum.INCREASE: {
+				this.store.dispatch(getNextWeek());
+				break;
+			}
+			default:
+				throw Error('Данное значение CalendarChangeWeekEnum не обработано в switch-case');
 		}
+		// this.selectedDay = null;
+		// this.client.next({
+		// 	...this.client.value,
+		// 	dateOrder: null,
+		// });
+		// this.startWeekDay = dayjs(event.startDay).add(event.increase, 'week').toString();
+		// if (this.client.value.serviceId !== null) {
+		// 	this.dates$ = this.apiService
+		// 		.getDates(
+		// 			this.client.value.serviceId,
+		// 			dayjs(event.startDay).add(event.increase, 'week').toString(),
+		// 			this.client.value.masterId,
+		// 		)
+		// 		.pipe(
+		// 			tap(dates => {
+		// 				this.calendarBtnConf.next(WizardHelper.getCalendarBtnConf(dates[0].date, this.selectedMonth));
+		// 			}),
+		// 		);
+		// }
 	}
 
 	onMasterChange(master: MasterDto | null) {
