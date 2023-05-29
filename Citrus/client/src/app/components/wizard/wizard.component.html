@@ -12,7 +12,8 @@
 		fwdBtnDisabled: fwdBtnDisabled$ | async,
 		selectedService: selectedService$ | async,
 		currentStep: (currentStep$ | async)!,
-		months: months$ | async
+		months: months$ | async,
+		selectedMonth: selectedMonth$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
@@ -51,7 +52,8 @@
 				[masters]="data.masters"
 				[dates]="data.dates"
 				[client]="data.client"
-				[selectedDay]="selectedDay">
+				[selectedDay]="selectedDay"
+				[selectedMonth]="data.selectedMonth">
 			</app-wizard-date-choice-step>
 			<app-wizard-confirm-step
 				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"

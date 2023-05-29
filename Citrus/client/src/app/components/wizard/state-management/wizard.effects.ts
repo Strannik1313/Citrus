@@ -7,6 +7,7 @@ import {
 	getMonths,
 	getNextWeek,
 	getServices,
+	initializeWizardDateChoice,
 	initializeWizardServiceChoice,
 	resetSelectedService,
 	resetWizardStep,
@@ -15,6 +16,7 @@ import {
 	setMasters,
 	setMonths,
 	setSchedules,
+	setSelectedMonth,
 	setServices,
 	TypedActionWithPayload,
 	WizardActions,
@@ -31,6 +33,7 @@ import { WizardStepperEnum } from '@components/wizard/wizard.component';
 import { CalendarService } from '@api/CalendarService';
 import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
+import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { DatesHelper } from '../../../helpers/DatesHelper';
 
 @Injectable()
@@ -128,16 +131,6 @@ export class WizardEffects {
 			mergeMap(() => {
 				this.router.navigate([NAVIGATE_ROUTES.home]);
 				return [resetSelectedService(), setFwdBtnDisabled({ payload: true })];
-			}),
-		);
-	});
-
-	initializeWizardServiceChoice$ = createEffect(() => {
-		return this.actions$.pipe(
-			ofType(WizardActions.InitializeWizardServiceChoiceAction),
-			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
-			switchMap(([, service]) => {
-				return [getServices({ payload: null }), ...(!!service ? [setFwdBtnDisabled({ payload: false })] : [])];
 			}),
 		);
 	});
@@ -255,6 +248,57 @@ export class WizardEffects {
 				return this.calendarService
 					.getDates({ serviceId: 1, masterId: 1 })
 					.pipe(map(datesDto => setDates({ payload: datesDto })));
+			}),
+		);
+	});
+
+	setMonths$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.SetDatesAction),
+			map((action: TypedActionWithPayload<CalendarDatesDto[]>) => action.payload),
+			switchMap(dates => {
+				return [setSelectedMonth({ payload: DatesHelper.getStartOfMonth(dates[0].date) })];
+			}),
+		);
+	});
+
+	initializeWizardServiceChoice$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.InitializeWizardServiceChoiceAction),
+			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
+			switchMap(([, service]) => {
+				return [getServices({ payload: null }), ...(!!service ? [setFwdBtnDisabled({ payload: false })] : [])];
+			}),
+		);
+	});
+
+	initializeWizardDateChoice$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.InitializeWizardDateChoiceAction),
+			concatLatestFrom(() => {
+				return [
+					this.store.select(WizardFeature.selectSelectedService),
+					this.store.select(WizardFeature.selectSelectedMaster),
+				];
+			}),
+			switchMap(([, service, master]) => {
+				return [
+					getMasters({
+						payload: { serviceId: service?.id ?? null, masterId: null },
+					}),
+					getDates({
+						payload: {
+							masterId: master?.id ?? null,
+							serviceId: service?.id ?? null,
+						},
+					}),
+					getMonths({
+						payload: {
+							currentMonth: new Date().getMonth().toString(),
+						},
+					}),
+					setFwdBtnDisabled({ payload: true }),
+				];
 			}),
 		);
 	});

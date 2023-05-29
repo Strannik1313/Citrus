@@ -18,4 +18,7 @@ export class DatesHelper {
 			.startOf('week')
 			.toString();
 	}
+	static getStartOfMonth(date: string): string {
+		return dayjs(date).startOf('month').toString();
+	}
 }

@@ -9,6 +9,7 @@ import { MatSelectChange } from '@angular/material/select';
 })
 export class MonthFilterComponent {
 	@Input() months: Array<string> | null = [];
+	@Input() selectedMonth: string | null = null;
 	@Input() label = '';
 	@Output() onMonthSelected: EventEmitter<string | null> = new EventEmitter();
 
