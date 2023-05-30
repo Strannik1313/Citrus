@@ -14,6 +14,7 @@ import {
 	setSelectedMaster,
 	setMonths,
 	setSelectedMonth,
+	setPrevWeekBtnDisabled,
 } from '@components/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
@@ -35,6 +36,7 @@ export interface WizardReducer {
 	selectedSchedule: ScheduleDto | null;
 	months: string[] | null;
 	selectedMonth: string | null;
+	prevWeekBtnDisabled: boolean;
 }
 
 export const wizardInitialState: WizardReducer = {
@@ -50,6 +52,7 @@ export const wizardInitialState: WizardReducer = {
 	selectedSchedule: null,
 	months: null,
 	selectedMonth: null,
+	prevWeekBtnDisabled: false,
 };
 
 export const WizardFeature = createFeature({
@@ -140,6 +143,12 @@ export const WizardFeature = createFeature({
 				selectedMonth: payload,
 			};
 		}),
+		on(setPrevWeekBtnDisabled, (state, { payload }): WizardReducer => {
+			return {
+				...state,
+				prevWeekBtnDisabled: payload,
+			};
+		}),
 	),
 });
 
@@ -159,4 +168,5 @@ export const {
 	selectSelectedSchedule,
 	selectMonths,
 	selectSelectedMonth,
+	selectPrevWeekBtnDisabled,
 } = WizardFeature;

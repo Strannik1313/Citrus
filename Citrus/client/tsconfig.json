@@ -17,6 +17,7 @@
 			"@environments/*": ["./src/environments/*"],
 			"@api/*": ["./src/app/api/*"],
 			"@tests/*": ["./src/app/tests/*"],
+			"@helpers/*": ["./src/app/helpers/*"],
 		},
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,

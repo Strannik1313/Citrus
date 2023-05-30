@@ -5,9 +5,7 @@ import {
 	getDates,
 	getMasters,
 	getMonths,
-	getNextWeek,
 	getServices,
-	initializeWizardDateChoice,
 	initializeWizardServiceChoice,
 	resetSelectedService,
 	resetWizardStep,
@@ -15,6 +13,7 @@ import {
 	setFwdBtnDisabled,
 	setMasters,
 	setMonths,
+	setPrevWeekBtnDisabled,
 	setSchedules,
 	setSelectedMonth,
 	setServices,
@@ -34,7 +33,7 @@ import { CalendarService } from '@api/CalendarService';
 import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
-import { DatesHelper } from '../../../helpers/DatesHelper';
+import { DatesHelper } from '@helpers/DatesHelper';
 
 @Injectable()
 export class WizardEffects {
@@ -257,7 +256,10 @@ export class WizardEffects {
 			ofType(WizardActions.SetDatesAction),
 			map((action: TypedActionWithPayload<CalendarDatesDto[]>) => action.payload),
 			switchMap(dates => {
-				return [setSelectedMonth({ payload: DatesHelper.getStartOfMonth(dates[0].date) })];
+				return [
+					setSelectedMonth({ payload: DatesHelper.getStartOfMonth(dates[0].date) }),
+					setPrevWeekBtnDisabled({ payload: DatesHelper.isPrevWeekInPast(dates[0].date) }),
+				];
 			}),
 		);
 	});

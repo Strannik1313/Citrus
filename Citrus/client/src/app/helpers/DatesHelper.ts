@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import weekOfYear from 'dayjs/plugin/weekOfYear';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 dayjs.extend(weekOfYear);
+dayjs.extend(isSameOrBefore);
 
 export class DatesHelper {
 	static getNextWeekNumber(day?: string): string {
@@ -20,5 +22,9 @@ export class DatesHelper {
 	}
 	static getStartOfMonth(date: string): string {
 		return dayjs(date).startOf('month').toString();
+	}
+
+	static isPrevWeekInPast(date: string): boolean {
+		return dayjs(date).isSameOrBefore(dayjs());
 	}
 }

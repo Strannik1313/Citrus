@@ -1,5 +1,5 @@
 <div class="container">
-	<button [disabled]="btnConf?.prev" (click)="onPrevWeekClick()"
+	<button [disabled]="prevWeekBtnDisabled" (click)="onPrevWeekClick()"
 		>Prev</button
 	>
 	<table class="cell__container">
@@ -17,7 +17,7 @@
 			</td>
 		</tr>
 	</table>
-	<button [disabled]="btnConf?.next" (click)="onNextWeekClick()"
+	<button [disabled]="nextWeekBtnDisabled" (click)="onNextWeekClick()"
 		>Next</button
 	>
 </div>
