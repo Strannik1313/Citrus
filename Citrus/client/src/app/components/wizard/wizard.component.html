@@ -5,15 +5,16 @@
 		dates: dates$ | async,
 		btnConf: calendarBtnConf$ | async,
 		client: client$ | async,
-		schedules$: schedules$ | async,
+		schedules: schedules$ | async,
 		isValid: isClientValid$ | async,
 		stepsQuantity: stepsQuantity$ | async,
 		updatedPhone: updatedPhone$ | async,
-		fwdBtnDisabled: fwdBtnDisabled$ | async,
+		fwdBtnDisabled: (fwdBtnDisabled$ | async)!,
 		selectedService: selectedService$ | async,
 		currentStep: (currentStep$ | async)!,
 		months: months$ | async,
-		selectedMonth: selectedMonth$ | async
+		selectedMonth: selectedMonth$ | async,
+		prevWeekBtnDisabled: prevWeekBtnDisabled$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
@@ -47,8 +48,8 @@
 				(onMonthChange)="onMonthChange($event)"
 				(onTimeChange)="onTimeChange($event)"
 				[months]="data.months"
-				[schedules]="data.schedules$"
-				[btnConf]="data.btnConf"
+				[schedules]="data.schedules"
+				[prevWeekBtnDisabled]="data.prevWeekBtnDisabled"
 				[masters]="data.masters"
 				[dates]="data.dates"
 				[client]="data.client"

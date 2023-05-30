@@ -4,7 +4,6 @@ import { Client } from '@models/client';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { MasterDto } from '@models/MasterDto';
 import { ScheduleDto } from '@models/ScheduleDto';
-import { BtnStatus } from '@models/buttons-status';
 import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 
@@ -19,7 +18,7 @@ export class WizardDateChoiceStepComponent {
 	@Input() masters: Array<MasterDto> | null = [];
 	@Input() months: Array<string> | null = [];
 	@Input() dates: Array<CalendarDatesDto> | null = [];
-	@Input() btnConf: BtnStatus | null = null;
+	@Input() prevWeekBtnDisabled: boolean | null = null;
 	@Input() schedules: Array<ScheduleDto> | null = null;
 	@Input() selectedDay: string | null = null;
 	@Input() selectedMonth: string | null = null;

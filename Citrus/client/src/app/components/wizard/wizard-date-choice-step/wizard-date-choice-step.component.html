@@ -20,7 +20,7 @@
 		<app-calendar
 			(onDayChange)="onDaySelected($event)"
 			(onWeekChange)="weekChange($event)"
-			[btnConf]="btnConf"
+			[prevWeekBtnDisabled]="prevWeekBtnDisabled"
 			[dates]="dates"
 			[preselectedDate]="client?.dateOrder ?? selectedDay">
 		</app-calendar>

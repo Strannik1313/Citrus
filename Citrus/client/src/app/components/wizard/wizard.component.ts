@@ -75,6 +75,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	schedules$: Observable<ScheduleDto[] | null> = new Observable<ScheduleDto[]>();
 	months$: Observable<string[] | null> = new Observable<string[]>();
 	selectedMonth$: Observable<string | null> = new Observable<string>();
+	prevWeekBtnDisabled$: Observable<boolean> = new Observable<boolean>();
 
 	constructor(private router: Router, private apiService: ApiService, private store: Store) {}
 
@@ -89,6 +90,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.schedules$ = this.store.select(WizardFeature.selectSchedules);
 		this.months$ = this.store.select(WizardFeature.selectMonths);
 		this.selectedMonth$ = this.store.select(WizardFeature.selectSelectedMonth);
+		this.prevWeekBtnDisabled$ = this.store.select(WizardFeature.selectPrevWeekBtnDisabled);
 	}
 
 	onFormChange(observable: Observable<ClientConfirmStep>): void {

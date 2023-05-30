@@ -1,5 +1,4 @@
 import { Component, ChangeDetectionStrategy, Output, EventEmitter, Input } from '@angular/core';
-import { BtnStatus } from '@models/buttons-status';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 
@@ -12,7 +11,8 @@ import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWee
 export class CalendarComponent {
 	@Input() dates: Array<CalendarDatesDto> | null = [];
 	@Input() preselectedDate: string | null = null;
-	@Input() btnConf: BtnStatus | null = null;
+	@Input() prevWeekBtnDisabled: boolean | null = null;
+	@Input() nextWeekBtnDisabled: boolean | null = null;
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
 	@Output() onWeekChange: EventEmitter<CalendarChangeWeekEnum> = new EventEmitter();
 
