@@ -20,7 +20,7 @@ import {
 	TypedActionWithPayload,
 	WizardActions,
 } from '@components/wizard/state-management/wizard.actions';
-import { debounce, interval, map, mergeMap, scheduled, switchMap } from 'rxjs';
+import { debounce, interval, map, mergeMap, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { WizardFeature } from '@components/wizard/state-management/wizard.reducer';
 import { WizardMaxStep } from '@components/wizard/constants/WizardMaxStep';
