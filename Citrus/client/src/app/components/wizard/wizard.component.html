@@ -14,7 +14,8 @@
 		currentStep: (currentStep$ | async)!,
 		months: months$ | async,
 		selectedMonth: selectedMonth$ | async,
-		prevWeekBtnDisabled: prevWeekBtnDisabled$ | async
+		prevWeekBtnDisabled: prevWeekBtnDisabled$ | async,
+		selectedSchedule: selectedSchedule$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
@@ -46,7 +47,7 @@
 				(onMasterChange)="onMasterChange($event)"
 				(onDayChange)="onDayChange($event)"
 				(onMonthChange)="onMonthChange($event)"
-				(onTimeChange)="onTimeChange($event)"
+				(onScheduleSelected)="scheduleSelected($event)"
 				[months]="data.months"
 				[schedules]="data.schedules"
 				[prevWeekBtnDisabled]="data.prevWeekBtnDisabled"
@@ -54,7 +55,8 @@
 				[dates]="data.dates"
 				[client]="data.client"
 				[selectedDay]="selectedDay"
-				[selectedMonth]="data.selectedMonth">
+				[selectedMonth]="data.selectedMonth"
+				[selectedSchedule]="data.selectedSchedule">
 			</app-wizard-date-choice-step>
 			<app-wizard-confirm-step
 				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"

@@ -3,9 +3,9 @@ import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
 import { Client } from '@models/client';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { MasterDto } from '@models/MasterDto';
-import { ScheduleDto } from '@models/ScheduleDto';
 import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
+import { Schedule } from '@models/Schedule';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',
@@ -19,14 +19,16 @@ export class WizardDateChoiceStepComponent {
 	@Input() months: Array<string> | null = [];
 	@Input() dates: Array<CalendarDatesDto> | null = [];
 	@Input() prevWeekBtnDisabled: boolean | null = null;
-	@Input() schedules: Array<ScheduleDto> | null = null;
+	@Input() schedules: Array<Schedule> | null = null;
 	@Input() selectedDay: string | null = null;
 	@Input() selectedMonth: string | null = null;
+	@Input() selectedSchedule: Schedule | null = null;
 	@Output() onWeekChange: EventEmitter<CalendarChangeWeekEnum> = new EventEmitter();
 	@Output() onMasterChange: EventEmitter<MasterDto | null> = new EventEmitter();
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
 	@Output() onMonthChange: EventEmitter<string | null> = new EventEmitter();
-	@Output() onTimeChange: EventEmitter<ScheduleDto> = new EventEmitter();
+	@Output() onTimeChange: EventEmitter<Schedule> = new EventEmitter();
+	@Output() onScheduleSelected: EventEmitter<Schedule> = new EventEmitter();
 
 	onDaySelected(date: string): void {
 		this.onDayChange.emit(date);
@@ -46,7 +48,11 @@ export class WizardDateChoiceStepComponent {
 		this.onMonthChange.emit(selectedMonth);
 	}
 
-	timeChange(choisenDate: ScheduleDto): void {
+	timeChange(choisenDate: Schedule): void {
 		this.onTimeChange.emit(choisenDate);
+	}
+
+	scheduleSelected(schedule: Schedule) {
+		this.onScheduleSelected.emit(schedule);
 	}
 }

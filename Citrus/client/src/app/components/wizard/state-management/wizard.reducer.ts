@@ -19,7 +19,7 @@ import {
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
-import { ScheduleDto } from '@models/ScheduleDto';
+import { Schedule } from '@models/Schedule';
 
 export const wizardFeatureKey = 'wizard';
 
@@ -32,8 +32,8 @@ export interface WizardReducer {
 	selectedMaster: MasterDto | null;
 	dates: CalendarDatesDto[] | null;
 	selectedDay: string | null;
-	schedules: ScheduleDto[] | null;
-	selectedSchedule: ScheduleDto | null;
+	schedules: Schedule[] | null;
+	selectedSchedule: Schedule | null;
 	months: string[] | null;
 	selectedMonth: string | null;
 	prevWeekBtnDisabled: boolean;
