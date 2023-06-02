@@ -22,11 +22,13 @@ export class WizardDateChoiceStepComponent {
 	@Input() schedules: Array<ScheduleDto> | null = null;
 	@Input() selectedDay: string | null = null;
 	@Input() selectedMonth: string | null = null;
+	@Input() selectedSchedule: ScheduleDto | null = null;
 	@Output() onWeekChange: EventEmitter<CalendarChangeWeekEnum> = new EventEmitter();
 	@Output() onMasterChange: EventEmitter<MasterDto | null> = new EventEmitter();
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
 	@Output() onMonthChange: EventEmitter<string | null> = new EventEmitter();
 	@Output() onTimeChange: EventEmitter<ScheduleDto> = new EventEmitter();
+	@Output() onScheduleSelected: EventEmitter<ScheduleDto> = new EventEmitter();
 
 	onDaySelected(date: string): void {
 		this.onDayChange.emit(date);
@@ -48,5 +50,9 @@ export class WizardDateChoiceStepComponent {
 
 	timeChange(choisenDate: ScheduleDto): void {
 		this.onTimeChange.emit(choisenDate);
+	}
+
+	scheduleSelected(schedule: ScheduleDto) {
+		this.onScheduleSelected.emit(schedule);
 	}
 }

@@ -57,8 +57,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 	private isClientValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private calendarBtnConf: BehaviorSubject<BtnStatus> = new BehaviorSubject<BtnStatus>(CALENDAR_BTN_INIT_VALUE);
 	private updatedPhone: BehaviorSubject<string> = new BehaviorSubject<string>('');
-	private startWeekDay = '';
-	private selectedMonth: string | null = null;
 	private confirmFormValue: ClientConfirmStep = CLIENT_INIT_CONFIRM;
 	private subscription: Subscription = new Subscription();
 	calendarBtnConf$ = this.calendarBtnConf.asObservable();
@@ -76,6 +74,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	months$: Observable<string[] | null> = new Observable<string[]>();
 	selectedMonth$: Observable<string | null> = new Observable<string>();
 	prevWeekBtnDisabled$: Observable<boolean> = new Observable<boolean>();
+	selectedSchedule$: Observable<ScheduleDto | null> = new Observable<ScheduleDto>();
 
 	constructor(private router: Router, private apiService: ApiService, private store: Store) {}
 
@@ -91,6 +90,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.months$ = this.store.select(WizardFeature.selectMonths);
 		this.selectedMonth$ = this.store.select(WizardFeature.selectSelectedMonth);
 		this.prevWeekBtnDisabled$ = this.store.select(WizardFeature.selectPrevWeekBtnDisabled);
+		this.selectedSchedule$ = this.store.select(WizardFeature.selectSelectedSchedule);
 	}
 
 	onFormChange(observable: Observable<ClientConfirmStep>): void {
@@ -188,5 +188,9 @@ export class WizardComponent implements OnInit, OnDestroy {
 
 	onServiceStepInputChange(service: string | null) {
 		this.store.dispatch(getServices({ payload: service }));
+	}
+
+	scheduleSelected(schedule: ScheduleDto) {
+		this.store.dispatch(setSelectedSchedule({ payload: schedule }));
 	}
 }

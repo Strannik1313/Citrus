@@ -6,4 +6,5 @@ export interface ScheduleDto {
 	freetimes: Array<string[]>;
 	orders: string[];
 	preOrder: string;
+	id: string;
 }
