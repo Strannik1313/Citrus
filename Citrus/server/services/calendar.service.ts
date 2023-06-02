@@ -6,9 +6,9 @@ import { WeekDto } from '@dto/WeekDto';
 import { DatesHelper } from '@helpers/DatesHelper';
 import { QueryDocumentSnapshot } from '@google-cloud/firestore';
 import { CalendarDto } from '@dto/CalendarDto';
-import { Schedule } from '@interfaces/Schedule';
 import dayjs from 'dayjs';
 import { MonthsDto } from '@dto/MonthsDto';
+import { ScheduleDto } from '@dto/ScheduleDto';
 dayjs().format();
 
 class CalendarServiceClass {
@@ -58,99 +58,21 @@ class CalendarServiceClass {
 		}
 	}
 
-	async getSchedule(serviceId: number, date: string): Promise<ServiceReturnType<Schedule[]>> {
-		let schedule: Array<Schedule> = [];
-		let extraTimeInterval: Array<string> = [];
-		const mastersIdArray: Array<number> = [];
-		const mastersCollection = db.collection('masters');
-		const servicesCollection = db.collection('services');
-		const datesCollection = db.collection('calendar');
+	async getSchedule(date: string): Promise<ServiceReturnType<ScheduleDto[]>> {
+		let schedule: Array<ScheduleDto> = [];
+		const schedulesCollection = db.collection('schedules');
 		try {
-			await mastersCollection.get().then(collection => {
-				collection.forEach(master => {
-					const masterId = master.data().masterId;
-					mastersIdArray.push(masterId);
-					schedule.push({
-						masterId,
-						masterName: master.data().name,
-						cost: master.data().price[master.data().serviceId.indexOf(serviceId)],
-						freetimes: [],
-					});
-				});
-			});
-		} catch (error) {
-			return {
-				status: ProcessStatus.ERROR,
-				message: 'Не удалось получить мастеров',
-				cause: error as Error,
-			};
-		}
-		try {
-			await servicesCollection
-				.where('id', '==', serviceId)
+			await schedulesCollection
+				.where('freetimes', 'array-contains', date)
 				.get()
 				.then(collection => {
-					collection.forEach(service => {
-						for (let i = 0; i <= 120 - service.data().duration; i = i + 10) {
-							extraTimeInterval.push(i.toString());
-						}
-						schedule = schedule.map(order => {
-							return {
-								...order,
-								duration: service.data().duration,
-							};
+					collection.forEach(scheduleFromDB => {
+						schedule.push({
+							masterId: scheduleFromDB.data().masterId,
+							freetimes: scheduleFromDB.data().freetimes,
+							id: scheduleFromDB.data().id,
+							date: scheduleFromDB.data().date,
 						});
-					});
-				});
-		} catch (error) {
-			return {
-				status: ProcessStatus.ERROR,
-				message: 'Не удалось получить доступные сервисы',
-				cause: error as Error,
-			};
-		}
-		try {
-			await datesCollection
-				.where('masterId', 'in', mastersIdArray)
-				.get()
-				.then(collection => {
-					collection.forEach(masterTimes => {
-						for (let i = 0; i < masterTimes.data().freeTimes.length; i++) {
-							if (dayjs(date).isSame(masterTimes.data().freeTimes[i].toDate(), 'day')) {
-								schedule = schedule.map(order => {
-									if (order.masterId === masterTimes.data().masterId) {
-										return {
-											...order,
-											freetimes: [...order.freetimes, masterTimes.data().freeTimes[i].toDate()],
-										};
-									}
-									return order;
-								});
-							}
-						}
-					});
-					schedule = schedule.filter(order => {
-						return order.freetimes.length > 0;
-					});
-					schedule = schedule.map(order => {
-						return {
-							...order,
-							freetimes: order.freetimes.sort((a, b) => {
-								return a - b;
-							}),
-						};
-					});
-					// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-					// @ts-ignore
-					schedule = schedule.map(order => {
-						return {
-							...order,
-							freetimes: order.freetimes.map(time => {
-								return extraTimeInterval.map(interval => {
-									return dayjs(time).minute(Number(interval)).toString();
-								});
-							}),
-						};
 					});
 				});
 			return {
@@ -160,7 +82,7 @@ class CalendarServiceClass {
 		} catch (error) {
 			return {
 				status: ProcessStatus.ERROR,
-				message: 'Не удалось получить доступные сервисы',
+				message: 'Не удалось получить расписание',
 				cause: error as Error,
 			};
 		}
