@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { BTN_LABELS } from '@constants/btn-labels';
 import { Client, ClientConfirmStep } from '@models/client';
 import { CLIENT_INIT_CONFIRM, CLIENT_INIT_VALUE } from '@constants/client-init-value';
@@ -9,7 +9,6 @@ import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { WizardHelper } from '@components/wizard/wizard-helper';
 import { BtnStatus, CALENDAR_BTN_INIT_VALUE } from '@models/buttons-status';
-import { ScheduleDto } from '@models/ScheduleDto';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
@@ -29,6 +28,7 @@ import {
 } from '@components/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
+import { Schedule } from '@models/Schedule';
 
 dayjs.locale('ru');
 
@@ -70,11 +70,11 @@ export class WizardComponent implements OnInit, OnDestroy {
 	selectedService$: Observable<ServiceDto | null> = new Observable<ServiceDto>();
 	masters$: Observable<MasterDto[] | null> = new Observable<MasterDto[]>();
 	dates$: Observable<CalendarDatesDto[] | null> = new Observable<CalendarDatesDto[]>();
-	schedules$: Observable<ScheduleDto[] | null> = new Observable<ScheduleDto[]>();
+	schedules$: Observable<Schedule[] | null> = new Observable<Schedule[]>();
 	months$: Observable<string[] | null> = new Observable<string[]>();
 	selectedMonth$: Observable<string | null> = new Observable<string>();
 	prevWeekBtnDisabled$: Observable<boolean> = new Observable<boolean>();
-	selectedSchedule$: Observable<ScheduleDto | null> = new Observable<ScheduleDto>();
+	selectedSchedule$: Observable<Schedule | null> = new Observable<Schedule>();
 
 	constructor(private router: Router, private apiService: ApiService, private store: Store) {}
 
@@ -170,9 +170,9 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.store.dispatch(setSelectedMonth({ payload: month }));
 	}
 
-	onTimeChange(choisenDate: ScheduleDto): void {
-		this.store.dispatch(setSelectedSchedule({ payload: choisenDate }));
-	}
+	// onTimeChange(choisenDate: ScheduleDto): void {
+	// 	this.store.dispatch(setSelectedSchedule({ payload: choisenDate }));
+	// }
 
 	onBtnClick(isNextStep: boolean): void {
 		if (isNextStep) {
@@ -190,7 +190,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.store.dispatch(getServices({ payload: service }));
 	}
 
-	scheduleSelected(schedule: ScheduleDto) {
+	scheduleSelected(schedule: Schedule) {
 		this.store.dispatch(setSelectedSchedule({ payload: schedule }));
 	}
 }

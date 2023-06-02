@@ -27,7 +27,6 @@
 	</div>
 	<div class="timesheets">
 		<app-schedule
-			(onTimeChange)="timeChange($event)"
 			(onScheduleSelected)='scheduleSelected($event)'
 			[schedules]="schedules"
 			[selectedSchedule]='selectedSchedule'>

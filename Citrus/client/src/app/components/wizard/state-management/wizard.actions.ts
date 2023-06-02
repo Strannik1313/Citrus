@@ -5,9 +5,9 @@ import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { TypedAction } from '@ngrx/store/src/models';
 import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
-import { ScheduleDto } from '@models/ScheduleDto';
 import { MonthsDto } from '@models/MonthsDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
+import { Schedule } from '@models/Schedule';
 
 export interface TypedActionWithPayload<T> extends TypedAction<WizardActions> {
 	payload: T;
@@ -77,8 +77,8 @@ export const initializeWizardDateChoice = createAction(WizardActions.InitializeW
 export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDatesDto[] }>());
 export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{ payload: ScheduleLoaderDto }>());
 export const setSelectedDay = createAction(WizardActions.SetSelectedDayAction, props<{ payload: string }>());
-export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: ScheduleDto[] }>());
-export const setSelectedSchedule = createAction(WizardActions.SetSelectedTimeAction, props<{ payload: ScheduleDto }>());
+export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: Schedule[] }>());
+export const setSelectedSchedule = createAction(WizardActions.SetSelectedTimeAction, props<{ payload: Schedule }>());
 export const setSelectedMaster = createAction(
 	WizardActions.SetSelectedMasterAction,
 	props<{ payload: MasterDto | null }>(),

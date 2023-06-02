@@ -20,7 +20,7 @@ import {
 	TypedActionWithPayload,
 	WizardActions,
 } from '@components/wizard/state-management/wizard.actions';
-import { debounce, interval, map, mergeMap, switchMap } from 'rxjs';
+import { debounce, interval, map, mergeMap, scheduled, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { WizardFeature } from '@components/wizard/state-management/wizard.reducer';
 import { WizardMaxStep } from '@components/wizard/constants/WizardMaxStep';
@@ -34,6 +34,7 @@ import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { DatesHelper } from '@helpers/DatesHelper';
+import { Schedule } from '@models/Schedule';
 
 @Injectable()
 export class WizardEffects {
@@ -178,11 +179,24 @@ export class WizardEffects {
 		return this.actions$.pipe(
 			ofType(WizardActions.SetSelectedDayAction),
 			map((action: TypedActionWithPayload<string>) => action.payload),
-			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
-			mergeMap(([day, service]) => {
-				return this.calendarService
-					.getSchedule({ date: day, serviceId: service!.id })
-					.pipe(map(schedules => setSchedules({ payload: schedules })));
+			concatLatestFrom(() => [
+				this.store.select(WizardFeature.selectSelectedService),
+				this.store.select(WizardFeature.selectMasters),
+			]),
+			mergeMap(([day, service, masters]) => {
+				return this.calendarService.getSchedule({ date: day }).pipe(
+					map(schedulesDto =>
+						schedulesDto.map(schedule => {
+							return {
+								...schedule,
+								cost: service?.cost,
+								duration: service?.duration,
+								masterName: masters?.find(master => master.id === schedule.masterId)?.name,
+							} as Schedule;
+						}),
+					),
+					map(schedules => setSchedules({ payload: schedules })),
+				);
 			}),
 		);
 	});

@@ -1,21 +1,21 @@
-<div class="container__schedule">
+<div class="container__schedules">
 	<ng-container *ngFor="let schedule of schedules; trackBy: trackByFn">
-		<mat-card class="schedule">
-			<div *ngIf="schedule.freetimes.length > 0"
-					 (click)='scheduleSelected(schedule)'
-					 appAddActiveClass
-					 [selectedElement]='selectedSchedule?.id'
-						id='{{schedule.id}}'>
+		<mat-card class="schedule" id='{{schedule.id}}'
+							*ngIf="schedule.freetimes.length > 0"
+							(click)='scheduleSelected(schedule)'
+							appAddActiveClass
+							[selectedElement]='selectedSchedule?.id'>
+			<div>
 				<p>{{ schedule.masterName }}</p>
 				<p>Цена: {{ schedule.cost }} рублей</p>
 				<p>Продолжительность: {{ schedule.duration }} минут</p>
 				<div class="time__container">
-					<div *ngFor="let time of schedule.freetimes; trackBy: trackByFn">
-						<app-timepicker
-							(onTimeChange)="timeChange($event, schedule)"
-							[time]="time">
-						</app-timepicker>
-					</div>
+<!--					<div *ngFor="let time of schedule.freetimes; trackBy: trackByFn">-->
+<!--						<app-timepicker-->
+<!--							(onTimeChange)="timeChange($event, schedule)"-->
+<!--							[time]="time">-->
+<!--						</app-timepicker>-->
+<!--					</div>-->
 				</div>
 			</div
 		></mat-card>

@@ -1,7 +1,8 @@
 .container__schedules {
 	display: flex;
 	justify-content: flex-start;
-	.schedule {
+	flex-direction: column;
+	.schedule.mat-card {
 		margin: 10px;
 		display: flex;
 		flex-direction: column;
@@ -11,4 +12,8 @@
 			display: flex;
 		}
 	}
+}
+.active {
+	outline: 3px solid black;
+	background: rgb(221, 221, 221);
 }
