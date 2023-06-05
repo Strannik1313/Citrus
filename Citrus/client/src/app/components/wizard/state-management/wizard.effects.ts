@@ -6,8 +6,10 @@ import {
 	getMasters,
 	getMonths,
 	getServices,
+	initializeWizardDateChoice,
 	initializeWizardServiceChoice,
 	resetSelectedService,
+	resetWizardDateChoiceStepState,
 	resetWizardStep,
 	setDates,
 	setFwdBtnDisabled,
@@ -15,6 +17,7 @@ import {
 	setMonths,
 	setPrevWeekBtnDisabled,
 	setSchedules,
+	setSelectedMaster,
 	setSelectedMonth,
 	setServices,
 	TypedActionWithPayload,
@@ -35,6 +38,7 @@ import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { DatesHelper } from '@helpers/DatesHelper';
 import { Schedule } from '@models/Schedule';
+import { MaxProcedureDuration } from '@constants/MaxProcedureDuration';
 
 @Injectable()
 export class WizardEffects {
@@ -88,35 +92,15 @@ export class WizardEffects {
 		return this.actions$.pipe(
 			ofType(WizardActions.ChangeWizardStepAction),
 			concatLatestFrom(() => {
-				return [
-					this.store.select(WizardFeature.selectStep),
-					this.store.select(WizardFeature.selectSelectedService),
-					this.store.select(WizardFeature.selectSelectedMaster),
-				];
+				return [this.store.select(WizardFeature.selectStep)];
 			}),
-			switchMap(([, step, service, master]) => {
+			switchMap(([, step]) => {
 				switch (step) {
 					case WizardStepperEnum.SERVICE_CHOICE: {
-						return [initializeWizardServiceChoice()];
+						return [initializeWizardServiceChoice(), resetWizardDateChoiceStepState()];
 					}
 					case WizardStepperEnum.DATE_CHOICE: {
-						return [
-							getMasters({
-								payload: { serviceId: service?.id ?? null, masterId: null },
-							}),
-							getDates({
-								payload: {
-									masterId: master?.id ?? null,
-									serviceId: service?.id ?? null,
-								},
-							}),
-							getMonths({
-								payload: {
-									currentMonth: new Date().getMonth().toString(),
-								},
-							}),
-							setFwdBtnDisabled({ payload: true }),
-						];
+						return [initializeWizardDateChoice()];
 					}
 					default:
 						return [getServices({ payload: null })];
@@ -189,13 +173,17 @@ export class WizardEffects {
 						schedulesDto.map(schedule => {
 							return {
 								...schedule,
-								cost: service?.cost,
-								duration: service?.duration,
+								cost: service!.cost,
+								duration: service!.duration,
 								masterName: masters?.find(master => master.id === schedule.masterId)?.name,
+								freeTimesWithShifts: DatesHelper.getFreeTimesWithShifts(
+									schedule.freetimes,
+									MaxProcedureDuration - service!.duration,
+								),
 							} as Schedule;
 						}),
 					),
-					map(schedules => setSchedules({ payload: schedules })),
+					switchMap(schedules => [setSchedules({ payload: schedules })]),
 				);
 			}),
 		);
@@ -278,6 +266,16 @@ export class WizardEffects {
 		);
 	});
 
+	setSelectedSchedule$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.SetSelectedScheduleAction),
+			map((action: TypedActionWithPayload<Schedule>) => action.payload),
+			concatLatestFrom(() => this.store.select(WizardFeature.selectMasters)),
+			map(([schedule, masters]) => masters?.find(master => master.id === schedule.masterId)),
+			switchMap(master => [setFwdBtnDisabled({ payload: false }), setSelectedMaster({ payload: master! })]),
+		);
+	});
+
 	initializeWizardServiceChoice$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.InitializeWizardServiceChoiceAction),
@@ -295,9 +293,10 @@ export class WizardEffects {
 				return [
 					this.store.select(WizardFeature.selectSelectedService),
 					this.store.select(WizardFeature.selectSelectedMaster),
+					this.store.select(WizardFeature.selectSelectedSchedule),
 				];
 			}),
-			switchMap(([, service, master]) => {
+			switchMap(([, service, master, schedule]) => {
 				return [
 					getMasters({
 						payload: { serviceId: service?.id ?? null, masterId: null },
@@ -313,7 +312,7 @@ export class WizardEffects {
 							currentMonth: new Date().getMonth().toString(),
 						},
 					}),
-					setFwdBtnDisabled({ payload: true }),
+					setFwdBtnDisabled({ payload: !schedule }),
 				];
 			}),
 		);

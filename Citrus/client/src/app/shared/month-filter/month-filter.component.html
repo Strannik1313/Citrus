@@ -4,8 +4,7 @@
 		[value]="selectedMonth"
 		[disableOptionCentering]=true
 		(selectionChange)='onFilterClick($event)'
-		panelClass='filter-dropdown-panel'
-		disableOptionCentering>
+		panelClass='filter-dropdown-panel'>
 		<mat-option *ngFor="let month of months; trackBy: trackByFn" [value]="month">
 			{{month | date: 'LLLL'}}
 		</mat-option>

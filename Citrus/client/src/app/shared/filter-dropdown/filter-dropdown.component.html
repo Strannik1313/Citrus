@@ -2,6 +2,7 @@
 	<mat-label>{{label}}</mat-label>
 	<mat-select
 		[ngModel]="items"
+		[value]='selectedItem'
 		[disableOptionCentering]=true
 		(selectionChange)='onFilterClick($event)'
 		panelClass='filter-dropdown-panel'

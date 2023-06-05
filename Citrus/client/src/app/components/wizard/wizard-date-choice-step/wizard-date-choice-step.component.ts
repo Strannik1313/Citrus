@@ -23,6 +23,8 @@ export class WizardDateChoiceStepComponent {
 	@Input() selectedDay: string | null = null;
 	@Input() selectedMonth: string | null = null;
 	@Input() selectedSchedule: Schedule | null = null;
+	@Input() selectedTime: string | null = null;
+	@Input() selectedMaster: MasterDto | null = null;
 	@Output() onWeekChange: EventEmitter<CalendarChangeWeekEnum> = new EventEmitter();
 	@Output() onMasterChange: EventEmitter<MasterDto | null> = new EventEmitter();
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();

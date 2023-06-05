@@ -25,13 +25,13 @@ class CalendarServiceClass {
 			}
 			case ProcessStatus.SUCCESS: {
 				try {
-					const datesCollection = db.collection('calendar');
+					const datesCollection = db.collection('schedules');
 					const dates = await datesCollection
 						.where('masterId', 'in', getMastersResult.data)
 						.get()
 						.then(collection => {
 							collection.forEach((snapshot: QueryDocumentSnapshot) => {
-								const masterTimes = snapshot.data() as CalendarDto;
+								const masterTimes = snapshot.data() as ScheduleDto;
 								if (masterId === masterTimes.masterId || masterId === null) {
 									week = DatesHelper.getWeekDto(week, masterTimes);
 								}
@@ -63,7 +63,7 @@ class CalendarServiceClass {
 		const schedulesCollection = db.collection('schedules');
 		try {
 			await schedulesCollection
-				.where('freetimes', 'array-contains', date)
+				.where('date', '==', date)
 				.get()
 				.then(collection => {
 					collection.forEach(scheduleFromDB => {

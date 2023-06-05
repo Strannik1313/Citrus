@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
 	changeWizardStep,
 	resetSelectedService,
@@ -15,6 +15,7 @@ import {
 	setMonths,
 	setSelectedMonth,
 	setPrevWeekBtnDisabled,
+	resetWizardDateChoiceStepState,
 } from '@components/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
@@ -149,6 +150,16 @@ export const WizardFeature = createFeature({
 				prevWeekBtnDisabled: payload,
 			};
 		}),
+		on(resetWizardDateChoiceStepState, (state): WizardReducer => {
+			return {
+				...state,
+				selectedMonth: null,
+				selectedDay: null,
+				selectedMaster: null,
+				selectedSchedule: null,
+				schedules: null,
+			};
+		}),
 	),
 });
 
@@ -170,3 +181,8 @@ export const {
 	selectSelectedMonth,
 	selectPrevWeekBtnDisabled,
 } = WizardFeature;
+
+export const selectScheduleSelectedTime = createSelector(
+	WizardFeature.selectSelectedSchedule,
+	schedule => schedule?.preOrder ?? null,
+);

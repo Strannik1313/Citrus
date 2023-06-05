@@ -12,6 +12,7 @@ import { MatSelectChange } from '@angular/material/select';
 export class FilterDropdownComponent {
 	@Input() items: Array<FilterItem> | null = [];
 	@Input() label = '';
+	@Input() selectedItem: FilterItem | null = null;
 	@Output() onFilterChange: EventEmitter<FilterItem | null> = new EventEmitter();
 
 	onFilterClick(item: MatSelectChange): void {
