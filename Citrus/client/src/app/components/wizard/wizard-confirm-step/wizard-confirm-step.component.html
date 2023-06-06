@@ -1,13 +1,13 @@
 <mat-card>
 	<form [formGroup]="confirmForm">
 		<p>Имя мастера:</p>
-		<p>{{ client?.masterName }}</p>
+		<p>{{ selectedMaster?.name }}</p>
 		<p>Выбранная услуга:</p>
-		<p>{{ client?.serviceName }}</p>
+		<p>{{ selectedService?.title }}</p>
 		<p>Время начала:</p>
-		<p>{{ client?.dateOrder | date: 'HH:mm' }}</p>
+		<p>{{ selectedSchedule?.preOrder | date: 'HH:mm' }}</p>
 		<p>Дата:</p>
-		<p>{{ client?.dateOrder | date: 'dd.MM' }}</p>
+		<p>{{ selectedSchedule?.preOrder | date: 'dd MMMM' }}</p>
 		<mat-form-field appearance="outline">
 			<mat-label>Фамилия</mat-label>
 			<input
