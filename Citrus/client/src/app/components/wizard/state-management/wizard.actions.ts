@@ -30,7 +30,7 @@ export enum WizardActions {
 	SetDatesAction = '[Wizard Page] SetDatesAction',
 	InitializeWizardServiceChoiceAction = '[Wizard Page] InitializeWizardServiceChoiceAction',
 	InitializeWizardDateChoiceAction = '[Wizard Page] InitializeWizardDateChoiceAction',
-	GetScheduleAction = '[Wizard Page] GetScheduleAction',
+	GetSchedulesAction = '[Wizard Page] GetSchedulesAction',
 	SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
 	SetScheduleAction = '[Wizard Page] SetScheduleAction',
 	SetSelectedScheduleAction = '[Wizard Page] SetSelectedScheduleAction',
@@ -42,6 +42,11 @@ export enum WizardActions {
 	GetPrevWeekAction = '[Wizard Page] GetPrevWeekAction',
 	SetPrevWeekBtnDisabledAction = '[Wizard Page] SetPrevWeekBtnDisabledAction',
 	ResetWizardDateChoiceStepStateAction = '[Wizard Page] ResetWizardDateChoiceStepStateAction',
+	ResetSelectedMasterAction = '[Wizard Page] ResetSelectedMasterAction',
+	ResetSelectedDayAction = '[Wizard Page] ResetSelectedDayAction',
+	ResetSelectedMonthAction = '[Wizard Page] ResetSelectedMonthAction',
+	ResetSelectedScheduleAction = '[Wizard Page] ResetSelectedScheduleAction',
+	ResetSchedulesAction = '[Wizard Page] ResetSchedulesAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -76,7 +81,7 @@ export const initializeWizardServiceChoice = createAction(WizardActions.Initiali
 export const initializeWizardDateChoice = createAction(WizardActions.InitializeWizardDateChoiceAction);
 
 export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDatesDto[] }>());
-export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{ payload: ScheduleLoaderDto }>());
+export const getSchedules = createAction(WizardActions.GetSchedulesAction, props<{ payload: ScheduleLoaderDto }>());
 export const setSelectedDay = createAction(WizardActions.SetSelectedDayAction, props<{ payload: string }>());
 export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: Schedule[] }>());
 export const setSelectedSchedule = createAction(
@@ -97,5 +102,10 @@ export const setPrevWeekBtnDisabled = createAction(
 	props<{ payload: boolean }>(),
 );
 export const resetWizardDateChoiceStepState = createAction(WizardActions.ResetWizardDateChoiceStepStateAction);
+export const resetSelectedMaster = createAction(WizardActions.ResetSelectedMasterAction);
+export const resetSelectedDay = createAction(WizardActions.ResetSelectedDayAction);
+export const resetSelectedMonth = createAction(WizardActions.ResetSelectedMonthAction);
+export const resetSelectedSchedule = createAction(WizardActions.ResetSelectedScheduleAction);
+export const resetSchedules = createAction(WizardActions.ResetSchedulesAction);
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

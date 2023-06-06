@@ -25,6 +25,7 @@ export class CalendarService {
 	getSchedule(body: ScheduleLoaderDto): Observable<Array<ScheduleDto>> {
 		return this.http.post<Array<ScheduleDto>>('/api/calendar/schedule', {
 			date: body.date,
+			masterId: body.masterId,
 		});
 	}
 

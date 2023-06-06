@@ -22,7 +22,7 @@ class CalendarController {
 	}
 
 	async schedule(req: Request, res: Response) {
-		const getScheduleResult = await CalendarService.getSchedule(req.body.date);
+		const getScheduleResult = await CalendarService.getSchedule(req.body.date, req.body.masterId);
 		switch (getScheduleResult.status) {
 			case ProcessStatus.SUCCESS: {
 				res.status(200).json(getScheduleResult.data);
