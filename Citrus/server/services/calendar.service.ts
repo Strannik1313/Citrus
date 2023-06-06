@@ -57,23 +57,23 @@ class CalendarServiceClass {
 		}
 	}
 
-	async getSchedule(date: string): Promise<ServiceReturnType<ScheduleDto[]>> {
+	async getSchedule(date: string, masterId?: number): Promise<ServiceReturnType<ScheduleDto[]>> {
 		let schedule: Array<ScheduleDto> = [];
 		const schedulesCollection = db.collection('schedules');
+		let querySchedulesCollection = masterId
+			? schedulesCollection.where('date', '==', date).where('masterId', '==', masterId)
+			: schedulesCollection.where('date', '==', date);
 		try {
-			await schedulesCollection
-				.where('date', '==', date)
-				.get()
-				.then(collection => {
-					collection.forEach(scheduleFromDB => {
-						schedule.push({
-							masterId: scheduleFromDB.data().masterId,
-							freetimes: scheduleFromDB.data().freetimes,
-							id: scheduleFromDB.data().id,
-							date: scheduleFromDB.data().date,
-						});
+			await querySchedulesCollection.get().then(collection => {
+				collection.forEach(scheduleFromDB => {
+					schedule.push({
+						masterId: scheduleFromDB.data().masterId,
+						freetimes: scheduleFromDB.data().freetimes,
+						id: scheduleFromDB.data().id,
+						date: scheduleFromDB.data().date,
 					});
 				});
+			});
 			return {
 				status: ProcessStatus.SUCCESS,
 				data: schedule,

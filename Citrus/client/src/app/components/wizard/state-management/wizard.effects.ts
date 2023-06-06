@@ -5,9 +5,15 @@ import {
 	getDates,
 	getMasters,
 	getMonths,
+	getSchedules,
 	getServices,
 	initializeWizardDateChoice,
 	initializeWizardServiceChoice,
+	resetSchedules,
+	resetSelectedDay,
+	resetSelectedMaster,
+	resetSelectedMonth,
+	resetSelectedSchedule,
 	resetSelectedService,
 	resetWizardDateChoiceStepState,
 	resetWizardStep,
@@ -39,6 +45,8 @@ import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { DatesHelper } from '@helpers/DatesHelper';
 import { Schedule } from '@models/Schedule';
 import { MaxProcedureDuration } from '@constants/MaxProcedureDuration';
+import { MasterDto } from '@models/MasterDto';
+import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
 
 @Injectable()
 export class WizardEffects {
@@ -159,16 +167,28 @@ export class WizardEffects {
 		);
 	});
 
-	setSchedule$ = createEffect(() => {
+	getScheduleAfterSelectDay$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.SetSelectedDayAction),
 			map((action: TypedActionWithPayload<string>) => action.payload),
+			concatLatestFrom(() => [this.store.select(WizardFeature.selectSelectedMaster)]),
+			map(([date, selectedMaster]) => {
+				return getSchedules({ payload: { date, masterId: selectedMaster?.id } });
+			}),
+		);
+	});
+
+	getSchedules$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.GetSchedulesAction),
+			map((action: TypedActionWithPayload<ScheduleLoaderDto>) => action.payload),
 			concatLatestFrom(() => [
 				this.store.select(WizardFeature.selectSelectedService),
 				this.store.select(WizardFeature.selectMasters),
+				this.store.select(WizardFeature.selectSelectedMaster),
 			]),
-			mergeMap(([day, service, masters]) => {
-				return this.calendarService.getSchedule({ date: day }).pipe(
+			switchMap(([{ date, masterId }, service, masters, selectedMaster]) =>
+				this.calendarService.getSchedule({ date, masterId }).pipe(
 					map(schedulesDto =>
 						schedulesDto.map(schedule => {
 							return {
@@ -183,9 +203,25 @@ export class WizardEffects {
 							} as Schedule;
 						}),
 					),
-					switchMap(schedules => [setSchedules({ payload: schedules })]),
-				);
-			}),
+					switchMap(schedules => {
+						if (!schedules || schedules.length === 0) {
+							return [
+								resetSelectedDay(),
+								resetSelectedSchedule(),
+								resetSchedules(),
+								setFwdBtnDisabled({ payload: true }),
+								getDates({
+									payload: {
+										serviceId: service!.id,
+										masterId: selectedMaster?.id ?? null,
+									},
+								}),
+							];
+						}
+						return [setSchedules({ payload: schedules })];
+					}),
+				),
+			),
 		);
 	});
 
@@ -273,6 +309,30 @@ export class WizardEffects {
 			concatLatestFrom(() => this.store.select(WizardFeature.selectMasters)),
 			map(([schedule, masters]) => masters?.find(master => master.id === schedule.masterId)),
 			switchMap(master => [setFwdBtnDisabled({ payload: false }), setSelectedMaster({ payload: master! })]),
+		);
+	});
+
+	resetSecondStepAfterSetMaster$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.SetSelectedMasterAction),
+			map((action: TypedActionWithPayload<MasterDto>) => action.payload),
+			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedDay)),
+			switchMap(([master, date]) => {
+				return [getSchedules({ payload: { date, masterId: master?.id } })];
+			}),
+		);
+	});
+
+	resetWizardDateChoiceStepState$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.ResetWizardDateChoiceStepStateAction),
+			switchMap(() => [
+				resetSelectedMaster(),
+				resetSelectedDay(),
+				resetSelectedMonth(),
+				resetSelectedSchedule(),
+				resetSchedules(),
+			]),
 		);
 	});
 

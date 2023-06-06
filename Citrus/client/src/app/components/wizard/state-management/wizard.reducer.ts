@@ -15,7 +15,11 @@ import {
 	setMonths,
 	setSelectedMonth,
 	setPrevWeekBtnDisabled,
-	resetWizardDateChoiceStepState,
+	resetSelectedMaster,
+	resetSelectedDay,
+	resetSelectedMonth,
+	resetSelectedSchedule,
+	resetSchedules,
 } from '@components/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
@@ -167,13 +171,33 @@ export const WizardFeature = createFeature({
 				prevWeekBtnDisabled: payload,
 			};
 		}),
-		on(resetWizardDateChoiceStepState, (state): WizardReducer => {
+		on(resetSelectedMaster, (state): WizardReducer => {
+			return {
+				...state,
+				selectedMaster: null,
+			};
+		}),
+		on(resetSelectedDay, (state): WizardReducer => {
+			return {
+				...state,
+				selectedDay: null,
+			};
+		}),
+		on(resetSelectedMonth, (state): WizardReducer => {
 			return {
 				...state,
 				selectedMonth: null,
-				selectedDay: null,
-				selectedMaster: null,
+			};
+		}),
+		on(resetSelectedSchedule, (state): WizardReducer => {
+			return {
+				...state,
 				selectedSchedule: null,
+			};
+		}),
+		on(resetSchedules, (state): WizardReducer => {
+			return {
+				...state,
 				schedules: null,
 			};
 		}),
