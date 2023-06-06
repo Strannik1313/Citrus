@@ -22,7 +22,7 @@
 				<li
 					class='time__select__dropdown__option'
 					[class.selected]='selectedTime === timeOption || timeOption === timeOptions[0]'
-					*ngFor="let timeOption of timeOptions"
+					*ngFor="let timeOption of timeOptions; trackBy: trackByFn"
 					(click)='timeSelected(timeOption)'>
 					{{timeOption | date: 'h:mm'}}
 				</li>

@@ -23,4 +23,8 @@ export class TimepickerComponent {
 	timeBtnClick(index: number) {
 		this.openedPanelNumber = index;
 	}
+
+	trackByFn(index: number, item: string): string {
+		return item;
+	}
 }

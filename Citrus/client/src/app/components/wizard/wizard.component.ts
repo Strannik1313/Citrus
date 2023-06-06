@@ -53,7 +53,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 	public backBtnLabels: string = BTN_LABELS.back;
 	public stepsQuantity: BehaviorSubject<Array<number>> = new BehaviorSubject(STEPS_QUATITY);
 	private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(CLIENT_INIT_VALUE);
-	public selectedDay: string | null = null;
 	private isClientValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private calendarBtnConf: BehaviorSubject<BtnStatus> = new BehaviorSubject<BtnStatus>(CALENDAR_BTN_INIT_VALUE);
 	private updatedPhone: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -77,6 +76,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	selectedSchedule$: Observable<Schedule | null> = new Observable<Schedule>();
 	selectedScheduleTime$: Observable<string | null> = new Observable<string>();
 	selectedMaster$: Observable<MasterDto | null> = new Observable<MasterDto>();
+	selectedDay$: Observable<string | null> = new Observable<string>();
 
 	constructor(private router: Router, private apiService: ApiService, private store: Store) {}
 
@@ -95,6 +95,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.selectedSchedule$ = this.store.select(WizardFeature.selectSelectedSchedule);
 		this.selectedScheduleTime$ = this.store.select(selectScheduleSelectedTime);
 		this.selectedMaster$ = this.store.select(WizardFeature.selectSelectedMaster);
+		this.selectedDay$ = this.store.select(WizardFeature.selectSelectedDay);
 	}
 
 	onFormChange(observable: Observable<ClientConfirmStep>): void {

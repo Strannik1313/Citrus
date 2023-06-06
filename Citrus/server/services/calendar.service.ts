@@ -5,7 +5,6 @@ import { ProcessStatus } from '@enums/ProcessStatus';
 import { WeekDto } from '@dto/WeekDto';
 import { DatesHelper } from '@helpers/DatesHelper';
 import { QueryDocumentSnapshot } from '@google-cloud/firestore';
-import { CalendarDto } from '@dto/CalendarDto';
 import dayjs from 'dayjs';
 import { MonthsDto } from '@dto/MonthsDto';
 import { ScheduleDto } from '@dto/ScheduleDto';

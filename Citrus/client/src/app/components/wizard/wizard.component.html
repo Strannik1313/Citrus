@@ -17,7 +17,8 @@
 		prevWeekBtnDisabled: prevWeekBtnDisabled$ | async,
 		selectedSchedule: selectedSchedule$ | async,
 		selectedScheduleTime: selectedScheduleTime$ | async,
-		selectedMaster: selectedMaster$ | async
+		selectedMaster: selectedMaster$ | async,
+		selectedDay: selectedDay$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
@@ -57,7 +58,7 @@
 				[masters]="data.masters"
 				[dates]="data.dates"
 				[client]="data.client"
-				[selectedDay]="selectedDay"
+				[selectedDay]="data.selectedDay"
 				[selectedMonth]="data.selectedMonth"
 				[selectedTime]='data.selectedScheduleTime'
 				[selectedSchedule]="data.selectedSchedule"

@@ -1,46 +1,14 @@
-import {
-	Directive,
-	HostListener,
-	ElementRef,
-	Input,
-	Renderer2,
-	OnChanges,
-	SimpleChanges,
-	OnInit,
-	EventEmitter,
-	Output,
-	AfterViewInit,
-	OnDestroy,
-} from '@angular/core';
+import { Directive, HostListener, ElementRef, Input, Renderer2, OnChanges, SimpleChanges } from '@angular/core';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
-import dayjs from 'dayjs';
-import { filter, fromEvent, Subscription } from 'rxjs';
 
 @Directive({
 	selector: '[appAddClass]',
 })
-export class AddClassDirective implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class AddClassDirective implements OnChanges {
 	@Input() day: CalendarDatesDto | undefined;
-	@Input() selectedDay: string | null = null;
-	@Output() onDateClick: EventEmitter<CalendarDatesDto> = new EventEmitter();
 	private disabled = true;
-	private subscription: Subscription = new Subscription();
 
 	constructor(public element: ElementRef, private renderer: Renderer2) {}
-
-	ngOnInit(): void {
-		this.subscription.add(
-			fromEvent<MouseEvent>(this.element.nativeElement, 'click')
-				.pipe(
-					filter(event => {
-						return !this.disabled;
-					}),
-				)
-				.subscribe(event => {
-					this.onDateClick.emit(this.day);
-				}),
-		);
-	}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes.day?.currentValue) {
@@ -48,17 +16,6 @@ export class AddClassDirective implements OnInit, OnChanges, AfterViewInit, OnDe
 			this.disabled
 				? this.renderer.addClass(this.element.nativeElement, 'disable')
 				: this.renderer.removeClass(this.element.nativeElement, 'disable');
-		}
-		if (!dayjs(changes.selectedDay?.currentValue).isSame(this.day?.date, 'day')) {
-			this.renderer.removeClass(this.element.nativeElement, 'active');
-		}
-	}
-
-	ngAfterViewInit(): void {
-		if (dayjs(this.selectedDay).isSame(this.element.nativeElement.id, 'day') && !this.disabled) {
-			this.renderer.addClass(this.element.nativeElement, 'active');
-		} else if (this.element.nativeElement.classList.contains('active')) {
-			this.renderer.removeClass(this.element.nativeElement, 'active');
 		}
 	}
 
@@ -72,15 +29,5 @@ export class AddClassDirective implements OnInit, OnChanges, AfterViewInit, OnDe
 		if (!this.disabled) {
 			this.renderer.removeClass(this.element.nativeElement, 'hover');
 		}
-	}
-
-	@HostListener('click') onMouseClick() {
-		if (!this.disabled) {
-			this.renderer.addClass(this.element.nativeElement, 'active');
-		}
-	}
-
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
 	}
 }
