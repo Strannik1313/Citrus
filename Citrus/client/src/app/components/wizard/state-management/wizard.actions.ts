@@ -33,7 +33,7 @@ export enum WizardActions {
 	GetScheduleAction = '[Wizard Page] GetScheduleAction',
 	SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
 	SetScheduleAction = '[Wizard Page] SetScheduleAction',
-	SetSelectedTimeAction = '[Wizard Page] SetSelectedTimeAction',
+	SetSelectedScheduleAction = '[Wizard Page] SetSelectedScheduleAction',
 	SetSelectedMasterAction = '[Wizard Page] SetSelectedMasterAction',
 	GetMonthsAction = '[Wizard Page] GetMonthsAction',
 	SetMonthsAction = '[Wizard Page] SetMonthsAction',
@@ -41,6 +41,7 @@ export enum WizardActions {
 	GetNextWeekAction = '[Wizard Page] GetNextWeekAction',
 	GetPrevWeekAction = '[Wizard Page] GetPrevWeekAction',
 	SetPrevWeekBtnDisabledAction = '[Wizard Page] SetPrevWeekBtnDisabledAction',
+	ResetWizardDateChoiceStepStateAction = '[Wizard Page] ResetWizardDateChoiceStepStateAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -78,7 +79,10 @@ export const setDates = createAction(WizardActions.SetDatesAction, props<{ paylo
 export const getSchedule = createAction(WizardActions.GetScheduleAction, props<{ payload: ScheduleLoaderDto }>());
 export const setSelectedDay = createAction(WizardActions.SetSelectedDayAction, props<{ payload: string }>());
 export const setSchedules = createAction(WizardActions.SetScheduleAction, props<{ payload: Schedule[] }>());
-export const setSelectedSchedule = createAction(WizardActions.SetSelectedTimeAction, props<{ payload: Schedule }>());
+export const setSelectedSchedule = createAction(
+	WizardActions.SetSelectedScheduleAction,
+	props<{ payload: Schedule }>(),
+);
 export const setSelectedMaster = createAction(
 	WizardActions.SetSelectedMasterAction,
 	props<{ payload: MasterDto | null }>(),
@@ -92,5 +96,6 @@ export const setPrevWeekBtnDisabled = createAction(
 	WizardActions.SetPrevWeekBtnDisabledAction,
 	props<{ payload: boolean }>(),
 );
+export const resetWizardDateChoiceStepState = createAction(WizardActions.ResetWizardDateChoiceStepStateAction);
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

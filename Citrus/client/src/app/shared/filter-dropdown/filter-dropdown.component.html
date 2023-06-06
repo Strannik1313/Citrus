@@ -1,11 +1,10 @@
 <mat-form-field appearance="fill">
 	<mat-label>{{label}}</mat-label>
 	<mat-select
-		[ngModel]="items"
+		[value]='selectedItem'
 		[disableOptionCentering]=true
 		(selectionChange)='onFilterClick($event)'
 		panelClass='filter-dropdown-panel'
-		name='food'
 		disableOptionCentering>
 		<mat-option *ngFor="let item of items; trackBy: trackByFn" [value]="item">
 			{{item.name}}

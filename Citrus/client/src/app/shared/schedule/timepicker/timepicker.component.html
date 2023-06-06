@@ -1,43 +1,32 @@
 <div class="container">
-	<svg
-		(click)="onNextTimeClick()"
-		*ngIf="buttonOpen"
-		xmlns="http://www.w3.org/2000/svg"
-		width="16"
-		height="16"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-		class="feather feather-loader">
-		<line x1="3" y1="23" x2="12" y2="19"></line>
-		<line x1="21" y1="23" x2="12" y2="19"></line>
-	</svg>
-	<div class="time__option" *ngIf="buttonOpen">
-		{{ content[content.length - 1] | date: 'mm' }}
+	<div class='time__select' *ngFor='let timeOptions of time; index as i'>
+		<button
+			mat-stroked-button
+			color='primary'
+			(click)="timeBtnClick(i)"
+			[class.active]='selectedTime && timeOptions.indexOf(selectedTime) >= 0'
+			cdkOverlayOrigin
+			#trigger="cdkOverlayOrigin">
+			{{(selectedTime && timeOptions.indexOf(selectedTime) >= 0 ? selectedTime : timeOptions[0]) | date: 'h:mm'}}
+		</button>
+		<ng-template
+			cdkConnectedOverlay
+			[cdkConnectedOverlayOrigin]="trigger"
+			[cdkConnectedOverlayOpen]="i === openedPanelNumber"
+			cdkConnectedOverlayHasBackdrop
+			cdkConnectedOverlayBackdropClass='timepicker_backdrop'
+			cdkConnectedOverlayPanelClass='timepicker_panel'
+			(backdropClick)="onBackdropClick()"
+		>
+			<ul class="time__select__dropdown">
+				<li
+					class='time__select__dropdown__option'
+					[class.selected]='selectedTime === timeOption || timeOption === timeOptions[0]'
+					*ngFor="let timeOption of timeOptions; trackBy: trackByFn"
+					(click)='timeSelected(timeOption)'>
+					{{timeOption | date: 'h:mm'}}
+				</li>
+			</ul>
+		</ng-template>
 	</div>
-	<div (click)="onTimeClick(content[0])">
-		{{ content[0] | date: 'HH:mm' }}
-	</div>
-	<div class="time__option" *ngIf="buttonOpen">
-		{{ content[1] | date: 'mm' }}
-	</div>
-	<svg
-		(click)="onPrevTimeClick()"
-		*ngIf="buttonOpen"
-		xmlns="http://www.w3.org/2000/svg"
-		width="16"
-		height="16"
-		viewBox="0 0 24 24"
-		fill="none"
-		stroke="currentColor"
-		stroke-width="2"
-		stroke-linecap="round"
-		stroke-linejoin="round"
-		class="feather feather-loader">
-		<line x1="21" y1="1" x2="12" y2="5"></line>
-		<line x1="3" y1="1" x2="12" y2="5"></line>
-	</svg>
 </div>

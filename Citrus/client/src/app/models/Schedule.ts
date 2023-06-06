@@ -6,4 +6,5 @@ export interface Schedule extends ScheduleDto {
 	duration: number;
 	orders?: string[];
 	preOrder?: string;
+	freeTimesWithShifts: Array<string[]>;
 }

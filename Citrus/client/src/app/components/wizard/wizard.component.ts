@@ -13,7 +13,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { WizardFeature } from '@components/wizard/state-management/wizard.reducer';
+import { selectScheduleSelectedTime, WizardFeature } from '@components/wizard/state-management/wizard.reducer';
 import {
 	decrementWizardStep,
 	getServices,
@@ -53,7 +53,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 	public backBtnLabels: string = BTN_LABELS.back;
 	public stepsQuantity: BehaviorSubject<Array<number>> = new BehaviorSubject(STEPS_QUATITY);
 	private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(CLIENT_INIT_VALUE);
-	public selectedDay: string | null = null;
 	private isClientValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 	private calendarBtnConf: BehaviorSubject<BtnStatus> = new BehaviorSubject<BtnStatus>(CALENDAR_BTN_INIT_VALUE);
 	private updatedPhone: BehaviorSubject<string> = new BehaviorSubject<string>('');
@@ -75,6 +74,9 @@ export class WizardComponent implements OnInit, OnDestroy {
 	selectedMonth$: Observable<string | null> = new Observable<string>();
 	prevWeekBtnDisabled$: Observable<boolean> = new Observable<boolean>();
 	selectedSchedule$: Observable<Schedule | null> = new Observable<Schedule>();
+	selectedScheduleTime$: Observable<string | null> = new Observable<string>();
+	selectedMaster$: Observable<MasterDto | null> = new Observable<MasterDto>();
+	selectedDay$: Observable<string | null> = new Observable<string>();
 
 	constructor(private router: Router, private apiService: ApiService, private store: Store) {}
 
@@ -91,6 +93,9 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.selectedMonth$ = this.store.select(WizardFeature.selectSelectedMonth);
 		this.prevWeekBtnDisabled$ = this.store.select(WizardFeature.selectPrevWeekBtnDisabled);
 		this.selectedSchedule$ = this.store.select(WizardFeature.selectSelectedSchedule);
+		this.selectedScheduleTime$ = this.store.select(selectScheduleSelectedTime);
+		this.selectedMaster$ = this.store.select(WizardFeature.selectSelectedMaster);
+		this.selectedDay$ = this.store.select(WizardFeature.selectSelectedDay);
 	}
 
 	onFormChange(observable: Observable<ClientConfirmStep>): void {
@@ -122,6 +127,10 @@ export class WizardComponent implements OnInit, OnDestroy {
 
 	onServiceChange(value: ServiceDto): void {
 		this.store.dispatch(setSelectedService({ payload: value }));
+	}
+
+	timeChange(schedule: Schedule) {
+		this.store.dispatch(setSelectedSchedule({ payload: schedule }));
 	}
 
 	onWeekChange(event: CalendarChangeWeekEnum): void {

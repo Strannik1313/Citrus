@@ -9,9 +9,9 @@
 				class="cell"
 				id="{{ date.date }}"
 				appAddClass
-				[selectedDay]="preselectedDate"
 				[day]="date"
-				(onDateClick)="onDateClick($event)">
+				[class.active]='preselectedDate === date.date'
+				(click)="onDateClick(date)">
 				<p class="day">{{ date.date | date: 'EEEEE' }}</p>
 				<p class="date">{{ date.date | date: 'dd.MM' }}</p>
 			</td>

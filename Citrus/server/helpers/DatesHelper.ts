@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 import { WeekDto } from '@dto/WeekDto';
-import { CalendarDto } from '@dto/CalendarDto';
+import { ScheduleDto } from '@dto/ScheduleDto';
 
 export class DatesHelper {
 	static getWeek(startOfWeek?: string): WeekDto[] {
@@ -15,11 +15,11 @@ export class DatesHelper {
 		return week;
 	}
 
-	static getWeekDto(week: WeekDto[], masterTimes: CalendarDto): WeekDto[] {
+	static getWeekDto(week: WeekDto[], masterTimes: ScheduleDto): WeekDto[] {
 		let weekDto: WeekDto[] = week;
-		for (let i = 0; i < masterTimes.freeTimes.length; i++) {
+		for (let i = 0; i < masterTimes.freetimes.length; i++) {
 			weekDto = week.map(day => {
-				if (dayjs(day.date).isSame(masterTimes.freeTimes[i].toDate(), 'day')) {
+				if (dayjs(day.date).isSame(masterTimes.freetimes[i], 'day')) {
 					return {
 						...day,
 						mastersId: [...day.mastersId, masterTimes.masterId],

@@ -1,13 +1,4 @@
-import {
-	Component,
-	ChangeDetectionStrategy,
-	Input,
-	Output,
-	EventEmitter,
-	OnChanges,
-	SimpleChanges,
-	ChangeDetectorRef,
-} from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
 	selector: 'app-timepicker',
@@ -15,46 +6,25 @@ import {
 	styleUrls: ['./timepicker.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TimepickerComponent implements OnChanges {
-	@Input() time: Array<string> = [];
-	@Output() onTimeChange: EventEmitter<string> = new EventEmitter();
-	public buttonOpen = false;
-	public content: Array<string> = [];
+export class TimepickerComponent {
+	@Input() time: Array<string[]> = [];
+	@Input() selectedTime: string | null = '';
+	@Output() onTimeSelected: EventEmitter<string> = new EventEmitter();
+	openedPanelNumber: number | null = null;
 
-	constructor(private cdr: ChangeDetectorRef) {}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		this.content = changes.time?.currentValue ?? [];
+	timeSelected(time: string) {
+		this.onTimeSelected.emit(time);
+		this.openedPanelNumber = null;
+	}
+	onBackdropClick() {
+		this.openedPanelNumber = null;
 	}
 
-	onTimeClick(time: string): void {
-		this.buttonOpen = !this.buttonOpen;
-		this.onTimeChange.emit(time);
+	timeBtnClick(index: number) {
+		this.openedPanelNumber = index;
 	}
 
-	onNextTimeClick(): void {
-		this.content = this.content.map((item, index, array) => {
-			let count = index;
-			count++;
-			if (count > this.content.length - 1) {
-				count = 0;
-			}
-			return this.content[count];
-		});
-		this.cdr.markForCheck();
-		this.onTimeChange.emit(this.content[0]);
-	}
-
-	onPrevTimeClick(): void {
-		this.content = this.content.map((item, index, array) => {
-			let count = index;
-			count--;
-			if (count < 0) {
-				count = this.content.length - 1;
-			}
-			return this.content[count];
-		});
-		this.cdr.markForCheck();
-		this.onTimeChange.emit(this.content[0]);
+	trackByFn(index: number, item: string): string {
+		return item;
 	}
 }

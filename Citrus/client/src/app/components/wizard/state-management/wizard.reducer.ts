@@ -1,4 +1,4 @@
-import { createFeature, createReducer, on } from '@ngrx/store';
+import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
 	changeWizardStep,
 	resetSelectedService,
@@ -15,11 +15,13 @@ import {
 	setMonths,
 	setSelectedMonth,
 	setPrevWeekBtnDisabled,
+	resetWizardDateChoiceStepState,
 } from '@components/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { Schedule } from '@models/Schedule';
+import equal from 'fast-deep-equal/es6';
 
 export const wizardFeatureKey = 'wizard';
 
@@ -72,10 +74,12 @@ export const WizardFeature = createFeature({
 			};
 		}),
 		on(setServices, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				services: payload,
-			};
+			return equal(state, payload)
+				? state
+				: {
+						...state,
+						services: payload,
+				  };
 		}),
 		on(setFwdBtnDisabled, (state, { payload }): WizardReducer => {
 			return {
@@ -84,10 +88,12 @@ export const WizardFeature = createFeature({
 			};
 		}),
 		on(setSelectedService, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				selectedService: payload,
-			};
+			return equal(state.selectedService, payload)
+				? state
+				: {
+						...state,
+						selectedService: payload,
+				  };
 		}),
 		on(resetSelectedService, (state): WizardReducer => {
 			return {
@@ -96,16 +102,20 @@ export const WizardFeature = createFeature({
 			};
 		}),
 		on(setMasters, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				masters: payload,
-			};
+			return equal(state.masters, payload)
+				? state
+				: {
+						...state,
+						masters: payload,
+				  };
 		}),
 		on(setDates, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				dates: payload,
-			};
+			return equal(state.dates, payload)
+				? state
+				: {
+						...state,
+						dates: payload,
+				  };
 		}),
 		on(setSelectedDay, (state, { payload }): WizardReducer => {
 			return {
@@ -114,28 +124,36 @@ export const WizardFeature = createFeature({
 			};
 		}),
 		on(setSchedules, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				schedules: payload,
-			};
+			return equal(state.schedules, payload)
+				? state
+				: {
+						...state,
+						schedules: payload,
+				  };
 		}),
 		on(setSelectedSchedule, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				selectedSchedule: payload,
-			};
+			return equal(state.selectedSchedule, payload)
+				? state
+				: {
+						...state,
+						selectedSchedule: payload,
+				  };
 		}),
 		on(setSelectedMaster, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				selectedMaster: payload,
-			};
+			return equal(state.selectedMaster, payload)
+				? state
+				: {
+						...state,
+						selectedMaster: payload,
+				  };
 		}),
 		on(setMonths, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				months: payload.months,
-			};
+			return equal(state.months, payload)
+				? state
+				: {
+						...state,
+						months: payload.months,
+				  };
 		}),
 		on(setSelectedMonth, (state, { payload }): WizardReducer => {
 			return {
@@ -147,6 +165,16 @@ export const WizardFeature = createFeature({
 			return {
 				...state,
 				prevWeekBtnDisabled: payload,
+			};
+		}),
+		on(resetWizardDateChoiceStepState, (state): WizardReducer => {
+			return {
+				...state,
+				selectedMonth: null,
+				selectedDay: null,
+				selectedMaster: null,
+				selectedSchedule: null,
+				schedules: null,
 			};
 		}),
 	),
@@ -170,3 +198,8 @@ export const {
 	selectSelectedMonth,
 	selectPrevWeekBtnDisabled,
 } = WizardFeature;
+
+export const selectScheduleSelectedTime = createSelector(
+	WizardFeature.selectSelectedSchedule,
+	schedule => schedule?.preOrder ?? null,
+);

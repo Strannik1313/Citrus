@@ -4,6 +4,7 @@
 			<app-filter-dropdown
 				(onFilterChange)='onMasterFilterChange($event)'
 				[items]='masters'
+				[selectedItem]='selectedMaster'
 				[label]='"Выберите мастера"'
 			></app-filter-dropdown>
 		</div>
@@ -22,14 +23,16 @@
 			(onWeekChange)="weekChange($event)"
 			[prevWeekBtnDisabled]="prevWeekBtnDisabled"
 			[dates]="dates"
-			[preselectedDate]="client?.dateOrder ?? selectedDay">
+			[preselectedDate]="selectedDay">
 		</app-calendar>
 	</div>
 	<div class="timesheets">
 		<app-schedule
 			(onScheduleSelected)='scheduleSelected($event)'
+			(onTimeChange)='timeChange($event)'
 			[schedules]="schedules"
-			[selectedSchedule]='selectedSchedule'>
+			[selectedSchedule]='selectedSchedule'
+			[selectedTime]='selectedTime'>
 		</app-schedule>
 	</div>
 </div>
