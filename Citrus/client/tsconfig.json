@@ -11,7 +11,7 @@
 			"@modules/*": ["./src/app/modules/*"],
 			"@pipes/*": ["./src/app/pipes/*"],
 			"@services/*": ["./src/app/services/*"],
-			"@shared/*": ["./src/app/shared/*"],
+			"@shared/*": ["./src/app/components/shared/*"],
 			"@constants/*": ["./src/app/constants/*"],
 			"@directives/*": ["./src/app/directives/*"],
 			"@environments/*": ["./src/environments/*"],
