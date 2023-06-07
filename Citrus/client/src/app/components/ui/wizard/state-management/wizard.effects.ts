@@ -121,7 +121,7 @@ export class WizardEffects {
 		return this.actions$.pipe(
 			ofType(WizardActions.ResetWizardStepAction),
 			mergeMap(() => {
-				this.router.navigate([NAVIGATE_ROUTES.home]);
+				this.router.navigate([NAVIGATE_ROUTES.HOME]);
 				return [resetSelectedService(), setFwdBtnDisabled({ payload: true })];
 			}),
 		);

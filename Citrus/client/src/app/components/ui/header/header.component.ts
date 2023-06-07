@@ -8,5 +8,5 @@ import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	public homeLink: string = NAVIGATE_ROUTES.home;
+	public homeLink: string = NAVIGATE_ROUTES.HOME;
 }

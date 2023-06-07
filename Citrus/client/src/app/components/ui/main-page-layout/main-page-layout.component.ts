@@ -11,6 +11,6 @@ import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
 export class MainPageLayoutComponent {
 	constructor(private router: Router) {}
 	startProcessBtnClick() {
-		this.router.navigate([NAVIGATE_ROUTES.wizard]);
+		this.router.navigate([NAVIGATE_ROUTES.WIZARD]);
 	}
 }
