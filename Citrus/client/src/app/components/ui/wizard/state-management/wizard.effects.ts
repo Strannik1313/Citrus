@@ -28,16 +28,16 @@ import {
 	setServices,
 	TypedActionWithPayload,
 	WizardActions,
-} from '@components/wizard/state-management/wizard.actions';
+} from '@components/ui/wizard/state-management/wizard.actions';
 import { debounce, interval, map, mergeMap, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { WizardFeature } from '@components/wizard/state-management/wizard.reducer';
-import { WizardMaxStep } from '@components/wizard/constants/WizardMaxStep';
+import { WizardFeature } from '@components/ui/wizard/state-management/wizard.reducer';
+import { WizardMaxStep } from '@components/ui/wizard/constants/WizardMaxStep';
 import { ServicesService } from '@api/ServicesService';
 import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
 import { Router } from '@angular/router';
 import { MastersService } from '@api/MastersService';
-import { WizardStepperEnum } from '@components/wizard/wizard.component';
+import { WizardStepperEnum } from '@components/ui/wizard/wizard.component';
 import { CalendarService } from '@api/CalendarService';
 import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';

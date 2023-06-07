@@ -20,7 +20,7 @@ import {
 	resetSelectedMonth,
 	resetSelectedSchedule,
 	resetSchedules,
-} from '@components/wizard/state-management/wizard.actions';
+} from '@components/ui/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';

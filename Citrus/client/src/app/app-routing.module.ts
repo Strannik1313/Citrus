@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { MainPageLayoutWrapperComponent } from '@components/main-page-layout-wrapper/main-page-layout-wrapper.component';
+import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MainPageLayoutWrapperComponent,
+		component: MainPageLayoutComponent,
 		pathMatch: 'full',
 	},
 	{
 		path: 'deal',
-		loadChildren: () => import('@components/wizard/wizard.module').then(m => m.WizardModule),
+		loadChildren: () => import('@components/ui/wizard/wizard.module').then(m => m.WizardModule),
 	},
 	// {
 	// 	path: 'register',

@@ -7,7 +7,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { selectScheduleSelectedTime, WizardFeature } from '@components/wizard/state-management/wizard.reducer';
+import { selectScheduleSelectedTime, WizardFeature } from '@components/ui/wizard/state-management/wizard.reducer';
 import {
 	decrementWizardStep,
 	getNextWeek,
@@ -19,7 +19,7 @@ import {
 	setSelectedMonth,
 	setSelectedSchedule,
 	setSelectedService,
-} from '@components/wizard/state-management/wizard.actions';
+} from '@components/ui/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@models/Schedule';

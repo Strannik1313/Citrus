@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
 
 @Component({
-	selector: 'app-header-wrapper',
-	templateUrl: './header-wrapper.component.html',
-	styleUrls: ['./header-wrapper.component.scss'],
+	selector: 'app-header',
+	templateUrl: './header.component.html',
+	styleUrls: ['./header.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderWrapperComponent {
+export class HeaderComponent {
 	public homeLink: string = NAVIGATE_ROUTES.home;
 }

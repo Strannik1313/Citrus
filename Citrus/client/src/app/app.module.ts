@@ -6,9 +6,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { AppComponent } from 'src/app/app.component';
-import { MainPageLayoutComponent } from '@components/ui/main-page-ui/main-page-layout.component';
-import { HeaderWrapperComponent } from '@components/header-wrapper/header-wrapper.component';
-import { MainPageLayoutWrapperComponent } from '@components/main-page-layout-wrapper/main-page-layout-wrapper.component';
+import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
+import { HeaderComponent } from '@components/ui/header/header.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
 import { MatIconModule } from '@angular/material/icon';
 import { StoreModule } from '@ngrx/store';
@@ -19,7 +18,7 @@ import { environment } from '@environments/environment';
 registerLocaleData(localeRu);
 
 @NgModule({
-	declarations: [AppComponent, MainPageLayoutComponent, HeaderWrapperComponent, MainPageLayoutWrapperComponent],
+	declarations: [AppComponent, MainPageLayoutComponent, HeaderComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
