@@ -1,18 +1,19 @@
 import {
-	Component,
 	ChangeDetectionStrategy,
-	Input,
-	Output,
+	Component,
 	EventEmitter,
-	OnInit,
+	Input,
 	OnChanges,
+	OnInit,
+	Output,
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormControlStatus, FormGroup, Validators } from '@angular/forms';
-import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { Client, ClientConfirmStep } from '@models/client';
-import { StorageService } from '@services/storage.service';
+import { ClientConfirmStep } from '@models/client';
 import { Observable } from 'rxjs';
+import { MasterDto } from '@models/MasterDto';
+import { ServiceDto } from '@models/ServiceDto';
+import { Schedule } from '@models/Schedule';
 
 @Component({
 	selector: 'app-wizard-confirm-step',
@@ -21,8 +22,9 @@ import { Observable } from 'rxjs';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardConfirmStepComponent implements OnInit, OnChanges {
-	@Input() client: Client | null = CLIENT_INIT_VALUE;
-	@Input() updatedPhone: string | null = '';
+	@Input() selectedMaster: MasterDto | null = null;
+	@Input() selectedService: ServiceDto | null = null;
+	@Input() selectedSchedule: Schedule | null = null;
 	@Output() onFormChange: EventEmitter<Observable<ClientConfirmStep>> = new EventEmitter();
 	@Output() onFormStatusChange: EventEmitter<Observable<FormControlStatus>> = new EventEmitter();
 	confirmForm = new FormGroup({
@@ -35,9 +37,6 @@ export class WizardConfirmStepComponent implements OnInit, OnChanges {
 		email: new FormControl('', Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')),
 		comments: new FormControl(''),
 	});
-	clientSurname = new FormControl('');
-
-	constructor(private storage: StorageService) {}
 
 	ngOnInit(): void {
 		this.onFormChange.emit(this.confirmForm.valueChanges);

@@ -66,8 +66,9 @@
 			</app-wizard-date-choice-step>
 			<app-wizard-confirm-step
 				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"
-				[client]="data.client"
-				[updatedPhone]="data.updatedPhone"
+				[selectedMaster]='data.selectedMaster'
+				[selectedService]='data.selectedService'
+				[selectedSchedule]='data.selectedSchedule'
 				(onFormChange)="onFormChange($event)"
 				(onFormStatusChange)="onFormStatusChange($event)">
 			</app-wizard-confirm-step>
