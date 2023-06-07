@@ -1,5 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
-import { StorageService } from '@services/storage.service';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 @Component({
 	selector: 'app-main-page-layout-wrapper',
@@ -7,9 +6,4 @@ import { StorageService } from '@services/storage.service';
 	styleUrls: ['./main-page-layout-wrapper.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainPageLayoutWrapperComponent implements OnInit {
-	constructor(private storage: StorageService) {}
-	ngOnInit(): void {
-		this.storage.setAccessMap('/');
-	}
-}
+export class MainPageLayoutWrapperComponent {}

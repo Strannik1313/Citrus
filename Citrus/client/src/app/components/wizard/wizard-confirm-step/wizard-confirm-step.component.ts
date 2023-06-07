@@ -9,7 +9,6 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { FormControl, FormControlStatus, FormGroup, Validators } from '@angular/forms';
-import { ClientConfirmStep } from '@models/client';
 import { Observable } from 'rxjs';
 import { MasterDto } from '@models/MasterDto';
 import { ServiceDto } from '@models/ServiceDto';
@@ -25,7 +24,7 @@ export class WizardConfirmStepComponent implements OnInit, OnChanges {
 	@Input() selectedMaster: MasterDto | null = null;
 	@Input() selectedService: ServiceDto | null = null;
 	@Input() selectedSchedule: Schedule | null = null;
-	@Output() onFormChange: EventEmitter<Observable<ClientConfirmStep>> = new EventEmitter();
+	@Output() onFormChange: EventEmitter<Observable<any>> = new EventEmitter();
 	@Output() onFormStatusChange: EventEmitter<Observable<FormControlStatus>> = new EventEmitter();
 	confirmForm = new FormGroup({
 		surname: new FormControl('', [Validators.required, Validators.pattern('[А-ЯЁ][а-яё]{1,}')]),

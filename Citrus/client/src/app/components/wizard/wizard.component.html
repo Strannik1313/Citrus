@@ -3,10 +3,7 @@
 		services: services$ | async,
 		masters: masters$ | async,
 		dates: dates$ | async,
-		btnConf: calendarBtnConf$ | async,
-		client: client$ | async,
 		schedules: schedules$ | async,
-		isValid: isClientValid$ | async,
 		stepsQuantity: stepsQuantity$ | async,
 		updatedPhone: updatedPhone$ | async,
 		fwdBtnDisabled: (fwdBtnDisabled$ | async)!,
@@ -26,14 +23,14 @@
 			[stepsQuantity]="data.stepsQuantity"></app-stepper>
 		<div class="button__container">
 			<button (click)="onBtnClick(false)" mat-button color="primary">{{
-				backBtnLabels
+				BUTTON_LABELS.PREV_BTN_LABEL
 			}}</button>
 			<button
 				mat-button
 				color="primary"
         [disabled]="data.fwdBtnDisabled"
 				(click)="onBtnClick(true)"
-				>{{ nextBtnLabel }}
+				>{{ BUTTON_LABELS.NEXT_BTN_LABEL }}
 			</button>
 		</div>
 		<div [ngSwitch]="data.currentStep">
@@ -57,7 +54,6 @@
 				[prevWeekBtnDisabled]="data.prevWeekBtnDisabled"
 				[masters]="data.masters"
 				[dates]="data.dates"
-				[client]="data.client"
 				[selectedDay]="data.selectedDay"
 				[selectedMonth]="data.selectedMonth"
 				[selectedTime]='data.selectedScheduleTime'

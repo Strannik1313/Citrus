@@ -1,14 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { BTN_LABELS } from '@constants/btn-labels';
-import { Client, ClientConfirmStep } from '@models/client';
-import { CLIENT_INIT_CONFIRM, CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { ApiService } from '@services/api.service';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
-import { WizardHelper } from '@components/wizard/wizard-helper';
-import { BtnStatus, CALENDAR_BTN_INIT_VALUE } from '@models/buttons-status';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
@@ -16,19 +10,20 @@ import { Store } from '@ngrx/store';
 import { selectScheduleSelectedTime, WizardFeature } from '@components/wizard/state-management/wizard.reducer';
 import {
 	decrementWizardStep,
-	getServices,
-	incrementWizardStep,
-	setSelectedSchedule,
-	setSelectedDay,
-	setSelectedService,
-	setSelectedMaster,
-	setSelectedMonth,
 	getNextWeek,
 	getPrevWeek,
+	getServices,
+	incrementWizardStep,
+	setSelectedDay,
+	setSelectedMaster,
+	setSelectedMonth,
+	setSelectedSchedule,
+	setSelectedService,
 } from '@components/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@models/Schedule';
+import { BUTTON_LABELS } from '@constants/ButtonLabels';
 
 dayjs.locale('ru');
 
@@ -49,18 +44,10 @@ export enum WizardStepperEnum {
 })
 export class WizardComponent implements OnInit, OnDestroy {
 	public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
-	public nextBtnLabel: string = BTN_LABELS.next;
-	public backBtnLabels: string = BTN_LABELS.back;
 	public stepsQuantity: BehaviorSubject<Array<number>> = new BehaviorSubject(STEPS_QUATITY);
-	private client: BehaviorSubject<Client> = new BehaviorSubject<Client>(CLIENT_INIT_VALUE);
-	private isClientValid: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-	private calendarBtnConf: BehaviorSubject<BtnStatus> = new BehaviorSubject<BtnStatus>(CALENDAR_BTN_INIT_VALUE);
+	public BUTTON_LABELS: typeof BUTTON_LABELS = BUTTON_LABELS;
 	private updatedPhone: BehaviorSubject<string> = new BehaviorSubject<string>('');
-	private confirmFormValue: ClientConfirmStep = CLIENT_INIT_CONFIRM;
 	private subscription: Subscription = new Subscription();
-	calendarBtnConf$ = this.calendarBtnConf.asObservable();
-	isClientValid$ = this.isClientValid.asObservable();
-	client$ = this.client.asObservable();
 	stepsQuantity$ = this.stepsQuantity.asObservable();
 	updatedPhone$ = this.updatedPhone.asObservable();
 	currentStep$: Observable<number> = new Observable<number>();
@@ -78,7 +65,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	selectedMaster$: Observable<MasterDto | null> = new Observable<MasterDto>();
 	selectedDay$: Observable<string | null> = new Observable<string>();
 
-	constructor(private router: Router, private apiService: ApiService, private store: Store) {}
+	constructor(private router: Router, private store: Store) {}
 
 	ngOnInit() {
 		this.store.dispatch(getServices({ payload: null }));
@@ -98,31 +85,12 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.selectedDay$ = this.store.select(WizardFeature.selectSelectedDay);
 	}
 
-	onFormChange(observable: Observable<ClientConfirmStep>): void {
-		this.subscription.add(
-			observable.subscribe(formValue => {
-				this.updatedPhone.next(WizardHelper.updatePhoneNumber(formValue.phoneNumber));
-				this.confirmFormValue = formValue;
-			}),
-		);
+	onFormChange(observable: any): void {
+		console.log(observable);
 	}
 
 	onFormStatusChange(observable: Observable<FormControlStatus>): void {
-		this.subscription.add(
-			observable.subscribe(status => {
-				if (status === 'VALID') {
-					this.client.next({
-						...this.client.value,
-						...this.confirmFormValue,
-					});
-				} else {
-					this.client.next({
-						...this.client.value,
-						...CLIENT_INIT_CONFIRM,
-					});
-				}
-			}),
-		);
+		console.log(observable);
 	}
 
 	onServiceChange(value: ServiceDto): void {
@@ -146,25 +114,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 			default:
 				throw Error('Данное значение CalendarChangeWeekEnum не обработано в switch-case');
 		}
-		// this.selectedDay = null;
-		// this.client.next({
-		// 	...this.client.value,
-		// 	dateOrder: null,
-		// });
-		// this.startWeekDay = dayjs(event.startDay).add(event.increase, 'week').toString();
-		// if (this.client.value.serviceId !== null) {
-		// 	this.dates$ = this.apiService
-		// 		.getDates(
-		// 			this.client.value.serviceId,
-		// 			dayjs(event.startDay).add(event.increase, 'week').toString(),
-		// 			this.client.value.masterId,
-		// 		)
-		// 		.pipe(
-		// 			tap(dates => {
-		// 				this.calendarBtnConf.next(WizardHelper.getCalendarBtnConf(dates[0].date, this.selectedMonth));
-		// 			}),
-		// 		);
-		// }
 	}
 
 	onMasterChange(master: MasterDto | null) {
@@ -178,10 +127,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 	onMonthChange(month: string | null): void {
 		this.store.dispatch(setSelectedMonth({ payload: month }));
 	}
-
-	// onTimeChange(choisenDate: ScheduleDto): void {
-	// 	this.store.dispatch(setSelectedSchedule({ payload: choisenDate }));
-	// }
 
 	onBtnClick(isNextStep: boolean): void {
 		if (isNextStep) {

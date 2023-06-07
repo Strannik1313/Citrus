@@ -1,1 +1,0 @@
-export const MAX_SERVICE_DURATION = 120;

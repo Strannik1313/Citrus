@@ -1,12 +1,5 @@
 <div class="document">
 	<app-header-wrapper class="header"></app-header-wrapper>
-	<!-- <app-dialog-window
-		*ngIf="isDialogActive"
-		(destroyWindow)="onButtonClick($event)"
-		[textData]="dialogTextData"
-		[type]="dialogType">
-	</app-dialog-window> -->
-	<app-spinner *ngIf="isLoading$ | async"></app-spinner>
 	<div class="content">
 		<router-outlet></router-outlet>
 	</div>

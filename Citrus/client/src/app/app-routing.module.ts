@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainPageLayoutWrapperComponent } from '@components/main-page-layout-wrapper/main-page-layout-wrapper.component';
-import { NavigateAccess } from '@services/navigate-access.service';
 
 const routes: Routes = [
 	{
@@ -11,19 +10,18 @@ const routes: Routes = [
 	},
 	{
 		path: 'deal',
-		loadChildren: () => import('@modules/wizard/wizard.module').then(m => m.WizardModule),
-		canActivate: [NavigateAccess],
+		loadChildren: () => import('@components/wizard/wizard.module').then(m => m.WizardModule),
 	},
-	{
-		path: 'register',
-		loadChildren: () => import('@modules/register-page/register-page.module').then(m => m.RegisterPageModule),
-		canActivate: [NavigateAccess],
-	},
-	{
-		path: 'login',
-		loadChildren: () => import('@modules/login-page/login-page.module').then(m => m.LoginPageModule),
-		canActivate: [NavigateAccess],
-	},
+	// {
+	// 	path: 'register',
+	// 	loadChildren: () => import('@modules/register-page/register-page.module').then(m => m.RegisterPageModule),
+	// 	canActivate: [NavigateAccess],
+	// },
+	// {
+	// 	path: 'login',
+	// 	loadChildren: () => import('@modules/login-page/login-page.module').then(m => m.LoginPageModule),
+	// 	canActivate: [NavigateAccess],
+	// },
 	{
 		path: '**',
 		redirectTo: '',

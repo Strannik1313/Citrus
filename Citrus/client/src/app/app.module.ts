@@ -10,12 +10,7 @@ import { MainPageLayoutComponent } from '@components/ui/main-page-ui/main-page-l
 import { HeaderWrapperComponent } from '@components/header-wrapper/header-wrapper.component';
 import { MainPageLayoutWrapperComponent } from '@components/main-page-layout-wrapper/main-page-layout-wrapper.component';
 import { AppRoutingModule } from 'src/app/app-routing.module';
-import { AppButtonGroupModule } from '@shared/app-button-group/app-button-group.module';
-import { DialogWindowModule } from '@shared/dialog-window/dialog-window.module';
-import { SpinnerModule } from '@shared/spinner/spinner.module';
-import { httpInterceptorProviders } from '@intercepters/http-intercepter-providers';
 import { MatIconModule } from '@angular/material/icon';
-import { SPINNER_DURATION, SPINNER_TIME } from 'src/app/InjectionsToken/InjectionToken';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
@@ -31,10 +26,7 @@ registerLocaleData(localeRu);
 		MatIconModule,
 		HttpClientModule,
 		BrowserAnimationsModule,
-		AppButtonGroupModule,
 		MatButtonModule,
-		DialogWindowModule,
-		SpinnerModule,
 		StoreModule.forRoot({}),
 		EffectsModule.forRoot([]),
 		StoreDevtoolsModule.instrument({
@@ -42,11 +34,7 @@ registerLocaleData(localeRu);
 			logOnly: environment.production,
 		}),
 	],
-	providers: [
-		httpInterceptorProviders,
-		{ provide: LOCALE_ID, useValue: 'ru' },
-		{ provide: SPINNER_TIME, useValue: SPINNER_DURATION },
-	],
+	providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,6 +1,4 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { CLIENT_INIT_VALUE } from '@constants/client-init-value';
-import { Client } from '@models/client';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { MasterDto } from '@models/MasterDto';
 import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
@@ -14,7 +12,6 @@ import { Schedule } from '@models/Schedule';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class WizardDateChoiceStepComponent {
-	@Input() client: Client | null = CLIENT_INIT_VALUE;
 	@Input() masters: Array<MasterDto> | null = [];
 	@Input() months: Array<string> | null = [];
 	@Input() dates: Array<CalendarDatesDto> | null = [];

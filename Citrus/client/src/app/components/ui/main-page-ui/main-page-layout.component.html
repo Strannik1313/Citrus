@@ -9,7 +9,8 @@
 		<p>Удобный способ самостоятельного бронирования, доступный 24/7.</p>
 	</div>
 	<div class="content__custom__button">
-		<app-button-wrapper [label]="'Записаться'" [url]="'/deal'">
-		</app-button-wrapper>
+		<button mat-raised-button (click)='startProcessBtnClick()'>
+			Записаться
+		</button>
 	</div>
 </div>

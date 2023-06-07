@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
 
 @Component({
 	selector: 'app-main-page-layout',
@@ -6,4 +8,9 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 	styleUrls: ['./main-page-layout.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MainPageLayoutComponent {}
+export class MainPageLayoutComponent {
+	constructor(private router: Router) {}
+	startProcessBtnClick() {
+		this.router.navigate([NAVIGATE_ROUTES.wizard]);
+	}
+}
