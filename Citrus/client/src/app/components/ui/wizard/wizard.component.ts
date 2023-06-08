@@ -7,7 +7,11 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
 import { FormControlStatus } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { selectScheduleSelectedTime, WizardFeature } from '@components/ui/wizard/state-management/wizard.reducer';
+import {
+	selectComponentsIsLoadingState,
+	selectScheduleSelectedTime,
+	WizardFeature,
+} from '@components/ui/wizard/state-management/wizard.reducer';
 import {
 	decrementWizardStep,
 	getNextWeek,
@@ -24,6 +28,7 @@ import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@models/Schedule';
 import { BUTTON_LABELS } from '@constants/ButtonLabels';
+import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
 
 dayjs.locale('ru');
 
@@ -64,11 +69,11 @@ export class WizardComponent implements OnInit, OnDestroy {
 	selectedScheduleTime$: Observable<string | null> = new Observable<string>();
 	selectedMaster$: Observable<MasterDto | null> = new Observable<MasterDto>();
 	selectedDay$: Observable<string | null> = new Observable<string>();
+	componentsLoadingState$: Observable<ComponentsLoadingState | null> = new Observable<ComponentsLoadingState>();
 
 	constructor(private router: Router, private store: Store) {}
 
 	ngOnInit() {
-		this.store.dispatch(getServices({ payload: null }));
 		this.currentStep$ = this.store.select(WizardFeature.selectStep);
 		this.services$ = this.store.select(WizardFeature.selectServices);
 		this.fwdBtnDisabled$ = this.store.select(WizardFeature.selectFwdBtnDisabled);
@@ -83,6 +88,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.selectedScheduleTime$ = this.store.select(selectScheduleSelectedTime);
 		this.selectedMaster$ = this.store.select(WizardFeature.selectSelectedMaster);
 		this.selectedDay$ = this.store.select(WizardFeature.selectSelectedDay);
+		this.componentsLoadingState$ = this.store.select(selectComponentsIsLoadingState);
 	}
 
 	onFormChange(observable: any): void {

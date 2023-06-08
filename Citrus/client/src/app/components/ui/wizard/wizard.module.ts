@@ -24,6 +24,7 @@ import { WizardFeature } from '@components/ui/wizard/state-management/wizard.red
 import { EffectsModule } from '@ngrx/effects';
 import { WizardEffects } from '@components/ui/wizard/state-management/wizard.effects';
 import { FilterDropdownModule } from '@shared/filter-dropdown/filter-dropdown.module';
+import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 
 @NgModule({
 	declarations: [
@@ -48,6 +49,7 @@ import { FilterDropdownModule } from '@shared/filter-dropdown/filter-dropdown.mo
 		MonthFilterModule,
 		DirectivesModule,
 		ReactiveFormsModule,
+		SpinnerModule,
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
 		StoreModule.forFeature(WizardFeature.name, WizardFeature.reducer),
 		EffectsModule.forFeature([WizardEffects]),

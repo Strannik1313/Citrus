@@ -1,35 +1,42 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
 	changeWizardStep,
+	resetSchedules,
+	resetSelectedDay,
+	resetSelectedMaster,
+	resetSelectedMonth,
+	resetSelectedSchedule,
 	resetSelectedService,
 	resetWizardStep,
-	setSelectedSchedule,
+	setCalendarComponentLoading,
 	setDates,
 	setFwdBtnDisabled,
 	setMasters,
+	setMastersFilterComponentLoading,
+	setMonths,
+	setMonthsFilterComponentLoading,
+	setPrevWeekBtnDisabled,
 	setSchedules,
+	setSchedulesComponentLoading,
 	setSelectedDay,
+	setSelectedMaster,
+	setSelectedMonth,
+	setSelectedSchedule,
 	setSelectedService,
 	setServices,
-	setSelectedMaster,
-	setMonths,
-	setSelectedMonth,
-	setPrevWeekBtnDisabled,
-	resetSelectedMaster,
-	resetSelectedDay,
-	resetSelectedMonth,
-	resetSelectedSchedule,
-	resetSchedules,
+	setServicesListLoading,
 } from '@components/ui/wizard/state-management/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { Schedule } from '@models/Schedule';
 import equal from 'fast-deep-equal/es6';
+import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
 
 export const wizardFeatureKey = 'wizard';
 
 export interface WizardReducer {
+	isWizardAvailable: boolean;
 	step: number;
 	fwdBtnDisabled: boolean;
 	services: ServiceDto[];
@@ -43,10 +50,16 @@ export interface WizardReducer {
 	months: string[] | null;
 	selectedMonth: string | null;
 	prevWeekBtnDisabled: boolean;
+	isServicesListLoading: boolean;
+	isMastersFilterLoading: boolean;
+	isMonthsFilterLoading: boolean;
+	isCalendarLoading: boolean;
+	isSchedulesLoading: boolean;
 }
 
 export const wizardInitialState: WizardReducer = {
-	step: 1,
+	isWizardAvailable: false,
+	step: 0,
 	fwdBtnDisabled: true,
 	services: [],
 	selectedService: null,
@@ -59,6 +72,11 @@ export const wizardInitialState: WizardReducer = {
 	months: null,
 	selectedMonth: null,
 	prevWeekBtnDisabled: false,
+	isServicesListLoading: false,
+	isMastersFilterLoading: false,
+	isMonthsFilterLoading: false,
+	isCalendarLoading: false,
+	isSchedulesLoading: false,
 };
 
 export const WizardFeature = createFeature({
@@ -71,10 +89,18 @@ export const WizardFeature = createFeature({
 				step: state.step + payload,
 			};
 		}),
+		on(changeWizardStep, (state): WizardReducer => {
+			return equal(state.isWizardAvailable, state.step > 0)
+				? state
+				: {
+						...state,
+						isWizardAvailable: state.step > 0,
+				  };
+		}),
 		on(resetWizardStep, (state): WizardReducer => {
 			return {
 				...state,
-				step: 1,
+				step: 0,
 			};
 		}),
 		on(setServices, (state, { payload }): WizardReducer => {
@@ -201,6 +227,46 @@ export const WizardFeature = createFeature({
 				schedules: null,
 			};
 		}),
+		on(setServicesListLoading, (state, { payload }): WizardReducer => {
+			return equal(state.isServicesListLoading, payload)
+				? state
+				: {
+						...state,
+						isServicesListLoading: payload,
+				  };
+		}),
+		on(setMastersFilterComponentLoading, (state, { payload }): WizardReducer => {
+			return equal(state.isMastersFilterLoading, payload)
+				? state
+				: {
+						...state,
+						isMastersFilterLoading: payload,
+				  };
+		}),
+		on(setMonthsFilterComponentLoading, (state, { payload }): WizardReducer => {
+			return equal(state.isMonthsFilterLoading, payload)
+				? state
+				: {
+						...state,
+						isMonthsFilterLoading: payload,
+				  };
+		}),
+		on(setCalendarComponentLoading, (state, { payload }): WizardReducer => {
+			return equal(state.isCalendarLoading, payload)
+				? state
+				: {
+						...state,
+						isCalendarLoading: payload,
+				  };
+		}),
+		on(setSchedulesComponentLoading, (state, { payload }): WizardReducer => {
+			return equal(state.isSchedulesLoading, payload)
+				? state
+				: {
+						...state,
+						isSchedulesLoading: payload,
+				  };
+		}),
 	),
 });
 
@@ -208,6 +274,7 @@ export const {
 	name,
 	reducer,
 	selectWizardState,
+	selectIsWizardAvailable,
 	selectStep,
 	selectFwdBtnDisabled,
 	selectServices,
@@ -226,4 +293,30 @@ export const {
 export const selectScheduleSelectedTime = createSelector(
 	WizardFeature.selectSelectedSchedule,
 	schedule => schedule?.preOrder ?? null,
+);
+export const selectComponentsIsLoadingState = createSelector(
+	WizardFeature.selectIsServicesListLoading,
+	WizardFeature.selectIsMastersFilterLoading,
+	WizardFeature.selectIsMonthsFilterLoading,
+	WizardFeature.selectIsCalendarLoading,
+	WizardFeature.selectIsSchedulesLoading,
+	(
+		isLoadingServiceList,
+		isLoadingMasterFilter,
+		isLoadingMonthsFilter,
+		isLoadingCalendar,
+		isLoadingSchedules,
+	): ComponentsLoadingState => {
+		return {
+			wizardFirstStep: {
+				isLoadingServiceList,
+			},
+			wizardSecondStep: {
+				isLoadingMasterFilter,
+				isLoadingMonthsFilter,
+				isLoadingCalendar,
+				isLoadingSchedules,
+			},
+		};
+	},
 );

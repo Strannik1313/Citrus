@@ -15,7 +15,8 @@
 		selectedSchedule: selectedSchedule$ | async,
 		selectedScheduleTime: selectedScheduleTime$ | async,
 		selectedMaster: selectedMaster$ | async,
-		selectedDay: selectedDay$ | async
+		selectedDay: selectedDay$ | async,
+		componentsLoadingState: componentsLoadingState$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
@@ -39,7 +40,8 @@
 				(serviceChange)="onServiceChange($event)"
         (inputChange)="onServiceStepInputChange($event)"
 				[services]="data.services"
-        [selectedService]="data.selectedService">
+        [selectedService]="data.selectedService"
+				[loadingState]='data.componentsLoadingState?.wizardFirstStep'>
 			</app-wizard-service-choice-step>
 			<app-wizard-date-choice-step
 				*ngSwitchCase="WizardStepperEnum.DATE_CHOICE"
@@ -58,7 +60,8 @@
 				[selectedMonth]="data.selectedMonth"
 				[selectedTime]='data.selectedScheduleTime'
 				[selectedSchedule]="data.selectedSchedule"
-				[selectedMaster]='data.selectedMaster'>
+				[selectedMaster]='data.selectedMaster'
+				[loadingState]='data.componentsLoadingState?.wizardSecondStep'>
 			</app-wizard-date-choice-step>
 			<app-wizard-confirm-step
 				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"
