@@ -7,7 +7,7 @@ import { By } from '@angular/platform-browser';
 @Component({
 	template: ` <li appAddActiveClass id="0">MockLi1</li>`,
 })
-export class TestComponent {}
+class TestComponent {}
 
 describe('AddActiveClassDirective', () => {
 	let fixture: ComponentFixture<TestComponent>;

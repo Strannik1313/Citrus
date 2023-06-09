@@ -16,10 +16,10 @@ import { SpinnerComponent } from '@components/ui/spinner/component/spinner.compo
 })
 export class SpinnerDirective implements OnChanges {
 	@Input() isRunning: boolean | null | undefined = false;
-	private spinner: ComponentRef<SpinnerComponent> | undefined;
-	private children: ViewRef | null | undefined;
+	spinner: ComponentRef<SpinnerComponent> | undefined;
+	children: ViewRef | null | undefined;
 
-	constructor(private viewContainerRef: ViewContainerRef, private cdr: ChangeDetectorRef, private elRef: ElementRef) {}
+	constructor(private viewContainerRef: ViewContainerRef, private cdr: ChangeDetectorRef) {}
 
 	ngOnChanges(changes: SimpleChanges): void {
 		if (changes['isRunning']?.currentValue === true) {
@@ -35,8 +35,7 @@ export class SpinnerDirective implements OnChanges {
 	renderSpinnerInHost() {
 		this.children = this.viewContainerRef.detach();
 		this.spinner = this.viewContainerRef.createComponent(SpinnerComponent);
-		this.spinner.instance.diameter = this.calculateSpinnerSize(this.elRef);
-		this.spinner.changeDetectorRef.markForCheck();
+		this.spinner.instance.diameter = this.calculateSpinnerSize(this.viewContainerRef.element);
 		this.cdr.markForCheck();
 	}
 
@@ -46,7 +45,6 @@ export class SpinnerDirective implements OnChanges {
 			if (!!this.children) {
 				this.viewContainerRef.insert(this.children);
 			}
-			this.spinner.changeDetectorRef.markForCheck();
 			this.cdr.markForCheck();
 		}
 	}
