@@ -1,17 +1,16 @@
-import { AfterViewInit, Directive, ElementRef, Input } from '@angular/core';
+import { Directive, ElementRef, Input } from '@angular/core';
 
 @Directive({
 	selector: '[appAutoscroll]',
 })
-export class AutoscrollDirective implements AfterViewInit {
-	@Input() selectedElement: number | null | undefined = null;
-	constructor(private element: ElementRef) {}
-	ngAfterViewInit(): void {
-		if (this.selectedElement?.toString() === this.element.nativeElement.id) {
+export class AutoscrollDirective {
+	@Input() set isSelected(condition: boolean | null | undefined) {
+		if (condition && this.element) {
 			this.element.nativeElement.scrollIntoView({
 				block: 'nearest',
 				behavior: 'smooth',
 			});
 		}
 	}
+	constructor(private element: ElementRef) {}
 }

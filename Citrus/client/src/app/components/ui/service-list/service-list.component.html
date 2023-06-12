@@ -1,6 +1,7 @@
 <mat-card
 	class="card__item"
 	appAutoscroll
+	[isSelected]='selectedService?.id === service?.id'
 	*ngFor="let service of services; trackBy: trackByFn; let i = index"
 	[class.active]='selectedService?.id === service.id'
 	(click)="onServiceClick(service)">
