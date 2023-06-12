@@ -47,6 +47,12 @@ export enum WizardActions {
 	ResetSelectedMonthAction = '[Wizard Page] ResetSelectedMonthAction',
 	ResetSelectedScheduleAction = '[Wizard Page] ResetSelectedScheduleAction',
 	ResetSchedulesAction = '[Wizard Page] ResetSchedulesAction',
+	SetServicesListComponentLoadingAction = '[Wizard Page] SetServicesListComponentLoadingAction',
+	SetMastersFilterComponentLoadingAction = '[Wizard Page] SetMastersFilterComponentLoadingAction',
+	SetMonthsFilterComponentLoadingAction = '[Wizard Page] SetMonthsFilterComponentLoadingAction',
+	SetCalendarComponentLoadingAction = '[Wizard Page] SetCalendarComponentLoadingAction',
+	SetSchedulesComponentLoadingAction = '[Wizard Page] SetSchedulesComponentLoadingAction',
+	LoadWizardAction = '[Wizard Page] LoadWizardAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -107,5 +113,36 @@ export const resetSelectedDay = createAction(WizardActions.ResetSelectedDayActio
 export const resetSelectedMonth = createAction(WizardActions.ResetSelectedMonthAction);
 export const resetSelectedSchedule = createAction(WizardActions.ResetSelectedScheduleAction);
 export const resetSchedules = createAction(WizardActions.ResetSchedulesAction);
+export const setServicesListLoading = createAction(
+	WizardActions.SetServicesListComponentLoadingAction,
+	props<{
+		payload: boolean;
+	}>(),
+);
+export const setMastersFilterComponentLoading = createAction(
+	WizardActions.SetMastersFilterComponentLoadingAction,
+	props<{
+		payload: boolean;
+	}>(),
+);
+export const setMonthsFilterComponentLoading = createAction(
+	WizardActions.SetMonthsFilterComponentLoadingAction,
+	props<{
+		payload: boolean;
+	}>(),
+);
+export const setCalendarComponentLoading = createAction(
+	WizardActions.SetCalendarComponentLoadingAction,
+	props<{
+		payload: boolean;
+	}>(),
+);
+export const setSchedulesComponentLoading = createAction(
+	WizardActions.SetSchedulesComponentLoadingAction,
+	props<{
+		payload: boolean;
+	}>(),
+);
+export const loadWizard = createAction(WizardActions.LoadWizardAction);
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

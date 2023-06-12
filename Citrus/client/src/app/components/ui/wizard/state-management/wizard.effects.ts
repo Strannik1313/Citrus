@@ -7,6 +7,7 @@ import {
 	getMonths,
 	getSchedules,
 	getServices,
+	incrementWizardStep,
 	initializeWizardDateChoice,
 	initializeWizardServiceChoice,
 	resetSchedules,
@@ -17,15 +18,19 @@ import {
 	resetSelectedService,
 	resetWizardDateChoiceStepState,
 	resetWizardStep,
+	setCalendarComponentLoading,
 	setDates,
 	setFwdBtnDisabled,
 	setMasters,
+	setMastersFilterComponentLoading,
 	setMonths,
+	setMonthsFilterComponentLoading,
 	setPrevWeekBtnDisabled,
 	setSchedules,
 	setSelectedMaster,
 	setSelectedMonth,
 	setServices,
+	setServicesListLoading,
 	TypedActionWithPayload,
 	WizardActions,
 } from '@components/ui/wizard/state-management/wizard.actions';
@@ -65,7 +70,11 @@ export class WizardEffects {
 			map((action: TypedActionWithPayload<string | null>) => action.payload),
 			debounce((payload: string | null) => interval(payload ? 300 : 0)),
 			switchMap((payload: string | null) =>
-				this.servicesService.getServices(payload).pipe(map(response => setServices({ payload: response }))),
+				this.servicesService
+					.getServices(payload)
+					.pipe(
+						switchMap(response => [setServices({ payload: response }), setServicesListLoading({ payload: false })]),
+					),
 			),
 		);
 	});
@@ -105,6 +114,7 @@ export class WizardEffects {
 			switchMap(([, step]) => {
 				switch (step) {
 					case WizardStepperEnum.SERVICE_CHOICE: {
+						this.router.navigate([NAVIGATE_ROUTES.WIZARD]);
 						return [initializeWizardServiceChoice(), resetWizardDateChoiceStepState()];
 					}
 					case WizardStepperEnum.DATE_CHOICE: {
@@ -152,7 +162,14 @@ export class WizardEffects {
 				};
 			}),
 			switchMap(masterResponse =>
-				this.mastersService.getMasters(masterResponse).pipe(map(masters => setMasters({ payload: masters }))),
+				this.mastersService
+					.getMasters(masterResponse)
+					.pipe(
+						switchMap(masters => [
+							setMasters({ payload: masters }),
+							setMastersFilterComponentLoading({ payload: false }),
+						]),
+					),
 			),
 		);
 	});
@@ -162,7 +179,14 @@ export class WizardEffects {
 			ofType(WizardActions.GetDatesAction),
 			map((action: TypedActionWithPayload<CalenderDatesLoaderDto>) => action.payload),
 			mergeMap(datesDto =>
-				this.calendarService.getDates(datesDto).pipe(map(calendarDates => setDates({ payload: calendarDates }))),
+				this.calendarService
+					.getDates(datesDto)
+					.pipe(
+						switchMap(calendarDates => [
+							setDates({ payload: calendarDates }),
+							setCalendarComponentLoading({ payload: false }),
+						]),
+					),
 			),
 		);
 	});
@@ -216,6 +240,7 @@ export class WizardEffects {
 										masterId: selectedMaster?.id ?? null,
 									},
 								}),
+								setCalendarComponentLoading({ payload: true }),
 							];
 						}
 						return [setSchedules({ payload: schedules })];
@@ -230,7 +255,14 @@ export class WizardEffects {
 			ofType(WizardActions.GetMonthsAction),
 			map((action: TypedActionWithPayload<MonthsLoaderDto>) => action.payload),
 			mergeMap(monthLoaderDto =>
-				this.calendarService.getMonths(monthLoaderDto).pipe(map(monthsDto => setMonths({ payload: monthsDto }))),
+				this.calendarService
+					.getMonths(monthLoaderDto)
+					.pipe(
+						switchMap(monthsDto => [
+							setMonths({ payload: monthsDto }),
+							setMonthsFilterComponentLoading({ payload: false }),
+						]),
+					),
 			),
 		);
 	});
@@ -257,7 +289,9 @@ export class WizardEffects {
 				}
 				return this.calendarService
 					.getDates({ serviceId: 1, masterId: 1 })
-					.pipe(map(datesDto => setDates({ payload: datesDto })));
+					.pipe(
+						switchMap(datesDto => [setDates({ payload: datesDto }), setCalendarComponentLoading({ payload: false })]),
+					);
 			}),
 		);
 	});
@@ -284,7 +318,9 @@ export class WizardEffects {
 				}
 				return this.calendarService
 					.getDates({ serviceId: 1, masterId: 1 })
-					.pipe(map(datesDto => setDates({ payload: datesDto })));
+					.pipe(
+						switchMap(datesDto => [setDates({ payload: datesDto }), setCalendarComponentLoading({ payload: false })]),
+					);
 			}),
 		);
 	});
@@ -336,12 +372,23 @@ export class WizardEffects {
 		);
 	});
 
+	loadWizard$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.LoadWizardAction),
+			map(() => incrementWizardStep()),
+		);
+	});
+
 	initializeWizardServiceChoice$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.InitializeWizardServiceChoiceAction),
 			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
 			switchMap(([, service]) => {
-				return [getServices({ payload: null }), ...(!!service ? [setFwdBtnDisabled({ payload: false })] : [])];
+				return [
+					getServices({ payload: null }),
+					...(!!service ? [setFwdBtnDisabled({ payload: false })] : []),
+					setServicesListLoading({ payload: true }),
+				];
 			}),
 		);
 	});
@@ -373,6 +420,9 @@ export class WizardEffects {
 						},
 					}),
 					setFwdBtnDisabled({ payload: !schedule }),
+					setMastersFilterComponentLoading({ payload: true }),
+					setMonthsFilterComponentLoading({ payload: true }),
+					setCalendarComponentLoading({ payload: true }),
 				];
 			}),
 		);

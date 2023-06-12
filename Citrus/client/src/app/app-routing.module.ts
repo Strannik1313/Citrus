@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
+import { RouteAccessGuard } from './guard/route-access.guard.service';
 
 const routes: Routes = [
 	{
@@ -11,6 +12,7 @@ const routes: Routes = [
 	{
 		path: 'deal',
 		loadChildren: () => import('@components/ui/wizard/wizard.module').then(m => m.WizardModule),
+		canActivate: [RouteAccessGuard],
 	},
 	// {
 	// 	path: 'register',

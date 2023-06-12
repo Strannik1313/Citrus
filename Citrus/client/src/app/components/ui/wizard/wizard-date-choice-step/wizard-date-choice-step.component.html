@@ -2,6 +2,8 @@
 	<div class="filters">
 		<div class="masters__filter">
 			<app-filter-dropdown
+				appSpinner
+				[isRunning]='loadingState?.isLoadingMasterFilter'
 				(onFilterChange)='onMasterFilterChange($event)'
 				[items]='masters'
 				[selectedItem]='selectedMaster'
@@ -10,6 +12,8 @@
 		</div>
 		<div class="months__filter">
 			<app-month-filter
+				appSpinner
+				[isRunning]='loadingState?.isLoadingMonthsFilter'
 				(onMonthSelected)='onMonthFilterChange($event)'
 				[months]='months'
 				[selectedMonth]='selectedMonth'
@@ -19,6 +23,8 @@
 	</div>
 	<div class="calendar">
 		<app-calendar
+			appSpinner
+			[isRunning]='loadingState?.isLoadingCalendar'
 			(onDayChange)="onDaySelected($event)"
 			(onWeekChange)="weekChange($event)"
 			[prevWeekBtnDisabled]="prevWeekBtnDisabled"
@@ -28,6 +34,8 @@
 	</div>
 	<div class="timesheets">
 		<app-schedule
+			appSpinner
+			[isRunning]='loadingState?.isLoadingSchedules'
 			(onScheduleSelected)='scheduleSelected($event)'
 			(onTimeChange)='timeChange($event)'
 			[schedules]="schedules"

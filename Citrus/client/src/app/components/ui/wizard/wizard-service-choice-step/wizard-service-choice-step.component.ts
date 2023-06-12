@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ServiceDto } from '@models/ServiceDto';
+import { WizardFirstStepLoadingState } from '@models/ComponentsLoadingState';
 
 @Component({
 	selector: 'app-wizard-service-choice-step',
@@ -10,6 +11,7 @@ import { ServiceDto } from '@models/ServiceDto';
 export class WizardServiceChoiceStepComponent {
 	@Input() services: Array<ServiceDto> | null = [];
 	@Input() selectedService: ServiceDto | null = null;
+	@Input() loadingState: WizardFirstStepLoadingState | null | undefined = null;
 	@Output() serviceChange: EventEmitter<ServiceDto> = new EventEmitter();
 	@Output() inputChange: EventEmitter<string | null> = new EventEmitter();
 	onServiceChange(service: ServiceDto | undefined): void {

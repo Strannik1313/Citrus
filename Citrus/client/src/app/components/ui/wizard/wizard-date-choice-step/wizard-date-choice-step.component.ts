@@ -4,6 +4,7 @@ import { MasterDto } from '@models/MasterDto';
 import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@models/Schedule';
+import { WizardSecondStepLoadingState } from '@models/ComponentsLoadingState';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',
@@ -22,6 +23,7 @@ export class WizardDateChoiceStepComponent {
 	@Input() selectedSchedule: Schedule | null = null;
 	@Input() selectedTime: string | null = null;
 	@Input() selectedMaster: MasterDto | null = null;
+	@Input() loadingState: WizardSecondStepLoadingState | undefined | null = null;
 	@Output() onWeekChange: EventEmitter<CalendarChangeWeekEnum> = new EventEmitter();
 	@Output() onMasterChange: EventEmitter<MasterDto | null> = new EventEmitter();
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();

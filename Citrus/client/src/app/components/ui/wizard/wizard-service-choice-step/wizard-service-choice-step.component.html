@@ -4,6 +4,8 @@
     (input)="onInputChange($event)"/>
 	<div class="card__container">
 		<app-service-list
+			appSpinner
+			[isRunning]='loadingState?.isLoadingServiceList'
 			[services]="services"
 			[selectedService]="selectedService"
 			(serviceClick)="onServiceChange($event)">

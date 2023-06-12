@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
+import { Store } from '@ngrx/store';
+import { loadWizard } from '@components/ui/wizard/state-management/wizard.actions';
 
 @Component({
 	selector: 'app-main-page-layout',
@@ -9,8 +9,8 @@ import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPageLayoutComponent {
-	constructor(private router: Router) {}
+	constructor(private store: Store) {}
 	startProcessBtnClick() {
-		this.router.navigate([NAVIGATE_ROUTES.WIZARD]);
+		this.store.dispatch(loadWizard());
 	}
 }
