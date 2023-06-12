@@ -1,10 +1,9 @@
 <mat-card
-	appAddActiveClass
-	appAutoscroll
-	[selectedElement]="selectedService?.id"
-	*ngFor="let service of services; trackBy: trackByFn; let i = index"
-	id="{{ service.id }}"
 	class="card__item"
+	appAutoscroll
+	[isSelected]='selectedService?.id === service?.id'
+	*ngFor="let service of services; trackBy: trackByFn; let i = index"
+	[class.active]='selectedService?.id === service.id'
 	(click)="onServiceClick(service)">
 	<p>{{ service?.title | firstLetterUppercase }}</p>
 	<p>{{ service?.description }}</p>

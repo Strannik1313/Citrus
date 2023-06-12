@@ -1,9 +1,8 @@
 <div class="container__schedules">
 	<ng-container *ngFor="let schedule of schedules; trackBy: trackByFn">
-		<mat-card class="schedule" id='{{schedule.id}}'
+		<mat-card class="schedule"
 							*ngIf="schedule.freetimes.length > 0"
-							appAddActiveClass
-							[selectedElement]='selectedSchedule?.id'>
+							[class.active]='selectedSchedule?.id === schedule.id'>
 			<div>
 				<p>{{ schedule.masterName }}</p>
 				<p>Цена: {{ schedule.cost }} рублей</p>

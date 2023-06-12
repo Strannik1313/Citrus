@@ -5,7 +5,6 @@ import { MockService } from '@tests/mockData/mockService';
 import { createMouseEvent } from '@tests/mockData/mockInputEvent';
 import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
 import { MatCard } from '@angular/material/card';
-import { AddActiveClassDirective } from '@directives/add-active-class.directive';
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
 import Spy = jasmine.Spy;
@@ -21,7 +20,6 @@ describe('WizardServiceChoiceStepComponent', () => {
 				WizardServiceChoiceStepComponent,
 				ServiceListComponent,
 				MatCard,
-				AddActiveClassDirective,
 				AutoscrollDirective,
 				FirstLetterUppercasePipe,
 			],

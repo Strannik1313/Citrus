@@ -7,9 +7,7 @@
 			<td
 				*ngFor="let date of dates; let i = index; trackBy: trackByFn"
 				class="cell"
-				id="{{ date.date }}"
-				appAddClass
-				[day]="date"
+				[class.disable]='!date.mastersId || date?.mastersId?.length === 0'
 				[class.active]='preselectedDate === date.date'
 				(click)="onDateClick(date)">
 				<p class="day">{{ date.date | date: 'EEEEE' }}</p>
