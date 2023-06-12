@@ -4,7 +4,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChangeDetectorRef, Component, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Spy = jasmine.Spy;
-import { getMockSimpleChanges } from '@tests/mockSimpleChanges';
 import { MockElementHeight } from '@tests/mockData/mockConstants';
 import { By } from '@angular/platform-browser';
 
@@ -42,16 +41,16 @@ describe('SpinnerDirective', () => {
 		expect(directive).toBeTruthy();
 	});
 
-	describe('ngOnChanges', () => {
+	describe('setter for @Input isRunning', () => {
 		it('should call renderSpinnerInHost', () => {
 			let directiveSpy: Spy = spyOn(directive, 'renderSpinnerInHost');
-			directive.ngOnChanges(getMockSimpleChanges({ isRunning: true }));
+			directive.isRunning = true;
 			expect(directiveSpy).toHaveBeenCalled();
 		});
 
 		it('should call removeSpinnerFromHost', () => {
 			let directiveSpy: Spy = spyOn(directive, 'removeSpinnerFromHost');
-			directive.ngOnChanges(getMockSimpleChanges({ isRunning: false }));
+			directive.isRunning = false;
 			expect(directiveSpy).toHaveBeenCalled();
 		});
 	});

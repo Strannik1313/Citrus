@@ -4,8 +4,6 @@ import {
 	Directive,
 	ElementRef,
 	Input,
-	OnChanges,
-	SimpleChanges,
 	ViewContainerRef,
 	ViewRef,
 } from '@angular/core';
@@ -14,24 +12,18 @@ import { SpinnerComponent } from '@components/ui/spinner/component/spinner.compo
 @Directive({
 	selector: '[appSpinner]',
 })
-export class SpinnerDirective implements OnChanges {
-	@Input() isRunning: boolean | null | undefined = false;
+export class SpinnerDirective {
+	@Input() set isRunning(condition: boolean | null | undefined) {
+		if (condition) {
+			this.renderSpinnerInHost();
+		} else {
+			this.removeSpinnerFromHost();
+		}
+	}
 	spinner: ComponentRef<SpinnerComponent> | undefined;
 	children: ViewRef | null | undefined;
 
 	constructor(private viewContainerRef: ViewContainerRef, private cdr: ChangeDetectorRef) {}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (changes['isRunning']?.currentValue === true) {
-			this.renderSpinnerInHost();
-			return;
-		}
-		if (changes['isRunning']?.currentValue === false) {
-			this.removeSpinnerFromHost();
-			return;
-		}
-	}
-
 	renderSpinnerInHost() {
 		this.children = this.viewContainerRef.detach();
 		this.spinner = this.viewContainerRef.createComponent(SpinnerComponent);
