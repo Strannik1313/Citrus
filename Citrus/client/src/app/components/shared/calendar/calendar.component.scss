@@ -17,13 +17,13 @@
 			color: grey;
 			opacity: 0.5;
 		}
+		&:hover {
+			cursor: pointer;
+			background: rgb(221, 221, 221);
+		}
 	}
 	.active {
 		outline: 1px solid black;
-		background: rgb(221, 221, 221);
-	}
-	.hover {
-		cursor: pointer;
 		background: rgb(221, 221, 221);
 	}
 }
