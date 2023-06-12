@@ -7,8 +7,8 @@ import { WizardFeature } from '@components/ui/wizard/state-management/wizard.red
 @Injectable({
 	providedIn: 'root',
 })
-export class AccessGuard implements CanActivate, OnDestroy {
-	private isWizardAvailable = false;
+export class RouteAccessGuard implements CanActivate, OnDestroy {
+	isWizardAvailable = false;
 	private destroy$: Subject<void> = new Subject<void>();
 
 	constructor(private store: Store, private router: Router) {
@@ -30,7 +30,7 @@ export class AccessGuard implements CanActivate, OnDestroy {
 				return true;
 			}
 		}
-		return true;
+		return false;
 	}
 
 	ngOnDestroy(): void {
