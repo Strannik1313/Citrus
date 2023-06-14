@@ -23,6 +23,12 @@ class CalendarServiceClass {
 				return getMastersResult;
 			}
 			case ProcessStatus.SUCCESS: {
+				if (getMastersResult.data.length === 0) {
+					return {
+						status: ProcessStatus.ERROR,
+						message: 'Не найден мастер, выполняющий эту услугу',
+					};
+				}
 				try {
 					const datesCollection = db.collection('schedules');
 					const dates = await datesCollection
