@@ -4,8 +4,8 @@ import { ServicesService } from '@services/services.service';
 import { ProcessStatus } from '@enums/ProcessStatus';
 import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 
-class ServicesController {
-	async services(req: Request, res: Response) {
+export namespace ServicesController {
+	export async function services(req: Request, res: Response) {
 		let filter = req.body.filter;
 		const getServicesResult: ServiceReturnType<Service[]> = await ServicesService.getServices(filter);
 		switch (getServicesResult.status) {

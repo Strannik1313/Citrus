@@ -3,7 +3,7 @@ import { db } from '@config/db';
 import { ProcessStatus } from '@enums/ProcessStatus';
 
 class MastersServiceClass {
-	async getMasters(serviceId: number): Promise<ServiceReturnType<number[] | void>> {
+	async getMasters(serviceId: number): Promise<ServiceReturnType<number[]>> {
 		try {
 			const mastersCollection = db.collection('masters');
 			const mastersIdsArray = await mastersCollection

@@ -2,8 +2,8 @@ import { db } from '@config/db';
 import { errorHandler } from '@utils/errorHandler';
 import { Request, Response } from 'express';
 
-class MastersController {
-	async masters(req: Request, res: Response) {
+namespace MastersController {
+	export async function masters(req: Request, res: Response) {
 		const mastersArray: Array<{ name: string; id: number }> = [];
 		const mastersCollection = db.collection('masters');
 		if (req.body.serviceId !== null) {
@@ -27,4 +27,4 @@ class MastersController {
 	}
 }
 
-export default new MastersController();
+export default MastersController;
