@@ -10,7 +10,7 @@ import {
 
 export interface AutocompleteOptionType {
 	title: string;
-	id: number;
+	id: string;
 }
 
 @Component({
@@ -53,7 +53,7 @@ export class AutocompleteComponent implements OnChanges {
 		this.isAutocompleteOpen = value;
 	}
 
-	trackByFn(index: number, item: AutocompleteOptionType): number {
+	trackByFn(index: number, item: AutocompleteOptionType): string {
 		return item.id;
 	}
 }

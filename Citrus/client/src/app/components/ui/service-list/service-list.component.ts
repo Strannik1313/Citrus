@@ -20,7 +20,7 @@ export class ServiceListComponent {
 		this.serviceClick.emit(service);
 	}
 
-	trackByFn(index: number, item: ServiceDto): number {
+	trackByFn(index: number, item: ServiceDto): string {
 		return item.id;
 	}
 }

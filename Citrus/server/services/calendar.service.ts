@@ -1,6 +1,6 @@
 import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 import { db } from '@config/db';
-import { MastersService } from './masters.service';
+import MastersService from './masters.service';
 import { ProcessStatus } from '@enums/ProcessStatus';
 import { WeekDto } from '@dto/WeekDto';
 import { DatesHelper } from '@helpers/DatesHelper';
@@ -8,22 +8,23 @@ import { QueryDocumentSnapshot } from '@google-cloud/firestore';
 import dayjs from 'dayjs';
 import { MonthsDto } from '@dto/MonthsDto';
 import { ScheduleDto } from '@dto/ScheduleDto';
+
 dayjs().format();
 
-class CalendarServiceClass {
-	async getCalendar(
-		serviceId: number,
+namespace CalendarService {
+	export async function getCalendar(
+		serviceId: string,
 		masterId: number | undefined,
 		startOfWeek: string | undefined,
 	): Promise<ServiceReturnType<WeekDto[]>> {
 		let week: WeekDto[] = DatesHelper.getWeek(startOfWeek);
-		const getMastersResult = await MastersService.getMasters(serviceId);
+		const getMastersResult = await MastersService.getMasters({ serviceId: [serviceId] });
 		switch (getMastersResult.status) {
 			case ProcessStatus.ERROR: {
 				return getMastersResult;
 			}
 			case ProcessStatus.SUCCESS: {
-				if (getMastersResult.data.length === 0) {
+				if (!getMastersResult.data || getMastersResult.data.length === 0) {
 					return {
 						status: ProcessStatus.ERROR,
 						message: 'Не найден мастер, выполняющий эту услугу',
@@ -63,7 +64,7 @@ class CalendarServiceClass {
 		}
 	}
 
-	async getSchedule(date: string, masterId?: number): Promise<ServiceReturnType<ScheduleDto[]>> {
+	export async function getSchedule(date: string, masterId?: number): Promise<ServiceReturnType<ScheduleDto[]>> {
 		let schedule: Array<ScheduleDto> = [];
 		const schedulesCollection = db.collection('schedules');
 		let querySchedulesCollection = masterId
@@ -93,7 +94,7 @@ class CalendarServiceClass {
 		}
 	}
 
-	async getMonths(startMonth: string): Promise<ServiceReturnType<MonthsDto>> {
+	export async function getMonths(startMonth: string): Promise<ServiceReturnType<MonthsDto>> {
 		try {
 			let monthsDto: MonthsDto = {
 				months: DatesHelper.getHalfOfYears(Number(startMonth)),
@@ -112,4 +113,4 @@ class CalendarServiceClass {
 	}
 }
 
-export const CalendarService = new CalendarServiceClass();
+export default CalendarService;

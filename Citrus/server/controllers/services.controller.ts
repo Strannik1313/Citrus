@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { Service } from '@interfaces/Service';
-import { ServicesService } from '@services/services.service';
+import ServicesService from '@services/services.service';
 import { ProcessStatus } from '@enums/ProcessStatus';
 import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 

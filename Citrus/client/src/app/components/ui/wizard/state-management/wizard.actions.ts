@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import { ServiceDto } from '@models/ServiceDto';
-import { MasterDto, MasterLoaderDto } from '@models/MasterDto';
+import { MasterDto } from '@models/MasterDto';
 import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { TypedAction } from '@ngrx/store/src/models';
@@ -8,6 +8,7 @@ import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
 import { MonthsDto } from '@models/MonthsDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { Schedule } from '@models/Schedule';
+import { MasterLoaderDto } from '@models/MasterLoaderDto';
 
 export interface TypedActionWithPayload<T> extends TypedAction<WizardActions> {
 	payload: T;
