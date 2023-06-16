@@ -1,6 +1,6 @@
 import express from 'express';
 import MastersController from '@controllers/masters.controller';
-import MastersControllerValidator from '../validators/masters.controller.validator';
+import MastersControllerValidator from '@validators/masters.controller.validator';
 
 const router = express.Router();
 

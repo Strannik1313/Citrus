@@ -1,6 +1,8 @@
 import dayjs from 'dayjs';
 import { WeekDto } from '@dto/WeekDto';
 import { ScheduleDto } from '@dto/ScheduleDto';
+import utc from 'dayjs/plugin/utc';
+dayjs.extend(utc);
 
 export class DatesHelper {
 	static getWeek(startOfWeek?: string): WeekDto[] {
@@ -38,7 +40,8 @@ export class DatesHelper {
 				dayjs()
 					.month(i + startMonth)
 					.startOf('month')
-					.toString(),
+					.utc()
+					.format('YYYY-MM-DDTHH:mm:ss.SSS[Z]'),
 			);
 		}
 		return months;

@@ -16,7 +16,7 @@ namespace MastersService {
 			masters.forEach(master => {
 				mastersArray.push({
 					name: master.data().name,
-					id: master.data().masterId,
+					id: master.data().id,
 					servicesIds: master.data().serviceId,
 					prices: master.data().price,
 				});

@@ -16,7 +16,7 @@ export class CalendarService {
 
 	getDates(params: CalenderDatesLoaderDto): Observable<Array<CalendarDatesDto>> {
 		return this.http.post<Array<CalendarDatesDto>>('/api/calendar', {
-			serviceId: params.serviceId,
+			serviceId: params.serviceId?.toString(),
 			masterId: params.masterId,
 			week: params.week,
 		});
