@@ -1,4 +1,4 @@
 export interface ScheduleLoaderDto {
 	date: string | null;
-	masterId?: number | null | undefined;
+	masterId?: string | null | undefined;
 }

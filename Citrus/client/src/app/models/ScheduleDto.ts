@@ -1,5 +1,5 @@
 export interface ScheduleDto {
-	masterId: number;
+	masterId: string;
 	freetimes: Array<string>;
 	id: string;
 	date: string;

@@ -1,4 +1,4 @@
 export interface CalendarDatesDto {
 	date: string;
-	mastersId: Array<number>;
+	mastersId: Array<string>;
 }

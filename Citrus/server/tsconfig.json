@@ -26,6 +26,7 @@
       "@middleware/*": ["middleware/*"],
       "@routes/*": ["routes/*"],
       "@services/*": ["services/*"],
+      "@validators/*": ["validators/*"],
       "@uploads/*": ["uploads/*"],
       "@utils/*": ["utils/*"],
     }

@@ -288,7 +288,7 @@ export class WizardEffects {
 						.pipe(map(datesDto => setDates({ payload: datesDto })));
 				}
 				return this.calendarService
-					.getDates({ serviceId: 1, masterId: 1 })
+					.getDates({ serviceId: '1', masterId: '1' })
 					.pipe(
 						switchMap(datesDto => [setDates({ payload: datesDto }), setCalendarComponentLoading({ payload: false })]),
 					);
@@ -317,7 +317,7 @@ export class WizardEffects {
 						.pipe(map(datesDto => setDates({ payload: datesDto })));
 				}
 				return this.calendarService
-					.getDates({ serviceId: 1, masterId: 1 })
+					.getDates({ serviceId: '1', masterId: '1' })
 					.pipe(
 						switchMap(datesDto => [setDates({ payload: datesDto }), setCalendarComponentLoading({ payload: false })]),
 					);

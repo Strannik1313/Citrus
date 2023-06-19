@@ -1,5 +1,5 @@
 export interface CalenderDatesLoaderDto {
-	serviceId: number | null;
-	masterId: number | null;
+	serviceId: string | null;
+	masterId: string | null;
 	week?: string;
 }

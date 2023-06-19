@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru.js';
 import { Request, Response } from 'express';
-import { CalendarService } from '@services/calendar.service';
+import CalendarService from '@services/calendar.service';
 import { ProcessStatus } from '@enums/ProcessStatus';
 
 dayjs.locale('ru');

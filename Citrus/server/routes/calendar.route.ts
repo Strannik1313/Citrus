@@ -1,6 +1,6 @@
 import express from 'express';
 import CalendarController from '@controllers/calendar.controller';
-import { calendarControllerValidator } from '../validators/calendar.controller.validator';
+import { calendarControllerValidator } from '@validators/calendar.controller.validator';
 
 const router = express.Router();
 

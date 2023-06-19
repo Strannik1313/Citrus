@@ -5,5 +5,5 @@ export interface ServiceDto extends AutocompleteOptionType {
 	description: string;
 	cost: number;
 	duration: number;
-	id: number;
+	id: string;
 }

@@ -4,8 +4,8 @@ import { Firestore, QueryDocumentSnapshot } from '@google-cloud/firestore';
 import { ProcessStatus } from '@enums/ProcessStatus';
 import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 
-class ServicesServiceClass {
-	async getServices(filter?: string): Promise<ServiceReturnType<Service[]>> {
+namespace ServicesService {
+	export async function getServices(filter?: string): Promise<ServiceReturnType<Service[]>> {
 		try {
 			const servicesArray = (<Firestore>db).collection('services');
 			const services: Service[] = await servicesArray.get().then(collection => {
@@ -32,4 +32,4 @@ class ServicesServiceClass {
 	}
 }
 
-export const ServicesService = new ServicesServiceClass();
+export default ServicesService;

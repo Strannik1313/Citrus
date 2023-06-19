@@ -1,28 +1,86 @@
-import { db } from '@config/db';
-import { errorHandler } from '@utils/errorHandler';
 import { Request, Response } from 'express';
+import { MasterDto } from '@dto/MasterDto';
+import { MasterFilter } from '@interfaces/MasterFilter';
+import { ServiceReturnType } from '@interfaces/ServiceReturnType';
+import { ProcessStatus } from '@enums/ProcessStatus';
+import MastersService from '@services/masters.service';
 
 namespace MastersController {
 	export async function masters(req: Request, res: Response) {
-		const mastersArray: Array<{ name: string; id: number }> = [];
-		const mastersCollection = db.collection('masters');
-		if (req.body.serviceId !== null) {
-			await mastersCollection
-				.where('serviceId', 'array-contains', req.body.serviceId)
-				.get()
-				.then(collection => {
-					try {
-						collection.forEach(master => {
-							mastersArray.push({
-								name: master.data().name,
-								id: master.data().masterId,
-							});
-						});
-						res.status(200).json(mastersArray);
-					} catch (error) {
-						errorHandler(res, error);
-					}
-				});
+		const filter: MasterFilter = {
+			name: req.body.name,
+			serviceId: req.body.serviceId?.split(','),
+		};
+		const getMastersResult: ServiceReturnType<MasterDto[]> = await MastersService.getMasters(filter);
+		switch (getMastersResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).json(getMastersResult.data);
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(getMastersResult);
+				break;
+			}
+		}
+	}
+
+	export async function masterById(req: Request, res: Response) {
+		const id = req.params.id;
+		const getMasterByIdResult = await MastersService.getMastersById(id);
+		switch (getMasterByIdResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).json(getMasterByIdResult.data);
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(getMasterByIdResult);
+				break;
+			}
+		}
+	}
+
+	export async function updateMaster(req: Request, res: Response) {
+		const master: MasterDto = req.body;
+		const updateMasterResult = await MastersService.updateMaster(master);
+		switch (updateMasterResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).send();
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(updateMasterResult);
+				break;
+			}
+		}
+	}
+
+	export async function createMaster(req: Request, res: Response) {
+		const master: MasterDto = req.body;
+		const createMasterResult = await MastersService.createMaster(master);
+		switch (createMasterResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).send();
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(createMasterResult);
+				break;
+			}
+		}
+	}
+
+	export async function deleteMaster(req: Request, res: Response) {
+		const id = req.body.id;
+		const deleteMasterResult = await MastersService.deleteMaster(id);
+		switch (deleteMasterResult.status) {
+			case ProcessStatus.SUCCESS: {
+				res.status(200).send();
+				break;
+			}
+			case ProcessStatus.ERROR: {
+				res.status(500).json(deleteMasterResult);
+				break;
+			}
 		}
 	}
 }
