@@ -38,7 +38,7 @@ namespace MastersService {
 		try {
 			let mastersDto: MasterDto | undefined = undefined;
 			const mastersCollection = db.collection('masters');
-			const snapshot = await mastersCollection.where('masterId', '==', id).get();
+			const snapshot = await mastersCollection.where('id', '==', id).get();
 			if (snapshot.empty) {
 				return {
 					status: ProcessStatus.SUCCESS,
@@ -65,8 +65,9 @@ namespace MastersService {
 		try {
 			const mastersRef = db.collection('masters').doc(master.id);
 			await mastersRef.update({
-				name: master.name,
-				price: master.prices,
+				...(master.name && { name: master.name }),
+				...(master.prices && { price: master.prices }),
+				...(master.servicesIds && { serviceId: master.servicesIds }),
 			});
 			return {
 				status: ProcessStatus.SUCCESS,

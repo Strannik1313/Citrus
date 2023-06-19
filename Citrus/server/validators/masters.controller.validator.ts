@@ -17,7 +17,7 @@ namespace MastersControllerValidator {
 	}
 
 	export async function validateMasterById(req: Request, res: Response, next: NextFunction) {
-		const masterIdCheckResult = await param('id').isInt().run(req);
+		const masterIdCheckResult = await param('id').isString().run(req);
 		if (!masterIdCheckResult.isEmpty()) {
 			return res.status(400).json({
 				status: ProcessStatus.ERROR,
@@ -29,12 +29,14 @@ namespace MastersControllerValidator {
 	}
 
 	export async function validateUpdateMaster(req: Request, res: Response, next: NextFunction) {
+		const idCheckResult = await body('id').isString().run(req);
 		const nameCheckResult = await body('name').optional().isString().run(req);
 		const pricesArrayCheckResult = await body('prices').optional().isArray().run(req);
 		const pricesArrayValuesCheckResult = await body('prices.*').optional().not().isString().isInt().run(req);
 		const servicesArrayCheckResult = await body('servicesIds').optional().isArray().run(req);
 		const servicesArrayValuesCheckResult = await body('servicesIds.*').optional().isString().run(req);
 		if (
+			!idCheckResult.isEmpty() ||
 			!nameCheckResult.isEmpty() ||
 			!pricesArrayCheckResult.isEmpty() ||
 			!pricesArrayValuesCheckResult.isEmpty() ||
