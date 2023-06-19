@@ -18,7 +18,7 @@ namespace CalendarService {
 		startOfWeek: string | undefined,
 	): Promise<ServiceReturnType<WeekDto[]>> {
 		let week: WeekDto[] = DatesHelper.getWeek(startOfWeek);
-		const getMastersResult = await MastersService.getMasters({ serviceId: [serviceId] });
+		const getMastersResult = await MastersService.getMasters({ serviceId: [serviceId], id: masterId });
 		switch (getMastersResult.status) {
 			case ProcessStatus.ERROR: {
 				return getMastersResult;
@@ -32,15 +32,14 @@ namespace CalendarService {
 				}
 				try {
 					const datesCollection = db.collection('schedules');
+					const mastersIds = getMastersResult.data.map(master => master.id);
 					const dates = await datesCollection
-						.where('masterId', 'in', getMastersResult.data)
+						.where('masterId', 'in', mastersIds)
 						.get()
 						.then(collection => {
 							collection.forEach((snapshot: QueryDocumentSnapshot) => {
 								const masterTimes = snapshot.data() as ScheduleDto;
-								if (masterId === masterTimes.masterId || masterId === null) {
-									week = DatesHelper.getWeekDto(week, masterTimes);
-								}
+								week = DatesHelper.getWeekDto(week, masterTimes);
 							});
 							return week.map(day => {
 								return {

@@ -6,7 +6,7 @@ export function obtainFilter(
 ) {
 	let queryCollection: FirebaseFirestore.Query<FirebaseFirestore.DocumentData> | undefined;
 	for (const filterElement in filter) {
-		if (filter[filterElement] === undefined) continue;
+		if (filter[filterElement] === undefined || filter[filterElement] === null) continue;
 		if (!queryCollection) {
 			queryCollection = collection.where(
 				filterElement,

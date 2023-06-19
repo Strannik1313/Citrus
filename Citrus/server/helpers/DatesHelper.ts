@@ -18,18 +18,16 @@ export class DatesHelper {
 	}
 
 	static getWeekDto(week: WeekDto[], masterTimes: ScheduleDto): WeekDto[] {
-		let weekDto: WeekDto[] = week;
-		for (let i = 0; i < masterTimes.freetimes.length; i++) {
-			weekDto = week.map(day => {
-				if (dayjs(day.date).isSame(masterTimes.freetimes[i], 'day')) {
-					return {
-						...day,
-						mastersId: [...day.mastersId, masterTimes.masterId],
-					};
-				}
-				return day;
-			});
-		}
+		let weekDto: WeekDto[];
+		weekDto = week.map(day => {
+			if (dayjs(day.date).isSame(masterTimes.date, 'day')) {
+				return {
+					...day,
+					mastersId: [...day.mastersId, masterTimes.masterId],
+				};
+			}
+			return day;
+		});
 		return weekDto;
 	}
 
