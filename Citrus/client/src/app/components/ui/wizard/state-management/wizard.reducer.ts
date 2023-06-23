@@ -7,6 +7,7 @@ import {
 	resetSelectedMonth,
 	resetSelectedSchedule,
 	resetSelectedService,
+	resetWizard,
 	resetWizardStep,
 	setCalendarComponentLoading,
 	setDates,
@@ -266,6 +267,11 @@ export const WizardFeature = createFeature({
 						...state,
 						isSchedulesLoading: payload,
 				  };
+		}),
+		on(resetWizard, (state): WizardReducer => {
+			return {
+				...wizardInitialState,
+			};
 		}),
 	),
 });

@@ -1,59 +1,62 @@
 <mat-card>
-	<form [formGroup]="confirmForm">
-		<p>Имя мастера:</p>
+	<form [formGroup]="confirmForm" (submit)='onSubmit()'>
+		<p>{{ labels.MASTER_NAME }}</p>
 		<p>{{ selectedMaster?.name }}</p>
-		<p>Выбранная услуга:</p>
+		<p>{{ labels.SELECTED_SERVICE }}</p>
 		<p>{{ selectedService?.title }}</p>
-		<p>Время начала:</p>
+		<p>{{ labels.START_TIME }}</p>
 		<p>{{ selectedSchedule?.preOrder | date: 'HH:mm' }}</p>
-		<p>Дата:</p>
+		<p>{{ labels.DATE }}</p>
 		<p>{{ selectedSchedule?.preOrder | date: 'dd MMMM' }}</p>
 		<mat-form-field appearance="outline">
-			<mat-label>Фамилия</mat-label>
+			<mat-label>{{ labels.SURNAME }}</mat-label>
 			<input
 				placeholder="Иванова"
 				matInput
 				formControlName="surname"
 				required />
-			<mat-error *ngIf="confirmForm.controls['surname'].errors?.['required']"
-				>Поле обязательно</mat-error
-			>
-			<mat-error *ngIf="confirmForm.controls['surname'].errors?.['pattern']"
-				>Некорректная запись</mat-error
-			>
+			<mat-error *ngIf="confirmForm.controls['surname'].errors?.['required']">
+				{{ validationErrors.REQUIRED_FIELD }}
+			</mat-error>
+			<mat-error *ngIf="confirmForm.controls['surname'].errors?.['pattern']">
+				{{ validationErrors.INVALID_STRING }}
+			</mat-error>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
-			<mat-label>Имя</mat-label>
+			<mat-label>{{ labels.NAME }}</mat-label>
 			<input placeholder="Инна" matInput formControlName="name" required />
-			<mat-error *ngIf="confirmForm.controls['name'].errors?.['required']"
-				>Поле обязательно</mat-error
-			>
-			<mat-error *ngIf="confirmForm.controls['name'].errors?.['pattern']"
-				>Некорректная запись</mat-error
-			>
+			<mat-error *ngIf="confirmForm.controls['name'].errors?.['required']">
+				{{ validationErrors.REQUIRED_FIELD }}
+			</mat-error>
+			<mat-error *ngIf="confirmForm.controls['name'].errors?.['pattern']">
+				{{ validationErrors.INVALID_STRING }}
+			</mat-error>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
-			<mat-label>Телефон</mat-label>
+			<mat-label>{{ labels.PHONE }}</mat-label>
 			<input
 				placeholder="+375(29)888-88-88"
 				matInput
+				[prefix]='"+375"'
+				[mask]='"(00)000-00-00"'
 				formControlName="phoneNumber"
 				required />
-			<mat-error *ngIf="confirmForm.controls['phoneNumber'].errors?.['pattern']"
-				>Некорректный номер</mat-error
-			>
+			<mat-error *ngIf="confirmForm.controls['phoneNumber'].errors?.['pattern']">
+				{{ validationErrors.INVALID_NUMBER }}
+			</mat-error>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
-			<mat-label>Email</mat-label>
+			<mat-label>{{ labels.EMAIL }}</mat-label>
 			<input placeholder="example@gmail.com" matInput formControlName="email" />
-			<mat-error *ngIf="confirmForm.controls['email'].errors?.['pattern']"
-				>Некорректный email</mat-error
-			>
+			<mat-error *ngIf="confirmForm.controls['email'].errors?.['pattern']">
+				{{ validationErrors.INVALID_EMAIL }}
+			</mat-error>
 		</mat-form-field>
 		<mat-form-field appearance="outline">
-			<mat-label>Комментарии</mat-label>
+			<mat-label>{{ labels.COMMENTS }}</mat-label>
 			<textarea matInput formControlName="comments"></textarea>
 		</mat-form-field>
-		<p>Оставьте свой email и мы отправим туда данные о Вашей записи</p>
+		<button [disabled]='!confirmForm.valid' mat-raised-button color='primary'>{{ btn_labels.BOOK }}</button>
+		<p>{{ labels.LEAVE_YOUR_EMAIL }}</p>
 	</form>
 </mat-card>

@@ -1,18 +1,12 @@
-import {
-	ChangeDetectionStrategy,
-	Component,
-	EventEmitter,
-	Input,
-	OnChanges,
-	OnInit,
-	Output,
-	SimpleChanges,
-} from '@angular/core';
-import { FormControl, FormControlStatus, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MasterDto } from '@models/MasterDto';
 import { ServiceDto } from '@models/ServiceDto';
 import { Schedule } from '@models/Schedule';
+import { ConfirmForm } from '@models/ConfirmForm';
+import { VALIDATIONS_ERROR } from '@enums/ValidationErrors';
+import { LABELS } from '@enums/Labels';
+import { BUTTON_LABELS } from '@enums/ButtonLabels';
 
 @Component({
 	selector: 'app-wizard-confirm-step',
@@ -20,36 +14,23 @@ import { Schedule } from '@models/Schedule';
 	styleUrls: ['./wizard-confirm-step.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardConfirmStepComponent implements OnInit, OnChanges {
+export class WizardConfirmStepComponent {
 	@Input() selectedMaster: MasterDto | null = null;
 	@Input() selectedService: ServiceDto | null = null;
 	@Input() selectedSchedule: Schedule | null = null;
-	@Output() onFormChange: EventEmitter<Observable<any>> = new EventEmitter();
-	@Output() onFormStatusChange: EventEmitter<Observable<FormControlStatus>> = new EventEmitter();
+	@Output() onFormSubmit: EventEmitter<ConfirmForm> = new EventEmitter();
+	validationErrors: typeof VALIDATIONS_ERROR = VALIDATIONS_ERROR;
+	labels: typeof LABELS = LABELS;
+	btn_labels: typeof BUTTON_LABELS = BUTTON_LABELS;
 	confirmForm = new FormGroup({
 		surname: new FormControl('', [Validators.required, Validators.pattern('[А-ЯЁ][а-яё]{1,}')]),
 		name: new FormControl('', [Validators.required, Validators.pattern('[А-ЯЁ][а-яё]{1,}')]),
-		phoneNumber: new FormControl('', [
-			Validators.required,
-			Validators.pattern('[+]{1,}375{1}[(]{1}[0-9]{2}[)]{1}[0-9]{3}[-]{1}[0-9]{2}[-]{1}[0-9]{2}'),
-		]),
+		phoneNumber: new FormControl('', [Validators.required, Validators.pattern(/\d/g)]),
 		email: new FormControl('', Validators.pattern('[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')),
 		comments: new FormControl(''),
 	});
 
-	ngOnInit(): void {
-		this.onFormChange.emit(this.confirmForm.valueChanges);
-		this.onFormStatusChange.emit(this.confirmForm.statusChanges);
-	}
-
-	ngOnChanges(changes: SimpleChanges): void {
-		if (!!changes.updatedPhone) {
-			this.confirmForm.patchValue(
-				{
-					phoneNumber: changes.updatedPhone.currentValue ?? '',
-				},
-				{ emitEvent: false },
-			);
-		}
+	onSubmit() {
+		this.onFormSubmit.emit(this.confirmForm.value as ConfirmForm);
 	}
 }

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
+import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 
 @Component({
 	selector: 'app-header',

@@ -9,6 +9,7 @@ import { MonthsDto } from '@models/MonthsDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { Schedule } from '@models/Schedule';
 import { MasterLoaderDto } from '@models/MasterLoaderDto';
+import { ConfirmForm } from '@models/ConfirmForm';
 
 export interface TypedActionWithPayload<T> extends TypedAction<WizardActions> {
 	payload: T;
@@ -31,6 +32,7 @@ export enum WizardActions {
 	SetDatesAction = '[Wizard Page] SetDatesAction',
 	InitializeWizardServiceChoiceAction = '[Wizard Page] InitializeWizardServiceChoiceAction',
 	InitializeWizardDateChoiceAction = '[Wizard Page] InitializeWizardDateChoiceAction',
+	InitializeWizardConfirmStepAction = '[Wizard Page] InitializeWizardConfirmStepAction',
 	GetSchedulesAction = '[Wizard Page] GetSchedulesAction',
 	SetSelectedDayAction = '[Wizard Page] SetSelectedDayAction',
 	SetScheduleAction = '[Wizard Page] SetScheduleAction',
@@ -54,6 +56,8 @@ export enum WizardActions {
 	SetCalendarComponentLoadingAction = '[Wizard Page] SetCalendarComponentLoadingAction',
 	SetSchedulesComponentLoadingAction = '[Wizard Page] SetSchedulesComponentLoadingAction',
 	LoadWizardAction = '[Wizard Page] LoadWizardAction',
+	SetOrderAction = '[Wizard Page] SetOrderAction',
+	ResetWizardAction = '[Wizard Page] ResetWizardAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -86,6 +90,7 @@ export const setMasters = createAction(WizardActions.SetMastersAction, props<{ p
 export const getDates = createAction(WizardActions.GetDatesAction, props<{ payload: CalenderDatesLoaderDto }>());
 export const initializeWizardServiceChoice = createAction(WizardActions.InitializeWizardServiceChoiceAction);
 export const initializeWizardDateChoice = createAction(WizardActions.InitializeWizardDateChoiceAction);
+export const initializeWizardConfirmStep = createAction(WizardActions.InitializeWizardConfirmStepAction);
 
 export const setDates = createAction(WizardActions.SetDatesAction, props<{ payload: CalendarDatesDto[] }>());
 export const getSchedules = createAction(WizardActions.GetSchedulesAction, props<{ payload: ScheduleLoaderDto }>());
@@ -144,6 +149,13 @@ export const setSchedulesComponentLoading = createAction(
 		payload: boolean;
 	}>(),
 );
+export const setOrder = createAction(
+	WizardActions.SetOrderAction,
+	props<{
+		payload: ConfirmForm;
+	}>(),
+);
+export const resetWizard = createAction(WizardActions.ResetWizardAction);
 export const loadWizard = createAction(WizardActions.LoadWizardAction);
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

@@ -68,8 +68,7 @@
 				[selectedMaster]='data.selectedMaster'
 				[selectedService]='data.selectedService'
 				[selectedSchedule]='data.selectedSchedule'
-				(onFormChange)="onFormChange($event)"
-				(onFormStatusChange)="onFormStatusChange($event)">
+				(onFormSubmit)='onFormSubmit($event)'>
 			</app-wizard-confirm-step>
 		</div>
 	</div>
