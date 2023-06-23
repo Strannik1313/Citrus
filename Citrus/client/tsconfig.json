@@ -18,6 +18,7 @@
 			"@api/*": ["./src/app/api/*"],
 			"@tests/*": ["./src/app/tests/*"],
 			"@helpers/*": ["./src/app/helpers/*"],
+			"@enums/*": ["./src/app/enums/*"],
 		},
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,

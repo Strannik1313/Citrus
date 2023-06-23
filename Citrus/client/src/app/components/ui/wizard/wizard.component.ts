@@ -5,7 +5,6 @@ import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import dayjs from 'dayjs';
 import 'dayjs/locale/ru';
-import { FormControlStatus } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import {
 	selectComponentsIsLoadingState,
@@ -18,6 +17,7 @@ import {
 	getPrevWeek,
 	getServices,
 	incrementWizardStep,
+	setOrder,
 	setSelectedDay,
 	setSelectedMaster,
 	setSelectedMonth,
@@ -27,8 +27,9 @@ import {
 import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@models/Schedule';
-import { BUTTON_LABELS } from '@constants/ButtonLabels';
+import { BUTTON_LABELS } from '@enums/ButtonLabels';
 import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
+import { ConfirmForm } from '@models/ConfirmForm';
 
 dayjs.locale('ru');
 
@@ -91,14 +92,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.componentsLoadingState$ = this.store.select(selectComponentsIsLoadingState);
 	}
 
-	onFormChange(observable: any): void {
-		console.log(observable);
-	}
-
-	onFormStatusChange(observable: Observable<FormControlStatus>): void {
-		console.log(observable);
-	}
-
 	onServiceChange(value: ServiceDto): void {
 		this.store.dispatch(setSelectedService({ payload: value }));
 	}
@@ -152,5 +145,9 @@ export class WizardComponent implements OnInit, OnDestroy {
 
 	scheduleSelected(schedule: Schedule) {
 		this.store.dispatch(setSelectedSchedule({ payload: schedule }));
+	}
+
+	onFormSubmit(formValue: ConfirmForm) {
+		this.store.dispatch(setOrder({ payload: formValue }));
 	}
 }

@@ -8,6 +8,7 @@ import {
 	getSchedules,
 	getServices,
 	incrementWizardStep,
+	initializeWizardConfirmStep,
 	initializeWizardDateChoice,
 	initializeWizardServiceChoice,
 	resetSchedules,
@@ -16,6 +17,7 @@ import {
 	resetSelectedMonth,
 	resetSelectedSchedule,
 	resetSelectedService,
+	resetWizard,
 	resetWizardDateChoiceStepState,
 	resetWizardStep,
 	setCalendarComponentLoading,
@@ -39,7 +41,7 @@ import { Store } from '@ngrx/store';
 import { WizardFeature } from '@components/ui/wizard/state-management/wizard.reducer';
 import { WizardMaxStep } from '@components/ui/wizard/constants/WizardMaxStep';
 import { ServicesService } from '@api/ServicesService';
-import { NAVIGATE_ROUTES } from '@constants/NavigateRoutes';
+import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 import { Router } from '@angular/router';
 import { MastersService } from '@api/MastersService';
 import { WizardStepperEnum } from '@components/ui/wizard/wizard.component';
@@ -52,6 +54,8 @@ import { Schedule } from '@models/Schedule';
 import { MaxProcedureDuration } from '@constants/MaxProcedureDuration';
 import { MasterDto } from '@models/MasterDto';
 import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
+import { ConfirmForm } from '@models/ConfirmForm';
+import { OrderService } from '@api/OrderService';
 
 @Injectable()
 export class WizardEffects {
@@ -62,6 +66,7 @@ export class WizardEffects {
 		private router: Router,
 		private mastersService: MastersService,
 		private calendarService: CalendarService,
+		private orderService: OrderService,
 	) {}
 
 	getServices$ = createEffect(() => {
@@ -119,6 +124,9 @@ export class WizardEffects {
 					}
 					case WizardStepperEnum.DATE_CHOICE: {
 						return [initializeWizardDateChoice()];
+					}
+					case WizardStepperEnum.CONFIRM_PAGE: {
+						return [initializeWizardConfirmStep()];
 					}
 					default:
 						return [getServices({ payload: null })];
@@ -379,6 +387,21 @@ export class WizardEffects {
 		);
 	});
 
+	createOrder$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.SetOrderAction),
+			map((action: TypedActionWithPayload<ConfirmForm>) => action.payload),
+			switchMap(order =>
+				this.orderService.createOrder(order).pipe(
+					map(() => {
+						this.router.navigate([NAVIGATE_ROUTES.HOME]);
+						return resetWizard();
+					}),
+				),
+			),
+		);
+	});
+
 	initializeWizardServiceChoice$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.InitializeWizardServiceChoiceAction),
@@ -425,6 +448,13 @@ export class WizardEffects {
 					setCalendarComponentLoading({ payload: true }),
 				];
 			}),
+		);
+	});
+
+	initializeWizardConfirmStep$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.InitializeWizardConfirmStepAction),
+			map(() => setFwdBtnDisabled({ payload: true })),
 		);
 	});
 }

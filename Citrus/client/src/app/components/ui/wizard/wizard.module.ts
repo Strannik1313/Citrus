@@ -25,6 +25,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { WizardEffects } from '@components/ui/wizard/state-management/wizard.effects';
 import { FilterDropdownModule } from '@shared/filter-dropdown/filter-dropdown.module';
 import { SpinnerModule } from '@components/ui/spinner/spinner.module';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
 	declarations: [
@@ -50,6 +51,7 @@ import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 		DirectivesModule,
 		ReactiveFormsModule,
 		SpinnerModule,
+		NgxMaskModule.forRoot(),
 		RouterModule.forChild([{ path: '', component: WizardComponent }]),
 		StoreModule.forFeature(WizardFeature.name, WizardFeature.reducer),
 		EffectsModule.forFeature([WizardEffects]),
