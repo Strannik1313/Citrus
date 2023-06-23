@@ -11,7 +11,7 @@ import { ScheduleDto } from '@dto/ScheduleDto';
 
 dayjs().format();
 
-namespace CalendarService {
+export namespace CalendarService {
 	export async function getCalendar(
 		serviceId: string,
 		masterId: number | undefined,
