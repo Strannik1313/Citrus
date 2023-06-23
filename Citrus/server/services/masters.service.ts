@@ -6,7 +6,7 @@ import { MasterDto } from '@dto/MasterDto';
 import { obtainFilter } from '@helpers/utils';
 import * as crypto from 'crypto';
 
-namespace MastersService {
+export namespace MastersService {
 	export async function getMasters(filter: MasterFilter): Promise<ServiceReturnType<MasterDto[]>> {
 		try {
 			const mastersArray: MasterDto[] = [];
