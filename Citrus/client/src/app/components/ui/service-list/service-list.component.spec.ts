@@ -69,7 +69,7 @@ describe('Dialog window component', () => {
 		it('trackByFn should return id when mat-cards rendering', () => {
 			spyOn(component, 'trackByFn').and.callThrough();
 			let expected = component.trackByFn(0, { ...MockService });
-			expect(expected).toEqual(1);
+			expect(expected).toBe('1');
 		});
 	});
 

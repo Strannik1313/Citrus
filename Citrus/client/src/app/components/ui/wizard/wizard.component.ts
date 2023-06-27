@@ -10,7 +10,7 @@ import {
 	selectComponentsIsLoadingState,
 	selectScheduleSelectedTime,
 	WizardFeature,
-} from '@components/ui/wizard/state-management/wizard.reducer';
+} from '@state-management/wizard-feature/wizard.reducer';
 import {
 	decrementWizardStep,
 	getNextWeek,
@@ -23,7 +23,7 @@ import {
 	setSelectedMonth,
 	setSelectedSchedule,
 	setSelectedService,
-} from '@components/ui/wizard/state-management/wizard.actions';
+} from '@state-management/wizard-feature/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@models/Schedule';

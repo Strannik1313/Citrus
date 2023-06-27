@@ -16,6 +16,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '@environments/environment';
 import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SnakeBarModule } from '@shared/sneakbar/snake-bar.module';
+import { MainFeature } from '@state-management/main-feature/main.reducer';
 
 registerLocaleData(localeRu);
 
@@ -29,8 +31,10 @@ registerLocaleData(localeRu);
 		BrowserAnimationsModule,
 		MatButtonModule,
 		SpinnerModule,
+		SnakeBarModule,
 		StoreModule.forRoot({}),
 		EffectsModule.forRoot([]),
+		StoreModule.forFeature(MainFeature.name, MainFeature.reducer),
 		StoreDevtoolsModule.instrument({
 			maxAge: 25,
 			logOnly: environment.production,

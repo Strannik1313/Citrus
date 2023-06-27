@@ -19,6 +19,7 @@
 			"@tests/*": ["./src/app/tests/*"],
 			"@helpers/*": ["./src/app/helpers/*"],
 			"@enums/*": ["./src/app/enums/*"],
+			"@state-management/*": ["./src/app/state-management/*"],
 		},
 		"allowSyntheticDefaultImports": true,
 		"esModuleInterop": true,

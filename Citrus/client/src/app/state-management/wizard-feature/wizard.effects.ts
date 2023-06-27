@@ -33,12 +33,11 @@ import {
 	setSelectedMonth,
 	setServices,
 	setServicesListLoading,
-	TypedActionWithPayload,
 	WizardActions,
-} from '@components/ui/wizard/state-management/wizard.actions';
+} from '@state-management/wizard-feature/wizard.actions';
 import { debounce, interval, map, mergeMap, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { WizardFeature } from '@components/ui/wizard/state-management/wizard.reducer';
+import { WizardFeature } from '@state-management/wizard-feature/wizard.reducer';
 import { WizardMaxStep } from '@components/ui/wizard/constants/WizardMaxStep';
 import { ServicesService } from '@api/ServicesService';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
@@ -56,6 +55,7 @@ import { MasterDto } from '@models/MasterDto';
 import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
 import { ConfirmForm } from '@models/ConfirmForm';
 import { OrderService } from '@api/OrderService';
+import { TypedActionWithPayload } from '@state-management/TypedActionWithPayload';
 
 @Injectable()
 export class WizardEffects {

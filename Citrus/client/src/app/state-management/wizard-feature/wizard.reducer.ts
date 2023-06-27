@@ -26,7 +26,7 @@ import {
 	setSelectedService,
 	setServices,
 	setServicesListLoading,
-} from '@components/ui/wizard/state-management/wizard.actions';
+} from '@state-management/wizard-feature/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
