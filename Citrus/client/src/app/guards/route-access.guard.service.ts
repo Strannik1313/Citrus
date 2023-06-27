@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { WizardFeature } from '@components/ui/wizard/state-management/wizard.reducer';
+import { WizardFeature } from '@state-management/wizard-feature/wizard.reducer';
 
 @Injectable({
 	providedIn: 'root',

@@ -1,0 +1,6 @@
+<div *ngIf='show' class='snakebar_container' @open @close>
+	<div class='snakebar_content'>
+		<p class='warning_message'>{{message}}</p>
+		<mat-icon class='close_btn' (click)='onCloseBtnClick()'>close</mat-icon>
+	</div>
+</div>

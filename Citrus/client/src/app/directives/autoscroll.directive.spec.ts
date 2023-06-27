@@ -43,15 +43,13 @@ describe('AutoscrollDirective', () => {
 	describe('ngAfterViewInit', () => {
 		it('scrollIntoView should not be called', () => {
 			spyOn(li.nativeElement, 'scrollIntoView').and.callThrough();
-			dir.selectedElement = 1;
-			dir.ngAfterViewInit();
+			dir.isSelected = false;
 			expect(li.nativeElement.scrollIntoView).not.toHaveBeenCalled();
 		});
 
 		it('scrollIntoView should be called', () => {
 			spyOn(li.nativeElement, 'scrollIntoView').and.callThrough();
-			dir.selectedElement = 0;
-			dir.ngAfterViewInit();
+			dir.isSelected = true;
 			expect(li.nativeElement.scrollIntoView).toHaveBeenCalled();
 		});
 	});

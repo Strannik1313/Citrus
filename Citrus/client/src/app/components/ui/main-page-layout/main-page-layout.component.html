@@ -14,3 +14,7 @@
 		</button>
 	</div>
 </div>
+<app-sneakbar
+	[show]='showSnakeBar$ | async'
+	(closeBtnClick)='onCloseSnakeBarClick()'>
+</app-sneakbar>
