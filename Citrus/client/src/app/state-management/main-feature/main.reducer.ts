@@ -27,7 +27,7 @@ export const MainFeature = createFeature({
 			return !state.showSnakeBar
 				? {
 						...state,
-						showSnakeBar: false,
+						showSnakeBar: true,
 				  }
 				: state;
 		}),

@@ -1,4 +1,8 @@
 <div class="document">
+	<app-sneakbar
+		[show]='showSnakeBar$ | async'
+		(closeBtnClick)='onCloseSnakeBarClick()'>
+	</app-sneakbar>
 	<app-header class="header"></app-header>
 	<div class="content">
 		<router-outlet></router-outlet>
