@@ -18,6 +18,7 @@ import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SnakeBarModule } from '@shared/sneakbar/snake-bar.module';
 import { MainFeature } from '@state-management/main-feature/main.reducer';
+import { ErrorHandlerInterceptor } from '@interceptors/error-handler.interceptor';
 
 registerLocaleData(localeRu);
 
@@ -41,7 +42,14 @@ registerLocaleData(localeRu);
 		}),
 		MatProgressSpinnerModule,
 	],
-	providers: [{ provide: LOCALE_ID, useValue: 'ru' }],
+	providers: [
+		{ provide: LOCALE_ID, useValue: 'ru' },
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: ErrorHandlerInterceptor,
+			multi: true,
+		},
+	],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

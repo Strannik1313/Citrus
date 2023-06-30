@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
-import { RouteAccessGuard } from './guards/route-access.guard.service';
+import { RouteAccessGuard } from '@guards/route-access.guard.service';
 
 const routes: Routes = [
 	{
