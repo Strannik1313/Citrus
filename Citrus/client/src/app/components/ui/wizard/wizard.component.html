@@ -16,7 +16,8 @@
 		selectedScheduleTime: selectedScheduleTime$ | async,
 		selectedMaster: selectedMaster$ | async,
 		selectedDay: selectedDay$ | async,
-		componentsLoadingState: componentsLoadingState$ | async
+		componentsLoadingState: componentsLoadingState$ | async,
+		isFwdBtnVisible: isFwdBtnVisible$ | async
 	} as data">
 	<div class="wizard__container">
 		<app-stepper
@@ -26,13 +27,15 @@
 			<button (click)="onBtnClick(false)" mat-button color="primary">{{
 				BUTTON_LABELS.PREV_BTN_LABEL
 			}}</button>
-			<button
-				mat-button
-				color="primary"
-        [disabled]="data.fwdBtnDisabled"
-				(click)="onBtnClick(true)"
+			<ng-container *ngIf='data.isFwdBtnVisible'>
+				<button
+					mat-button
+					color="primary"
+					[disabled]="data.fwdBtnDisabled"
+					(click)="onBtnClick(true)"
 				>{{ BUTTON_LABELS.NEXT_BTN_LABEL }}
-			</button>
+				</button>
+			</ng-container>
 		</div>
 		<div [ngSwitch]="data.currentStep">
 			<app-wizard-service-choice-step

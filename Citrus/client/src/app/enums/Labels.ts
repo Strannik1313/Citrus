@@ -9,4 +9,5 @@ export enum LABELS {
 	START_TIME = 'Время начала:',
 	SELECTED_SERVICE = 'Выбранная услуга:',
 	MASTER_NAME = 'Имя мастера:',
+	ORDER_CREATED = 'Запись успешно создана',
 }

@@ -53,6 +53,8 @@ export enum WizardActions {
 	LoadWizardAction = '[Wizard Page] LoadWizardAction',
 	SetOrderAction = '[Wizard Page] SetOrderAction',
 	ResetWizardAction = '[Wizard Page] ResetWizardAction',
+	SetFwdBtnVisibleAction = '[Wizard Page] SetFwdBtnVisibleAction',
+	SetAcceptPageAccessAction = '[Wizard Page] SetAcceptPageAccessAction',
 }
 
 export const incrementWizardStep = createAction(WizardActions.IncrementWizardStepAction);
@@ -152,5 +154,7 @@ export const setOrder = createAction(
 );
 export const resetWizard = createAction(WizardActions.ResetWizardAction);
 export const loadWizard = createAction(WizardActions.LoadWizardAction);
+export const setFwdBtnVisible = createAction(WizardActions.SetFwdBtnVisibleAction, props<{ payload: boolean }>());
+export const setAcceptPageAccess = createAction(WizardActions.SetAcceptPageAccessAction, props<{ payload: boolean }>());
 
 export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());
