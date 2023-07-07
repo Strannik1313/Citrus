@@ -2,20 +2,26 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { WizardFeature } from '@state-management/wizard-feature/wizard.reducer';
+import { selectIsAcceptPageAvailable, selectIsWizardAvailable } from '@state-management/wizard-feature/wizard.reducer';
+import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class RouteAccessGuard implements CanActivate, OnDestroy {
 	isWizardAvailable = false;
+	isAcceptPageAvailable = false;
 	private destroy$: Subject<void> = new Subject<void>();
 
 	constructor(private store: Store, private router: Router) {
 		this.store
-			.select(WizardFeature.selectIsWizardAvailable)
+			.select(selectIsWizardAvailable)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(access => (this.isWizardAvailable = access));
+		this.store
+			.select(selectIsAcceptPageAvailable)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(access => (this.isAcceptPageAvailable = access));
 	}
 
 	canActivate(
@@ -23,8 +29,14 @@ export class RouteAccessGuard implements CanActivate, OnDestroy {
 		state: RouterStateSnapshot,
 	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 		switch (state.url) {
-			case '/deal': {
+			case NAVIGATE_ROUTES.WIZARD: {
 				if (!this.isWizardAvailable) {
+					this.router.navigate(['/']);
+				}
+				return true;
+			}
+			case NAVIGATE_ROUTES.ACCEPT: {
+				if (!this.isAcceptPageAvailable) {
 					this.router.navigate(['/']);
 				}
 				return true;

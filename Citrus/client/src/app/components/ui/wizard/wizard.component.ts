@@ -8,8 +8,21 @@ import 'dayjs/locale/ru';
 import { Store } from '@ngrx/store';
 import {
 	selectComponentsIsLoadingState,
+	selectDates,
+	selectFwdBtnDisabled,
+	selectIsNextBTnVisible,
+	selectMasters,
+	selectMonths,
+	selectPrevWeekBtnDisabled,
+	selectSchedules,
 	selectScheduleSelectedTime,
-	WizardFeature,
+	selectSelectedDay,
+	selectSelectedMaster,
+	selectSelectedMonth,
+	selectSelectedSchedule,
+	selectSelectedService,
+	selectServices,
+	selectStep,
 } from '@state-management/wizard-feature/wizard.reducer';
 import {
 	decrementWizardStep,
@@ -71,25 +84,27 @@ export class WizardComponent implements OnInit, OnDestroy {
 	selectedMaster$: Observable<MasterDto | null> = new Observable<MasterDto>();
 	selectedDay$: Observable<string | null> = new Observable<string>();
 	componentsLoadingState$: Observable<ComponentsLoadingState | null> = new Observable<ComponentsLoadingState>();
+	isFwdBtnVisible$: Observable<boolean | null> = new Observable<boolean>();
 
 	constructor(private router: Router, private store: Store) {}
 
 	ngOnInit() {
-		this.currentStep$ = this.store.select(WizardFeature.selectStep);
-		this.services$ = this.store.select(WizardFeature.selectServices);
-		this.fwdBtnDisabled$ = this.store.select(WizardFeature.selectFwdBtnDisabled);
-		this.selectedService$ = this.store.select(WizardFeature.selectSelectedService);
-		this.masters$ = this.store.select(WizardFeature.selectMasters);
-		this.dates$ = this.store.select(WizardFeature.selectDates);
-		this.schedules$ = this.store.select(WizardFeature.selectSchedules);
-		this.months$ = this.store.select(WizardFeature.selectMonths);
-		this.selectedMonth$ = this.store.select(WizardFeature.selectSelectedMonth);
-		this.prevWeekBtnDisabled$ = this.store.select(WizardFeature.selectPrevWeekBtnDisabled);
-		this.selectedSchedule$ = this.store.select(WizardFeature.selectSelectedSchedule);
+		this.currentStep$ = this.store.select(selectStep);
+		this.services$ = this.store.select(selectServices);
+		this.fwdBtnDisabled$ = this.store.select(selectFwdBtnDisabled);
+		this.selectedService$ = this.store.select(selectSelectedService);
+		this.masters$ = this.store.select(selectMasters);
+		this.dates$ = this.store.select(selectDates);
+		this.schedules$ = this.store.select(selectSchedules);
+		this.months$ = this.store.select(selectMonths);
+		this.selectedMonth$ = this.store.select(selectSelectedMonth);
+		this.prevWeekBtnDisabled$ = this.store.select(selectPrevWeekBtnDisabled);
+		this.selectedSchedule$ = this.store.select(selectSelectedSchedule);
 		this.selectedScheduleTime$ = this.store.select(selectScheduleSelectedTime);
-		this.selectedMaster$ = this.store.select(WizardFeature.selectSelectedMaster);
-		this.selectedDay$ = this.store.select(WizardFeature.selectSelectedDay);
+		this.selectedMaster$ = this.store.select(selectSelectedMaster);
+		this.selectedDay$ = this.store.select(selectSelectedDay);
 		this.componentsLoadingState$ = this.store.select(selectComponentsIsLoadingState);
+		this.isFwdBtnVisible$ = this.store.select(selectIsNextBTnVisible);
 	}
 
 	onServiceChange(value: ServiceDto): void {

@@ -9,9 +9,11 @@ import {
 	resetSelectedService,
 	resetWizard,
 	resetWizardStep,
+	setAcceptPageAccess,
 	setCalendarComponentLoading,
 	setDates,
 	setFwdBtnDisabled,
+	setFwdBtnVisible,
 	setMasters,
 	setMastersFilterComponentLoading,
 	setMonths,
@@ -38,6 +40,7 @@ export const wizardFeatureKey = 'wizard';
 
 export interface WizardReducer {
 	isWizardAvailable: boolean;
+	isNextBTnVisible: boolean;
 	step: number;
 	fwdBtnDisabled: boolean;
 	services: ServiceDto[];
@@ -56,10 +59,12 @@ export interface WizardReducer {
 	isMonthsFilterLoading: boolean;
 	isCalendarLoading: boolean;
 	isSchedulesLoading: boolean;
+	isAcceptPageAvailable: boolean;
 }
 
 export const wizardInitialState: WizardReducer = {
 	isWizardAvailable: false,
+	isNextBTnVisible: true,
 	step: 0,
 	fwdBtnDisabled: true,
 	services: [],
@@ -78,6 +83,7 @@ export const wizardInitialState: WizardReducer = {
 	isMonthsFilterLoading: false,
 	isCalendarLoading: false,
 	isSchedulesLoading: false,
+	isAcceptPageAvailable: false,
 };
 
 export const WizardFeature = createFeature({
@@ -268,10 +274,26 @@ export const WizardFeature = createFeature({
 						isSchedulesLoading: payload,
 				  };
 		}),
-		on(resetWizard, (state): WizardReducer => {
+		on(resetWizard, (): WizardReducer => {
 			return {
 				...wizardInitialState,
 			};
+		}),
+		on(setFwdBtnVisible, (state, action): WizardReducer => {
+			return action.payload === state.isNextBTnVisible
+				? state
+				: {
+						...state,
+						isNextBTnVisible: action.payload,
+				  };
+		}),
+		on(setAcceptPageAccess, (state, action) => {
+			return action.payload === state.isAcceptPageAvailable
+				? state
+				: {
+						...state,
+						isAcceptPageAvailable: action.payload,
+				  };
 		}),
 	),
 });
@@ -294,6 +316,8 @@ export const {
 	selectMonths,
 	selectSelectedMonth,
 	selectPrevWeekBtnDisabled,
+	selectIsNextBTnVisible,
+	selectIsAcceptPageAvailable,
 } = WizardFeature;
 
 export const selectScheduleSelectedTime = createSelector(

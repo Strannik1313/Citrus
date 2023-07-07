@@ -26,6 +26,8 @@ import { WizardEffects } from '@state-management/wizard-feature/wizard.effects';
 import { FilterDropdownModule } from '@shared/filter-dropdown/filter-dropdown.module';
 import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 import { NgxMaskModule } from 'ngx-mask';
+import { AcceptPageComponent } from '@components/ui/wizard/accept-page/accept-page.component';
+import { RouteAccessGuard } from '@guards/route-access.guard.service';
 
 @NgModule({
 	declarations: [
@@ -35,6 +37,7 @@ import { NgxMaskModule } from 'ngx-mask';
 		WizardConfirmStepComponent,
 		FirstLetterUppercasePipe,
 		ServiceListComponent,
+		AcceptPageComponent,
 	],
 	imports: [
 		CommonModule,
@@ -52,7 +55,14 @@ import { NgxMaskModule } from 'ngx-mask';
 		ReactiveFormsModule,
 		SpinnerModule,
 		NgxMaskModule.forRoot(),
-		RouterModule.forChild([{ path: '', component: WizardComponent }]),
+		RouterModule.forChild([
+			{ path: '', component: WizardComponent },
+			{
+				path: 'accept',
+				component: AcceptPageComponent,
+				canActivate: [RouteAccessGuard],
+			},
+		]),
 		StoreModule.forFeature(WizardFeature.name, WizardFeature.reducer),
 		EffectsModule.forFeature([WizardEffects]),
 		FormsModule,

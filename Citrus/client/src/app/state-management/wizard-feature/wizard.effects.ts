@@ -20,9 +20,11 @@ import {
 	resetWizard,
 	resetWizardDateChoiceStepState,
 	resetWizardStep,
+	setAcceptPageAccess,
 	setCalendarComponentLoading,
 	setDates,
 	setFwdBtnDisabled,
+	setFwdBtnVisible,
 	setMasters,
 	setMastersFilterComponentLoading,
 	setMonths,
@@ -393,9 +395,9 @@ export class WizardEffects {
 			map((action: TypedActionWithPayload<ConfirmForm>) => action.payload),
 			switchMap(order =>
 				this.orderService.createOrder(order).pipe(
-					map(() => {
-						this.router.navigate([NAVIGATE_ROUTES.HOME]);
-						return resetWizard();
+					switchMap(() => {
+						this.router.navigate([NAVIGATE_ROUTES.ACCEPT]);
+						return [resetWizard(), setAcceptPageAccess({ payload: true })];
 					}),
 				),
 			),
@@ -454,7 +456,7 @@ export class WizardEffects {
 	initializeWizardConfirmStep$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.InitializeWizardConfirmStepAction),
-			map(() => setFwdBtnDisabled({ payload: true })),
+			switchMap(() => [setFwdBtnDisabled({ payload: true }), setFwdBtnVisible({ payload: false })]),
 		);
 	});
 }
