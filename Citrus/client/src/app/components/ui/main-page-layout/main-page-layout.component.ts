@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadWizard } from '@state-management/wizard-feature/wizard.actions';
+import { BUTTON_LABELS } from '@enums/ButtonLabels';
+import { LABELS } from '@enums/Labels';
 
 @Component({
 	selector: 'app-main-page-layout',
@@ -9,6 +11,8 @@ import { loadWizard } from '@state-management/wizard-feature/wizard.actions';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPageLayoutComponent {
+	BUTTON_LABELS: typeof BUTTON_LABELS = BUTTON_LABELS;
+	LABELS: typeof LABELS = LABELS;
 	constructor(private store: Store) {}
 
 	startProcessBtnClick() {
