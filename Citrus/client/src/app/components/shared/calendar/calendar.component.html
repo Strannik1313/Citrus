@@ -1,11 +1,11 @@
 <div class="container">
-	<button [disabled]="prevWeekBtnDisabled" (click)="onPrevWeekClick()"
-		>Prev</button
+	<button data-testid='calendar_prev_btn' [disabled]="prevWeekBtnDisabled" (click)="onPrevWeekClick()"
+		>{{BUTTON_LABELS.PREV}}</button
 	>
 	<table class="cell__container">
 		<tr>
 			<td
-				*ngFor="let date of dates; let i = index; trackBy: trackByFn"
+				*ngFor="let date of dates; trackBy: trackByFn"
 				class="cell"
 				[class.disable]='!date.mastersId || date?.mastersId?.length === 0'
 				[class.active]='preselectedDate === date.date'
@@ -15,7 +15,7 @@
 			</td>
 		</tr>
 	</table>
-	<button [disabled]="nextWeekBtnDisabled" (click)="onNextWeekClick()"
-		>Next</button
+	<button data-testid='calendar_next_btn' [disabled]="nextWeekBtnDisabled" (click)="onNextWeekClick()"
+		>{{BUTTON_LABELS.NEXT}}</button
 	>
 </div>
