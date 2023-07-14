@@ -16,8 +16,4 @@ export class MonthFilterComponent {
 	onFilterClick(item: MatSelectChange): void {
 		this.onMonthSelected.emit(item.value);
 	}
-
-	trackByFn(index: number, item: string): string {
-		return item;
-	}
 }
