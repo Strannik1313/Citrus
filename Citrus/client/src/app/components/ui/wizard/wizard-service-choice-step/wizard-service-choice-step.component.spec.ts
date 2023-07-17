@@ -8,6 +8,7 @@ import { MatCard } from '@angular/material/card';
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
 import Spy = jasmine.Spy;
+import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 
 describe('WizardServiceChoiceStepComponent', () => {
 	let fixture: ComponentFixture<WizardServiceChoiceStepComponent>;
@@ -15,7 +16,7 @@ describe('WizardServiceChoiceStepComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			imports: [RouterTestingModule],
+			imports: [RouterTestingModule, SpinnerModule],
 			declarations: [
 				WizardServiceChoiceStepComponent,
 				ServiceListComponent,
