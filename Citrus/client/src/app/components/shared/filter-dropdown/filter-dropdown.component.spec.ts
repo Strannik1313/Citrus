@@ -83,7 +83,7 @@ describe('FilterDropdownComponent', () => {
 			expect(matLabel.nativeElement.textContent).toBe(mockLabel);
 		});
 
-		it('mat-select has right selection', async () => {
+		it('mat-select has right selection', () => {
 			expect(matSelect.nativeElement.textContent).toBe(mockSelectedItem.name);
 		});
 

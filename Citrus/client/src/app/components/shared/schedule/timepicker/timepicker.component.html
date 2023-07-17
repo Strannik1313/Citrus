@@ -6,7 +6,8 @@
 			(click)="timeBtnClick(i)"
 			[class.active]='selectedTime && timeOptions.indexOf(selectedTime) >= 0'
 			cdkOverlayOrigin
-			#trigger="cdkOverlayOrigin">
+			#trigger="cdkOverlayOrigin"
+			data-testid='timepicker_button'>
 			{{(selectedTime && timeOptions.indexOf(selectedTime) >= 0 ? selectedTime : timeOptions[0]) | date: 'h:mm'}}
 		</button>
 		<ng-template
@@ -17,15 +18,15 @@
 			cdkConnectedOverlayBackdropClass='timepicker_backdrop'
 			cdkConnectedOverlayPanelClass='timepicker_panel'
 			(backdropClick)="onBackdropClick()"
+			data-testid='timepicker_backdrop'
 		>
-			<ul class="time__select__dropdown">
+			<ul class="time__select__dropdown" data-testid='timepicker_list'>
 				<li
 					class='time__select__dropdown__option'
 					[class.selected]='selectedTime === timeOption || timeOption === timeOptions[0]'
-					*ngFor="let timeOption of timeOptions; trackBy: trackByFn"
-					(click)='timeSelected(timeOption)'>
-					{{timeOption | date: 'h:mm'}}
-				</li>
+					*ngFor="let timeOption of timeOptions"
+					(click)='timeSelected(timeOption)'
+					data-testid='timepicker_option'>{{timeOption | date: 'h:mm'}}</li>
 			</ul>
 		</ng-template>
 	</div>

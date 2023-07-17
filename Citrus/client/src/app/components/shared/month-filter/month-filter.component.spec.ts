@@ -11,7 +11,7 @@ import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
 import { MonthFilterComponent } from '@shared/month-filter/month-filter.component';
 
-describe('FilterDropdownComponent', () => {
+describe('MonthFilterComponent', () => {
 	let component: MonthFilterComponent;
 	let fixture: ComponentFixture<MonthFilterComponent>;
 	let matLabel: DebugElement;
