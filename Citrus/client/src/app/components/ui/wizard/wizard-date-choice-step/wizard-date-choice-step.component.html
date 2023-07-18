@@ -36,7 +36,6 @@
 		<app-schedule
 			appSpinner
 			[isRunning]='loadingState?.isLoadingSchedules'
-			(onScheduleSelected)='scheduleSelected($event)'
 			(onTimeChange)='timeChange($event)'
 			[schedules]="schedules"
 			[selectedSchedule]='selectedSchedule'

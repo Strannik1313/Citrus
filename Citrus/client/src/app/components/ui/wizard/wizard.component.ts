@@ -158,10 +158,6 @@ export class WizardComponent implements OnInit, OnDestroy {
 		this.store.dispatch(getServices({ payload: service }));
 	}
 
-	scheduleSelected(schedule: Schedule) {
-		this.store.dispatch(setSelectedSchedule({ payload: schedule }));
-	}
-
 	onFormSubmit(formValue: ConfirmForm) {
 		this.store.dispatch(setOrder({ payload: formValue }));
 	}
