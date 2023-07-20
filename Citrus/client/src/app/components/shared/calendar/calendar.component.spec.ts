@@ -9,22 +9,19 @@ import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWee
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { ChangeDetectorRef, DebugElement } from '@angular/core';
 import { CALENDAR_BUTTON_LABELS } from '@shared/calendar/enums/CALENDAR_BUTTON_LABELS';
+import { MockCalendarDtos, MockDate } from '@tests/mockData/mockConstants';
 
 describe('CalendarComponent', () => {
 	let component: CalendarComponent;
 	let fixture: ComponentFixture<CalendarComponent>;
-	let mockDay: CalendarDatesDto = { date: '123', mastersId: ['1'] };
-	let mockDate: string = new Date().toString();
-	let mockDates: CalendarDatesDto[] = [
-		{ date: mockDate, mastersId: [] },
-		{ date: mockDate, mastersId: ['1'] },
-	];
 	let prevBtn: DebugElement;
 	let nextBtn: DebugElement;
 	let cells: DebugElement[];
 	let paragraphs: DebugElement[];
 	let cdr: ChangeDetectorRef;
 	let datePipe: DatePipe;
+
+	let mockDay: CalendarDatesDto = MockCalendarDtos[0];
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
@@ -37,8 +34,8 @@ describe('CalendarComponent', () => {
 		component = fixture.componentInstance;
 		cdr = fixture.componentRef.injector.get(ChangeDetectorRef);
 		datePipe = fixture.componentRef.injector.get(DatePipe);
-		component.dates = mockDates;
-		component.preselectedDate = mockDate;
+		component.dates = MockCalendarDtos;
+		component.preselectedDate = MockDate;
 		fixture.detectChanges();
 		prevBtn = fixture.debugElement.query(By.css('[data-testid="calendar_prev_btn"]'));
 		nextBtn = fixture.debugElement.query(By.css('[data-testid="calendar_next_btn"]'));
@@ -122,11 +119,11 @@ describe('CalendarComponent', () => {
 			});
 
 			it('first p in cell contain name of day', () => {
-				expect(paragraphs[0].nativeElement.textContent).toBe(datePipe.transform(mockDate, 'EEEEE'));
+				expect(paragraphs[0].nativeElement.textContent).toBe(datePipe.transform(MockDate, 'EEEEE'));
 			});
 
 			it('second p in cell contain day in number format', () => {
-				expect(paragraphs[1].nativeElement.textContent).toBe(datePipe.transform(mockDate, 'dd.MM'));
+				expect(paragraphs[1].nativeElement.textContent).toBe(datePipe.transform(MockDate, 'dd.MM'));
 			});
 		});
 
@@ -134,7 +131,7 @@ describe('CalendarComponent', () => {
 			it('click on first cell calls onDateClick', () => {
 				let spy = spyOn(component, 'onDateClick');
 				cells[0].triggerEventHandler('click', undefined);
-				expect(spy).toHaveBeenCalledOnceWith(mockDates[0]);
+				expect(spy).toHaveBeenCalledOnceWith(MockCalendarDtos[0]);
 			});
 
 			it('click prev button calls onPrevWeekClick', () => {

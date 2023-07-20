@@ -7,9 +7,9 @@ import { DirectivesModule } from '@directives/directives.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { Schedule } from '@models/Schedule';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { MockDate, MockSchedule } from '@tests/mockData/mockConstants';
 
 describe('ScheduleComponent', () => {
 	let fixture: ComponentFixture<ScheduleComponent>;
@@ -19,19 +19,6 @@ describe('ScheduleComponent', () => {
 	let paragraphCost: DebugElement;
 	let paragraphDuration: DebugElement;
 	let timepicker: DebugElement;
-
-	let mockTime = new Date(2000, 0, 0).toString();
-	let mockFreeTimes: string[] = [mockTime];
-	let mockSchedule: Schedule = {
-		masterName: 'mockName',
-		cost: 90,
-		duration: 90,
-		freeTimesWithShifts: [],
-		masterId: '1',
-		id: 'mockId',
-		date: mockTime,
-		freetimes: mockFreeTimes,
-	};
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
@@ -43,9 +30,9 @@ describe('ScheduleComponent', () => {
 	beforeEach(() => {
 		fixture = TestBed.createComponent(ScheduleComponent);
 		component = fixture.componentInstance;
-		component.schedules = [mockSchedule];
-		component.selectedSchedule = mockSchedule;
-		component.selectedTime = mockTime;
+		component.schedules = [MockSchedule];
+		component.selectedSchedule = MockSchedule;
+		component.selectedTime = MockDate;
 		fixture.detectChanges();
 		matCard = fixture.debugElement.query(By.css('[data-testid="schedule_mat_card"]'));
 		paragraphMasterName = fixture.debugElement.query(By.css('[data-testid="schedule_p_master_name"]'));
@@ -66,12 +53,12 @@ describe('ScheduleComponent', () => {
 		describe('ScheduleComponent methods', () => {
 			it('onTimeChange emit schedule with preorder', () => {
 				let spy = spyOn(component.onTimeChange, 'emit');
-				component.timeChange(mockTime, mockSchedule);
-				expect(spy).toHaveBeenCalledOnceWith({ ...mockSchedule, preOrder: mockTime });
+				component.timeChange(MockDate, MockSchedule);
+				expect(spy).toHaveBeenCalledOnceWith({ ...MockSchedule, preOrder: MockDate });
 			});
 
 			it('trackByFn return id', () => {
-				expect(component.trackByFn(0, mockSchedule)).toBe(mockSchedule.id);
+				expect(component.trackByFn(0, MockSchedule)).toBe(MockSchedule.id);
 			});
 		});
 
@@ -89,21 +76,21 @@ describe('ScheduleComponent', () => {
 			});
 
 			it('p with master name has right template', () => {
-				expect(paragraphMasterName.nativeElement.textContent).toBe(mockSchedule.masterName);
+				expect(paragraphMasterName.nativeElement.textContent).toBe(MockSchedule.masterName);
 			});
 
 			it('p with cost has right template', () => {
-				expect(paragraphCost.nativeElement.textContent).toBe('Цена: ' + mockSchedule.cost + ' рублей');
+				expect(paragraphCost.nativeElement.textContent).toBe('Цена: ' + MockSchedule.cost + ' рублей');
 			});
 
 			it('p with duration has right template', () => {
-				expect(paragraphDuration.nativeElement.textContent).toBe('Продолжительность: ' + mockSchedule.cost + ' минут');
+				expect(paragraphDuration.nativeElement.textContent).toBe('Продолжительность: ' + MockSchedule.cost + ' минут');
 			});
 
 			it('timepicker onTimeSelected event calls timeChange() with time and schedule', () => {
 				let spy = spyOn(component, 'timeChange');
-				timepicker.triggerEventHandler('onTimeSelected', mockTime);
-				expect(spy).toHaveBeenCalledOnceWith(mockTime, mockSchedule);
+				timepicker.triggerEventHandler('onTimeSelected', MockDate);
+				expect(spy).toHaveBeenCalledOnceWith(MockDate, MockSchedule);
 			});
 		});
 	});

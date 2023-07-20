@@ -5,12 +5,12 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { HttpHandler, HttpRequest } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { showSnakeBar } from '@state-management/main-feature/main.actions';
+import { MockInitialState } from '@tests/mockData/mockConstants';
 
 describe('ErrorHandlerInterceptor', () => {
 	let store: MockStore;
 	let interceptor: ErrorHandlerInterceptor;
 
-	let initialState = {};
 	let mockRequest: HttpRequest<unknown>;
 	let mockHandler: HttpHandler;
 
@@ -28,7 +28,7 @@ describe('ErrorHandlerInterceptor', () => {
 					useValue: throwError(() => new Error('')),
 				},
 				ErrorHandlerInterceptor,
-				provideMockStore({ initialState }),
+				provideMockStore({ initialState: MockInitialState }),
 			],
 		}),
 	);

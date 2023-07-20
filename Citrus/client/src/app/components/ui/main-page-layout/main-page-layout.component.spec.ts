@@ -6,6 +6,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { BUTTON_LABELS } from '@enums/ButtonLabels';
 import { LABELS } from '@enums/Labels';
+import { MockInitialState } from '@tests/mockData/mockConstants';
 
 describe('MainPageLayoutComponent', () => {
 	let fixture: ComponentFixture<MainPageLayoutComponent>;
@@ -14,12 +15,11 @@ describe('MainPageLayoutComponent', () => {
 	let btn: DebugElement;
 	let title: DebugElement;
 	let subtitle: DebugElement;
-	const initialState = {};
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [MainPageLayoutComponent],
-			providers: [provideMockStore(initialState)],
+			providers: [provideMockStore({ initialState: MockInitialState })],
 		}).compileComponents();
 	});
 
