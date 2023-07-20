@@ -1,6 +1,7 @@
 import { createFeature, createReducer, createSelector, on } from '@ngrx/store';
 import {
 	changeWizardStep,
+	checkIsWizardAvailable,
 	resetSchedules,
 	resetSelectedDay,
 	resetSelectedMaster,
@@ -96,7 +97,7 @@ export const WizardFeature = createFeature({
 				step: state.step + payload,
 			};
 		}),
-		on(changeWizardStep, (state): WizardReducer => {
+		on(checkIsWizardAvailable, (state): WizardReducer => {
 			return equal(state.isWizardAvailable, state.step > 0)
 				? state
 				: {
@@ -105,13 +106,15 @@ export const WizardFeature = createFeature({
 				  };
 		}),
 		on(resetWizardStep, (state): WizardReducer => {
-			return {
-				...state,
-				step: 0,
-			};
+			return state.step === 0
+				? state
+				: {
+						...state,
+						step: 0,
+				  };
 		}),
 		on(setServices, (state, { payload }): WizardReducer => {
-			return equal(state, payload)
+			return equal(state.services, payload)
 				? state
 				: {
 						...state,
@@ -119,10 +122,12 @@ export const WizardFeature = createFeature({
 				  };
 		}),
 		on(setFwdBtnDisabled, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				fwdBtnDisabled: payload,
-			};
+			return state.fwdBtnDisabled === payload
+				? state
+				: {
+						...state,
+						fwdBtnDisabled: payload,
+				  };
 		}),
 		on(setSelectedService, (state, { payload }): WizardReducer => {
 			return equal(state.selectedService, payload)
@@ -133,10 +138,12 @@ export const WizardFeature = createFeature({
 				  };
 		}),
 		on(resetSelectedService, (state): WizardReducer => {
-			return {
-				...state,
-				selectedService: null,
-			};
+			return state.selectedService === null
+				? state
+				: {
+						...state,
+						selectedService: null,
+				  };
 		}),
 		on(setMasters, (state, { payload }): WizardReducer => {
 			return equal(state.masters, payload)
@@ -155,10 +162,12 @@ export const WizardFeature = createFeature({
 				  };
 		}),
 		on(setSelectedDay, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				selectedDay: payload,
-			};
+			return equal(state.selectedDay, payload)
+				? state
+				: {
+						...state,
+						selectedDay: payload,
+				  };
 		}),
 		on(setSchedules, (state, { payload }): WizardReducer => {
 			return equal(state.schedules, payload)
@@ -185,7 +194,7 @@ export const WizardFeature = createFeature({
 				  };
 		}),
 		on(setMonths, (state, { payload }): WizardReducer => {
-			return equal(state.months, payload)
+			return equal(state.months, payload.months)
 				? state
 				: {
 						...state,
@@ -193,46 +202,60 @@ export const WizardFeature = createFeature({
 				  };
 		}),
 		on(setSelectedMonth, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				selectedMonth: payload,
-			};
+			return state.selectedMonth === payload
+				? state
+				: {
+						...state,
+						selectedMonth: payload,
+				  };
 		}),
 		on(setPrevWeekBtnDisabled, (state, { payload }): WizardReducer => {
-			return {
-				...state,
-				prevWeekBtnDisabled: payload,
-			};
+			return state.prevWeekBtnDisabled === payload
+				? state
+				: {
+						...state,
+						prevWeekBtnDisabled: payload,
+				  };
 		}),
 		on(resetSelectedMaster, (state): WizardReducer => {
-			return {
-				...state,
-				selectedMaster: null,
-			};
+			return state.selectedMaster === null
+				? state
+				: {
+						...state,
+						selectedMaster: null,
+				  };
 		}),
 		on(resetSelectedDay, (state): WizardReducer => {
-			return {
-				...state,
-				selectedDay: null,
-			};
+			return state.selectedDay === null
+				? state
+				: {
+						...state,
+						selectedDay: null,
+				  };
 		}),
 		on(resetSelectedMonth, (state): WizardReducer => {
-			return {
-				...state,
-				selectedMonth: null,
-			};
+			return state.selectedMonth === null
+				? state
+				: {
+						...state,
+						selectedMonth: null,
+				  };
 		}),
 		on(resetSelectedSchedule, (state): WizardReducer => {
-			return {
-				...state,
-				selectedSchedule: null,
-			};
+			return state.selectedSchedule === null
+				? state
+				: {
+						...state,
+						selectedSchedule: null,
+				  };
 		}),
 		on(resetSchedules, (state): WizardReducer => {
-			return {
-				...state,
-				schedules: null,
-			};
+			return state.schedules === null
+				? state
+				: {
+						...state,
+						schedules: null,
+				  };
 		}),
 		on(setServicesListLoading, (state, { payload }): WizardReducer => {
 			return equal(state.isServicesListLoading, payload)
@@ -274,25 +297,27 @@ export const WizardFeature = createFeature({
 						isSchedulesLoading: payload,
 				  };
 		}),
-		on(resetWizard, (): WizardReducer => {
-			return {
-				...wizardInitialState,
-			};
-		}),
-		on(setFwdBtnVisible, (state, action): WizardReducer => {
-			return action.payload === state.isNextBTnVisible
+		on(resetWizard, (state): WizardReducer => {
+			return equal(state, wizardInitialState)
 				? state
 				: {
-						...state,
-						isNextBTnVisible: action.payload,
+						...wizardInitialState,
 				  };
 		}),
-		on(setAcceptPageAccess, (state, action) => {
-			return action.payload === state.isAcceptPageAvailable
+		on(setFwdBtnVisible, (state, { payload }): WizardReducer => {
+			return payload === state.isNextBTnVisible
 				? state
 				: {
 						...state,
-						isAcceptPageAvailable: action.payload,
+						isNextBTnVisible: payload,
+				  };
+		}),
+		on(setAcceptPageAccess, (state, { payload }) => {
+			return payload === state.isAcceptPageAvailable
+				? state
+				: {
+						...state,
+						isAcceptPageAvailable: payload,
 				  };
 		}),
 	),

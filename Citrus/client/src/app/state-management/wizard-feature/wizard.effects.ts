@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import {
 	changeWizardStep,
+	checkIsWizardAvailable,
 	getDates,
 	getMasters,
 	getMonths,
@@ -134,6 +135,13 @@ export class WizardEffects {
 						return [getServices({ payload: null })];
 				}
 			}),
+		);
+	});
+
+	checkIsWizardAvailable$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.ChangeWizardStepAction),
+			map(() => checkIsWizardAvailable()),
 		);
 	});
 
