@@ -461,6 +461,7 @@ export class WizardEffects {
 						},
 					}),
 					setFwdBtnDisabled({ payload: !schedule }),
+					setFwdBtnVisible({ payload: true }),
 					setMastersFilterComponentLoading({ payload: true }),
 					setMonthsFilterComponentLoading({ payload: true }),
 					setCalendarComponentLoading({ payload: true }),
