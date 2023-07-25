@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
 import {
 	changeWizardStep,
+	checkIsWizardAvailable,
 	getDates,
 	getMasters,
 	getMonths,
@@ -39,7 +40,15 @@ import {
 } from '@state-management/wizard-feature/wizard.actions';
 import { debounce, interval, map, mergeMap, switchMap } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { WizardFeature } from '@state-management/wizard-feature/wizard.reducer';
+import {
+	selectDates,
+	selectMasters,
+	selectSelectedDay,
+	selectSelectedMaster,
+	selectSelectedService,
+	selectStep,
+	WizardFeature,
+} from '@state-management/wizard-feature/wizard.reducer';
 import { WizardMaxStep } from '@components/ui/wizard/constants/WizardMaxStep';
 import { ServicesService } from '@api/ServicesService';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
@@ -89,7 +98,7 @@ export class WizardEffects {
 	increaseWizardStep$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(WizardActions.IncrementWizardStepAction),
-			concatLatestFrom(() => this.store.select(WizardFeature.selectStep)),
+			concatLatestFrom(() => this.store.select(selectStep)),
 			map(([, step]) => {
 				if (step === WizardMaxStep) {
 					return resetWizardStep();
@@ -131,9 +140,16 @@ export class WizardEffects {
 						return [initializeWizardConfirmStep()];
 					}
 					default:
-						return [getServices({ payload: null })];
+						return [resetWizardStep()];
 				}
 			}),
+		);
+	});
+
+	checkIsWizardAvailable$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(WizardActions.ChangeWizardStepAction),
+			map(() => checkIsWizardAvailable()),
 		);
 	});
 
@@ -205,7 +221,7 @@ export class WizardEffects {
 		return this.actions$.pipe(
 			ofType(WizardActions.SetSelectedDayAction),
 			map((action: TypedActionWithPayload<string>) => action.payload),
-			concatLatestFrom(() => [this.store.select(WizardFeature.selectSelectedMaster)]),
+			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedMaster)),
 			map(([date, selectedMaster]) => {
 				return getSchedules({ payload: { date, masterId: selectedMaster?.id } });
 			}),
@@ -282,9 +298,9 @@ export class WizardEffects {
 			ofType(WizardActions.GetNextWeekAction),
 			concatLatestFrom(() => {
 				return [
-					this.store.select(WizardFeature.selectSelectedMaster),
-					this.store.select(WizardFeature.selectSelectedService),
-					this.store.select(WizardFeature.selectDates),
+					this.store.select(selectSelectedMaster),
+					this.store.select(selectSelectedService),
+					this.store.select(selectDates),
 				];
 			}),
 			switchMap(([, selectedMater, selectedService, calendarDates]) => {
@@ -352,7 +368,7 @@ export class WizardEffects {
 		return this.actions$.pipe(
 			ofType(WizardActions.SetSelectedScheduleAction),
 			map((action: TypedActionWithPayload<Schedule>) => action.payload),
-			concatLatestFrom(() => this.store.select(WizardFeature.selectMasters)),
+			concatLatestFrom(() => this.store.select(selectMasters)),
 			map(([schedule, masters]) => masters?.find(master => master.id === schedule.masterId)),
 			switchMap(master => [setFwdBtnDisabled({ payload: false }), setSelectedMaster({ payload: master! })]),
 		);
@@ -362,7 +378,7 @@ export class WizardEffects {
 		return this.actions$.pipe(
 			ofType(WizardActions.SetSelectedMasterAction),
 			map((action: TypedActionWithPayload<MasterDto>) => action.payload),
-			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedDay)),
+			concatLatestFrom(() => this.store.select(selectSelectedDay)),
 			switchMap(([master, date]) => {
 				return [getSchedules({ payload: { date, masterId: master?.id } })];
 			}),

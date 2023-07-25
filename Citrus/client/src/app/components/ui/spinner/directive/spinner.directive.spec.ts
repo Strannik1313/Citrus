@@ -82,4 +82,13 @@ describe('SpinnerDirective', () => {
 			expect(directive.calculateSpinnerSize(viewContainerRef.element)).toEqual(100);
 		});
 	});
+
+	describe('removeSpinnerFromHost', () => {
+		it('call spinner destroy', () => {
+			directive.renderSpinnerInHost();
+			let spy = spyOn(cdr, 'markForCheck');
+			directive.isRunning = false;
+			expect(spy).toHaveBeenCalledOnceWith();
+		});
+	});
 });

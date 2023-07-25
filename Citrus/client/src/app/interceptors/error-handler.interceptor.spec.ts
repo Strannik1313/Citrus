@@ -1,16 +1,57 @@
 import { TestBed } from '@angular/core/testing';
 
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { HttpHandler, HttpRequest } from '@angular/common/http';
+import { throwError } from 'rxjs';
+import { showSnakeBar } from '@state-management/main-feature/main.actions';
+import { MockInitialState } from '@tests/mockData/mockConstants';
 
 describe('ErrorHandlerInterceptor', () => {
+	let store: MockStore;
+	let interceptor: ErrorHandlerInterceptor;
+
+	let mockRequest: HttpRequest<unknown>;
+	let mockHandler: HttpHandler;
+
 	beforeEach(() =>
 		TestBed.configureTestingModule({
-			providers: [ErrorHandlerInterceptor],
+			providers: [
+				{
+					provide: HttpHandler,
+					useValue: {
+						handle: (request: HttpRequest<unknown>) => request,
+					},
+				},
+				{
+					provide: HttpRequest,
+					useValue: throwError(() => new Error('')),
+				},
+				ErrorHandlerInterceptor,
+				provideMockStore({ initialState: MockInitialState }),
+			],
 		}),
 	);
 
+	beforeEach(() => {
+		store = TestBed.inject(MockStore);
+		interceptor = TestBed.inject(ErrorHandlerInterceptor);
+		mockRequest = TestBed.inject(HttpRequest);
+		mockHandler = TestBed.inject(HttpHandler);
+	});
+
 	it('should be created', () => {
-		const interceptor: ErrorHandlerInterceptor = TestBed.inject(ErrorHandlerInterceptor);
 		expect(interceptor).toBeTruthy();
+	});
+
+	it('dispatch showSnakeBar action after error is thrown', () => {
+		let spy = spyOn(store, 'dispatch');
+		interceptor.intercept(mockRequest, mockHandler).subscribe({
+			// eslint-disable-next-line @typescript-eslint/no-empty-function
+			next: () => {},
+			error: () => {
+				expect(spy).toHaveBeenCalledOnceWith(showSnakeBar());
+			},
+		});
 	});
 });

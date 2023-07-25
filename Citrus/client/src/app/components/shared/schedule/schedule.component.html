@@ -1,17 +1,19 @@
 <div class="container__schedules">
 	<ng-container *ngFor="let schedule of schedules; trackBy: trackByFn">
 		<mat-card class="schedule"
+							data-testid='schedule_mat_card'
 							*ngIf="schedule.freetimes.length > 0"
 							[class.active]='selectedSchedule?.id === schedule.id'>
 			<div>
-				<p>{{ schedule.masterName }}</p>
-				<p>Цена: {{ schedule.cost }} рублей</p>
-				<p>Продолжительность: {{ schedule.duration }} минут</p>
+				<p data-testid='schedule_p_master_name'>{{ schedule.masterName }}</p>
+				<p data-testid='schedule_p_cost'>Цена: {{ schedule.cost }} рублей</p>
+				<p data-testid='schedule_p_duration'>Продолжительность: {{ schedule.duration }} минут</p>
 				<div class="time__container">
 					<app-timepicker
 						[time]="schedule.freeTimesWithShifts"
 						[selectedTime]='selectedTime'
-						(onTimeSelected)='timeChange($event, schedule)'>
+						(onTimeSelected)='timeChange($event, schedule)'
+						data-testid='schedule_timepicker'>
 					</app-timepicker>
 				</div>
 			</div

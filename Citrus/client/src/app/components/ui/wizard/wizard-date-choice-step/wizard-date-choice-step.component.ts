@@ -29,7 +29,6 @@ export class WizardDateChoiceStepComponent {
 	@Output() onDayChange: EventEmitter<string> = new EventEmitter();
 	@Output() onMonthChange: EventEmitter<string | null> = new EventEmitter();
 	@Output() onTimeChange: EventEmitter<Schedule> = new EventEmitter();
-	@Output() onScheduleSelected: EventEmitter<Schedule> = new EventEmitter();
 
 	onDaySelected(date: string): void {
 		this.onDayChange.emit(date);
@@ -51,9 +50,5 @@ export class WizardDateChoiceStepComponent {
 
 	timeChange(choisenDate: Schedule): void {
 		this.onTimeChange.emit(choisenDate);
-	}
-
-	scheduleSelected(schedule: Schedule) {
-		this.onScheduleSelected.emit(schedule);
 	}
 }

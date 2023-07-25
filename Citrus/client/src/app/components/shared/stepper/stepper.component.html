@@ -2,7 +2,8 @@
 	<div
 		class="step"
 		[class.active-step]='currentStep >= step'
-		*ngFor="let step of stepsQuantity; trackBy: trackByFn; let i = index">
+		*ngFor="let step of stepsQuantity"
+		data-testid='step_container'>
 		<span>{{ step }}</span>
 	</div>
 </div>

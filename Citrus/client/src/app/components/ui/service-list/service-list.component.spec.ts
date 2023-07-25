@@ -5,10 +5,10 @@ import { ServiceListComponent } from '@components/ui/service-list/service-list.c
 import { DebugElement } from '@angular/core';
 import { first } from 'rxjs';
 import { ServiceDto } from '@models/ServiceDto';
-import { MockService } from '@tests/mockData/mockService';
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
 import Spy = jasmine.Spy;
+import { MockService } from '@tests/mockData/mockConstants';
 
 describe('Dialog window component', () => {
 	let fixture: ComponentFixture<ServiceListComponent>;

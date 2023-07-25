@@ -4,8 +4,8 @@ import { RouteAccessGuard } from './route-access.guard.service';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { asyncData } from '@tests/async-observable-helper/async-observable-helper';
-import { MockUrlEnum } from '@tests/mockData/mockUrlEnum';
 import 'zone.js/testing';
+import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 
 describe('RouteAccessGuard', () => {
 	let guard: RouteAccessGuard;
@@ -52,22 +52,43 @@ describe('RouteAccessGuard', () => {
 	});
 
 	describe('canActivate', () => {
-		beforeEach(() => {
-			router.routerState.snapshot.url = MockUrlEnum.WIZARD;
-		});
-		it('should return true', () => {
-			guard.isWizardAvailable = true;
-			expect(guard.canActivate(activatedRouter.snapshot, router.routerState.snapshot)).toBeTrue();
-		});
-		it('should call navigate()', () => {
-			guard.isWizardAvailable = false;
-			let routerSpy = spyOn(router, 'navigate');
-			guard.canActivate(activatedRouter.snapshot, router.routerState.snapshot);
-			expect(routerSpy).toHaveBeenCalled();
-		});
 		it('should return false by default', () => {
 			router.routerState.snapshot.url = '/fakeUrl';
 			expect(guard.canActivate(activatedRouter.snapshot, router.routerState.snapshot)).toBeFalse();
+		});
+
+		describe('access to /deal', () => {
+			beforeEach(() => {
+				router.routerState.snapshot.url = NAVIGATE_ROUTES.WIZARD;
+			});
+			it('should return true', () => {
+				guard.isWizardAvailable = true;
+				expect(guard.canActivate(activatedRouter.snapshot, router.routerState.snapshot)).toBeTrue();
+			});
+			it('should call navigate()', () => {
+				guard.isWizardAvailable = false;
+				let routerSpy = spyOn(router, 'navigate');
+				guard.canActivate(activatedRouter.snapshot, router.routerState.snapshot);
+				expect(routerSpy).toHaveBeenCalledOnceWith(['/']);
+			});
+		});
+
+		describe('access to /deal/accept', () => {
+			beforeEach(() => {
+				router.routerState.snapshot.url = NAVIGATE_ROUTES.ACCEPT;
+			});
+
+			it('return true if accept page is available', () => {
+				guard.isAcceptPageAvailable = true;
+				expect(guard.canActivate(activatedRouter.snapshot, router.routerState.snapshot)).toBeTrue();
+			});
+
+			it('calls navigate() if accept page is not available', () => {
+				guard.isAcceptPageAvailable = false;
+				let routerSpy = spyOn(router, 'navigate');
+				guard.canActivate(activatedRouter.snapshot, router.routerState.snapshot);
+				expect(routerSpy).toHaveBeenCalledOnceWith(['/']);
+			});
 		});
 	});
 });

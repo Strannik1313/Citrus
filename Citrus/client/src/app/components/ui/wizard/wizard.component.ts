@@ -1,10 +1,7 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
 import { Store } from '@ngrx/store';
 import {
 	selectComponentsIsLoadingState,
@@ -44,15 +41,10 @@ import { BUTTON_LABELS } from '@enums/ButtonLabels';
 import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
 import { ConfirmForm } from '@models/ConfirmForm';
 
-dayjs.locale('ru');
-
-const STEPS_QUATITY = [1, 2, 3];
-
 export enum WizardStepperEnum {
 	SERVICE_CHOICE = 1,
 	DATE_CHOICE = 2,
 	CONFIRM_PAGE = 3,
-	DONE = 4,
 }
 
 @Component({
@@ -61,14 +53,10 @@ export enum WizardStepperEnum {
 	styleUrls: ['./wizard.component.scss'],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class WizardComponent implements OnInit, OnDestroy {
+export class WizardComponent implements OnInit {
 	public WizardStepperEnum: typeof WizardStepperEnum = WizardStepperEnum;
-	public stepsQuantity: BehaviorSubject<Array<number>> = new BehaviorSubject(STEPS_QUATITY);
 	public BUTTON_LABELS: typeof BUTTON_LABELS = BUTTON_LABELS;
-	private updatedPhone: BehaviorSubject<string> = new BehaviorSubject<string>('');
-	private subscription: Subscription = new Subscription();
-	stepsQuantity$ = this.stepsQuantity.asObservable();
-	updatedPhone$ = this.updatedPhone.asObservable();
+	stepsQuantity = [1, 2, 3];
 	currentStep$: Observable<number> = new Observable<number>();
 	services$: Observable<ServiceDto[]> = new Observable<ServiceDto[]>();
 	fwdBtnDisabled$: Observable<boolean> = new Observable<boolean>();
@@ -86,7 +74,7 @@ export class WizardComponent implements OnInit, OnDestroy {
 	componentsLoadingState$: Observable<ComponentsLoadingState | null> = new Observable<ComponentsLoadingState>();
 	isFwdBtnVisible$: Observable<boolean | null> = new Observable<boolean>();
 
-	constructor(private router: Router, private store: Store) {}
+	constructor(private store: Store) {}
 
 	ngOnInit() {
 		this.currentStep$ = this.store.select(selectStep);
@@ -150,16 +138,8 @@ export class WizardComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	ngOnDestroy(): void {
-		this.subscription.unsubscribe();
-	}
-
 	onServiceStepInputChange(service: string | null) {
 		this.store.dispatch(getServices({ payload: service }));
-	}
-
-	scheduleSelected(schedule: Schedule) {
-		this.store.dispatch(setSelectedSchedule({ payload: schedule }));
 	}
 
 	onFormSubmit(formValue: ConfirmForm) {

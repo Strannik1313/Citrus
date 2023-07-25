@@ -12,7 +12,6 @@ export class ScheduleComponent {
 	@Input() selectedSchedule: Schedule | null = null;
 	@Input() selectedTime: string | null = null;
 	@Output() onTimeChange: EventEmitter<Schedule> = new EventEmitter();
-	@Output() onScheduleSelected: EventEmitter<Schedule> = new EventEmitter();
 
 	timeChange(time: string, schedule: Schedule): void {
 		this.onTimeChange.emit({

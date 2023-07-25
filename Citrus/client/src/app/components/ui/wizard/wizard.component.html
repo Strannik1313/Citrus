@@ -4,8 +4,6 @@
 		masters: masters$ | async,
 		dates: dates$ | async,
 		schedules: schedules$ | async,
-		stepsQuantity: stepsQuantity$ | async,
-		updatedPhone: updatedPhone$ | async,
 		fwdBtnDisabled: (fwdBtnDisabled$ | async)!,
 		selectedService: selectedService$ | async,
 		currentStep: (currentStep$ | async)!,
@@ -22,38 +20,43 @@
 	<div class="wizard__container">
 		<app-stepper
 			[currentStep]="data.currentStep"
-			[stepsQuantity]="data.stepsQuantity"></app-stepper>
+			[stepsQuantity]="stepsQuantity">
+		</app-stepper>
 		<div class="button__container">
-			<button (click)="onBtnClick(false)" mat-button color="primary">{{
-				BUTTON_LABELS.PREV_BTN_LABEL
-			}}</button>
-			<ng-container *ngIf='data.isFwdBtnVisible'>
+			<button
+				mat-button
+				color="primary"
+				data-testid="wizard_prev_step_btn"
+				(click)="onBtnClick(false)"
+			>{{ BUTTON_LABELS.PREV_BTN_LABEL }}</button>
+			<ng-container *ngIf="data.isFwdBtnVisible">
 				<button
 					mat-button
 					color="primary"
+					data-testid="wizard_next_step_btn"
 					[disabled]="data.fwdBtnDisabled"
 					(click)="onBtnClick(true)"
-				>{{ BUTTON_LABELS.NEXT_BTN_LABEL }}
-				</button>
+				>{{ BUTTON_LABELS.NEXT_BTN_LABEL }}</button>
 			</ng-container>
 		</div>
 		<div [ngSwitch]="data.currentStep">
 			<app-wizard-service-choice-step
+				data-testid="wizard_first_step"
 				*ngSwitchCase="WizardStepperEnum.SERVICE_CHOICE"
 				(serviceChange)="onServiceChange($event)"
         (inputChange)="onServiceStepInputChange($event)"
 				[services]="data.services"
         [selectedService]="data.selectedService"
-				[loadingState]='data.componentsLoadingState?.wizardFirstStep'>
+				[loadingState]="data.componentsLoadingState?.wizardFirstStep">
 			</app-wizard-service-choice-step>
 			<app-wizard-date-choice-step
+				data-testid="wizard_second_step"
 				*ngSwitchCase="WizardStepperEnum.DATE_CHOICE"
 				(onWeekChange)="onWeekChange($event)"
 				(onMasterChange)="onMasterChange($event)"
 				(onDayChange)="onDayChange($event)"
 				(onMonthChange)="onMonthChange($event)"
-				(onScheduleSelected)="scheduleSelected($event)"
-				(onTimeChange)='timeChange($event)'
+				(onTimeChange)="timeChange($event)"
 				[months]="data.months"
 				[schedules]="data.schedules"
 				[prevWeekBtnDisabled]="data.prevWeekBtnDisabled"
@@ -61,17 +64,18 @@
 				[dates]="data.dates"
 				[selectedDay]="data.selectedDay"
 				[selectedMonth]="data.selectedMonth"
-				[selectedTime]='data.selectedScheduleTime'
+				[selectedTime]="data.selectedScheduleTime"
 				[selectedSchedule]="data.selectedSchedule"
-				[selectedMaster]='data.selectedMaster'
-				[loadingState]='data.componentsLoadingState?.wizardSecondStep'>
+				[selectedMaster]="data.selectedMaster"
+				[loadingState]="data.componentsLoadingState?.wizardSecondStep">
 			</app-wizard-date-choice-step>
 			<app-wizard-confirm-step
+				data-testid="wizard_third_step"
 				*ngSwitchCase="WizardStepperEnum.CONFIRM_PAGE"
-				[selectedMaster]='data.selectedMaster'
-				[selectedService]='data.selectedService'
-				[selectedSchedule]='data.selectedSchedule'
-				(onFormSubmit)='onFormSubmit($event)'>
+				(onFormSubmit)="onFormSubmit($event)"
+				[selectedMaster]="data.selectedMaster"
+				[selectedService]="data.selectedService"
+				[selectedSchedule]="data.selectedSchedule">
 			</app-wizard-confirm-step>
 		</div>
 	</div>

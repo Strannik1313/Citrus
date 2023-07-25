@@ -9,8 +9,4 @@ import { Component, ChangeDetectionStrategy, Input } from '@angular/core';
 export class StepperComponent {
 	@Input() currentStep = 1;
 	@Input() stepsQuantity: Array<number> | null = [];
-
-	trackByFn(index: number, item: number): number {
-		return item;
-	}
 }

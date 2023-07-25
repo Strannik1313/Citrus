@@ -1,80 +1,79 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { FilterDropdownComponent } from './filter-dropdown.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule, By } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
 import { DebugElement } from '@angular/core';
 import { HarnessLoader } from '@angular/cdk/testing';
 import { TestbedHarnessEnvironment } from '@angular/cdk/testing/testbed';
 import { MatSelectHarness } from '@angular/material/select/testing';
+import { MonthFilterComponent } from '@shared/month-filter/month-filter.component';
 
-describe('FilterDropdownComponent', () => {
-	let component: FilterDropdownComponent;
-	let fixture: ComponentFixture<FilterDropdownComponent>;
+describe('MonthFilterComponent', () => {
+	let component: MonthFilterComponent;
+	let fixture: ComponentFixture<MonthFilterComponent>;
 	let matLabel: DebugElement;
 	let matSelect: DebugElement;
 	let matOptions: DebugElement[];
 	let loader: HarnessLoader;
 	let select: MatSelectHarness;
+	let datePipe: DatePipe;
 
 	let mockMatSelectChange: MatSelectChange;
-	let mockItems: FilterItem[] = [{ name: 'mockItem1' }, { name: 'mockItem2' }];
+	let mockFirstMonth = new Date(2000, 0, 1).toString();
+	let mockSecondMonth = new Date(2000, 1, 1).toString();
+	let mockMonths: string[] = [mockFirstMonth, mockSecondMonth];
 	let mockLabel = 'mockLabel';
-	let mockSelectedItem: FilterItem = mockItems[0];
+	let mockSelectedMonth: string = mockMonths[0];
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [FilterDropdownComponent],
+			declarations: [MonthFilterComponent],
 			imports: [CommonModule, FormsModule, MatFormFieldModule, MatSelectModule, BrowserModule, BrowserAnimationsModule],
 			providers: [
 				{
 					provide: MatSelectChange,
-					useValue: { value: mockSelectedItem },
+					useValue: { value: mockSelectedMonth },
 				},
+				DatePipe,
 			],
 		}).compileComponents();
 	});
 
 	beforeEach(async () => {
-		fixture = TestBed.createComponent(FilterDropdownComponent);
+		fixture = TestBed.createComponent(MonthFilterComponent);
 		component = fixture.componentInstance;
-		component.selectedItem = mockSelectedItem;
-		component.items = mockItems;
+		component.selectedMonth = mockSelectedMonth;
+		component.months = mockMonths;
 		component.label = mockLabel;
 		mockMatSelectChange = fixture.componentRef.injector.get(MatSelectChange);
+		datePipe = fixture.componentRef.injector.get(DatePipe);
 		fixture.detectChanges();
 
 		loader = TestbedHarnessEnvironment.loader(fixture);
 		select = await loader.getHarness(MatSelectHarness);
 		await select.open();
 
-		matLabel = fixture.debugElement.query(By.css('[data-testid="filter_dropdown_label"]'));
-		matSelect = fixture.debugElement.query(By.css('[data-testid="filter_dropdown_select"]'));
-		matOptions = fixture.debugElement.queryAll(By.css('[data-testid="filter_dropdown_mat-option"]'));
+		matLabel = fixture.debugElement.query(By.css('[data-testid="month_filter_label"]'));
+		matSelect = fixture.debugElement.query(By.css('[data-testid="month_filter_mat_select"]'));
+		matOptions = fixture.debugElement.queryAll(By.css('[data-testid="month_filter_mat_option"]'));
 	});
 
 	afterEach(() => {
 		fixture.destroy();
 	});
 
-	describe('FilterDropdownComponent', () => {
+	describe('MonthFilterComponent', () => {
 		it('should create', () => {
 			expect(component).toBeTruthy();
 		});
 
 		it('onFilterClick', () => {
-			let spy = spyOn(component.onFilterChange, 'emit');
+			let spy = spyOn(component.onMonthSelected, 'emit');
 			component.onFilterClick(mockMatSelectChange);
-			expect(spy).toHaveBeenCalledOnceWith(mockSelectedItem);
-		});
-
-		it('trackByFn', () => {
-			expect(component.trackByFn(0, mockSelectedItem)).toBe(mockSelectedItem.name);
+			expect(spy).toHaveBeenCalledOnceWith(mockSelectedMonth);
 		});
 	});
 
@@ -84,7 +83,7 @@ describe('FilterDropdownComponent', () => {
 		});
 
 		it('mat-select has right selection', () => {
-			expect(matSelect.nativeElement.textContent).toBe(mockSelectedItem.name);
+			expect(matSelect.nativeElement.textContent).toBe(datePipe.transform(mockSelectedMonth, 'LLLL'));
 		});
 
 		it('mat-select has disableOptionCentering attribute', () => {
@@ -102,7 +101,7 @@ describe('FilterDropdownComponent', () => {
 		});
 
 		it('mat-option has label as item.name', () => {
-			expect(matOptions[0].nativeElement.textContent).toBe(mockSelectedItem.name);
+			expect(matOptions[0].nativeElement.textContent).toBe(datePipe.transform(mockSelectedMonth, 'LLLL'));
 		});
 	});
 });
