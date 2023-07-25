@@ -446,14 +446,15 @@ describe('WizardEffects', () => {
 		});
 
 		it('calls actions with not null params when in store are selectedService, selectedMaster, selectedSchedule', () => {
-			const expected = cold('(bcdefgh)', {
+			const expected = cold('(bcdefghi)', {
 				b: getMasters({ payload: { serviceId: MockService.id, masterId: null } }),
 				c: getDates({ payload: { serviceId: MockService.id, masterId: MockMasterDto.id } }),
 				d: getMonths({ payload: { currentMonth: new Date().getMonth().toString() } }),
 				e: setFwdBtnDisabled({ payload: false }),
-				f: setMastersFilterComponentLoading({ payload: true }),
-				g: setMonthsFilterComponentLoading({ payload: true }),
-				h: setCalendarComponentLoading({ payload: true }),
+				f: setFwdBtnVisible({ payload: true }),
+				g: setMastersFilterComponentLoading({ payload: true }),
+				h: setMonthsFilterComponentLoading({ payload: true }),
+				i: setCalendarComponentLoading({ payload: true }),
 			});
 			expect(effects.initializeWizardDateChoice$).toBeObservable(expected);
 		});
@@ -462,14 +463,15 @@ describe('WizardEffects', () => {
 			selectSelectedService.setResult(null);
 			selectSelectedMaster.setResult(null);
 			selectSelectedSchedule.setResult(null);
-			const expected = cold('(bcdefgh)', {
+			const expected = cold('(bcdefghi)', {
 				b: getMasters({ payload: { serviceId: null, masterId: null } }),
 				c: getDates({ payload: { serviceId: null, masterId: null } }),
 				d: getMonths({ payload: { currentMonth: new Date().getMonth().toString() } }),
 				e: setFwdBtnDisabled({ payload: true }),
-				f: setMastersFilterComponentLoading({ payload: true }),
-				g: setMonthsFilterComponentLoading({ payload: true }),
-				h: setCalendarComponentLoading({ payload: true }),
+				f: setFwdBtnVisible({ payload: true }),
+				g: setMastersFilterComponentLoading({ payload: true }),
+				h: setMonthsFilterComponentLoading({ payload: true }),
+				i: setCalendarComponentLoading({ payload: true }),
 			});
 			expect(effects.initializeWizardDateChoice$).toBeObservable(expected);
 		});
