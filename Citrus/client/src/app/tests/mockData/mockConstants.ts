@@ -23,6 +23,7 @@ import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { ConfirmForm } from '@models/ConfirmForm';
 import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
+import { ScheduleDto } from '@models/ScheduleDto';
 
 export const MockElementHeight = 20;
 
@@ -59,9 +60,16 @@ export const MockSchedule: Schedule = {
 	duration: 90,
 	freeTimesWithShifts: [],
 	masterId: 'mockId',
-	id: 'mockId',
+	id: 'mockIdSchedule',
 	date: MockDate,
 	freetimes: [MockDate],
+};
+
+export const MockScheduleDto: ScheduleDto = {
+	masterId: 'mockId',
+	freetimes: [MockDate],
+	id: 'mockIdSchedule',
+	date: MockDate,
 };
 
 export const MockCalendarDtos: CalendarDatesDto[] = [

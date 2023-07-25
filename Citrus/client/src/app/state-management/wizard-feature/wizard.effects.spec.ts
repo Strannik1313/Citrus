@@ -11,6 +11,7 @@ import {
 	MockDate,
 	MockMasterDto,
 	MockSchedule,
+	MockSelectors,
 	MockService,
 } from '@tests/mockData/mockConstants';
 import {
@@ -61,9 +62,6 @@ import { MastersService } from '@api/MastersService';
 import { CalendarService } from '@api/CalendarService';
 import { OrderService } from '@api/OrderService';
 import {
-	selectDates,
-	selectMasters,
-	selectSelectedDay,
 	selectSelectedMaster,
 	selectSelectedSchedule,
 	selectSelectedService,
@@ -91,33 +89,7 @@ describe('WizardEffects', () => {
 			providers: [
 				WizardEffects,
 				provideMockStore({
-					selectors: [
-						{ selector: selectStep, value: 1 },
-						{
-							selector: selectSelectedService,
-							value: MockService,
-						},
-						{
-							selector: selectSelectedMaster,
-							value: MockMasterDto,
-						},
-						{
-							selector: selectDates,
-							value: MockCalendarDtos,
-						},
-						{
-							selector: selectMasters,
-							value: [MockMasterDto],
-						},
-						{
-							selector: selectSelectedDay,
-							value: MockDate,
-						},
-						{
-							selector: selectSelectedSchedule,
-							value: MockSchedule,
-						},
-					],
+					selectors: MockSelectors,
 				}),
 				provideMockActions(() => actions$),
 				{

@@ -5,6 +5,15 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { hideSnakeBar } from '@state-management/main-feature/main.actions';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
+import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
+import { HeaderComponent } from '@components/ui/header/header.component';
+import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { SpinnerModule } from '@components/ui/spinner/spinner.module';
+import { SnakeBarModule } from '@shared/sneakbar/snake-bar.module';
+import { AppRoutingModule } from './app-routing.module';
 
 describe('AppComponent', () => {
 	let fixture: ComponentFixture<AppComponent>;
@@ -14,8 +23,17 @@ describe('AppComponent', () => {
 
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
-			declarations: [AppComponent],
-			imports: [CommonModule],
+			declarations: [AppComponent, MainPageLayoutComponent, HeaderComponent],
+			imports: [
+				CommonModule,
+				MatIconModule,
+				HttpClientModule,
+				BrowserAnimationsModule,
+				MatButtonModule,
+				SpinnerModule,
+				SnakeBarModule,
+				AppRoutingModule,
+			],
 			providers: [provideMockStore({ initialState: {} })],
 		}).compileComponents();
 	});
