@@ -58,7 +58,7 @@ export const MockSchedule: Schedule = {
 	cost: 90,
 	duration: 90,
 	freeTimesWithShifts: [],
-	masterId: '1',
+	masterId: 'mockId',
 	id: 'mockId',
 	date: MockDate,
 	freetimes: [MockDate],
