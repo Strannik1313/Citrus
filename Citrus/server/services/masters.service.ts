@@ -1,20 +1,28 @@
 import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 import { db } from '@config/db';
 import { ProcessStatus } from '@enums/ProcessStatus';
-import { MasterFilter } from '@interfaces/MasterFilter';
+import { MasterFilter, MasterFilterWithId } from '@interfaces/MasterFilter';
 import { MasterDto } from '@dto/MasterDto';
-import { obtainFilter } from '@helpers/utils';
+import { getPageableResponse, obtainFilter, obtainMasterFilterWithId, obtainOrderBy } from '@helpers/utils';
 import * as crypto from 'crypto';
+import { FilterUnionEnum } from '@enums/FilterUnionEnum';
+import { PageableRequest } from '@interfaces/PageableRequest';
+import { PageableResponse } from '@interfaces/PageableResponse';
 
 export namespace MastersService {
-	export async function getMasters(filter: MasterFilter): Promise<ServiceReturnType<MasterDto[]>> {
+	export async function getMasters(
+		params: PageableRequest<MasterFilter>,
+	): Promise<ServiceReturnType<PageableResponse<MasterDto>>> {
 		try {
-			const mastersArray: MasterDto[] = [];
+			const response: MasterDto[] = [];
 			const mastersCollection = db.collection('masters');
-			const queryCollection = obtainFilter(filter, mastersCollection);
-			let masters = await queryCollection.get();
+			let queryCollection = obtainFilter(FilterUnionEnum.MasterFilter, params.filter, mastersCollection);
+			if (params.orderBy) {
+				queryCollection = obtainOrderBy(queryCollection, params.orderBy);
+			}
+			const masters = await queryCollection.get();
 			masters.forEach(master => {
-				mastersArray.push({
+				response.push({
 					name: master.data().name,
 					id: master.data().id,
 					servicesIds: master.data().serviceId,
@@ -23,7 +31,7 @@ export namespace MastersService {
 			});
 			return {
 				status: ProcessStatus.SUCCESS,
-				data: mastersArray,
+				data: getPageableResponse<MasterDto>(response, params.pagination),
 			};
 		} catch (error) {
 			return {
@@ -118,6 +126,33 @@ export namespace MastersService {
 				status: ProcessStatus.ERROR,
 				cause: error as Error,
 				message: 'Не удалось удалить мастера',
+			};
+		}
+	}
+
+	export async function getMastersByIdWithFilter(params: MasterFilterWithId): Promise<ServiceReturnType<MasterDto[]>> {
+		try {
+			const response: MasterDto[] = [];
+			const mastersCollection = db.collection('masters');
+			let queryCollection = obtainMasterFilterWithId(params, mastersCollection);
+			const masters = await queryCollection.get();
+			masters.forEach(master => {
+				response.push({
+					name: master.data().name,
+					id: master.data().id,
+					servicesIds: master.data().serviceId,
+					prices: master.data().price,
+				});
+			});
+			return {
+				status: ProcessStatus.SUCCESS,
+				data: response,
+			};
+		} catch (error) {
+			return {
+				status: ProcessStatus.ERROR,
+				cause: error as Error,
+				message: 'Не удалось получить коллекцию мастеров',
 			};
 		}
 	}

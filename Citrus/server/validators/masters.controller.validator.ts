@@ -4,9 +4,38 @@ import { ProcessStatus } from '@enums/ProcessStatus';
 
 namespace MastersControllerValidator {
 	export async function validateMasters(req: Request, res: Response, next: NextFunction) {
-		const serviceIdCheckResult = await body('serviceId').optional({ values: 'null' }).isString().isInt().run(req);
-		const masterIdCheckResult = await body('masterId').optional({ values: 'null' }).isString().isInt().run(req);
-		if (!serviceIdCheckResult.isEmpty() || !masterIdCheckResult.isEmpty()) {
+		const filterNamesCheck = await body('filter.names').optional().isArray({ min: 1 }).run(req);
+		const filterNamesValuesCheck = await body('filter.names.*').optional().isString().run(req);
+		const filterServiceCheck = await body('filter.serviceId').optional().isString().run(req);
+		const orderCheck = await body('orderBy')
+			.optional()
+			.isString()
+			.matches(/name (?=asc\b|desc\b)/)
+			.run(req);
+		const paginationSizeCheck = await body('pagination.size')
+			.optional()
+			.not()
+			.isEmpty({ ignore_whitespace: true })
+			.not()
+			.isString()
+			.isInt({ min: 1 })
+			.run(req);
+		const paginationPageCheck = await body('pagination.page')
+			.optional()
+			.not()
+			.isEmpty({ ignore_whitespace: true })
+			.not()
+			.isString()
+			.isInt({ min: 1 })
+			.run(req);
+		if (
+			!filterNamesCheck.isEmpty() ||
+			!filterNamesValuesCheck.isEmpty() ||
+			!filterServiceCheck.isEmpty() ||
+			!orderCheck.isEmpty() ||
+			!paginationSizeCheck.isEmpty() ||
+			!paginationPageCheck.isEmpty()
+		) {
 			return res.status(400).json({
 				status: ProcessStatus.ERROR,
 				message: 'Bad Request',

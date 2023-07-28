@@ -8,6 +8,8 @@ import { QueryDocumentSnapshot } from '@google-cloud/firestore';
 import dayjs from 'dayjs';
 import { MonthsDto } from '@dto/MonthsDto';
 import { ScheduleDto } from '@dto/ScheduleDto';
+import { MasterFilter } from '@interfaces/MasterFilter';
+import { MasterDto } from '@dto/MasterDto';
 
 dayjs().format();
 
@@ -18,13 +20,17 @@ export namespace CalendarService {
 		startOfWeek: string | undefined,
 	): Promise<ServiceReturnType<WeekDto[]>> {
 		let week: WeekDto[] = DatesHelper.getWeek(startOfWeek);
-		const getMastersResult = await MastersService.getMasters({ serviceId: [serviceId], id: masterId });
+		let getMastersResult: ServiceReturnType<MasterDto[]>;
+		const params: MasterFilter = {};
+
+		getMastersResult = await MastersService.getMastersByIdWithFilter(params);
 		switch (getMastersResult.status) {
 			case ProcessStatus.ERROR: {
 				return getMastersResult;
 			}
 			case ProcessStatus.SUCCESS: {
-				if (!getMastersResult.data || getMastersResult.data.length === 0) {
+				const masters = getMastersResult.data;
+				if (!masters) {
 					return {
 						status: ProcessStatus.ERROR,
 						message: 'Не найден мастер, выполняющий эту услугу',
@@ -32,7 +38,7 @@ export namespace CalendarService {
 				}
 				try {
 					const datesCollection = db.collection('schedules');
-					const mastersIds = getMastersResult.data.map(master => master.id);
+					const mastersIds = masters.map(master => master.id);
 					const dates = await datesCollection
 						.where('masterId', 'in', mastersIds)
 						.get()
