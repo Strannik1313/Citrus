@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MasterDto } from '@models/MasterDto';
 import { ServiceDto } from '@models/ServiceDto';
-import { Schedule } from '@models/Schedule';
-import { ConfirmForm } from '@models/ConfirmForm';
+import { Schedule } from '@interfaces/Schedule';
+import { ConfirmForm } from '@interfaces/ConfirmForm';
 import { VALIDATIONS_ERROR } from '@enums/ValidationErrors';
 import { LABELS } from '@enums/Labels';
 import { BUTTON_LABELS } from '@enums/ButtonLabels';

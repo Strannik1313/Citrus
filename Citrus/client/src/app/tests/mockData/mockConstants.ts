@@ -18,10 +18,10 @@ import {
 	selectServices,
 	selectStep,
 } from '@state-management/wizard-feature/wizard.reducer';
-import { Schedule } from '@models/Schedule';
+import { Schedule } from '@interfaces/Schedule';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
-import { ConfirmForm } from '@models/ConfirmForm';
+import { ConfirmForm } from '@interfaces/ConfirmForm';
 import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
 import { ScheduleDto } from '@models/ScheduleDto';
 

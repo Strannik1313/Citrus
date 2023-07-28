@@ -36,10 +36,10 @@ import {
 } from '@state-management/wizard-feature/wizard.actions';
 import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
-import { Schedule } from '@models/Schedule';
+import { Schedule } from '@interfaces/Schedule';
 import { BUTTON_LABELS } from '@enums/ButtonLabels';
 import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
-import { ConfirmForm } from '@models/ConfirmForm';
+import { ConfirmForm } from '@interfaces/ConfirmForm';
 
 export enum WizardStepperEnum {
 	SERVICE_CHOICE = 1,

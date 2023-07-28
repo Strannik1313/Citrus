@@ -6,9 +6,9 @@ import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
 import { MonthsDto } from '@models/MonthsDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
-import { Schedule } from '@models/Schedule';
+import { Schedule } from '@interfaces/Schedule';
 import { MasterLoaderDto } from '@models/MasterLoaderDto';
-import { ConfirmForm } from '@models/ConfirmForm';
+import { ConfirmForm } from '@interfaces/ConfirmForm';
 
 export enum WizardActions {
 	IncrementWizardStepAction = '[Wizard Page] IncrementWizardStepAction',

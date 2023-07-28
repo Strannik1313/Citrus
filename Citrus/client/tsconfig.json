@@ -13,6 +13,7 @@
 			"@guards/*": ["./src/app/guards/*"],
 			"@helpers/*": ["./src/app/helpers/*"],
 			"@interceptors/*": ["./src/app/interceptors/*"],
+			"@interfaces/*": ["./src/app/interfaces/*"],
 			"@models/*": ["./src/app/models/*"],
 			"@pipes/*": ["./src/app/pipes/*"],
 			"@shared/*": ["./src/app/components/shared/*"],

@@ -60,11 +60,11 @@ import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { DatesHelper } from '@helpers/DatesHelper';
-import { Schedule } from '@models/Schedule';
+import { Schedule } from '@interfaces/Schedule';
 import { MaxProcedureDuration } from '@constants/MaxProcedureDuration';
 import { MasterDto } from '@models/MasterDto';
 import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
-import { ConfirmForm } from '@models/ConfirmForm';
+import { ConfirmForm } from '@interfaces/ConfirmForm';
 import { OrderService } from '@api/OrderService';
 import { TypedActionWithPayload } from '@state-management/TypedActionWithPayload';
 
@@ -183,16 +183,17 @@ export class WizardEffects {
 			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
 			map(([, service]) => {
 				return {
-					serviceId: service?.id ?? null,
-					masterId: null,
+					filter: {
+						serviceId: service?.id ?? null,
+					},
 				};
 			}),
 			switchMap(masterResponse =>
 				this.mastersService
 					.getMasters(masterResponse)
 					.pipe(
-						switchMap(masters => [
-							setMasters({ payload: masters }),
+						switchMap(response => [
+							setMasters({ payload: response.result }),
 							setMastersFilterComponentLoading({ payload: false }),
 						]),
 					),

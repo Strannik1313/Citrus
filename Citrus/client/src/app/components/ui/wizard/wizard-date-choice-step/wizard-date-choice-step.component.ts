@@ -3,7 +3,7 @@ import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { MasterDto } from '@models/MasterDto';
 import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
-import { Schedule } from '@models/Schedule';
+import { Schedule } from '@interfaces/Schedule';
 import { WizardSecondStepLoadingState } from '@models/ComponentsLoadingState';
 
 @Component({
