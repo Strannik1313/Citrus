@@ -4,14 +4,13 @@ import { MasterFilter } from '@interfaces/MasterFilter';
 import { ServiceReturnType } from '@interfaces/ServiceReturnType';
 import { ProcessStatus } from '@enums/ProcessStatus';
 import MastersService from '@services/masters.service';
+import { PageableRequest } from '@interfaces/PageableRequest';
+import { PageableResponse } from '@interfaces/PageableResponse';
 
 namespace MastersController {
 	export async function masters(req: Request, res: Response) {
-		const filter: MasterFilter = {
-			name: req.body.name,
-			serviceId: req.body.serviceId?.split(','),
-		};
-		const getMastersResult: ServiceReturnType<MasterDto[]> = await MastersService.getMasters(filter);
+		const data: PageableRequest<MasterFilter> = req.body;
+		const getMastersResult: ServiceReturnType<PageableResponse<MasterDto>> = await MastersService.getMasters(data);
 		switch (getMastersResult.status) {
 			case ProcessStatus.SUCCESS: {
 				res.status(200).json(getMastersResult.data);
