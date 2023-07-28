@@ -10,6 +10,7 @@ import {
 	MockConfirmForm,
 	MockDate,
 	MockMasterDto,
+	MockPageableMasterDto,
 	MockSchedule,
 	MockSelectors,
 	MockService,
@@ -104,7 +105,7 @@ describe('WizardEffects', () => {
 					provide: MastersService,
 					useValue: {
 						getMasters(params: MasterLoaderDto) {
-							return of([MockMasterDto]);
+							return of(MockPageableMasterDto);
 						},
 					},
 				},

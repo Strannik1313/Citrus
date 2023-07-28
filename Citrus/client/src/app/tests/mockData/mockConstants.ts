@@ -163,3 +163,9 @@ export const MockSelectors: MockSelector[] = [
 		value: true,
 	},
 ];
+
+export const MockPageableMasterDto = {
+	result: [MockMasterDto],
+	total: 100,
+	current: 1,
+};
