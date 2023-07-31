@@ -24,14 +24,14 @@ function obtainMasterFilter(filter: MasterFilter, collection: CollectionReferenc
 	if (filter.names) {
 		result = collection.where('name', 'in', filter.names);
 	}
-	if (filter.serviceId) {
-		result = collection.where('serviceId', 'array-contains-any', filter.serviceId);
+	if (filter.servicesIds) {
+		result = collection.where('serviceId', 'array-contains-any', filter.servicesIds);
 	}
 	return result;
 }
 
-export function getPageableResponse<T>(response: T[], pagination?: Pagination): PageableResponse<T> {
-	if (!pagination) {
+export function getPageableResponse<T>(response: T[], pagination: Pagination): PageableResponse<T> {
+	if (!pagination || !pagination.page || !pagination.size) {
 		return {
 			total: 1,
 			current: 1,
@@ -39,15 +39,17 @@ export function getPageableResponse<T>(response: T[], pagination?: Pagination): 
 		};
 	}
 	let result: T[] = [];
-	const pages: number = Math.ceil(response.length / pagination.size);
+	const size = pagination.size;
+	const page = pagination.page;
+	const pages: number = Math.ceil(response.length / size);
 	response.forEach((curr, index) => {
-		if (Math.ceil((index + 1) / pagination.size) === pagination.page) {
+		if (Math.ceil((index + 1) / size) === page) {
 			result.push(curr);
 		}
 	});
 	return {
 		total: pages,
-		current: pagination.page,
+		current: page,
 		result: result,
 	};
 }

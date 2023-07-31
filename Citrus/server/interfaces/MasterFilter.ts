@@ -1,6 +1,6 @@
 export interface MasterFilter {
-	names?: string[];
-	serviceId?: string[];
+	names?: string;
+	servicesIds?: string[];
 }
 
 export interface MasterFilterWithId extends MasterFilter {
