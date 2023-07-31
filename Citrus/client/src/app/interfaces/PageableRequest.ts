@@ -1,8 +1,9 @@
-import { Pagination } from './Pagination';
 import { LoadersUnion } from './LoadersUnion';
 
-export interface PageableRequest<T extends LoadersUnion> {
-	pagination?: Pagination;
-	filter?: T;
+export type PageableRequest<T extends LoadersUnion> = {
+	[key in keyof T]: string | boolean | number | undefined;
+} & {
+	size?: number;
+	page?: number;
 	orderBy?: string;
-}
+};

@@ -183,14 +183,12 @@ export class WizardEffects {
 			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
 			map(([, service]) => {
 				return {
-					filter: {
-						serviceId: service?.id ?? null,
-					},
+					serviceId: service?.id,
 				};
 			}),
-			switchMap(masterResponse =>
+			switchMap(params =>
 				this.mastersService
-					.getMasters(masterResponse)
+					.getMasters(params)
 					.pipe(
 						switchMap(response => [
 							setMasters({ payload: response.result }),
