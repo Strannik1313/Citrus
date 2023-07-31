@@ -284,7 +284,7 @@ describe('WizardEffects', () => {
 	});
 
 	it('getMasters$', () => {
-		actions$ = hot('a', { a: getMasters({ payload: { serviceId: null } }) });
+		actions$ = hot('a', { a: getMasters({ payload: { servicesIds: null } }) });
 		const expected = cold('(bc)', {
 			b: setMasters({ payload: [MockMasterDto] }),
 			c: setMastersFilterComponentLoading({ payload: false }),
@@ -448,7 +448,7 @@ describe('WizardEffects', () => {
 
 		it('calls actions with not null params when in store are selectedService, selectedMaster, selectedSchedule', () => {
 			const expected = cold('(bcdefghi)', {
-				b: getMasters({ payload: { serviceId: MockService.id, masterId: null } }),
+				b: getMasters({ payload: { servicesIds: [MockService.id] } }),
 				c: getDates({ payload: { serviceId: MockService.id, masterId: MockMasterDto.id } }),
 				d: getMonths({ payload: { currentMonth: new Date().getMonth().toString() } }),
 				e: setFwdBtnDisabled({ payload: false }),
@@ -465,7 +465,7 @@ describe('WizardEffects', () => {
 			selectSelectedMaster.setResult(null);
 			selectSelectedSchedule.setResult(null);
 			const expected = cold('(bcdefghi)', {
-				b: getMasters({ payload: { serviceId: null, masterId: null } }),
+				b: getMasters({ payload: { servicesIds: null } }),
 				c: getDates({ payload: { serviceId: null, masterId: null } }),
 				d: getMonths({ payload: { currentMonth: new Date().getMonth().toString() } }),
 				e: setFwdBtnDisabled({ payload: true }),
