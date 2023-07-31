@@ -9,8 +9,8 @@ import { PageableResponse } from '@interfaces/PageableResponse';
 
 namespace MastersController {
 	export async function masters(req: Request, res: Response) {
-		const data: PageableRequest<MasterFilter> = req.body;
-		const getMastersResult: ServiceReturnType<PageableResponse<MasterDto>> = await MastersService.getMasters(data);
+		const params: PageableRequest<MasterFilter> = req.query;
+		const getMastersResult: ServiceReturnType<PageableResponse<MasterDto>> = await MastersService.getMasters(params);
 		switch (getMastersResult.status) {
 			case ProcessStatus.SUCCESS: {
 				res.status(200).json(getMastersResult.data);
