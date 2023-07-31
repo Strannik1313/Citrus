@@ -22,10 +22,12 @@ export function obtainFilter(type: FilterUnionEnum, filter: FilterUnion | undefi
 function obtainMasterFilter(filter: MasterFilter, collection: CollectionReference): Query | undefined {
 	let result: FirebaseFirestore.Query<FirebaseFirestore.DocumentData> | undefined;
 	if (filter.names) {
-		result = collection.where('name', 'in', filter.names);
+		const names = filter.names.split(',');
+		result = collection.where('name', 'in', names);
 	}
 	if (filter.servicesIds) {
-		result = collection.where('serviceId', 'array-contains-any', filter.servicesIds);
+		const servicesIds = filter.servicesIds.split(',');
+		result = collection.where('serviceId', 'array-contains-any', servicesIds);
 	}
 	return result;
 }

@@ -1,21 +1,19 @@
 import { NextFunction, Request, Response } from 'express';
-import { body, param } from 'express-validator';
+import { body, param, query } from 'express-validator';
 import { ProcessStatus } from '@enums/ProcessStatus';
 
 namespace MastersControllerValidator {
 	export async function validateMasters(req: Request, res: Response, next: NextFunction) {
-		const filterNamesCheck = await body('names').optional().isArray({ min: 1 }).run(req);
-		const filterNamesValuesCheck = await body('names.*').optional().isString().run(req);
-		const filterServiceCheck = await body('servicesIds').optional().isString().run(req);
-		const orderCheck = await body('orderBy')
+		const filterNamesValuesCheck = await query('names').optional().isString().run(req);
+		const filterServiceCheck = await query('servicesIds').optional().isString().run(req);
+		const orderCheck = await query('orderBy')
 			.optional()
 			.isString()
 			.matches(/name (?=asc\b|desc\b)/)
 			.run(req);
-		const paginationSizeCheck = await body('size').optional().not().isString().isInt({ min: 1 }).run(req);
-		const paginationPageCheck = await body('page').optional().not().isString().isInt({ min: 1 }).run(req);
+		const paginationSizeCheck = await query('size').optional().not().isString().isInt({ min: 1 }).run(req);
+		const paginationPageCheck = await query('page').optional().not().isString().isInt({ min: 1 }).run(req);
 		if (
-			!filterNamesCheck.isEmpty() ||
 			!filterNamesValuesCheck.isEmpty() ||
 			!filterServiceCheck.isEmpty() ||
 			!orderCheck.isEmpty() ||
