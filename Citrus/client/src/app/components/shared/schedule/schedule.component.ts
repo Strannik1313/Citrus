@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, Input, Output, EventEmitter } from '@angular/core';
-import { Schedule } from '@models/Schedule';
+import { Schedule } from '@interfaces/Schedule';
 
 @Component({
 	selector: 'app-schedule',

@@ -2,21 +2,26 @@ export class HttpHelper {
 	static normalizeParams(params: { [key: string]: any }) {
 		let temp: { [key: string]: string | number | boolean | readonly (string | number | boolean)[] } = {};
 		for (const paramsKey in params) {
-			if (Array.isArray(params[paramsKey])) {
-				temp[paramsKey] = params[paramsKey];
+			const value = params[paramsKey];
+			if (Array.isArray(value)) {
+				if (value.length > 1) {
+					temp[paramsKey] = value.join(',');
+					continue;
+				}
+				temp[paramsKey] = value;
 				continue;
 			}
-			switch (typeof params[paramsKey]) {
+			switch (typeof value) {
 				case 'boolean': {
-					temp[paramsKey] = params[paramsKey];
+					temp[paramsKey] = value;
 					break;
 				}
 				case 'number': {
-					temp[paramsKey] = params[paramsKey];
+					temp[paramsKey] = value;
 					break;
 				}
 				case 'string': {
-					temp[paramsKey] = params[paramsKey];
+					temp[paramsKey] = value;
 					break;
 				}
 				default:

@@ -60,11 +60,11 @@ import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { DatesHelper } from '@helpers/DatesHelper';
-import { Schedule } from '@models/Schedule';
+import { Schedule } from '@interfaces/Schedule';
 import { MaxProcedureDuration } from '@constants/MaxProcedureDuration';
 import { MasterDto } from '@models/MasterDto';
 import { ScheduleLoaderDto } from '@models/ScheduleLoaderDto';
-import { ConfirmForm } from '@models/ConfirmForm';
+import { ConfirmForm } from '@interfaces/ConfirmForm';
 import { OrderService } from '@api/OrderService';
 import { TypedActionWithPayload } from '@state-management/TypedActionWithPayload';
 
@@ -183,16 +183,15 @@ export class WizardEffects {
 			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
 			map(([, service]) => {
 				return {
-					serviceId: service?.id ?? null,
-					masterId: null,
+					servicesIds: service?.id ? [service.id] : null,
 				};
 			}),
-			switchMap(masterResponse =>
+			switchMap(params =>
 				this.mastersService
-					.getMasters(masterResponse)
+					.getMasters(params)
 					.pipe(
-						switchMap(masters => [
-							setMasters({ payload: masters }),
+						switchMap(response => [
+							setMasters({ payload: response.result }),
 							setMastersFilterComponentLoading({ payload: false }),
 						]),
 					),
@@ -447,7 +446,7 @@ export class WizardEffects {
 			switchMap(([, service, master, schedule]) => {
 				return [
 					getMasters({
-						payload: { serviceId: service?.id ?? null, masterId: null },
+						payload: { servicesIds: service?.id ? [service.id] : null },
 					}),
 					getDates({
 						payload: {
