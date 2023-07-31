@@ -1,8 +1,9 @@
 import { FilterUnion } from '@interfaces/FilterUnion';
-import { Pagination } from '@interfaces/Pagination';
 
-export interface PageableRequest<T extends FilterUnion> {
-	pagination?: Pagination;
-	filter?: T;
+export type PageableRequest<T extends FilterUnion> = {
+	[key in keyof T]: T[key];
+} & {
 	orderBy?: string;
-}
+	size?: number;
+	page?: number;
+};

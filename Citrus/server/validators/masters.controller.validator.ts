@@ -4,30 +4,16 @@ import { ProcessStatus } from '@enums/ProcessStatus';
 
 namespace MastersControllerValidator {
 	export async function validateMasters(req: Request, res: Response, next: NextFunction) {
-		const filterNamesCheck = await body('filter.names').optional().isArray({ min: 1 }).run(req);
-		const filterNamesValuesCheck = await body('filter.names.*').optional().isString().run(req);
-		const filterServiceCheck = await body('filter.serviceId').optional().isString().run(req);
+		const filterNamesCheck = await body('names').optional().isArray({ min: 1 }).run(req);
+		const filterNamesValuesCheck = await body('names.*').optional().isString().run(req);
+		const filterServiceCheck = await body('servicesIds').optional().isString().run(req);
 		const orderCheck = await body('orderBy')
 			.optional()
 			.isString()
 			.matches(/name (?=asc\b|desc\b)/)
 			.run(req);
-		const paginationSizeCheck = await body('pagination.size')
-			.optional()
-			.not()
-			.isEmpty({ ignore_whitespace: true })
-			.not()
-			.isString()
-			.isInt({ min: 1 })
-			.run(req);
-		const paginationPageCheck = await body('pagination.page')
-			.optional()
-			.not()
-			.isEmpty({ ignore_whitespace: true })
-			.not()
-			.isString()
-			.isInt({ min: 1 })
-			.run(req);
+		const paginationSizeCheck = await body('size').optional().not().isString().isInt({ min: 1 }).run(req);
+		const paginationPageCheck = await body('page').optional().not().isString().isInt({ min: 1 }).run(req);
 		if (
 			!filterNamesCheck.isEmpty() ||
 			!filterNamesValuesCheck.isEmpty() ||

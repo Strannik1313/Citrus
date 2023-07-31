@@ -8,6 +8,7 @@ import * as crypto from 'crypto';
 import { FilterUnionEnum } from '@enums/FilterUnionEnum';
 import { PageableRequest } from '@interfaces/PageableRequest';
 import { PageableResponse } from '@interfaces/PageableResponse';
+import { Pagination } from '@interfaces/Pagination';
 
 export namespace MastersService {
 	export async function getMasters(
@@ -16,7 +17,9 @@ export namespace MastersService {
 		try {
 			const response: MasterDto[] = [];
 			const mastersCollection = db.collection('masters');
-			let queryCollection = obtainFilter(FilterUnionEnum.MasterFilter, params.filter, mastersCollection);
+			const filter: MasterFilter = { servicesIds: params.servicesIds, names: params.names };
+			const pagination: Pagination = { size: params.size, page: params.page };
+			let queryCollection = obtainFilter(FilterUnionEnum.MasterFilter, filter, mastersCollection);
 			if (params.orderBy) {
 				queryCollection = obtainOrderBy(queryCollection, params.orderBy);
 			}
@@ -31,7 +34,7 @@ export namespace MastersService {
 			});
 			return {
 				status: ProcessStatus.SUCCESS,
-				data: getPageableResponse<MasterDto>(response, params.pagination),
+				data: getPageableResponse<MasterDto>(response, pagination),
 			};
 		} catch (error) {
 			return {
