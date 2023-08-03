@@ -6,7 +6,7 @@ import { AdminRoutes } from '@routes/admin.route';
 import { PersonalRoutes } from '@routes/personal.route';
 import { OrderRoutes } from '@routes/order.route';
 import { CalendarRoutes } from '@routes/calendar.route';
-import { middleware } from '@middleware/passport-middleware';
+import { passportMiddleware } from '@middleware/passport-middleware';
 import { router as ServiceRoutes } from '@routes/services.route';
 import passport from 'passport';
 import morgan from 'morgan';
@@ -27,6 +27,6 @@ app.use('/api', MastersRoutes);
 app.use('/api', ServiceRoutes);
 app.use(passport.initialize());
 
-middleware(passport);
+passportMiddleware(passport);
 
 export default app;
