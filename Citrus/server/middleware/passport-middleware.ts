@@ -1,34 +1,31 @@
-import { db } from '@config/db';
 import { config } from '@config/config';
-import { errorHandler } from '@utils/errorHandler';
 import passport from 'passport';
-import { QuerySnapshot } from '@google-cloud/firestore';
-import { ExtractJwt } from 'passport-jwt';
 import { Strategy as JwtStrategy } from 'passport-jwt';
+import { AuthService } from '@services/auth.service';
+import { Request } from 'express';
+import { UserDto } from '@dto/UserDto';
+
+const tokenExtractor = (req: Request) => {
+	const accessToken = req.header('authorization');
+	const refreshToken = req.header('cookie');
+	if (accessToken) return accessToken;
+	if (refreshToken) return refreshToken;
+	return null;
+};
 
 const opts = {
-	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+	jwtFromRequest: tokenExtractor,
 	secretOrKey: config.jwt,
 };
-export const middleware = (passport: passport.Authenticator) => {
+export const passportMiddleware = (passport: passport.Authenticator) => {
 	passport.use(
 		new JwtStrategy(opts, async (payload, done) => {
+			let candidate: UserDto;
 			try {
-				await db
-					.collection('authorizedClients')
-					.get()
-					.then((collection: QuerySnapshot) => {
-						const candidate = collection.docs.find(d => {
-							return d.data().email === payload.email;
-						});
-						if (candidate !== undefined) {
-							done(null, candidate.data());
-						} else {
-							done(null, false);
-						}
-					});
+				candidate = await AuthService.getUserById(payload.userId);
+				done(null, candidate);
 			} catch (error) {
-				errorHandler(null, error);
+				done(null, false);
 			}
 		}),
 	);
