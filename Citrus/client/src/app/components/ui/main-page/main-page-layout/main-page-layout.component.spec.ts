@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
+import { MainPageLayoutComponent } from '@components/ui/main-page/main-page-layout/main-page-layout.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { loadWizard } from '@state-management/wizard-feature/wizard.actions';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
-import { LABELS } from '@enums/Labels';
+import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
+import { LABELS } from '@enums/labels/Labels';
 import { MockInitialState } from '@tests/mockData/mockConstants';
 
 describe('MainPageLayoutComponent', () => {

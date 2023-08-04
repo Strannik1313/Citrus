@@ -54,7 +54,7 @@ import { MonthFilterModule } from '@shared/month-filter/month-filter.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaskModule } from 'ngx-mask';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
+import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
 
 describe('WizardComponent', () => {
 	let fixture: ComponentFixture<WizardComponent>;

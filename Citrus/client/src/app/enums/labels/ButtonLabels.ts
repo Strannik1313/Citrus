@@ -3,5 +3,4 @@ export enum BUTTON_LABELS {
 	PREV_BTN_LABEL = 'Назад',
 	BOOK = 'Забронировать',
 	OK = 'ОК',
-	MAKE_ORDER = 'Записаться',
 }

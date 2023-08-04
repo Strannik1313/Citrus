@@ -1,13 +1,15 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
 import { WizardAccessGuard } from '@guards/wizard-access.guard.service';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import { MainPageContainerComponent } from '@components/ui/main-page/main-page-container/main-page-container.component';
+import { AuthPageComponent } from '@shared/auth/auth-page/auth-page.component';
+import { AuthAccessGuard } from '@guards/auth-access-guard.service';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MainPageLayoutComponent,
+		component: MainPageContainerComponent,
 		pathMatch: 'full',
 	},
 	{
@@ -17,7 +19,18 @@ const routes: Routes = [
 	},
 	{
 		path: 'auth',
-		loadChildren: () => import('@components/shared/auth/auth.module').then(m => m.AuthModule),
+		component: AuthPageComponent,
+		canActivate: [AuthAccessGuard],
+	},
+	{
+		path: 'auth/login',
+		component: AuthPageComponent,
+		canActivate: [AuthAccessGuard],
+	},
+	{
+		path: 'auth/register',
+		component: AuthPageComponent,
+		canActivate: [AuthAccessGuard],
 	},
 	{
 		path: '**',

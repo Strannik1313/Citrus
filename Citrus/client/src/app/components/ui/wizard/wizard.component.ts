@@ -37,7 +37,7 @@ import {
 import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@interfaces/Schedule';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
+import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
 import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
 import { ConfirmForm } from '@interfaces/ConfirmForm';
 

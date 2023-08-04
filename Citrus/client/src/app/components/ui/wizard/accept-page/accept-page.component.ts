@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { LABELS } from '@enums/Labels';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
+import { LABELS } from '@enums/labels/Labels';
+import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
 import { Router } from '@angular/router';
 
 @Component({

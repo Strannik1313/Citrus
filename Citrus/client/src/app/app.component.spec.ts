@@ -5,7 +5,7 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { hideSnakeBar } from '@state-management/main-feature/main.actions';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
+import { MainPageLayoutComponent } from '@components/ui/main-page/main-page-layout/main-page-layout.component';
 import { HeaderComponent } from '@components/ui/header/header.component';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';

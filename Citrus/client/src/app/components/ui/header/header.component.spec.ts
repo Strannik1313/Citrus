@@ -4,7 +4,7 @@ import { CommonModule, Location } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterTestingModule } from '@angular/router/testing';
-import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
+import { MainPageLayoutComponent } from '@components/ui/main-page/main-page-layout/main-page-layout.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 

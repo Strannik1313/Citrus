@@ -5,8 +5,8 @@ import { ServiceDto } from '@models/ServiceDto';
 import { Schedule } from '@interfaces/Schedule';
 import { ConfirmForm } from '@interfaces/ConfirmForm';
 import { VALIDATIONS_ERROR } from '@enums/ValidationErrors';
-import { LABELS } from '@enums/Labels';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
+import { LABELS } from '@enums/labels/Labels';
+import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
 
 @Component({
 	selector: 'app-wizard-confirm-step',

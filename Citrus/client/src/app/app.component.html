@@ -1,11 +1,20 @@
-<div class="document">
-	<app-sneakbar
-		data-testid='shake_bar'
-		[show]='showSnakeBar$ | async'
-		(closeBtnClick)='onCloseSnakeBarClick()'>
-	</app-sneakbar>
-	<app-header class="header"></app-header>
-	<div class="content">
-		<router-outlet></router-outlet>
+<ng-container *ngIf='{
+	showSnakeBar: showSnakeBar$ | async,
+	isLogged: (isUserLogged$ | async)!
+} as data'>
+	<div class='document'>
+		<app-sneakbar
+			data-testid='shake_bar'
+			[show]='data.showSnakeBar'
+			(closeBtnClick)='onCloseSnakeBarClick()'>
+		</app-sneakbar>
+		<app-header
+			class='header'
+			[isLogged]='data.isLogged'
+		></app-header>
+		<div class='content'>
+			<router-outlet></router-outlet>
+		</div>
 	</div>
-</div>
+</ng-container>
+

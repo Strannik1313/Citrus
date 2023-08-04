@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { AuthFormType } from '@enums/AuthFormType';
-import { AuthPageLabels } from '@enums/AuthPageLabels';
+import { AuthPageLabels } from '@enums/labels/AuthPageLabels';
 import { FormControl, FormGroup } from '@angular/forms';
 import { AuthForm } from '@interfaces/AuthForm';
 
