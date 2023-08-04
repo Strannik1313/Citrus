@@ -1,0 +1,20 @@
+<div class='form_container'>
+	<div class='login_header'
+			 *ngIf='type === AuthFormType.LOGIN; else registerHeader'
+	>{{AuthPageLabels.LOGIN_HEADER}}</div>
+	<ng-template #registerHeader>
+		<div class='register_header'>{{AuthPageLabels.REGISTER_HEADER}}</div>
+	</ng-template>
+	<div class='form_content_container'>
+		<form class='form_content' [formGroup]='authForm' (ngSubmit)='onSubmit()'>
+			<mat-form-field>
+				<input matInput formControlName='email' [placeholder]='AuthPageLabels.WRITE_EMAIL'>
+			</mat-form-field>
+			<mat-form-field>
+				<input matInput formControlName='password' [placeholder]='AuthPageLabels.WRITE_PASSWORD'>
+			</mat-form-field>
+			<button mat-button [disabled]='!authForm.valid' >{{AuthPageLabels.CONFIRM_BUTTON}}</button>
+		</form>
+	</div>
+	<div class='form_footer'>{{AuthPageLabels.FOOTER}}</div>
+</div>

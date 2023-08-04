@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
-import { RouteAccessGuard } from '@guards/route-access.guard.service';
+import { WizardAccessGuard } from '@guards/wizard-access.guard.service';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 const routes: Routes = [
 	{
@@ -12,18 +13,12 @@ const routes: Routes = [
 	{
 		path: 'deal',
 		loadChildren: () => import('@components/ui/wizard/wizard.module').then(m => m.WizardModule),
-		canActivate: [RouteAccessGuard],
+		canActivate: [WizardAccessGuard],
 	},
-	// {
-	// 	path: 'register',
-	// 	loadChildren: () => import('@modules/register-page/register-page.module').then(m => m.RegisterPageModule),
-	// 	canActivate: [NavigateAccess],
-	// },
-	// {
-	// 	path: 'login',
-	// 	loadChildren: () => import('@modules/login-page/login-page.module').then(m => m.LoginPageModule),
-	// 	canActivate: [NavigateAccess],
-	// },
+	{
+		path: 'auth',
+		loadChildren: () => import('@components/shared/auth/auth.module').then(m => m.AuthModule),
+	},
 	{
 		path: '**',
 		redirectTo: '',
@@ -31,7 +26,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+	imports: [
+		RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
+		StoreRouterConnectingModule.forRoot(),
+	],
 	exports: [RouterModule],
 })
 export class AppRoutingModule {}

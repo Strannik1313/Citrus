@@ -1,0 +1,15 @@
+<ng-container *ngIf='{
+	authForm: (authForm$ | async)!
+} as data'>
+	<mat-card>
+		<div class='choice_form_container'
+				 *ngIf='data.authForm === AuthFormType.NONE; else form'
+		></div>
+		<ng-template #form>
+			<app-auth-form
+				[type]='data.authForm'
+				(onFormSubmit)='onFormSubmit($event, data.authForm)'
+			></app-auth-form>
+		</ng-template>
+	</mat-card>
+</ng-container>

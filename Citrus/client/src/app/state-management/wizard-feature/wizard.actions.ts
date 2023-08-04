@@ -158,5 +158,3 @@ export const loadWizard = createAction(WizardActions.LoadWizardAction);
 export const setFwdBtnVisible = createAction(WizardActions.SetFwdBtnVisibleAction, props<{ payload: boolean }>());
 export const setAcceptPageAccess = createAction(WizardActions.SetAcceptPageAccessAction, props<{ payload: boolean }>());
 export const checkIsWizardAvailable = createAction(WizardActions.CheckIsWizardAvailableAction);
-
-export const login = createAction('[Login Page] Login', props<{ payload: { username: string; password: string } }>());

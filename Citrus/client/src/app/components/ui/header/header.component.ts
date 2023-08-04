@@ -8,5 +8,5 @@ import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	public homeLink: string = NAVIGATE_ROUTES.HOME;
+	readonly routes = NAVIGATE_ROUTES;
 }
