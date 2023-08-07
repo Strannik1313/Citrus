@@ -21,6 +21,7 @@ import { ErrorHandlerInterceptor } from '@interceptors/error-handler.interceptor
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainPageModule } from '@components/ui/main-page/main-page.module';
 import { AuthModule } from '@shared/auth/auth.module';
+import { TokenInterceptor } from '@interceptors/token.interceptor';
 
 registerLocaleData(localeRu);
 
@@ -49,6 +50,11 @@ registerLocaleData(localeRu);
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'ru' },
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: TokenInterceptor,
+			multi: true,
+		},
 		{
 			provide: HTTP_INTERCEPTORS,
 			useClass: ErrorHandlerInterceptor,

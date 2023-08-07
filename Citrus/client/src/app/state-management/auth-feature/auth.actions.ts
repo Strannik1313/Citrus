@@ -11,6 +11,7 @@ export enum AuthActions {
 	LogoutAction = '[Auth Page] LogoutAction',
 	SetUserAction = '[Auth Page] SetUserAction',
 	ResetUserAction = '[Auth Page] ResetUserAction',
+	GetAuthUserAction = '[Auth Page] GetAuthUserAction',
 }
 
 export const setIsLogged = createAction(AuthActions.SetIsLoggedAction, props<{ payload: boolean }>());
@@ -20,3 +21,4 @@ export const register = createAction(AuthActions.RegisterAction, props<{ payload
 export const logout = createAction(AuthActions.LogoutAction);
 export const setUser = createAction(AuthActions.SetUserAction, props<{ payload: UserDto }>());
 export const resetUser = createAction(AuthActions.ResetUserAction);
+export const getAuthUser = createAction(AuthActions.GetAuthUserAction);

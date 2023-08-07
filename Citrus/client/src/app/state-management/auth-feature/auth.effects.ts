@@ -1,8 +1,15 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { map, switchMap } from 'rxjs';
-import { AuthActions, resetUser, setAuthForm, setIsLogged, setUser } from '@state-management/auth-feature/auth.actions';
+import {
+	AuthActions,
+	getAuthUser,
+	resetUser,
+	setAuthForm,
+	setIsLogged,
+	setUser,
+} from '@state-management/auth-feature/auth.actions';
 import { AuthFormType } from '@enums/AuthFormType';
 import { TypedActionWithPayload } from '@state-management/TypedActionWithPayload';
 import { AuthForm } from '@interfaces/AuthForm';
@@ -11,10 +18,15 @@ import { UserDto } from '@models/UserDto';
 import { UserRoles } from '@enums/UserRoles';
 import { ROUTER_NAVIGATION, RouterNavigationAction } from '@ngrx/router-store';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
+import { Action } from '@ngrx/store';
 
 @Injectable()
-export class AuthEffects {
+export class AuthEffects implements OnInitEffects {
 	constructor(private actions$: Actions, private router: Router, private authService: AuthService) {}
+
+	ngrxOnInitEffects(): Action {
+		return getAuthUser();
+	}
 
 	init$ = createEffect(() => {
 		return this.actions$.pipe(
@@ -85,6 +97,15 @@ export class AuthEffects {
 		return this.actions$.pipe(
 			ofType(AuthActions.ResetUserAction),
 			map(() => setIsLogged({ payload: false })),
+		);
+	});
+
+	getAuthUser$ = createEffect(() => {
+		return this.actions$.pipe(
+			ofType(AuthActions.GetAuthUserAction),
+			switchMap(() => {
+				return this.authService.currentUser().pipe(map(user => setUser({ payload: user })));
+			}),
 		);
 	});
 }
