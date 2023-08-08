@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 import { HEADER_LABELS } from '@enums/labels/HeaderLabels';
-import { AuthButtonsLoadingState } from '@interfaces/ComponentsLoadingState';
+import { UserDto } from '@models/UserDto';
 
 @Component({
 	selector: 'app-header',
@@ -11,7 +11,8 @@ import { AuthButtonsLoadingState } from '@interfaces/ComponentsLoadingState';
 })
 export class HeaderComponent {
 	@Input() isLogged = false;
-	@Input() isLoadingAuthButtonsState: AuthButtonsLoadingState = { isLoadingAuthButtons: true };
+	@Input() isLoadingAuthButtonsState = true;
+	@Input() user: UserDto | null = null;
 	@Output() logout: EventEmitter<void> = new EventEmitter<void>();
 	readonly routes = NAVIGATE_ROUTES;
 	readonly HeaderLabels = HEADER_LABELS;

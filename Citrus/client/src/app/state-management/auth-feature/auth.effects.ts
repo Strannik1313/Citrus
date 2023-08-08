@@ -9,8 +9,8 @@ import {
 	setAuthButtonsLoadingState,
 	setAuthForm,
 	setAuthFormDisabled,
-	setIsLogged,
 	setAuthFormResponseError,
+	setIsLogged,
 	setUser,
 } from '@state-management/auth-feature/auth.actions';
 import { AuthFormType } from '@enums/AuthFormType';
@@ -24,7 +24,8 @@ import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 import { Action, Store } from '@ngrx/store';
 import { selectUser } from '@state-management/auth-feature/auth.reducer';
 import { HttpErrorResponse } from '@angular/common/http';
-import { HttpErrorsHelper } from '@helpers/HttpErrorsHelper';
+import { selectUrlBeforeAuthNavigation } from '@state-management/main-feature/main.reducer';
+import { setUrlBeforeAuthNavigation } from '@state-management/main-feature/main.actions';
 
 @Injectable()
 export class AuthEffects implements OnInitEffects {
@@ -58,13 +59,22 @@ export class AuthEffects implements OnInitEffects {
 		return this.actions$.pipe(
 			ofType(AuthActions.LoginAction),
 			map((action: TypedActionWithPayload<AuthForm>) => action.payload),
-			switchMap(authForm => {
-				return this.authService
-					.login(authForm)
-					.pipe(switchMap(userDto => [setUser({ payload: userDto }), setAuthFormDisabled({ payload: false })]));
-			}),
-			catchError((error: HttpErrorResponse) => {
-				return of(setAuthFormResponseError({ payload: error }));
+			concatLatestFrom(() => this.store.select(selectUrlBeforeAuthNavigation)),
+			switchMap(([authForm, route]) => {
+				return this.authService.login(authForm).pipe(
+					switchMap(userDto => {
+						this.router.navigate([route]);
+						return [
+							setUser({ payload: userDto }),
+							setAuthFormDisabled({ payload: false }),
+							setAuthFormResponseError({ payload: null }),
+							setUrlBeforeAuthNavigation({ payload: '' }),
+						];
+					}),
+					catchError((response: HttpErrorResponse) => {
+						return of(setAuthFormResponseError({ payload: response.error }));
+					}),
+				);
 			}),
 		);
 	});
@@ -75,12 +85,12 @@ export class AuthEffects implements OnInitEffects {
 			map((action: TypedActionWithPayload<AuthForm>) => action.payload),
 			switchMap(authForm => {
 				return this.authService.register(authForm).pipe(
-					map(() => {
+					switchMap(() => {
 						this.router.navigate([NAVIGATE_ROUTES.LOGIN]);
-						return setAuthFormDisabled({ payload: false });
+						return [setAuthFormDisabled({ payload: false }), setAuthFormResponseError({ payload: null })];
 					}),
-					catchError((error: HttpErrorResponse) => {
-						return of(setAuthFormResponseError({ payload: error }));
+					catchError((response: HttpErrorResponse) => {
+						return of(setAuthFormResponseError({ payload: response.error }));
 					}),
 				);
 			}),
@@ -116,16 +126,6 @@ export class AuthEffects implements OnInitEffects {
 		);
 	});
 
-	setIsLogged$ = createEffect(
-		() => {
-			return this.actions$.pipe(
-				ofType(AuthActions.SetIsLoggedAction),
-				map(() => this.router.navigate([NAVIGATE_ROUTES.HOME])),
-			);
-		},
-		{ dispatch: false },
-	);
-
 	resetUser$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(AuthActions.ResetUserAction),
@@ -138,12 +138,9 @@ export class AuthEffects implements OnInitEffects {
 			ofType(AuthActions.GetAuthUserAction),
 			switchMap(() => {
 				return this.authService.currentUser().pipe(
-					switchMap(user => [
-						setUser({ payload: user }),
-						setAuthButtonsLoadingState({ payload: { isLoadingAuthButtons: false } }),
-					]),
+					switchMap(user => [setUser({ payload: user }), setAuthButtonsLoadingState({ payload: false })]),
 					catchError(() => {
-						return of(setAuthButtonsLoadingState({ payload: { isLoadingAuthButtons: false } }));
+						return of(setAuthButtonsLoadingState({ payload: false }));
 					}),
 				);
 			}),
@@ -153,10 +150,7 @@ export class AuthEffects implements OnInitEffects {
 	setRegisterResponseError$ = createEffect(() => {
 		return this.actions$.pipe(
 			ofType(AuthActions.SetAuthFormResponseErrorAction),
-			map((action: TypedActionWithPayload<HttpErrorResponse>) => action.payload),
-			switchMap(error => {
-				return [setAuthFormDisabled({ payload: false }), HttpErrorsHelper.getActionAfterRegisterError(error)];
-			}),
+			map(() => setAuthFormDisabled({ payload: false })),
 		);
 	});
 }

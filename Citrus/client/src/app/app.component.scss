@@ -1,5 +1,4 @@
 * {
-	position: relative;
 	padding: 0.5rem;
 }
 body {
@@ -9,25 +8,16 @@ body {
 }
 
 .document {
-	display: grid;
-	grid-template-areas:
-		'header'
-		'content';
-	grid-template-rows: 1fr 7fr;
-	grid-template-columns: 1fr;
-	align-content: stretch;
-}
-
-.header {
-	grid-area: header;
-	max-height: 5em;
-	background-color: #f4f6fc;
-	border-radius: 10px;
-	align-self: center;
-}
-
-.content {
-	height: 100vh;
-	grid-area: content;
-	position: absolute;
+	display: flex;
+	flex-direction: column;
+	.header {
+		max-height: 5em;
+		background-color: #f4f6fc;
+		border-radius: 10px;
+		align-self: stretch;
+	}
+	.content {
+		align-self: center;
+		justify-content: center;
+	}
 }

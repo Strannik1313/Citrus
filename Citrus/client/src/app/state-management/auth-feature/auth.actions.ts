@@ -2,8 +2,6 @@ import { createAction, props } from '@ngrx/store';
 import { AuthFormType } from '@enums/AuthFormType';
 import { AuthForm } from '@interfaces/AuthForm';
 import { UserDto } from '@models/UserDto';
-import { AuthButtonsLoadingState } from '@interfaces/ComponentsLoadingState';
-import { HttpErrorResponse } from '@angular/common/http';
 
 export enum AuthActions {
 	SetIsLoggedAction = '[Auth Page] SetIsLoggedAction',
@@ -16,7 +14,6 @@ export enum AuthActions {
 	GetAuthUserAction = '[Auth Page] GetAuthUserAction',
 	SetAuthButtonsLoadingStateAction = '[Auth Page] SetAuthButtonsLoadingStateAction',
 	SetAuthFormResponseErrorAction = '[Auth Page] SetAuthFormResponseErrorAction',
-	SetBadEmailOnRegisterAction = '[Auth Page] SetBadEmailOnRegisterAction',
 	SetAuthFormDisabledAction = '[Auth Page] SetAuthFormDisabledAction',
 }
 
@@ -31,19 +28,13 @@ export const getAuthUser = createAction(AuthActions.GetAuthUserAction);
 export const setAuthButtonsLoadingState = createAction(
 	AuthActions.SetAuthButtonsLoadingStateAction,
 	props<{
-		payload: AuthButtonsLoadingState;
+		payload: boolean;
 	}>(),
 );
 export const setAuthFormResponseError = createAction(
 	AuthActions.SetAuthFormResponseErrorAction,
 	props<{
-		payload: HttpErrorResponse;
-	}>(),
-);
-export const setBadEmailOnRegister = createAction(
-	AuthActions.SetBadEmailOnRegisterAction,
-	props<{
-		payload: boolean;
+		payload: string | null;
 	}>(),
 );
 export const setAuthFormDisabled = createAction(

@@ -10,8 +10,8 @@
 		</button>
 	</div>
 	<div class='auth'>
-		<div class='button_container' appSpinner [isRunning]='isLoadingAuthButtonsState.isLoadingAuthButtons'>
-			<ng-container *ngIf='!isLogged && !isLoadingAuthButtonsState.isLoadingAuthButtons; else authUserButtons'>
+		<div class='button_container' appSpinner [isRunning]='isLoadingAuthButtonsState'>
+			<ng-container *ngIf='!isLogged && !isLoadingAuthButtonsState; else authUserButtons'>
 				<button
 					[matTooltip]='HeaderLabels.LOGIN_BTN_TOOLTIP'
 					mat-icon-button
@@ -28,12 +28,13 @@
 					data-testid='header_btn'
 					[routerLink]='routes.REGISTER'
 				>
-					<mat-icon data-testid='header_icon'>how_to_reg</mat-icon>
+					<mat-icon data-testid='header_icon'>person_add</mat-icon>
 				</button>
 			</ng-container>
 		</div>
 		<ng-template #authUserButtons>
-			<ng-container *ngIf='!isLoadingAuthButtonsState.isLoadingAuthButtons'>
+			<ng-container *ngIf='!isLoadingAuthButtonsState'>
+				<a class='account_link' [routerLink]='routes.ACCOUNT'>{{user?.name || user?.email}}</a>
 				<button
 					[matTooltip]='HeaderLabels.LOGOUT_BTN_TOOLTIP'
 					mat-icon-button

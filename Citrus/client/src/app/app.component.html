@@ -1,7 +1,8 @@
 <ng-container *ngIf='{
 	showSnakeBar: showSnakeBar$ | async,
 	isLogged: (isUserLogged$ | async)!,
-	isLoadingAuthButtonsState: (isLoadingAuthButtonsState$ | async)!
+	isLoadingAuthButtonsState: (isLoadingAuthButtonsState$ | async)!,
+	user: user$ | async
 } as data'>
 	<div class='document'>
 		<app-sneakbar
@@ -13,6 +14,7 @@
 			class='header'
 			[isLogged]='data.isLogged'
 			[isLoadingAuthButtonsState]='data.isLoadingAuthButtonsState'
+			[user]='data.user'
 			(logout)='onLogout()'
 		></app-header>
 		<div class='content'>

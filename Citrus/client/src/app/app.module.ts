@@ -22,6 +22,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainPageModule } from '@components/ui/main-page/main-page.module';
 import { AuthModule } from '@shared/auth/auth.module';
 import { TokenInterceptor } from '@interceptors/token.interceptor';
+import { routerReducer } from '@ngrx/router-store';
+import { RouterEffects } from '@state-management/router-feature/router.effects';
 
 registerLocaleData(localeRu);
 
@@ -36,8 +38,8 @@ registerLocaleData(localeRu);
 		MatButtonModule,
 		SpinnerModule,
 		SnakeBarModule,
-		StoreModule.forRoot({}),
-		EffectsModule.forRoot([]),
+		StoreModule.forRoot({ router: routerReducer }),
+		EffectsModule.forRoot([RouterEffects]),
 		StoreModule.forFeature(MainFeature.name, MainFeature.reducer),
 		StoreDevtoolsModule.instrument({
 			maxAge: 25,

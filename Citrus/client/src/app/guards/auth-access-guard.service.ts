@@ -21,7 +21,7 @@ export class AuthAccessGuard implements CanActivate, OnDestroy {
 		this.store
 			.select(selectIsLoadingAuthButtons)
 			.pipe(takeUntil(this.destroy$))
-			.subscribe(authButtonState => (this.isUserInitializing = authButtonState.isLoadingAuthButtons));
+			.subscribe(authButtonState => (this.isUserInitializing = authButtonState));
 	}
 
 	canActivate(

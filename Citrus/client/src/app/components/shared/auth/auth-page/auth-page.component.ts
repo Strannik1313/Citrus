@@ -6,8 +6,8 @@ import { AuthForm } from '@interfaces/AuthForm';
 import { Observable } from 'rxjs';
 import {
 	selectAuthForm,
+	selectAuthFormError,
 	selectIsAuthFormDisabled,
-	selectIsBadEmailError,
 } from '@state-management/auth-feature/auth.reducer';
 
 @Component({
@@ -19,7 +19,7 @@ import {
 export class AuthPageComponent implements OnInit {
 	authForm$: Observable<AuthFormType> = new Observable<AuthFormType>();
 	isAuthFormDisabled$: Observable<boolean> = new Observable<boolean>();
-	isBadEmailError$: Observable<boolean> = new Observable<boolean>();
+	error$: Observable<string | null> = new Observable<string | null>();
 	readonly AuthFormType = AuthFormType;
 
 	constructor(private store: Store) {}
@@ -27,7 +27,7 @@ export class AuthPageComponent implements OnInit {
 	ngOnInit(): void {
 		this.authForm$ = this.store.select(selectAuthForm);
 		this.isAuthFormDisabled$ = this.store.select(selectIsAuthFormDisabled);
-		this.isBadEmailError$ = this.store.select(selectIsBadEmailError);
+		this.error$ = this.store.select(selectAuthFormError);
 	}
 
 	onFormSubmit(authForm: AuthForm, type: AuthFormType) {

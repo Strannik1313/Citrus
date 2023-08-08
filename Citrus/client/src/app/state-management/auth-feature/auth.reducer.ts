@@ -4,31 +4,30 @@ import {
 	setAuthButtonsLoadingState,
 	setAuthForm,
 	setAuthFormDisabled,
-	setBadEmailOnRegister,
+	setAuthFormResponseError,
 	setIsLogged,
 	setUser,
 } from '@state-management/auth-feature/auth.actions';
 import { UserDto } from '@models/UserDto';
 import equal from 'fast-deep-equal/es6';
-import { AuthButtonsLoadingState } from '@interfaces/ComponentsLoadingState';
 
 export const authFeatureKey = 'auth';
 
 export interface AuthReducer {
 	isLogged: boolean;
-	isLoadingAuthButtons: AuthButtonsLoadingState;
+	isLoadingAuthButtons: boolean;
 	isAuthFormDisabled: boolean;
-	isBadEmailError: boolean;
 	authForm: AuthFormType;
+	authFormError: string | null;
 	user: UserDto | null;
 }
 
 export const authInitialState: AuthReducer = {
 	isLogged: false,
-	isLoadingAuthButtons: { isLoadingAuthButtons: true },
+	isLoadingAuthButtons: true,
 	isAuthFormDisabled: false,
-	isBadEmailError: false,
 	authForm: AuthFormType.NONE,
+	authFormError: null,
 	user: null,
 };
 
@@ -76,12 +75,12 @@ export const AuthFeature = createFeature({
 						isAuthFormDisabled: payload,
 				  };
 		}),
-		on(setBadEmailOnRegister, (state, { payload }) => {
-			return state.isBadEmailError === payload
+		on(setAuthFormResponseError, (state, { payload }) => {
+			return state.authFormError === payload
 				? state
 				: {
 						...state,
-						isBadEmailError: payload,
+						authFormError: payload,
 				  };
 		}),
 	),
@@ -95,5 +94,5 @@ export const {
 	selectIsLoadingAuthButtons,
 	selectUser,
 	selectIsAuthFormDisabled,
-	selectIsBadEmailError,
+	selectAuthFormError,
 } = AuthFeature;

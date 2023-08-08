@@ -12,9 +12,10 @@
 					<input matInput formControlName='email' [placeholder]='AuthPageLabels.WRITE_EMAIL'>
 				</mat-form-field>
 				<mat-form-field>
-					<input matInput formControlName='password' [placeholder]='AuthPageLabels.WRITE_PASSWORD'>
+					<input type='password' matInput formControlName='password' [placeholder]='AuthPageLabels.WRITE_PASSWORD'>
 				</mat-form-field>
-				<button mat-button [disabled]='!authForm.valid || !!isFormDisabled'>{{AuthPageLabels.CONFIRM_BUTTON}}</button>
+				<button mat-raised-button [disabled]='!authForm.valid || !!isFormDisabled'>{{AuthPageLabels.CONFIRM_BUTTON}}</button>
+				<mat-error *ngIf='!!error'>{{error}}</mat-error>
 			</fieldset>
 		</form>
 	</div>
