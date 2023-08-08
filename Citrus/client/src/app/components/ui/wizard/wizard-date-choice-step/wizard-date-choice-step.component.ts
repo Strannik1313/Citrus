@@ -4,7 +4,7 @@ import { MasterDto } from '@models/MasterDto';
 import { FilterItem } from '@shared/filter-dropdown/interfaces/FilterItem';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@interfaces/Schedule';
-import { WizardSecondStepLoadingState } from '@models/ComponentsLoadingState';
+import { WizardSecondStepLoadingState } from '@interfaces/ComponentsLoadingState';
 
 @Component({
 	selector: 'app-wizard-date-choice-step',

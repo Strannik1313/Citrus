@@ -22,7 +22,7 @@ import { Schedule } from '@interfaces/Schedule';
 import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { ConfirmForm } from '@interfaces/ConfirmForm';
-import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
+import { ComponentsLoadingState } from '@interfaces/ComponentsLoadingState';
 import { ScheduleDto } from '@models/ScheduleDto';
 
 export const MockElementHeight = 20;

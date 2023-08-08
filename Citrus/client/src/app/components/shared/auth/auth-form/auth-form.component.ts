@@ -12,6 +12,7 @@ import { AuthForm } from '@interfaces/AuthForm';
 })
 export class AuthFormComponent {
 	@Input() type: AuthFormType = AuthFormType.NONE;
+	@Input() isFormDisabled: boolean | null = false;
 	@Output() onFormSubmit: EventEmitter<AuthForm> = new EventEmitter<AuthForm>();
 
 	readonly AuthFormType = AuthFormType;

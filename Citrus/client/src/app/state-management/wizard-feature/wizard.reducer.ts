@@ -35,7 +35,7 @@ import { MasterDto } from '@models/MasterDto';
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { Schedule } from '@interfaces/Schedule';
 import equal from 'fast-deep-equal/es6';
-import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
+import { ComponentsLoadingState } from '@interfaces/ComponentsLoadingState';
 
 export const wizardFeatureKey = 'wizard';
 

@@ -38,7 +38,7 @@ import { ServiceDto } from '@models/ServiceDto';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { Schedule } from '@interfaces/Schedule';
 import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
-import { ComponentsLoadingState } from '@models/ComponentsLoadingState';
+import { ComponentsLoadingState } from '@interfaces/ComponentsLoadingState';
 import { ConfirmForm } from '@interfaces/ConfirmForm';
 
 export enum WizardStepperEnum {

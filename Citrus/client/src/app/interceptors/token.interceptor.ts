@@ -7,12 +7,13 @@ import {
 	HttpRequest,
 	HttpResponse,
 } from '@angular/common/http';
-import { catchError, filter, Observable, switchMap } from 'rxjs';
+import { catchError, filter, map, Observable, switchMap } from 'rxjs';
 import { AuthService } from '@api/AuthService';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
 	private acceptToken = '';
+
 	constructor(private authService: AuthService) {}
 
 	intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
@@ -22,6 +23,18 @@ export class TokenInterceptor implements HttpInterceptor {
 		}
 		return next.handle(clone).pipe(
 			filter(event => event instanceof HttpResponse),
+			map(response => {
+				if (
+					response instanceof HttpResponse &&
+					!(response instanceof HttpErrorResponse) &&
+					response.url?.includes('/api/auth/login')
+				) {
+					return response.clone({
+						body: { ...response.body.user },
+					});
+				}
+				return response;
+			}),
 			catchError(error => {
 				if (
 					error instanceof HttpErrorResponse &&
@@ -30,7 +43,7 @@ export class TokenInterceptor implements HttpInterceptor {
 				) {
 					return this.authService.refreshTokens().pipe(
 						switchMap(token => {
-							this.acceptToken = token.accept;
+							this.acceptToken = token;
 							const clone = request.clone({
 								setHeaders: { Authorization: this.acceptToken },
 							});

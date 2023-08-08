@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { ServiceDto } from '@models/ServiceDto';
-import { WizardFirstStepLoadingState } from '@models/ComponentsLoadingState';
+import { WizardFirstStepLoadingState } from '@interfaces/ComponentsLoadingState';
 
 @Component({
 	selector: 'app-wizard-service-choice-step',

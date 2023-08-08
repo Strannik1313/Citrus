@@ -52,12 +52,12 @@ registerLocaleData(localeRu);
 		{ provide: LOCALE_ID, useValue: 'ru' },
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: TokenInterceptor,
+			useClass: ErrorHandlerInterceptor,
 			multi: true,
 		},
 		{
 			provide: HTTP_INTERCEPTORS,
-			useClass: ErrorHandlerInterceptor,
+			useClass: TokenInterceptor,
 			multi: true,
 		},
 	],

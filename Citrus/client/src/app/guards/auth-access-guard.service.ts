@@ -3,13 +3,14 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
-import { selectIsLogged } from '@state-management/auth-feature/auth.reducer';
+import { selectIsLoadingAuthButtons, selectIsLogged } from '@state-management/auth-feature/auth.reducer';
 
 @Injectable({
 	providedIn: 'root',
 })
 export class AuthAccessGuard implements CanActivate, OnDestroy {
 	isUserLogged = false;
+	isUserInitializing = false;
 	private destroy$: Subject<void> = new Subject<void>();
 
 	constructor(private store: Store, private router: Router) {
@@ -17,6 +18,10 @@ export class AuthAccessGuard implements CanActivate, OnDestroy {
 			.select(selectIsLogged)
 			.pipe(takeUntil(this.destroy$))
 			.subscribe(isLogged => (this.isUserLogged = isLogged));
+		this.store
+			.select(selectIsLoadingAuthButtons)
+			.pipe(takeUntil(this.destroy$))
+			.subscribe(authButtonState => (this.isUserInitializing = authButtonState.isLoadingAuthButtons));
 	}
 
 	canActivate(
@@ -25,19 +30,19 @@ export class AuthAccessGuard implements CanActivate, OnDestroy {
 	): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 		switch (state.url) {
 			case NAVIGATE_ROUTES.AUTH: {
-				if (this.isUserLogged) {
+				if (this.isUserLogged || this.isUserInitializing) {
 					this.router.navigate(['/']);
 				}
 				return true;
 			}
 			case NAVIGATE_ROUTES.REGISTER: {
-				if (this.isUserLogged) {
+				if (this.isUserLogged || this.isUserInitializing) {
 					this.router.navigate(['/']);
 				}
 				return true;
 			}
 			case NAVIGATE_ROUTES.LOGIN: {
-				if (this.isUserLogged) {
+				if (this.isUserLogged || this.isUserInitializing) {
 					this.router.navigate(['/']);
 				}
 				return true;

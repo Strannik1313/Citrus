@@ -13,3 +13,7 @@ export interface WizardSecondStepLoadingState {
 	isLoadingCalendar: boolean;
 	isLoadingSchedules: boolean;
 }
+
+export interface AuthButtonsLoadingState {
+	isLoadingAuthButtons: boolean;
+}

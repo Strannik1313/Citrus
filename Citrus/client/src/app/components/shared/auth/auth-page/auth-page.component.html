@@ -1,5 +1,7 @@
 <ng-container *ngIf='{
-	authForm: (authForm$ | async)!
+	authForm: (authForm$ | async)!,
+	isAuthFormDisabled: isAuthFormDisabled$ | async,
+	isBadEmailError: isBadEmailError$ | async
 } as data'>
 	<mat-card>
 		<div class='choice_form_container'
@@ -8,6 +10,7 @@
 		<ng-template #form>
 			<app-auth-form
 				[type]='data.authForm'
+				[isFormDisabled]='data.isAuthFormDisabled'
 				(onFormSubmit)='onFormSubmit($event, data.authForm)'
 			></app-auth-form>
 		</ng-template>

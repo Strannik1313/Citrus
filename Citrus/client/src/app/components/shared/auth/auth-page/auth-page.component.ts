@@ -4,7 +4,11 @@ import { Store } from '@ngrx/store';
 import { login, register } from '@state-management/auth-feature/auth.actions';
 import { AuthForm } from '@interfaces/AuthForm';
 import { Observable } from 'rxjs';
-import { selectAuthForm } from '@state-management/auth-feature/auth.reducer';
+import {
+	selectAuthForm,
+	selectIsAuthFormDisabled,
+	selectIsBadEmailError,
+} from '@state-management/auth-feature/auth.reducer';
 
 @Component({
 	selector: 'app-auth-page',
@@ -14,12 +18,16 @@ import { selectAuthForm } from '@state-management/auth-feature/auth.reducer';
 })
 export class AuthPageComponent implements OnInit {
 	authForm$: Observable<AuthFormType> = new Observable<AuthFormType>();
+	isAuthFormDisabled$: Observable<boolean> = new Observable<boolean>();
+	isBadEmailError$: Observable<boolean> = new Observable<boolean>();
 	readonly AuthFormType = AuthFormType;
 
 	constructor(private store: Store) {}
 
 	ngOnInit(): void {
 		this.authForm$ = this.store.select(selectAuthForm);
+		this.isAuthFormDisabled$ = this.store.select(selectIsAuthFormDisabled);
+		this.isBadEmailError$ = this.store.select(selectIsBadEmailError);
 	}
 
 	onFormSubmit(authForm: AuthForm, type: AuthFormType) {
