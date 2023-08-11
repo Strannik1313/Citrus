@@ -1,6 +1,6 @@
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Action } from '@ngrx/store';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { Router } from '@angular/router';
 import { TestBed } from '@angular/core/testing';
 import { AuthEffects } from '@state-management/auth-feature/auth.effects';

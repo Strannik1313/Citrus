@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { WizardAccessGuard } from '@guards/wizard-access.guard.service';
-import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { MainPageContainerComponent } from '@components/ui/main-page/main-page-container/main-page-container.component';
 import { AuthPageComponent } from '@shared/auth/auth-page/auth-page.component';
 import { AuthAccessGuard } from '@guards/auth-access-guard.service';

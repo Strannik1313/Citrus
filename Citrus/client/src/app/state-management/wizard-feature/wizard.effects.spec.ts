@@ -12,8 +12,8 @@ import {
 	MockMasterDto,
 	MockPageableMasterDto,
 	MockSchedule,
-	MockWizardSelectors,
 	MockService,
+	MockWizardSelectors,
 } from '@tests/mock-constants';
 import {
 	changeWizardStep,

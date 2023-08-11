@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { HttpHandler, HttpRequest } from '@angular/common/http';
-import { throwError } from 'rxjs';
 import { showSnakeBar } from '@state-management/main-feature/main.actions';
 import { MockInitialState } from '@tests/mock-constants';
 import { MockHttpHandlerWithError, MockHttpRequest } from '@tests/mock-services';

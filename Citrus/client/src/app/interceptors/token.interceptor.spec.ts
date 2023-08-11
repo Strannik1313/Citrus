@@ -1,11 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { HttpHandler, HttpRequest, HttpResponse } from '@angular/common/http';
-import { MockInitialState, MockUserDto } from '@tests/mock-constants';
+import { HttpHandler, HttpRequest } from '@angular/common/http';
 import { TokenInterceptor } from '@interceptors/token.interceptor';
 import { AuthService } from '@api/AuthService';
 import { MockAuthService, MockHttpHandler, MockHttpRequest, MockHttpResponseWithoutToken } from '@tests/mock-services';
-import { UserDto } from '@models/UserDto';
 import { cold } from 'jasmine-marbles';
 
 describe('TokenInterceptor', () => {
