@@ -1,5 +1,7 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
+import { HEADER_LABELS } from '@enums/labels/HeaderLabels';
+import { UserDto } from '@models/UserDto';
 
 @Component({
 	selector: 'app-header',
@@ -8,5 +10,14 @@ import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent {
-	public homeLink: string = NAVIGATE_ROUTES.HOME;
+	@Input() isLogged = false;
+	@Input() isUserInitializingProcess = true;
+	@Input() user: UserDto | null = null;
+	@Output() logout: EventEmitter<void> = new EventEmitter<void>();
+	readonly routes = NAVIGATE_ROUTES;
+	readonly HeaderLabels = HEADER_LABELS;
+
+	onLogoutClick() {
+		this.logout.emit();
+	}
 }

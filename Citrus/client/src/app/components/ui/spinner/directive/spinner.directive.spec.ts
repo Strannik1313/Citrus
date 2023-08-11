@@ -4,7 +4,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ChangeDetectorRef, Component, ViewContainerRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Spy = jasmine.Spy;
-import { MockElementHeight } from '@tests/mockData/mockConstants';
+import { MockElementHeight } from '@tests/mock-constants';
 import { By } from '@angular/platform-browser';
 
 @Component({

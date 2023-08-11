@@ -9,7 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { MockDate, MockSchedule } from '@tests/mockData/mockConstants';
+import { MockDate, MockSchedule } from '@tests/mock-constants';
 
 describe('ScheduleComponent', () => {
 	let fixture: ComponentFixture<ScheduleComponent>;

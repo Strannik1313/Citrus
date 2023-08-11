@@ -1,17 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
-import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { loadWizard } from '@state-management/wizard-feature/wizard.actions';
+import { MainPageLayoutComponent } from '@components/ui/main-page/main-page-layout/main-page-layout.component';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
-import { LABELS } from '@enums/Labels';
-import { MockInitialState } from '@tests/mockData/mockConstants';
+import { HomePageLabels } from '@enums/labels/HomePageLabels';
 
 describe('MainPageLayoutComponent', () => {
 	let fixture: ComponentFixture<MainPageLayoutComponent>;
 	let component: MainPageLayoutComponent;
-	let store: MockStore;
 	let btn: DebugElement;
 	let title: DebugElement;
 	let subtitle: DebugElement;
@@ -19,14 +14,12 @@ describe('MainPageLayoutComponent', () => {
 	beforeEach(async () => {
 		await TestBed.configureTestingModule({
 			declarations: [MainPageLayoutComponent],
-			providers: [provideMockStore({ initialState: MockInitialState })],
 		}).compileComponents();
 	});
 
 	beforeEach(() => {
 		fixture = TestBed.createComponent(MainPageLayoutComponent);
 		component = fixture.componentInstance;
-		store = TestBed.inject(MockStore);
 		fixture.detectChanges();
 		btn = fixture.debugElement.query(By.css('[data-testid="start-process-btn"]'));
 		title = fixture.debugElement.query(By.css('[data-testid="title"]'));
@@ -43,9 +36,9 @@ describe('MainPageLayoutComponent', () => {
 
 	describe('startProcessBtnClick', () => {
 		it('dispatch loadWizard', () => {
-			let spy = spyOn(store, 'dispatch');
+			let spy = spyOn(component.onStartProcess, 'emit');
 			component.startProcessBtnClick();
-			expect(spy).toHaveBeenCalledOnceWith(loadWizard());
+			expect(spy).toHaveBeenCalledOnceWith();
 		});
 	});
 
@@ -57,15 +50,15 @@ describe('MainPageLayoutComponent', () => {
 		});
 
 		it('right button label', () => {
-			expect(btn.nativeElement.textContent).toBe(BUTTON_LABELS.MAKE_ORDER);
+			expect(btn.nativeElement.textContent).toBe(HomePageLabels.MAKE_ORDER_BTN);
 		});
 
 		it('right title label', () => {
-			expect(title.nativeElement.textContent).toBe(LABELS.MAIN_PAGE_TITLE);
+			expect(title.nativeElement.textContent).toBe(HomePageLabels.TITLE);
 		});
 
 		it('right subtitle label', () => {
-			expect(subtitle.nativeElement.textContent).toBe(LABELS.MAIN_PAGE_SUBTITLE);
+			expect(subtitle.nativeElement.textContent).toBe(HomePageLabels.SUBTITLE);
 		});
 	});
 });

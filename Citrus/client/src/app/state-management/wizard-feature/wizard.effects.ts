@@ -183,7 +183,7 @@ export class WizardEffects {
 			concatLatestFrom(() => this.store.select(WizardFeature.selectSelectedService)),
 			map(([, service]) => {
 				return {
-					servicesIds: service?.id ? [service.id] : null,
+					servicesIds: service?.id ?? undefined,
 				};
 			}),
 			switchMap(params =>
@@ -446,7 +446,7 @@ export class WizardEffects {
 			switchMap(([, service, master, schedule]) => {
 				return [
 					getMasters({
-						payload: { servicesIds: service?.id ? [service.id] : null },
+						payload: { servicesIds: service?.id ?? undefined },
 					}),
 					getDates({
 						payload: {

@@ -29,11 +29,11 @@ import {
 	MockLoadingState,
 	MockMasterDto,
 	MockSchedule,
-	MockSelectors,
+	MockWizardSelectors,
 	MockService,
 	MockServiceDto,
 	MockStep,
-} from '@tests/mockData/mockConstants';
+} from '@tests/mock-constants';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { ChangeDetectorRef, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -54,7 +54,7 @@ import { MonthFilterModule } from '@shared/month-filter/month-filter.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxMaskModule } from 'ngx-mask';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
+import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
 
 describe('WizardComponent', () => {
 	let fixture: ComponentFixture<WizardComponent>;
@@ -98,7 +98,10 @@ describe('WizardComponent', () => {
 				BrowserAnimationsModule,
 				NgxMaskModule.forRoot(),
 			],
-			providers: [provideMockStore({ initialState: MockInitialState, selectors: MockSelectors }), ChangeDetectorRef],
+			providers: [
+				provideMockStore({ initialState: MockInitialState, selectors: MockWizardSelectors }),
+				ChangeDetectorRef,
+			],
 		}).compileComponents();
 	});
 

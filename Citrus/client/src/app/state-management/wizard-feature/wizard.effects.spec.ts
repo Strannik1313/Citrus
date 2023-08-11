@@ -12,9 +12,9 @@ import {
 	MockMasterDto,
 	MockPageableMasterDto,
 	MockSchedule,
-	MockSelectors,
 	MockService,
-} from '@tests/mockData/mockConstants';
+	MockWizardSelectors,
+} from '@tests/mock-constants';
 import {
 	changeWizardStep,
 	checkIsWizardAvailable,
@@ -78,6 +78,7 @@ import { CalenderDatesLoaderDto } from '@models/CalenderDatesLoaderDto';
 import { MonthsLoaderDto } from '@models/MonthsLoaderDto';
 import { DatesHelper } from '@helpers/DatesHelper';
 import { OrderDto } from '@models/OrderDto';
+import { MockRouter } from '@tests/mock-services';
 
 describe('WizardEffects', () => {
 	let actions$: Observable<Action>;
@@ -90,7 +91,7 @@ describe('WizardEffects', () => {
 			providers: [
 				WizardEffects,
 				provideMockStore({
-					selectors: MockSelectors,
+					selectors: MockWizardSelectors,
 				}),
 				provideMockActions(() => actions$),
 				{
@@ -130,11 +131,7 @@ describe('WizardEffects', () => {
 				},
 				{
 					provide: Router,
-					useValue: {
-						navigate() {
-							return undefined;
-						},
-					},
+					useValue: MockRouter,
 				},
 			],
 		}).compileComponents();
@@ -284,7 +281,7 @@ describe('WizardEffects', () => {
 	});
 
 	it('getMasters$', () => {
-		actions$ = hot('a', { a: getMasters({ payload: { servicesIds: null } }) });
+		actions$ = hot('a', { a: getMasters({ payload: { servicesIds: undefined } }) });
 		const expected = cold('(bc)', {
 			b: setMasters({ payload: [MockMasterDto] }),
 			c: setMastersFilterComponentLoading({ payload: false }),
@@ -448,7 +445,7 @@ describe('WizardEffects', () => {
 
 		it('calls actions with not null params when in store are selectedService, selectedMaster, selectedSchedule', () => {
 			const expected = cold('(bcdefghi)', {
-				b: getMasters({ payload: { servicesIds: [MockService.id] } }),
+				b: getMasters({ payload: { servicesIds: MockService.id } }),
 				c: getDates({ payload: { serviceId: MockService.id, masterId: MockMasterDto.id } }),
 				d: getMonths({ payload: { currentMonth: new Date().getMonth().toString() } }),
 				e: setFwdBtnDisabled({ payload: false }),
@@ -465,7 +462,7 @@ describe('WizardEffects', () => {
 			selectSelectedMaster.setResult(null);
 			selectSelectedSchedule.setResult(null);
 			const expected = cold('(bcdefghi)', {
-				b: getMasters({ payload: { servicesIds: null } }),
+				b: getMasters({ payload: { servicesIds: undefined } }),
 				c: getDates({ payload: { serviceId: null, masterId: null } }),
 				d: getMonths({ payload: { currentMonth: new Date().getMonth().toString() } }),
 				e: setFwdBtnDisabled({ payload: true }),

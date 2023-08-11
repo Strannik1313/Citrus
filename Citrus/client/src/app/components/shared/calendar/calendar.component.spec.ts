@@ -9,7 +9,7 @@ import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWee
 import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { ChangeDetectorRef, DebugElement } from '@angular/core';
 import { CALENDAR_BUTTON_LABELS } from '@shared/calendar/enums/CALENDAR_BUTTON_LABELS';
-import { MockCalendarDtos, MockDate } from '@tests/mockData/mockConstants';
+import { MockCalendarDtos, MockDate } from '@tests/mock-constants';
 
 describe('CalendarComponent', () => {
 	let component: CalendarComponent;

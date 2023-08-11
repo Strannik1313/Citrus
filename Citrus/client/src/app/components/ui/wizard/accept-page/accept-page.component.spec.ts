@@ -4,8 +4,9 @@ import { AcceptPageComponent } from './accept-page.component';
 import { Router } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
-import { BUTTON_LABELS } from '@enums/ButtonLabels';
-import { LABELS } from '@enums/Labels';
+import { BUTTON_LABELS } from '@enums/labels/ButtonLabels';
+import { LABELS } from '@enums/labels/Labels';
+import { MockRouter } from '@tests/mock-services';
 
 describe('AcceptPageComponent', () => {
 	let component: AcceptPageComponent;
@@ -18,11 +19,7 @@ describe('AcceptPageComponent', () => {
 			providers: [
 				{
 					provide: Router,
-					useValue: {
-						navigate() {
-							return undefined;
-						},
-					},
+					useValue: MockRouter,
 				},
 			],
 		}).compileComponents();

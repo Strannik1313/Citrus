@@ -1,29 +1,36 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { MainPageLayoutComponent } from '@components/ui/main-page-layout/main-page-layout.component';
-import { RouteAccessGuard } from '@guards/route-access.guard.service';
+import { WizardAccessGuard } from '@guards/wizard-access.guard.service';
+import { MainPageContainerComponent } from '@components/ui/main-page/main-page-container/main-page-container.component';
+import { AuthPageComponent } from '@shared/auth/auth-page/auth-page.component';
+import { AuthAccessGuard } from '@guards/auth-access-guard.service';
 
 const routes: Routes = [
 	{
 		path: '',
-		component: MainPageLayoutComponent,
+		component: MainPageContainerComponent,
 		pathMatch: 'full',
 	},
 	{
 		path: 'deal',
 		loadChildren: () => import('@components/ui/wizard/wizard.module').then(m => m.WizardModule),
-		canActivate: [RouteAccessGuard],
+		canActivate: [WizardAccessGuard],
 	},
-	// {
-	// 	path: 'register',
-	// 	loadChildren: () => import('@modules/register-page/register-page.module').then(m => m.RegisterPageModule),
-	// 	canActivate: [NavigateAccess],
-	// },
-	// {
-	// 	path: 'login',
-	// 	loadChildren: () => import('@modules/login-page/login-page.module').then(m => m.LoginPageModule),
-	// 	canActivate: [NavigateAccess],
-	// },
+	{
+		path: 'auth',
+		component: AuthPageComponent,
+		canActivate: [AuthAccessGuard],
+	},
+	{
+		path: 'auth/login',
+		component: AuthPageComponent,
+		canActivate: [AuthAccessGuard],
+	},
+	{
+		path: 'auth/register',
+		component: AuthPageComponent,
+		canActivate: [AuthAccessGuard],
+	},
 	{
 		path: '**',
 		redirectTo: '',

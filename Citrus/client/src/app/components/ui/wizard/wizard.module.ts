@@ -27,7 +27,7 @@ import { FilterDropdownModule } from '@shared/filter-dropdown/filter-dropdown.mo
 import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 import { NgxMaskModule } from 'ngx-mask';
 import { AcceptPageComponent } from '@components/ui/wizard/accept-page/accept-page.component';
-import { RouteAccessGuard } from '@guards/route-access.guard.service';
+import { WizardAccessGuard } from '@guards/wizard-access.guard.service';
 
 @NgModule({
 	declarations: [
@@ -60,7 +60,7 @@ import { RouteAccessGuard } from '@guards/route-access.guard.service';
 			{
 				path: 'accept',
 				component: AcceptPageComponent,
-				canActivate: [RouteAccessGuard],
+				canActivate: [WizardAccessGuard],
 			},
 		]),
 		StoreModule.forFeature(WizardFeature.name, WizardFeature.reducer),

@@ -1,14 +1,14 @@
 import { CalendarService } from '@api/CalendarService';
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { MockCalendarDtos, MockDate, MockScheduleDto } from '@tests/mockData/mockConstants';
+import { MockCalendarDtos, MockDate, MockScheduleDto } from '@tests/mock-constants';
 
 describe('CalendarService', () => {
 	let calendarService: CalendarService;
 	let controller: HttpTestingController;
 
-	beforeEach(async () => {
-		await TestBed.configureTestingModule({
+	beforeEach(() => {
+		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
 			providers: [CalendarService],
 		});

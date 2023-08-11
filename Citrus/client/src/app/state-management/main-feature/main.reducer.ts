@@ -1,14 +1,16 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
-import { hideSnakeBar, showSnakeBar } from '@state-management/main-feature/main.actions';
+import { hideSnakeBar, setUrlBeforeAuthNavigation, showSnakeBar } from '@state-management/main-feature/main.actions';
 
 export const mainFeatureKey = 'main';
 
 export interface MainReducer {
 	showSnakeBar: boolean;
+	urlBeforeAuthNavigation: string;
 }
 
 export const mainInitialState: MainReducer = {
 	showSnakeBar: false,
+	urlBeforeAuthNavigation: '',
 };
 
 export const MainFeature = createFeature({
@@ -31,7 +33,15 @@ export const MainFeature = createFeature({
 				  }
 				: state;
 		}),
+		on(setUrlBeforeAuthNavigation, (state, { payload }) => {
+			return state.urlBeforeAuthNavigation !== payload
+				? {
+						...state,
+						urlBeforeAuthNavigation: payload,
+				  }
+				: state;
+		}),
 	),
 });
 
-export const { name, reducer, selectMainState, selectShowSnakeBar } = MainFeature;
+export const { name, reducer, selectMainState, selectShowSnakeBar, selectUrlBeforeAuthNavigation } = MainFeature;

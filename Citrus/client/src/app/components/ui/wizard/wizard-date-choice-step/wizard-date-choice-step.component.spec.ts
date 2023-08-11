@@ -7,7 +7,7 @@ import { MonthFilterModule } from '@shared/month-filter/month-filter.module';
 import { SpinnerModule } from '@components/ui/spinner/spinner.module';
 import { FilterDropdownModule } from '@shared/filter-dropdown/filter-dropdown.module';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
-import { MockDate, MockLoadingState, MockMasterDto, MockSchedule } from '@tests/mockData/mockConstants';
+import { MockDate, MockLoadingState, MockMasterDto, MockSchedule } from '@tests/mock-constants';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('WizardDateChoiceStepComponent', () => {

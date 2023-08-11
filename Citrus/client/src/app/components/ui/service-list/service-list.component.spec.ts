@@ -8,7 +8,7 @@ import { ServiceDto } from '@models/ServiceDto';
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
 import Spy = jasmine.Spy;
-import { MockService } from '@tests/mockData/mockConstants';
+import { MockService } from '@tests/mock-constants';
 
 describe('Dialog window component', () => {
 	let fixture: ComponentFixture<ServiceListComponent>;

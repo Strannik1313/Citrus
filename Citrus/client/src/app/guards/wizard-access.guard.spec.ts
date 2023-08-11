@@ -1,14 +1,15 @@
 import { fakeAsync, TestBed, tick } from '@angular/core/testing';
 
-import { RouteAccessGuard } from './route-access.guard.service';
+import { WizardAccessGuard } from './wizard-access.guard.service';
 import { Store } from '@ngrx/store';
 import { ActivatedRoute, Router } from '@angular/router';
 import { asyncData } from '@tests/async-observable-helper/async-observable-helper';
 import 'zone.js/testing';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
+import { MockRouter } from '@tests/mock-services';
 
-describe('RouteAccessGuard', () => {
-	let guard: RouteAccessGuard;
+describe('WizardAccessGuard', () => {
+	let guard: WizardAccessGuard;
 	let storeSpy = jasmine.createSpyObj('Store', ['select']);
 	let router: Router;
 	let activatedRouter: ActivatedRoute;
@@ -18,23 +19,18 @@ describe('RouteAccessGuard', () => {
 	beforeEach(fakeAsync(() => {
 		TestBed.configureTestingModule({
 			providers: [
-				RouteAccessGuard,
+				WizardAccessGuard,
 				Store,
 				{
 					provide: Router,
-					useValue: {
-						routerState: { snapshot: { url: '' } },
-						navigate() {
-							return undefined;
-						},
-					},
+					useValue: MockRouter,
 				},
 				{ provide: ActivatedRoute, useValue: { snapshot: {} } },
 			],
 		});
 		router = TestBed.inject(Router);
 		activatedRouter = TestBed.inject(ActivatedRoute);
-		guard = new RouteAccessGuard(storeSpy, router);
+		guard = new WizardAccessGuard(storeSpy, router);
 		tick();
 	}));
 

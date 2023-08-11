@@ -8,7 +8,7 @@ import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
 @Injectable({
 	providedIn: 'root',
 })
-export class RouteAccessGuard implements CanActivate, OnDestroy {
+export class WizardAccessGuard implements CanActivate, OnDestroy {
 	isWizardAvailable = false;
 	isAcceptPageAvailable = false;
 	private destroy$: Subject<void> = new Subject<void>();

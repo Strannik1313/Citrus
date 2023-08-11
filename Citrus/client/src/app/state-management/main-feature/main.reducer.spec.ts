@@ -1,5 +1,6 @@
 import * as fromReducer from './main.reducer';
-import { hideSnakeBar, showSnakeBar } from '@state-management/main-feature/main.actions';
+import { hideSnakeBar, setUrlBeforeAuthNavigation, showSnakeBar } from '@state-management/main-feature/main.actions';
+import { MockUrl } from '@tests/mock-constants';
 
 describe('MainReducer', () => {
 	const { mainInitialState } = fromReducer;
@@ -21,6 +22,15 @@ describe('MainReducer', () => {
 		expect(firstState).not.toBe(modifiedInitialState);
 
 		const secondState = fromReducer.reducer(firstState, showSnakeBar());
+		expect(secondState).toBe(firstState);
+	});
+
+	it('setUrlBeforeAuthNavigation', () => {
+		const firstState = fromReducer.reducer(mainInitialState, setUrlBeforeAuthNavigation({ payload: MockUrl }));
+		expect(firstState.urlBeforeAuthNavigation).toBe(MockUrl);
+		expect(firstState).not.toBe(mainInitialState);
+
+		const secondState = fromReducer.reducer(firstState, setUrlBeforeAuthNavigation({ payload: MockUrl }));
 		expect(secondState).toBe(firstState);
 	});
 });

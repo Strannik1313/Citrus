@@ -4,4 +4,12 @@
 	align-items: center;
 	align-self: center;
 	padding: 0 20px;
+
+	.auth {
+		position: relative;
+		display: flex;
+		align-self: stretch;
+		align-content: stretch;
+		min-width: 50px;
+	}
 }
