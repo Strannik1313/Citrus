@@ -1,14 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { WizardServiceChoiceStepComponent } from '@components/ui/wizard/wizard-service-choice-step/wizard-service-choice-step.component';
-import { createMouseEvent } from '@tests/mockData/mockInputEvent';
+import { MockEvent } from '@tests/mock-events';
 import { ServiceListComponent } from '@components/ui/service-list/service-list.component';
 import { MatCard } from '@angular/material/card';
 import { AutoscrollDirective } from '@directives/autoscroll.directive';
 import { FirstLetterUppercasePipe } from '@pipes/first-letter-uppercase.pipe';
-import Spy = jasmine.Spy;
 import { SpinnerModule } from '@components/ui/spinner/spinner.module';
-import { MockService } from '@tests/mockData/mockConstants';
+import { MockService } from '@tests/mock-constants';
+import Spy = jasmine.Spy;
 
 describe('WizardServiceChoiceStepComponent', () => {
 	let fixture: ComponentFixture<WizardServiceChoiceStepComponent>;
@@ -41,9 +41,6 @@ describe('WizardServiceChoiceStepComponent', () => {
 	it('component should created', () => {
 		expect(component).toBeDefined();
 	});
-	it('123', () => {
-		expect(component);
-	});
 
 	describe('onServiceChange', () => {
 		let serviceClickSpy: Spy;
@@ -71,8 +68,8 @@ describe('WizardServiceChoiceStepComponent', () => {
 		});
 
 		it('should call inputChangeSpy with value when onInputChange called', () => {
-			component.onInputChange(createMouseEvent('mock'));
-			expect(inputChangeSpy).toHaveBeenCalledOnceWith('mock');
+			component.onInputChange(MockEvent);
+			expect(inputChangeSpy).toHaveBeenCalledOnceWith('mockValue');
 		});
 	});
 });

@@ -29,6 +29,7 @@ export class TokenInterceptor implements HttpInterceptor {
 					!(response instanceof HttpErrorResponse) &&
 					response.url?.includes('/api/auth/login')
 				) {
+					this.acceptToken = response.body.acceptToken;
 					return response.clone({
 						body: { ...response.body.user },
 					});

@@ -15,14 +15,14 @@ export class AuthService {
 		return this.http.post<UserDto>('/api/auth/login', form, { context: new HttpContext().set(SUPPRESS_EVENT, true) });
 	}
 
-	register(form: AuthForm): Observable<UserDto> {
-		return this.http.post<UserDto>('/api/auth/register', form, {
+	register(form: AuthForm): Observable<void> {
+		return this.http.post<void>('/api/auth/register', form, {
 			context: new HttpContext().set(SUPPRESS_EVENT, true),
 		});
 	}
 
 	logout(user: UserDto): Observable<void> {
-		return this.http.post<void>('api/auth/logout', user, { context: new HttpContext().set(SUPPRESS_EVENT, true) });
+		return this.http.post<void>('/api/auth/logout', user, { context: new HttpContext().set(SUPPRESS_EVENT, true) });
 	}
 
 	refreshTokens(): Observable<string> {

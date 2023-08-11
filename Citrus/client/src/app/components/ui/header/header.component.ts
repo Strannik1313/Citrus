@@ -11,7 +11,7 @@ import { UserDto } from '@models/UserDto';
 })
 export class HeaderComponent {
 	@Input() isLogged = false;
-	@Input() isLoadingAuthButtonsState = true;
+	@Input() isUserInitializingProcess = true;
 	@Input() user: UserDto | null = null;
 	@Output() logout: EventEmitter<void> = new EventEmitter<void>();
 	readonly routes = NAVIGATE_ROUTES;

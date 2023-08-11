@@ -22,7 +22,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MainPageModule } from '@components/ui/main-page/main-page.module';
 import { AuthModule } from '@shared/auth/auth.module';
 import { TokenInterceptor } from '@interceptors/token.interceptor';
-import { routerReducer } from '@ngrx/router-store';
+import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { RouterEffects } from '@state-management/router-feature/router.effects';
 
 registerLocaleData(localeRu);
@@ -49,6 +49,7 @@ registerLocaleData(localeRu);
 		MatTooltipModule,
 		MainPageModule,
 		AuthModule,
+		StoreRouterConnectingModule.forRoot(),
 	],
 	providers: [
 		{ provide: LOCALE_ID, useValue: 'ru' },

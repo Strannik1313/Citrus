@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { asyncData } from '@tests/async-observable-helper/async-observable-helper';
 import 'zone.js/testing';
 import { NAVIGATE_ROUTES } from '@enums/NavigateRoutes';
+import { MockRouter } from '@tests/mock-services';
 
 describe('WizardAccessGuard', () => {
 	let guard: WizardAccessGuard;
@@ -22,12 +23,7 @@ describe('WizardAccessGuard', () => {
 				Store,
 				{
 					provide: Router,
-					useValue: {
-						routerState: { snapshot: { url: '' } },
-						navigate() {
-							return undefined;
-						},
-					},
+					useValue: MockRouter,
 				},
 				{ provide: ActivatedRoute, useValue: { snapshot: {} } },
 			],

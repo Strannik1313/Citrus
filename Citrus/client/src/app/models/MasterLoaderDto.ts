@@ -1,4 +1,4 @@
 export interface MasterLoaderDto {
-	servicesIds?: string[] | null;
-	id?: string | null;
+	servicesIds?: string | undefined;
+	id?: string | undefined;
 }

@@ -2,47 +2,48 @@
 	<div class='home'>
 		<button 
 			[matTooltip]='HeaderLabels.HOME_BTN_TOOLTIP'
-			mat-icon-button color='primary'
-			data-testid='header_btn'
+			mat-icon-button
+			color='primary'
+			data-testid='home_btn'
 			[routerLink]='routes.HOME'
 		>
-			<mat-icon data-testid='header_icon'>home</mat-icon>
+			<mat-icon data-testid='home_icon'>home</mat-icon>
 		</button>
 	</div>
 	<div class='auth'>
-		<div class='button_container' appSpinner [isRunning]='isLoadingAuthButtonsState'>
-			<ng-container *ngIf='!isLogged && !isLoadingAuthButtonsState; else authUserButtons'>
+		<div class='button_container' data-testid='auth_buttons_container' appSpinner [isRunning]='isUserInitializingProcess'>
+			<ng-container *ngIf='!isLogged && !isUserInitializingProcess; else authUserButtons'>
 				<button
 					[matTooltip]='HeaderLabels.LOGIN_BTN_TOOLTIP'
 					mat-icon-button
 					color='primary'
-					data-testid='header_btn'
+					data-testid='login_btn'
 					[routerLink]='routes.LOGIN'
 				>
-					<mat-icon data-testid='header_icon'>login</mat-icon>
+					<mat-icon data-testid='login_icon'>login</mat-icon>
 				</button>
 				<button
 					[matTooltip]='HeaderLabels.REGISTER_BTN_TOOLTIP'
 					mat-icon-button
 					color='primary'
-					data-testid='header_btn'
+					data-testid='register_btn'
 					[routerLink]='routes.REGISTER'
 				>
-					<mat-icon data-testid='header_icon'>person_add</mat-icon>
+					<mat-icon data-testid='register_icon'>person_add</mat-icon>
 				</button>
 			</ng-container>
 		</div>
 		<ng-template #authUserButtons>
-			<ng-container *ngIf='!isLoadingAuthButtonsState'>
+			<ng-container *ngIf='!isUserInitializingProcess'>
 				<a class='account_link' [routerLink]='routes.ACCOUNT'>{{user?.name || user?.email}}</a>
 				<button
 					[matTooltip]='HeaderLabels.LOGOUT_BTN_TOOLTIP'
 					mat-icon-button
 					color='primary'
-					data-testid='header_btn'
+					data-testid='logout_btn'
 					(click)='onLogoutClick()'
 				>
-					<mat-icon data-testid='header_icon'>logout</mat-icon>
+					<mat-icon data-testid='logout_icon'>logout</mat-icon>
 				</button>
 			</ng-container>
 		</ng-template>

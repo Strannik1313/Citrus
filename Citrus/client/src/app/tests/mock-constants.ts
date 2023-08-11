@@ -24,6 +24,12 @@ import { CalendarDatesDto } from '@models/CalendarDatesDto';
 import { ConfirmForm } from '@interfaces/ConfirmForm';
 import { ComponentsLoadingState } from '@interfaces/ComponentsLoadingState';
 import { ScheduleDto } from '@models/ScheduleDto';
+import { UserDto } from '@models/UserDto';
+import { UserRoles } from '@enums/UserRoles';
+import { AuthForm } from '@interfaces/AuthForm';
+import { OrderDto } from '@models/OrderDto';
+import { selectUrlBeforeAuthNavigation } from '@state-management/main-feature/main.reducer';
+import { selectUser } from '@state-management/auth-feature/auth.reducer';
 
 export const MockElementHeight = 20;
 
@@ -97,7 +103,16 @@ export const MockLoadingState: ComponentsLoadingState = {
 
 export const MockStep = 1;
 
-export const MockSelectors: MockSelector[] = [
+export const MockUrl = '/mock';
+
+export const MockUserDto: UserDto = {
+	email: 'mockEmail',
+	phoneNumber: 8,
+	id: 'mockId',
+	role: UserRoles.USER,
+};
+
+export const MockWizardSelectors: MockSelector[] = [
 	{
 		selector: selectComponentsIsLoadingState,
 		value: MockLoadingState,
@@ -162,6 +177,14 @@ export const MockSelectors: MockSelector[] = [
 		selector: selectIsNextBTnVisible,
 		value: true,
 	},
+	{
+		selector: selectUrlBeforeAuthNavigation,
+		value: MockUrl,
+	},
+	{
+		selector: selectUser,
+		value: MockUserDto,
+	},
 ];
 
 export const MockPageableMasterDto = {
@@ -169,3 +192,16 @@ export const MockPageableMasterDto = {
 	total: 100,
 	current: 1,
 };
+
+export const MockAuthForm: AuthForm = {
+	email: 'mockEmail',
+	password: '123',
+};
+
+export const MockOrderDto: OrderDto = {
+	name: 'mockName',
+	surname: 'mockSurname',
+	phoneNumber: 'mockPhone',
+};
+
+export const mockRouterUrl = '/mock';

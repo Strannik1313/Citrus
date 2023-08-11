@@ -29,11 +29,11 @@ import {
 	MockLoadingState,
 	MockMasterDto,
 	MockSchedule,
-	MockSelectors,
+	MockWizardSelectors,
 	MockService,
 	MockServiceDto,
 	MockStep,
-} from '@tests/mockData/mockConstants';
+} from '@tests/mock-constants';
 import { CalendarChangeWeekEnum } from '@shared/calendar/enums/CalendarChangeWeekEnum';
 import { ChangeDetectorRef, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -98,7 +98,10 @@ describe('WizardComponent', () => {
 				BrowserAnimationsModule,
 				NgxMaskModule.forRoot(),
 			],
-			providers: [provideMockStore({ initialState: MockInitialState, selectors: MockSelectors }), ChangeDetectorRef],
+			providers: [
+				provideMockStore({ initialState: MockInitialState, selectors: MockWizardSelectors }),
+				ChangeDetectorRef,
+			],
 		}).compileComponents();
 	});
 

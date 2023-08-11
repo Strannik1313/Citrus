@@ -37,7 +37,7 @@ import {
 	MockMasterDto,
 	MockSchedule,
 	MockService,
-} from '@tests/mockData/mockConstants';
+} from '@tests/mock-constants';
 import { selectComponentsIsLoadingState, selectScheduleSelectedTime } from './wizard.reducer';
 
 describe('WizardReducer', () => {

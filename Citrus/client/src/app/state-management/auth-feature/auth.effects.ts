@@ -109,7 +109,7 @@ export class AuthEffects implements OnInitEffects {
 			ofType(AuthActions.LogoutAction),
 			concatLatestFrom(() => this.store.select(selectUser)),
 			switchMap(([, user]) => {
-				if (!user) throw Error('');
+				if (!user) throw Error('Не найден пользователь');
 				return this.authService.logout(user).pipe(map(() => resetUser()));
 			}),
 		);

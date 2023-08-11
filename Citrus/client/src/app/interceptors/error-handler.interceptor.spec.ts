@@ -5,7 +5,8 @@ import { MockStore, provideMockStore } from '@ngrx/store/testing';
 import { HttpHandler, HttpRequest } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { showSnakeBar } from '@state-management/main-feature/main.actions';
-import { MockInitialState } from '@tests/mockData/mockConstants';
+import { MockInitialState } from '@tests/mock-constants';
+import { MockHttpHandlerWithError, MockHttpRequest } from '@tests/mock-services';
 
 describe('ErrorHandlerInterceptor', () => {
 	let store: MockStore;
@@ -19,13 +20,11 @@ describe('ErrorHandlerInterceptor', () => {
 			providers: [
 				{
 					provide: HttpHandler,
-					useValue: {
-						handle: (request: HttpRequest<unknown>) => request,
-					},
+					useValue: MockHttpHandlerWithError,
 				},
 				{
 					provide: HttpRequest,
-					useValue: throwError(() => new Error('')),
+					useValue: MockHttpRequest,
 				},
 				ErrorHandlerInterceptor,
 				provideMockStore({ initialState: MockInitialState }),
@@ -45,12 +44,20 @@ describe('ErrorHandlerInterceptor', () => {
 	});
 
 	it('dispatch showSnakeBar action after error is thrown', () => {
-		let spy = spyOn(store, 'dispatch');
+		const spy = spyOn(store, 'dispatch');
 		interceptor.intercept(mockRequest, mockHandler).subscribe({
-			// eslint-disable-next-line @typescript-eslint/no-empty-function
-			next: () => {},
 			error: () => {
 				expect(spy).toHaveBeenCalledOnceWith(showSnakeBar());
+			},
+		});
+	});
+
+	it('dont dispatch showSnakeBar action after error is thrown if suppressEvent is true', () => {
+		const spy = spyOn(store, 'dispatch');
+		spyOn(mockRequest.context, 'get').and.returnValue(true);
+		interceptor.intercept(mockRequest, mockHandler).subscribe({
+			error: () => {
+				expect(spy).not.toHaveBeenCalled();
 			},
 		});
 	});
