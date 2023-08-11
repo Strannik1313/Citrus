@@ -8,5 +8,6 @@ router.post('/login', AuthController.login);
 router.post('/logout', AuthController.logout);
 router.post('/register', AuthController.register);
 router.get('/refresh-tokens', passport.authenticate('jwt', { session: false }), AuthController.refreshTokens);
+router.get('/current-user', passport.authenticate('jwt', { session: false }), AuthController.currentUser);
 
 export { router as AuthRoutes };

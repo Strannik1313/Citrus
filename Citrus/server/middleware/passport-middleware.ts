@@ -4,10 +4,11 @@ import { Strategy as JwtStrategy } from 'passport-jwt';
 import { AuthService } from '@services/auth.service';
 import { Request } from 'express';
 import { UserDto } from '@dto/UserDto';
+import { CookieHelper } from '@helpers/CookieHelper';
 
 const tokenExtractor = (req: Request) => {
 	const accessToken = req.header('authorization');
-	const refreshToken = req.header('cookie');
+	const refreshToken = CookieHelper.getCookieFromHeader(req.header('cookie'));
 	if (accessToken) return accessToken;
 	if (refreshToken) return refreshToken;
 	return null;

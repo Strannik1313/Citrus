@@ -28,13 +28,10 @@ export namespace AuthService {
 		return result;
 	}
 
-	export async function getUserByEmail(email: string): Promise<User> {
+	export async function getUserByEmail(email: string): Promise<User | undefined> {
 		let result: User | undefined;
 		const userCollection = await db.collection('users').where('email', '==', email).get();
 		userCollection.forEach(user => (result = user.data() as User));
-		if (!result) {
-			throw new Error('Не найден пользователь');
-		}
 		return result;
 	}
 
@@ -107,7 +104,7 @@ export namespace AuthService {
 		const document = sessionsCollection.data();
 		if (!document) throw new Error('Не удалось получить коллекцию');
 		const session = (document.session as Array<Session>).find(session => ua === session.ua);
-		if (!session) throw new Error('Не удалось получить сессию');
+		if (!session) throw new Error('Не удалось получить коллекцию');
 		await sessionsRef.update({
 			session: FieldValue.arrayRemove(session),
 		});
