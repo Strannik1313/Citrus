@@ -28,6 +28,9 @@ export class CalendarComponent {
 	}
 
 	onDateClick(day: CalendarDatesDto): void {
+		if (!day.mastersId || day?.mastersId?.length === 0) {
+			return;
+		}
 		this.onDayChange.emit(day.date);
 	}
 

@@ -13,7 +13,6 @@ export class DatesHelper {
 		let currentWeek = dayjs(day).week();
 		return dayjs(day)
 			.week(currentWeek + 1)
-			.startOf('week')
 			.utc()
 			.format(DateFormat);
 	}
@@ -22,7 +21,6 @@ export class DatesHelper {
 		let currentWeek = dayjs(day).week();
 		return dayjs(day)
 			.week(currentWeek - 1)
-			.startOf('week')
 			.utc()
 			.format(DateFormat);
 	}
